@@ -30407,16 +30407,34 @@
         "message": "[WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
         "details": null
       }
+    },
+    {
+      "timestamp": "2025-11-18T22:35:55.971736",
+      "type": "error",
+      "data": {
+        "error_type": "listener",
+        "message": "[WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T22:37:09.636730",
+      "type": "error",
+      "data": {
+        "error_type": "listener",
+        "message": "[WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+        "details": null
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
     "stt_events": 2327,
     "commands_processed": 37,
-    "errors": 379,
+    "errors": 381,
     "total_chars_spoken": 7004,
     "total_chars_heard": 78236,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T22:28:56.737400"
+  "last_updated": "2025-11-18T22:37:09.636759"
 }
