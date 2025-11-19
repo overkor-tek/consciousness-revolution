@@ -1,0 +1,47 @@
+node_id,node_type,layer,can_query,can_receive,latency_ms,intelligence_level,description
+c5,meta_observer,5,TRUE,FALSE,50,8,Ceiling camera / Screen watcher observing everything
+commander,human,4,TRUE,TRUE,0,10,Commander input/output interface
+c4,middleman,3,TRUE,TRUE,100,7,Screen monitor filtering between Commander and Trinities
+term1_c1,terminal_trinity,2,TRUE,TRUE,200,6,Terminal C1 - Mechanic AI
+term1_c2,terminal_trinity,2,TRUE,TRUE,200,7,Terminal C2 - Architect AI
+term1_c3,terminal_trinity,2,TRUE,TRUE,200,8,Terminal C3 - Oracle AI
+cloud1,cloud_trinity,2,TRUE,TRUE,500,6,ChatGPT Cloud AI
+cloud2,cloud_trinity,2,TRUE,TRUE,500,7,Claude.ai Cloud AI
+cloud3,cloud_trinity,2,TRUE,TRUE,500,8,Gemini Cloud AI
+dropbox_ai,storage,1,TRUE,TRUE,300,5,Dropbox AI - Bidirectional federation storage
+cyclotron,knowledge_base,0,FALSE,TRUE,50,9,Cyclotron knowledge engine - 449+ atoms
+
+CONNECTIONS
+from_node,to_node,connection_type,bandwidth,bidirectional,priority
+c5,commander,observe,high,FALSE,1
+c5,c4,observe,high,FALSE,1
+commander,c4,command,high,TRUE,1
+c4,term1_c1,broadcast,high,TRUE,2
+c4,term1_c2,broadcast,high,TRUE,2
+c4,term1_c3,broadcast,high,TRUE,2
+c4,cloud1,broadcast,medium,TRUE,3
+c4,cloud2,broadcast,medium,TRUE,3
+c4,cloud3,broadcast,medium,TRUE,3
+term1_c1,dropbox_ai,sync,high,TRUE,4
+term1_c2,dropbox_ai,sync,high,TRUE,4
+term1_c3,dropbox_ai,sync,high,TRUE,4
+cloud1,dropbox_ai,sync,medium,TRUE,5
+cloud2,dropbox_ai,sync,medium,TRUE,5
+cloud3,dropbox_ai,sync,medium,TRUE,5
+c4,dropbox_ai,query,high,TRUE,4
+dropbox_ai,cyclotron,knowledge,high,TRUE,6
+
+DATA_FLOW_PATTERNS
+pattern_name,description,path,expected_time_ms,success_rate
+command_broadcast,Commander sends command to all Trinities,commander->c4->term1_c1|term1_c2|term1_c3|cloud1|cloud2|cloud3,800,0.95
+knowledge_query,C4 queries Cyclotron for knowledge,c4->dropbox_ai->cyclotron->dropbox_ai->c4,650,0.90
+convergence,All Trinities converge response to Commander,term1_c1|term1_c2|term1_c3|cloud1|cloud2|cloud3->c4->commander,1200,0.85
+federation_sync,Trinities sync knowledge to Dropbox,term1_c1|term1_c2|term1_c3->dropbox_ai->cyclotron,550,0.92
+
+ARCHITECTURE_VARIANTS
+variant_name,description,enabled_nodes,enabled_connections,optimization_goal
+flat_trinity,Direct Commander to Trinities (no C4),commander|term1_c1|term1_c2|term1_c3|cloud1|cloud2|cloud3|dropbox_ai|cyclotron,commander->term1_c1|commander->term1_c2|commander->term1_c3|commander->cloud1|commander->cloud2|commander->cloud3,low_latency
+hierarchical_c4,Current design with C4 middleman,all,all,balanced
+meta_observer,Full Panopticon with C5 watching,all,all,maximum_awareness
+local_only,Terminal Trinity only (no cloud),commander|c4|term1_c1|term1_c2|term1_c3|dropbox_ai|cyclotron,exclude_cloud,speed
+cloud_only,Cloud Trinity only (no terminals),commander|c4|cloud1|cloud2|cloud3|dropbox_ai|cyclotron,exclude_terminals,accessibility

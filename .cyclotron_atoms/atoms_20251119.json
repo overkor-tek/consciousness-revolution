@@ -7,6 +7,34 @@
     "modified": 1763528601
   },
   {
+    "path": "C:/Users/dwrek/100X_DEPLOYMENT\\AI_ARCHITECTURE_RECOMMENDATIONS.md",
+    "name": "AI_ARCHITECTURE_RECOMMENDATIONS.md",
+    "type": "md",
+    "size": 1117,
+    "modified": 1763557018
+  },
+  {
+    "path": "C:/Users/dwrek/100X_DEPLOYMENT\\ARCHITECTURE_SIMULATION_RESULTS.json",
+    "name": "ARCHITECTURE_SIMULATION_RESULTS.json",
+    "type": "json",
+    "size": 5284,
+    "modified": 1763557018
+  },
+  {
+    "path": "C:/Users/dwrek/100X_DEPLOYMENT\\ARCHITECTURE_SIMULATOR.py",
+    "name": "ARCHITECTURE_SIMULATOR.py",
+    "type": "py",
+    "size": 14571,
+    "modified": 1763556996
+  },
+  {
+    "path": "C:/Users/dwrek/100X_DEPLOYMENT\\ARCHITECTURE_SIMULATOR_DASHBOARD.html",
+    "name": "ARCHITECTURE_SIMULATOR_DASHBOARD.html",
+    "type": "html",
+    "size": 17661,
+    "modified": 1763557084
+  },
+  {
     "path": "C:/Users/dwrek/100X_DEPLOYMENT\\COMPUTER_2_START_HERE.md",
     "name": "COMPUTER_2_START_HERE.md",
     "type": "md",
@@ -409,8 +437,8 @@
     "path": "C:/Users/dwrek/.consciousness\\autonomous_rake_status.json",
     "name": "autonomous_rake_status.json",
     "type": "json",
-    "size": 186,
-    "modified": 1763556797
+    "size": 187,
+    "modified": 1763557097
   },
   {
     "path": "C:/Users/dwrek/.consciousness\\AUTO_KNOWLEDGE_FILING_SYSTEM.py",
@@ -501,7 +529,7 @@
     "name": "cyclotron_daemon_status.json",
     "type": "json",
     "size": 321,
-    "modified": 1763556680
+    "modified": 1763556980
   },
   {
     "path": "C:/Users/dwrek/.consciousness\\cyclotron_federation_index.json",
@@ -571,7 +599,7 @@
     "name": "last_auto_save.txt",
     "type": "txt",
     "size": 18,
-    "modified": 1763556606
+    "modified": 1763556967
   },
   {
     "path": "C:/Users/dwrek/.consciousness\\last_boot.json",
@@ -1796,7 +1824,7 @@
     "name": "COORDINATION_STATUS.json",
     "type": "json",
     "size": 224,
-    "modified": 1763556795
+    "modified": 1763557096
   },
   {
     "path": "C:/Users/dwrek/.trinity\\CREATE_3RD_ANTHROPIC_EMAIL.md",
@@ -3063,7 +3091,7 @@
     "name": "trinity_thoughts.json",
     "type": "json",
     "size": 29803,
-    "modified": 1763556786
+    "modified": 1763557057
   },
   {
     "path": "C:/Users/dwrek/.trinity\\TRINITY_VISUAL_DASHBOARD.html",

@@ -206,3 +206,5 @@
 
 [2025-11-19 04:23:07] [COMMANDER] okay you put it in a file called dropbox but we need to put it in the cloud
 
+[2025-11-19 05:00:52] [COMMANDER] okay we're plugged directly into the starlink professional
+
