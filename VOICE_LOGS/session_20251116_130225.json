@@ -31757,16 +31757,159 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T06:22:49.065300",
+      "type": "stt",
+      "data": {
+        "text": "it'll probably come up with different kinds of concrete for all different regions",
+        "chars": 81,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:23:12.851883",
+      "type": "stt",
+      "data": {
+        "text": "there was a call",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:23:21.059670",
+      "type": "stt",
+      "data": {
+        "text": "and sandpoint build",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:23:37.282165",
+      "type": "stt",
+      "data": {
+        "text": "you got a whole list of things to do we're basically building the foundation for a new real",
+        "chars": 91,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:24:33.443517",
+      "type": "stt",
+      "data": {
+        "text": "augmented reality",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:24:49.653944",
+      "type": "stt",
+      "data": {
+        "text": "when you're on the road",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:24:54.310165",
+      "type": "stt",
+      "data": {
+        "text": "all right call me call me a program",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:25:02.236749",
+      "type": "stt",
+      "data": {
+        "text": "everywhere",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:25:41.502375",
+      "type": "stt",
+      "data": {
+        "text": "and he started explaining to me what was",
+        "chars": 40,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:26:03.955083",
+      "type": "stt",
+      "data": {
+        "text": "maggie got logged on and into the system and she's like the",
+        "chars": 59,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:26:17.233588",
+      "type": "stt",
+      "data": {
+        "text": "everybody hates her everywhere she goes and she's the one that does everything",
+        "chars": 78,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:26:44.346125",
+      "type": "stt",
+      "data": {
+        "text": "you need to go get some sunlight you need to go eat some food it'll start coaching you",
+        "chars": 86,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:27:13.102948",
+      "type": "stt",
+      "data": {
+        "text": "i literally have to move",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2435,
+    "stt_events": 2448,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 81722,
+    "total_chars_heard": 82301,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T06:22:10.729866"
+  "last_updated": "2025-11-19T06:27:13.102960"
 }
