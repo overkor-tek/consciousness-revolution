@@ -31284,16 +31284,203 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T06:08:03.631480",
+      "type": "stt",
+      "data": {
+        "text": "and",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:08:38.183043",
+      "type": "stt",
+      "data": {
+        "text": "this laptop right here",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:08:43.094399",
+      "type": "stt",
+      "data": {
+        "text": "1 terminal trinity in one cloud trinity",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:08:47.823808",
+      "type": "stt",
+      "data": {
+        "text": "screen sharing",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:08:58.672651",
+      "type": "stt",
+      "data": {
+        "text": "what's the other computers here",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:09:10.592973",
+      "type": "stt",
+      "data": {
+        "text": "figure out how",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:09:15.154987",
+      "type": "stt",
+      "data": {
+        "text": "where to report in",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:09:26.682675",
+      "type": "stt",
+      "data": {
+        "text": "how old is cha",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:09:47.681090",
+      "type": "stt",
+      "data": {
+        "text": "we're going to start using these xboxes",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:10:12.388142",
+      "type": "stt",
+      "data": {
+        "text": "so we're going to end up being able to shortcut the whole www",
+        "chars": 61,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:10:23.957414",
+      "type": "stt",
+      "data": {
+        "text": "www.facebook.com",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:10:38.695175",
+      "type": "stt",
+      "data": {
+        "text": "so we don't need the www i'm going to make",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:10:45.271467",
+      "type": "stt",
+      "data": {
+        "text": "so the idea is that",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:10:56.482107",
+      "type": "stt",
+      "data": {
+        "text": "and we're going to use that short period of time to get out from under",
+        "chars": 70,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:11:08.037504",
+      "type": "stt",
+      "data": {
+        "text": "and we're going to go around",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:11:12.689337",
+      "type": "stt",
+      "data": {
+        "text": "the goal is",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:11:50.955814",
+      "type": "stt",
+      "data": {
+        "text": "infinity",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2392,
+    "stt_events": 2409,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 80327,
+    "total_chars_heard": 80776,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T06:07:03.718248"
+  "last_updated": "2025-11-19T06:11:50.955828"
 }
