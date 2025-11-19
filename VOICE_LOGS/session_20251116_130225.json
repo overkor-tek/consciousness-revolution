@@ -29369,16 +29369,60 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-18T21:03:53.617222",
+      "type": "stt",
+      "data": {
+        "text": "let's just put it this way",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:04:01.686603",
+      "type": "stt",
+      "data": {
+        "text": "home depot parking lot going through bins and some guy comes and beats on the side because",
+        "chars": 90,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:04:33.209739",
+      "type": "stt",
+      "data": {
+        "text": "mother",
+        "chars": 6,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:05:03.165575",
+      "type": "stt",
+      "data": {
+        "text": "the computer talks a lot about",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2240,
+    "stt_events": 2244,
     "commands_processed": 37,
     "errors": 370,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 75277,
+    "total_chars_heard": 75429,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T21:02:35.490143"
+  "last_updated": "2025-11-18T21:05:03.165592"
 }
