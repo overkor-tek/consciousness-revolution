@@ -33523,16 +33523,71 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T09:53:59.442244",
+      "type": "stt",
+      "data": {
+        "text": "anything he needs as a foundation",
+        "chars": 33,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:54:05.102126",
+      "type": "stt",
+      "data": {
+        "text": "pattern theory 7 domains",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:54:09.315014",
+      "type": "stt",
+      "data": {
+        "text": "map the whole goddamn thing",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:54:16.395468",
+      "type": "stt",
+      "data": {
+        "text": "or something",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:54:20.143433",
+      "type": "stt",
+      "data": {
+        "text": "to have to figure it all out",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 113,
-    "stt_events": 2585,
+    "stt_events": 2590,
     "commands_processed": 39,
     "errors": 399,
     "total_chars_spoken": 7430,
-    "total_chars_heard": 86412,
+    "total_chars_heard": 86536,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T09:53:52.695536"
+  "last_updated": "2025-11-19T09:54:20.143445"
 }
