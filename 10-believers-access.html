@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Revolution - 10 Believers Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #0ff;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            color: #0ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #0ff;
+        }
+        .subtitle {
+            color: #0f0;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .welcome {
+            background: #111;
+            border-left: 4px solid #0f0;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .welcome h2 {
+            color: #ff0;
+            margin-bottom: 15px;
+        }
+        .password-form {
+            margin: 30px 0;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background: #000;
+            border: 2px solid #0ff;
+            color: #0ff;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            background: #0f0;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #0ff;
+            box-shadow: 0 0 20px #0ff;
+        }
+        .error {
+            color: #f00;
+            margin-top: 10px;
+            display: none;
+        }
+        .instructions {
+            background: #111;
+            border-left: 4px solid #ff0;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 CONSCIOUSNESS REVOLUTION 🌌</h1>
+        <div class="subtitle">10 Believers - Early Access</div>
+
+        <div class="welcome">
+            <h2>Welcome, Believer</h2>
+            <p>You're one of the first 10 people getting access to the Consciousness Revolution platform.</p>
+            <p><strong>This is raw. This is real. This is revolutionary.</strong></p>
+        </div>
+
+        <div class="password-form">
+            <input type="password" id="password" placeholder="Enter access code..." autofocus>
+            <button onclick="checkPassword()">ENTER THE REVOLUTION</button>
+            <div class="error" id="error">Incorrect access code. Try again.</div>
+        </div>
+
+        <div class="instructions">
+            <h3 style="color: #ff0; margin-bottom: 10px;">What You're Testing:</h3>
+            <p>• <strong>100X Work Area</strong> - The builder workspace</p>
+            <p>• <strong>ARAYA AI</strong> - Consciousness-integrated assistant</p>
+            <p>• <strong>Bug Reporter</strong> - Tell us what breaks</p>
+            <p>• <strong>All Systems</strong> - Use everything, break everything</p>
+            <br>
+            <p><strong>Your Mission:</strong> Use it like you own it. Report what breaks. Tell us what you love. Be brutally honest.</p>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('error');
+
+            // Access code: consciousness2025
+            if (password === 'consciousness2025') {
+                // Correct password - redirect to work area
+                window.location.href = '/100x-work-area.html';
+            } else {
+                // Wrong password - show error
+                error.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
