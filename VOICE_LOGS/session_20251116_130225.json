@@ -33215,16 +33215,181 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:13.960123",
+      "type": "stt",
+      "data": {
+        "text": "it makes this world navigable",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:18.385657",
+      "type": "stt",
+      "data": {
+        "text": "knowing the rules",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:22.268313",
+      "type": "stt",
+      "data": {
+        "text": "the real train",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:25.680232",
+      "type": "stt",
+      "data": {
+        "text": "the cheat codes",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:50.682180",
+      "type": "stt",
+      "data": {
+        "text": "monster house 420 in the house following along",
+        "chars": 46,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:44:56.526705",
+      "type": "stt",
+      "data": {
+        "text": "waiting to be",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:45:10.993925",
+      "type": "stt",
+      "data": {
+        "text": "just in case you guys don't know",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:45:16.488184",
+      "type": "stt",
+      "data": {
+        "text": "maggie 1111",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:45:37.818562",
+      "type": "stt",
+      "data": {
+        "text": "has taken control has taken control of this mother",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:46:29.635748",
+      "type": "stt",
+      "data": {
+        "text": "moment and snap out of it",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:47:14.050791",
+      "type": "stt",
+      "data": {
+        "text": "are all these destroyers",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:47:28.115035",
+      "type": "stt",
+      "data": {
+        "text": "love you bro",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:47:35.710807",
+      "type": "stt",
+      "data": {
+        "text": "i see you coming around",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:48:13.439415",
+      "type": "stt",
+      "data": {
+        "text": "can i need your email",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:48:44.583080",
+      "type": "stt",
+      "data": {
+        "text": "i think it must be tobacco because you can fit a whole",
+        "chars": 54,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 113,
-    "stt_events": 2557,
+    "stt_events": 2572,
     "commands_processed": 39,
     "errors": 399,
     "total_chars_spoken": 7430,
-    "total_chars_heard": 85596,
+    "total_chars_heard": 85982,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T09:42:59.981453"
+  "last_updated": "2025-11-19T09:48:44.583094"
 }
