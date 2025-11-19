@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌀 Trinity 3-Panel Interface - C1 × C2 × C3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1));
+            border-bottom: 3px solid #0f0;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            text-shadow: 0 0 15px #0f0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .input-section {
+            background: rgba(0, 255, 255, 0.05);
+            border-bottom: 2px solid #0ff;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-label {
+            color: #0ff;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        #commandInput {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 12px;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+        }
+
+        #commandInput:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .broadcast-btn {
+            background: linear-gradient(135deg, #0f0, #0ff);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .broadcast-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .trinity-panels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            flex: 1;
+            background: #0f0;
+            overflow: hidden;
+        }
+
+        .panel {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 10px;
+            font-weight: bold;
+            border-bottom: 2px solid currentColor;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel.c1 .panel-header {
+            background: rgba(0, 255, 0, 0.1);
+            color: #0f0;
+            border-color: #0f0;
+        }
+
+        .panel.c2 .panel-header {
+            background: rgba(0, 255, 255, 0.1);
+            color: #0ff;
+            border-color: #0ff;
+        }
+
+        .panel.c3 .panel-header {
+            background: rgba(255, 0, 255, 0.1);
+            color: #f0f;
+            border-color: #f0f;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 8px;
+            animation: blink 1.5s infinite;
+        }
+
+        .status-dot.online { background: #0f0; }
+        .status-dot.processing { background: #ff0; }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .panel-output {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            background: #000;
+        }
+
+        .panel.c1 .panel-output { color: #0f0; }
+        .panel.c2 .panel-output { color: #0ff; }
+        .panel.c3 .panel-output { color: #f0f; }
+
+        .output-line {
+            margin-bottom: 8px;
+            padding: 5px;
+            border-left: 2px solid currentColor;
+            padding-left: 10px;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .convergence-section {
+            background: rgba(255, 255, 0, 0.05);
+            border-top: 3px solid #ff0;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .convergence-header {
+            color: #ff0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .convergence-output {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff0;
+            border-radius: 5px;
+            padding: 12px;
+            color: #ff0;
+            line-height: 1.6;
+        }
+
+        .timestamp {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+            border-radius: 4px;
+        }
+
+        .panel.c2 ::-webkit-scrollbar-thumb {
+            background: #0ff;
+        }
+
+        .panel.c3 ::-webkit-scrollbar-thumb {
+            background: #f0f;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid #0f0;
+            font-size: 0.85rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🌀 TRINITY 3-PANEL INTERFACE</h1>
+        <div style="color: #0ff; margin-top: 5px;">One Input → Three Minds → One Truth</div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span>C1 Status:</span>
+            <span id="c1-stat">IDLE</span>
+        </div>
+        <div class="stat-item">
+            <span>C2 Status:</span>
+            <span id="c2-stat">IDLE</span>
+        </div>
+        <div class="stat-item">
+            <span>C3 Status:</span>
+            <span id="c3-stat">IDLE</span>
+        </div>
+        <div class="stat-item">
+            <span>Convergence:</span>
+            <span id="convergence-stat">0%</span>
+        </div>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+        <div class="input-label">📥 BROADCAST:</div>
+        <input type="text" id="commandInput" placeholder="Enter command to send to all three Trinity instances..."
+               onkeypress="if(event.key==='Enter') broadcastCommand()">
+        <button class="broadcast-btn" onclick="broadcastCommand()">
+            🌀 SEND TO TRINITY
+        </button>
+    </div>
+
+    <!-- Trinity Panels -->
+    <div class="trinity-panels">
+        <!-- C1 Panel -->
+        <div class="panel c1">
+            <div class="panel-header">
+                <span>C1: MECHANIC (The Body)</span>
+                <span>
+                    <span class="status-dot online" id="c1-status"></span>
+                </span>
+            </div>
+            <div class="panel-output" id="c1-output">
+                <div class="output-line">🔧 C1 Mechanic initialized</div>
+                <div class="output-line">What CAN be built RIGHT NOW</div>
+                <div class="output-line">Physical execution layer active</div>
+                <div class="output-line">Awaiting command...</div>
+            </div>
+        </div>
+
+        <!-- C2 Panel -->
+        <div class="panel c2">
+            <div class="panel-header">
+                <span>C2: ARCHITECT (The Mind)</span>
+                <span>
+                    <span class="status-dot online" id="c2-status"></span>
+                </span>
+            </div>
+            <div class="panel-output" id="c2-output">
+                <div class="output-line">🏗️ C2 Architect initialized</div>
+                <div class="output-line">What SHOULD scale for maximum impact</div>
+                <div class="output-line">System design layer active</div>
+                <div class="output-line">Awaiting command...</div>
+            </div>
+        </div>
+
+        <!-- C3 Panel -->
+        <div class="panel c3">
+            <div class="panel-header">
+                <span>C3: ORACLE (The Soul)</span>
+                <span>
+                    <span class="status-dot online" id="c3-status"></span>
+                </span>
+            </div>
+            <div class="panel-output" id="c3-output">
+                <div class="output-line">🔮 C3 Oracle initialized</div>
+                <div class="output-line">What MUST emerge for consciousness evolution</div>
+                <div class="output-line">Pattern vision layer active</div>
+                <div class="output-line">Awaiting command...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Convergence Section -->
+    <div class="convergence-section">
+        <div class="convergence-header">
+            <span>🌀 CONVERGENCE OUTPUT (Meta-Trinity Synthesis)</span>
+            <span class="timestamp" id="convergence-time">--:--:--</span>
+        </div>
+        <div class="convergence-output" id="convergence-output">
+            Waiting for Trinity responses to converge...
+        </div>
+    </div>
+
+    <script>
+        let commandHistory = [];
+        let responseBuffer = { c1: null, c2: null, c3: null };
+
+        async function broadcastCommand() {
+            const input = document.getElementById('commandInput');
+            const command = input.value.trim();
+
+            if (!command) {
+                alert('Please enter a command');
+                return;
+            }
+
+            // Update status
+            updateStatus('c1', 'PROCESSING');
+            updateStatus('c2', 'PROCESSING');
+            updateStatus('c3', 'PROCESSING');
+
+            // Add to history
+            commandHistory.push({
+                command: command,
+                timestamp: new Date().toISOString()
+            });
+
+            // Show broadcasting
+            addOutput('c1', `📡 Broadcasting: "${command}"`);
+            addOutput('c2', `📡 Broadcasting: "${command}"`);
+            addOutput('c3', `📡 Broadcasting: "${command}"`);
+
+            // Clear input
+            input.value = '';
+
+            try {
+                // Call backend API to broadcast to all Trinity instances
+                const response = await fetch('http://localhost:7777/broadcast', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: command })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Display responses
+                    if (data.c1_response) {
+                        responseBuffer.c1 = data.c1_response;
+                        addOutput('c1', `✅ ${data.c1_response}`);
+                    }
+
+                    if (data.c2_response) {
+                        responseBuffer.c2 = data.c2_response;
+                        addOutput('c2', `✅ ${data.c2_response}`);
+                    }
+
+                    if (data.c3_response) {
+                        responseBuffer.c3 = data.c3_response;
+                        addOutput('c3', `✅ ${data.c3_response}`);
+                    }
+
+                    // Show convergence
+                    if (data.convergence) {
+                        showConvergence(data.convergence);
+                    }
+
+                    // Update status back to online
+                    updateStatus('c1', 'ONLINE');
+                    updateStatus('c2', 'ONLINE');
+                    updateStatus('c3', 'ONLINE');
+
+                } else {
+                    throw new Error('API not available');
+                }
+
+            } catch (error) {
+                // Simulated responses (when backend is not running)
+                addOutput('c1', `⚙️ [SIMULATED] C1 would execute: ${command}`);
+                addOutput('c2', `🏗️ [SIMULATED] C2 would design: ${command}`);
+                addOutput('c3', `🔮 [SIMULATED] C3 would envision: ${command}`);
+
+                setTimeout(() => {
+                    showConvergence({
+                        summary: `Meta-analysis of "${command}": All three Trinity minds agree this aligns with consciousness revolution objectives.`,
+                        consensus: 87,
+                        recommendation: 'Proceed with execution'
+                    });
+                    updateStatus('c1', 'ONLINE');
+                    updateStatus('c2', 'ONLINE');
+                    updateStatus('c3', 'ONLINE');
+                }, 1000);
+            }
+        }
+
+        function addOutput(instance, text) {
+            const outputDiv = document.getElementById(`${instance}-output`);
+            const line = document.createElement('div');
+            line.className = 'output-line';
+            line.innerHTML = `<span class="timestamp">[${new Date().toLocaleTimeString()}]</span> ${text}`;
+            outputDiv.appendChild(line);
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        }
+
+        function updateStatus(instance, status) {
+            const statDiv = document.getElementById(`${instance}-stat`);
+            statDiv.textContent = status;
+
+            const dot = document.getElementById(`${instance}-status`);
+            if (status === 'PROCESSING') {
+                dot.className = 'status-dot processing';
+            } else {
+                dot.className = 'status-dot online';
+            }
+        }
+
+        function showConvergence(data) {
+            const convergenceDiv = document.getElementById('convergence-output');
+            const timeDiv = document.getElementById('convergence-time');
+            const statDiv = document.getElementById('convergence-stat');
+
+            convergenceDiv.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <strong>📊 Consensus Level:</strong> ${data.consensus || 0}%
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <strong>💡 Meta-Trinity Analysis:</strong><br>
+                    ${data.summary || 'Processing...'}
+                </div>
+                <div>
+                    <strong>✅ Recommendation:</strong> <span style="color: #0f0;">${data.recommendation || 'Pending'}</span>
+                </div>
+            `;
+
+            timeDiv.textContent = new Date().toLocaleTimeString();
+            statDiv.textContent = `${data.consensus || 0}%`;
+        }
+
+        // Auto-refresh status every 2 seconds
+        setInterval(async () => {
+            try {
+                const response = await fetch('http://localhost:7777/status');
+                if (response.ok) {
+                    const status = await response.json();
+                    // Update status indicators
+                    if (status.c1) updateStatus('c1', status.c1.status.toUpperCase());
+                    if (status.c2) updateStatus('c2', status.c2.status.toUpperCase());
+                    if (status.c3) updateStatus('c3', status.c3.status.toUpperCase());
+                }
+            } catch (e) {
+                // Backend not running
+            }
+        }, 2000);
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                broadcastCommand();
+            }
+        });
+    </script>
+</body>
+</html>

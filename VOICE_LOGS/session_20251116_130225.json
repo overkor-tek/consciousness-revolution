@@ -30506,16 +30506,71 @@
         "message": "[WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
         "details": null
       }
+    },
+    {
+      "timestamp": "2025-11-19T04:21:29.872064",
+      "type": "stt",
+      "data": {
+        "text": "okay this is the plan",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T04:21:38.247252",
+      "type": "stt",
+      "data": {
+        "text": "we got a nest all three of these into an interface",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T04:21:45.098037",
+      "type": "stt",
+      "data": {
+        "text": "already did that let's go find it",
+        "chars": 33,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T04:21:49.098191",
+      "type": "stt",
+      "data": {
+        "text": "consoles",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T04:23:07.242134",
+      "type": "stt",
+      "data": {
+        "text": "okay you put it in a file called dropbox but we need to put it in the cloud",
+        "chars": 75,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2327,
+    "stt_events": 2332,
     "commands_processed": 37,
     "errors": 390,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 78236,
+    "total_chars_heard": 78423,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T23:17:05.159585"
+  "last_updated": "2025-11-19T04:23:07.242161"
 }

@@ -196,3 +196,13 @@
 
 [2025-11-18 21:38:16] [COMMANDER] i think everything
 
+[2025-11-19 04:21:29] [COMMANDER] okay this is the plan
+
+[2025-11-19 04:21:38] [COMMANDER] we got a nest all three of these into an interface
+
+[2025-11-19 04:21:45] [COMMANDER] already did that let's go find it
+
+[2025-11-19 04:21:49] [COMMANDER] consoles
+
+[2025-11-19 04:23:07] [COMMANDER] okay you put it in a file called dropbox but we need to put it in the cloud
+
