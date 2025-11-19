@@ -31471,16 +31471,192 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T06:12:33.050701",
+      "type": "stt",
+      "data": {
+        "text": "probably one of these raspberry pi",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:12:43.505270",
+      "type": "stt",
+      "data": {
+        "text": "raspberry pi unit and then you put the star",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:13:09.610721",
+      "type": "stt",
+      "data": {
+        "text": "if it's a forest ranger",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:13:42.920168",
+      "type": "stt",
+      "data": {
+        "text": "you already have your outdoor area set up in the woods and you're probably already fucking",
+        "chars": 90,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:13:50.759194",
+      "type": "stt",
+      "data": {
+        "text": "you won't want to go back to town and then you just",
+        "chars": 51,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:14:00.467325",
+      "type": "stt",
+      "data": {
+        "text": "so what's going to happen",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:14:08.335894",
+      "type": "stt",
+      "data": {
+        "text": "it is not going to be able to be used by destroyers",
+        "chars": 51,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:14:31.434823",
+      "type": "stt",
+      "data": {
+        "text": "start talking about you",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:14:48.327158",
+      "type": "stt",
+      "data": {
+        "text": "i wanted to show you guys",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:15:39.707943",
+      "type": "stt",
+      "data": {
+        "text": "french frame breaks it all down",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:16:19.085724",
+      "type": "stt",
+      "data": {
+        "text": "spell pattern",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:16:41.511490",
+      "type": "stt",
+      "data": {
+        "text": "and i want you guys to see",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:16:55.555721",
+      "type": "stt",
+      "data": {
+        "text": "not just tokens but actual progress",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:16:59.053560",
+      "type": "stt",
+      "data": {
+        "text": "we're looking for",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:17:02.826566",
+      "type": "stt",
+      "data": {
+        "text": "add testers coming up",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:17:06.830248",
+      "type": "stt",
+      "data": {
+        "text": "anybody can apply",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2409,
+    "stt_events": 2425,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 80776,
+    "total_chars_heard": 81301,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T06:11:50.955828"
+  "last_updated": "2025-11-19T06:17:06.830259"
 }
