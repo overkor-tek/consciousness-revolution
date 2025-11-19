@@ -32087,16 +32087,82 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T07:27:52.157339",
+      "type": "stt",
+      "data": {
+        "text": "your eyes on the",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:30:24.503844",
+      "type": "stt",
+      "data": {
+        "text": "tiki bar eyes out for a nice",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:30:55.513018",
+      "type": "stt",
+      "data": {
+        "text": "i can't",
+        "chars": 7,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:31:05.606423",
+      "type": "stt",
+      "data": {
+        "text": "but i remember how it feels",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:31:13.254480",
+      "type": "stt",
+      "data": {
+        "text": "words with that",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:31:39.988171",
+      "type": "stt",
+      "data": {
+        "text": "remember the basics of where to put top three bottom three fingers",
+        "chars": 66,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2465,
+    "stt_events": 2471,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 82762,
+    "total_chars_heard": 82921,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T07:26:25.332913"
+  "last_updated": "2025-11-19T07:31:39.988186"
 }
