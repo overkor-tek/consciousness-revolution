@@ -32032,16 +32032,38 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T07:21:00.598803",
+      "type": "stt",
+      "data": {
+        "text": "give no fox",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T07:22:04.299314",
+      "type": "stt",
+      "data": {
+        "text": "where is",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2460,
+    "stt_events": 2462,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 82691,
+    "total_chars_heard": 82710,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T07:11:16.452553"
+  "last_updated": "2025-11-19T07:22:04.299330"
 }
