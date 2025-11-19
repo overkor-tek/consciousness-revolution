@@ -30117,16 +30117,181 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-18T21:24:23.566587",
+      "type": "stt",
+      "data": {
+        "text": "okay so are you going to",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:24:27.707943",
+      "type": "stt",
+      "data": {
+        "text": "oh it's already",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:24:31.805674",
+      "type": "stt",
+      "data": {
+        "text": "oh you're going to push",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:25:02.534465",
+      "type": "stt",
+      "data": {
+        "text": "yeah look back",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:25:06.494261",
+      "type": "stt",
+      "data": {
+        "text": "install the work area",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:25:11.150652",
+      "type": "stt",
+      "data": {
+        "text": "this is going to be interesting",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:25:27.745782",
+      "type": "stt",
+      "data": {
+        "text": "computer control application or",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:25:41.419686",
+      "type": "stt",
+      "data": {
+        "text": "or we need to report back to the",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:05.196020",
+      "type": "stt",
+      "data": {
+        "text": "i'm thinking about running that triple trinity i'm trying to figure out",
+        "chars": 71,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:17.705795",
+      "type": "stt",
+      "data": {
+        "text": "do we have the to do list in place with",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:22.085831",
+      "type": "stt",
+      "data": {
+        "text": "and then personal",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:27.487940",
+      "type": "stt",
+      "data": {
+        "text": "our personal cockpits what should we do about that do you",
+        "chars": 57,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:31.476194",
+      "type": "stt",
+      "data": {
+        "text": "i'm off the phone with josh",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:26:49.796786",
+      "type": "stt",
+      "data": {
+        "text": "mathematical",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:27:04.655800",
+      "type": "stt",
+      "data": {
+        "text": "i also need to max out the amount of credits for the week",
+        "chars": 57,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2308,
+    "stt_events": 2323,
     "commands_processed": 37,
     "errors": 370,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 77672,
+    "total_chars_heard": 78143,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T21:22:50.078047"
+  "last_updated": "2025-11-18T21:27:04.655817"
 }

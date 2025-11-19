@@ -1,0 +1,357 @@
+{
+  "knowledge_atoms": [
+    {
+      "timestamp": "2025-11-18T13:50:50.431114",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\THREE_STEP_SEARCH_PROTOCOL.md",
+      "category": "deployment_docs",
+      "filename": "THREE_STEP_SEARCH_PROTOCOL.md",
+      "size": 5526
+    },
+    {
+      "timestamp": "2025-11-18T13:51:29.609366",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ACCOUNT_CREATION_AUTOMATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "ACCOUNT_CREATION_AUTOMATION_GUIDE.md",
+      "size": 10996
+    },
+    {
+      "timestamp": "2025-11-18T13:51:03.192737",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\AI_COMMUNICATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "AI_COMMUNICATION_GUIDE.md",
+      "size": 8512
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.137761",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\API_QUICK_START_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "API_QUICK_START_GUIDE.md",
+      "size": 5855
+    },
+    {
+      "timestamp": "2025-11-18T13:51:29.619484",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ARAYA_EXECUTION_INTEGRATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "ARAYA_EXECUTION_INTEGRATION_GUIDE.md",
+      "size": 4420
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.799436",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ARIA_3D_AVATAR_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "ARIA_3D_AVATAR_GUIDE.md",
+      "size": 10399
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.802434",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ARIA_TOUR_GUIDE_README.md",
+      "category": "deployment_docs",
+      "filename": "ARIA_TOUR_GUIDE_README.md",
+      "size": 9923
+    },
+    {
+      "timestamp": "2025-11-18T13:50:59.512279",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\AUTHENTICATION_GATE_SYSTEM_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "AUTHENTICATION_GATE_SYSTEM_GUIDE.md",
+      "size": 10635
+    },
+    {
+      "timestamp": "2025-11-18T13:51:08.695497",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\BUG_REPORTER_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "BUG_REPORTER_COMPLETE_GUIDE.md",
+      "size": 3237
+    },
+    {
+      "timestamp": "2025-11-16T15:23:15.657871",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\C1_IMPLEMENTATION_GUIDE_FROM_C2.md",
+      "category": "deployment_docs",
+      "filename": "C1_IMPLEMENTATION_GUIDE_FROM_C2.md",
+      "size": 23611
+    },
+    {
+      "timestamp": "2025-11-18T08:42:14.457734",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\C1_IMPLEMENTATION_GUIDE_REALITY_ENGINE.md",
+      "category": "deployment_docs",
+      "filename": "C1_IMPLEMENTATION_GUIDE_REALITY_ENGINE.md",
+      "size": 14479
+    },
+    {
+      "timestamp": "2025-11-18T13:51:40.282386",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\COINBASE_MONEY_EXTRACTION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "COINBASE_MONEY_EXTRACTION_GUIDE.md",
+      "size": 10011
+    },
+    {
+      "timestamp": "2025-11-18T13:50:50.364233",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\COMPLETE_DEPLOYMENT_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "COMPLETE_DEPLOYMENT_GUIDE.md",
+      "size": 11132
+    },
+    {
+      "timestamp": "2025-11-15T10:57:45.504128",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\CYCLOTRON_CLOUD_NATIVE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "CYCLOTRON_CLOUD_NATIVE_GUIDE.md",
+      "size": 8111
+    },
+    {
+      "timestamp": "2025-11-15T11:03:56.086720",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\CYCLOTRON_TRULY_AUTOMATIC_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "CYCLOTRON_TRULY_AUTOMATIC_GUIDE.md",
+      "size": 9568
+    },
+    {
+      "timestamp": "2025-11-18T13:50:59.517831",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\DATA_MIGRATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "DATA_MIGRATION_GUIDE.md",
+      "size": 6621
+    },
+    {
+      "timestamp": "2025-11-18T13:51:05.505081",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\DEPLOYMENT_MASTER_GUIDE_THE_BOOK.md",
+      "category": "deployment_docs",
+      "filename": "DEPLOYMENT_MASTER_GUIDE_THE_BOOK.md",
+      "size": 21831
+    },
+    {
+      "timestamp": "2025-11-18T13:50:51.104998",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\EMAIL_AUTOMATION_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "EMAIL_AUTOMATION_SETUP_GUIDE.md",
+      "size": 7257
+    },
+    {
+      "timestamp": "2025-11-18T13:50:50.389499",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\EMAIL_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "EMAIL_SETUP_GUIDE.md",
+      "size": 3202
+    },
+    {
+      "timestamp": "2025-11-18T13:51:06.990216",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\EMAIL_TRACKING_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "EMAIL_TRACKING_GUIDE.md",
+      "size": 3827
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.868718",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\FUN_FEATURES_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "FUN_FEATURES_COMPLETE_GUIDE.md",
+      "size": 12623
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.870718",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\GIT_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "GIT_SETUP_GUIDE.md",
+      "size": 15235
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.145781",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\HARMONIC_SECURITY_DEPLOYMENT_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "HARMONIC_SECURITY_DEPLOYMENT_GUIDE.md",
+      "size": 13815
+    },
+    {
+      "timestamp": "2025-11-18T13:50:59.518834",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\HUD_EMBED_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "HUD_EMBED_GUIDE.md",
+      "size": 2593
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.147285",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\INSTAGRAM_BOT_ARMY_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "INSTAGRAM_BOT_ARMY_GUIDE.md",
+      "size": 9449
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.874809",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\INTELLIGENT_TERMINAL_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "INTELLIGENT_TERMINAL_GUIDE.md",
+      "size": 7001
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.148291",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\LATE_API_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "LATE_API_SETUP_GUIDE.md",
+      "size": 9690
+    },
+    {
+      "timestamp": "2025-11-18T13:51:07.525460",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\MANIFESTATION_SYSTEM_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "MANIFESTATION_SYSTEM_GUIDE.md",
+      "size": 10469
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.883333",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\META_LAYER_INTEGRATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "META_LAYER_INTEGRATION_GUIDE.md",
+      "size": 11898
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.888417",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\OBSERVATORY_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "OBSERVATORY_GUIDE.md",
+      "size": 2803
+    },
+    {
+      "timestamp": "2025-11-18T13:51:07.530492",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ONBOARDING_DEPLOYMENT_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "ONBOARDING_DEPLOYMENT_GUIDE.md",
+      "size": 11298
+    },
+    {
+      "timestamp": "2025-11-18T13:51:08.824534",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\QUICK_START_INVESTOR_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "QUICK_START_INVESTOR_GUIDE.md",
+      "size": 7307
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.230332",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\RAILWAY_DEPLOYMENT_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "RAILWAY_DEPLOYMENT_GUIDE.md",
+      "size": 233
+    },
+    {
+      "timestamp": "2025-11-18T13:50:52.691913",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ROLLING_STUDIO_INTEGRATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "ROLLING_STUDIO_INTEGRATION_GUIDE.md",
+      "size": 11672
+    },
+    {
+      "timestamp": "2025-11-18T13:51:16.183356",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\STRIPE_INTEGRATION_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "STRIPE_INTEGRATION_GUIDE.md",
+      "size": 12103
+    },
+    {
+      "timestamp": "2025-11-18T13:51:40.488950",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\STRIPE_SETUP_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "STRIPE_SETUP_COMPLETE_GUIDE.md",
+      "size": 8192
+    },
+    {
+      "timestamp": "2025-11-18T13:51:40.489950",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\STRIPE_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "STRIPE_SETUP_GUIDE.md",
+      "size": 3425
+    },
+    {
+      "timestamp": "2025-11-16T14:25:50.202981",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\TRIPLE_TRINITY_DEPLOYMENT_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "TRIPLE_TRINITY_DEPLOYMENT_GUIDE.md",
+      "size": 12077
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.233878",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\TWITTER_SETUP_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "TWITTER_SETUP_COMPLETE_GUIDE.md",
+      "size": 7567
+    },
+    {
+      "timestamp": "2025-11-18T13:51:06.675318",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\UNIFIED_ANALYTICS_SETUP_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "UNIFIED_ANALYTICS_SETUP_GUIDE.md",
+      "size": 8195
+    },
+    {
+      "timestamp": "2025-11-18T13:50:59.179077",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\VOICE_SYSTEM_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "VOICE_SYSTEM_COMPLETE_GUIDE.md",
+      "size": 9751
+    },
+    {
+      "timestamp": "2025-11-18T13:50:56.233878",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\YOUTUBE_SETUP_COMPLETE_GUIDE.md",
+      "category": "deployment_docs",
+      "filename": "YOUTUBE_SETUP_COMPLETE_GUIDE.md",
+      "size": 7257
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.802434",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\ARIA_TOUR_GUIDE_README.md",
+      "category": "deployment_docs",
+      "filename": "ARIA_TOUR_GUIDE_README.md",
+      "size": 9923
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.813266",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\BUSINESS_PHASE_CLOCK_README.md",
+      "category": "deployment_docs",
+      "filename": "BUSINESS_PHASE_CLOCK_README.md",
+      "size": 7588
+    },
+    {
+      "timestamp": "2025-11-16T15:20:07.738039",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\EMERGENCY_CHAOS_FIXED_README.md",
+      "category": "deployment_docs",
+      "filename": "EMERGENCY_CHAOS_FIXED_README.md",
+      "size": 13931
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.873717",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\INSIDE_THE_MACHINE_README.md",
+      "category": "deployment_docs",
+      "filename": "INSIDE_THE_MACHINE_README.md",
+      "size": 7472
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.890922",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\OPEN_SOURCE_README.md",
+      "category": "deployment_docs",
+      "filename": "OPEN_SOURCE_README.md",
+      "size": 14568
+    },
+    {
+      "timestamp": "2025-11-18T13:50:54.896453",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\PHASE_BADGE_SYSTEM_README.md",
+      "category": "deployment_docs",
+      "filename": "PHASE_BADGE_SYSTEM_README.md",
+      "size": 5266
+    },
+    {
+      "timestamp": "2025-11-18T13:50:50.418568",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\README.md",
+      "category": "deployment_docs",
+      "filename": "README.md",
+      "size": 4441
+    },
+    {
+      "timestamp": "2025-11-18T13:50:59.050450",
+      "file": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\VOICE_MODULE_README.md",
+      "category": "deployment_docs",
+      "filename": "VOICE_MODULE_README.md",
+      "size": 7737
+    }
+  ],
+  "total_atoms": 328,
+  "created": "2025-11-18",
+  "purpose": "Catch up new builder Claude instances with existing knowledge"
+}
