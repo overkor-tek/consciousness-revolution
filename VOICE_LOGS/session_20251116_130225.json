@@ -30855,16 +30855,148 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T05:52:04.339713",
+      "type": "stt",
+      "data": {
+        "text": "a triple trinity",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:53:22.270931",
+      "type": "stt",
+      "data": {
+        "text": "jedi",
+        "chars": 4,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:53:27.328277",
+      "type": "stt",
+      "data": {
+        "text": "so i'm following",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:54:18.567217",
+      "type": "stt",
+      "data": {
+        "text": "they project everything they're doing like literally",
+        "chars": 52,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:54:30.845915",
+      "type": "stt",
+      "data": {
+        "text": "these destroyers",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:54:37.517216",
+      "type": "stt",
+      "data": {
+        "text": "they're only job is",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:54:56.584088",
+      "type": "stt",
+      "data": {
+        "text": "pause are going to spring up all over the world",
+        "chars": 47,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:55:10.125494",
+      "type": "stt",
+      "data": {
+        "text": "steal all of your personal data",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:55:59.044347",
+      "type": "stt",
+      "data": {
+        "text": "destroyers use",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:56:05.968993",
+      "type": "stt",
+      "data": {
+        "text": "builders use action and truth to render reality",
+        "chars": 47,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:56:10.020886",
+      "type": "stt",
+      "data": {
+        "text": "changes your whole life",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T05:56:17.396671",
+      "type": "stt",
+      "data": {
+        "text": "we're going to go back to this project",
+        "chars": 38,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2353,
+    "stt_events": 2365,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 79193,
+    "total_chars_heard": 79516,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T05:51:44.433017"
+  "last_updated": "2025-11-19T05:56:17.396689"
 }
