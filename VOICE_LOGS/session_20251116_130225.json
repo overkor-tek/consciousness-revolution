@@ -30282,16 +30282,27 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-18T21:31:48.602203",
+      "type": "stt",
+      "data": {
+        "text": "have network cable",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2323,
+    "stt_events": 2324,
     "commands_processed": 37,
     "errors": 370,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 78143,
+    "total_chars_heard": 78161,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T21:27:04.655817"
+  "last_updated": "2025-11-18T21:31:48.602226"
 }
