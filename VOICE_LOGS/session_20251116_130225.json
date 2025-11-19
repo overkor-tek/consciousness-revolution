@@ -30293,16 +30293,103 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:01.018405",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [WinError 10053] An established connection was aborted by the software in your host machine",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:19.263389",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:24.996388",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:31.135341",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:34.190195",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:34:49.123403",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:38:00.219918",
+      "type": "stt",
+      "data": {
+        "text": "let's go ahead and",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:38:06.999892",
+      "type": "stt",
+      "data": {
+        "text": "i would think we should be able to talk",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-18T21:38:16.021048",
+      "type": "stt",
+      "data": {
+        "text": "i think everything",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2324,
+    "stt_events": 2327,
     "commands_processed": 37,
-    "errors": 370,
+    "errors": 376,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 78161,
+    "total_chars_heard": 78236,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-18T21:31:48.602226"
+  "last_updated": "2025-11-18T21:38:16.021064"
 }
