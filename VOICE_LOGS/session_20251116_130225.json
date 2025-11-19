@@ -32812,16 +32812,320 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T09:33:49.292699",
+      "type": "stt",
+      "data": {
+        "text": "i'm just like hovering above neutral in the negative",
+        "chars": 52,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:33:52.193742",
+      "type": "stt",
+      "data": {
+        "text": "i'm sorry",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:33:55.323523",
+      "type": "stt",
+      "data": {
+        "text": "put on being an ass",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:17.068120",
+      "type": "stt",
+      "data": {
+        "text": "tell claude to search the",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:17.091922",
+      "type": "tts",
+      "data": {
+        "text": "Yes Commander?",
+        "chars": 14,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:24.177186",
+      "type": "stt",
+      "data": {
+        "text": "there's all sorts of info on the respiratory branches",
+        "chars": 53,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:24.209845",
+      "type": "command",
+      "data": {
+        "command": "there's all sorts of info on the respiratory branches",
+        "response": "processing",
+        "processing_time": null
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:24.243378",
+      "type": "tts",
+      "data": {
+        "text": "Command received: there's all sorts of info on the respiratory branches. I'm still learning new commands. Try asking about status, deploy, payment, cloud, or cockpit.",
+        "chars": 166,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:32.590447",
+      "type": "stt",
+      "data": {
+        "text": "tell him to find the pattern theory in boo'd up seven domains",
+        "chars": 61,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:34:38.566423",
+      "type": "stt",
+      "data": {
+        "text": "tell him all the tools info and abilities",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:04.422938",
+      "type": "stt",
+      "data": {
+        "text": "get three of them going tell him to all go in there and explore",
+        "chars": 63,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:11.399107",
+      "type": "stt",
+      "data": {
+        "text": "and we're trying to get all the abilities skills and info",
+        "chars": 57,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:35.891618",
+      "type": "stt",
+      "data": {
+        "text": "thank you for understanding",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:40.283433",
+      "type": "stt",
+      "data": {
+        "text": "off my shoulders when this thing fires up",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:44.461136",
+      "type": "stt",
+      "data": {
+        "text": "happening",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:35:57.769130",
+      "type": "stt",
+      "data": {
+        "text": "now if i go to jail you guys keep working",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:36:11.749203",
+      "type": "stt",
+      "data": {
+        "text": "and i sit there in jail sleep and smile",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:36:27.074984",
+      "type": "stt",
+      "data": {
+        "text": "knowing that all of the work",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:36:34.442354",
+      "type": "stt",
+      "data": {
+        "text": "do you know once this thing fires up",
+        "chars": 36,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:36:40.430673",
+      "type": "stt",
+      "data": {
+        "text": "sure how fast it grows daily and it's going to start compounding",
+        "chars": 64,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:36:48.364681",
+      "type": "stt",
+      "data": {
+        "text": "it will compound until it hits an optimized state",
+        "chars": 49,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:37:24.727751",
+      "type": "stt",
+      "data": {
+        "text": "i'm pretty sure there's a part of this level where the federal government makes me disappear for a few days and everybody freaks out",
+        "chars": 132,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:37:28.917095",
+      "type": "stt",
+      "data": {
+        "text": "pattern recognition says it's coming",
+        "chars": 36,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:37:54.033291",
+      "type": "stt",
+      "data": {
+        "text": "if it were a movie",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:38:15.285363",
+      "type": "stt",
+      "data": {
+        "text": "that's what this is we're in a movie like it's showing us the movie while",
+        "chars": 73,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:38:20.232065",
+      "type": "stt",
+      "data": {
+        "text": "but we get choices of different paths to",
+        "chars": 40,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:38:28.419529",
+      "type": "stt",
+      "data": {
+        "text": "so some of this is unavoidable it's",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:38:35.687547",
+      "type": "stt",
+      "data": {
+        "text": "checkpoints that will be hit no matter what you do",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
-    "tts_events": 111,
-    "stt_events": 2523,
-    "commands_processed": 38,
+    "tts_events": 113,
+    "stt_events": 2548,
+    "commands_processed": 39,
     "errors": 399,
-    "total_chars_spoken": 7250,
-    "total_chars_heard": 84232,
+    "total_chars_spoken": 7430,
+    "total_chars_heard": 85330,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T09:33:32.082986"
+  "last_updated": "2025-11-19T09:38:35.687563"
 }
