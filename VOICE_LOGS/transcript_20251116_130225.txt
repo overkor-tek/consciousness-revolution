@@ -560,3 +560,27 @@
 
 [2025-11-19 09:22:35] [COMMANDER] can you pull up joshua
 
+[2025-11-19 09:25:04] [COMMANDER] did you get an invitation to the over core tek consciousness revolution resp
+
+[2025-11-19 09:25:43] [COMMANDER] tell claude
+
+[2025-11-19 09:25:43] [CLAUDE] Yes Commander?
+
+[2025-11-19 09:25:47] [CLAUDE] I didn't hear a command. Try again.
+
+[2025-11-19 09:25:53] [COMMANDER] rtk
+
+[2025-11-19 09:25:57] [COMMANDER] and you don't know how
+
+[2025-11-19 09:26:31] [COMMANDER] i've been added to github as an ad
+
+[2025-11-19 09:26:39] [COMMANDER] on github
+
+[2025-11-19 09:26:46] [COMMANDER] we need to get in there and start editing
+
+[2025-11-19 09:26:50] [COMMANDER] how do we do that
+
+[2025-11-19 09:26:53] [COMMANDER] is a screenshot
+
+[2025-11-19 09:27:02] [COMMANDER] you can copy that and put that in there or just say it to him
+

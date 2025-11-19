@@ -32578,16 +32578,155 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:04.208988",
+      "type": "stt",
+      "data": {
+        "text": "did you get an invitation to the over core tek consciousness revolution resp",
+        "chars": 76,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:43.217349",
+      "type": "stt",
+      "data": {
+        "text": "tell claude",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:43.253387",
+      "type": "tts",
+      "data": {
+        "text": "Yes Commander?",
+        "chars": 14,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:47.269957",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "Could not understand speech",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:47.295024",
+      "type": "tts",
+      "data": {
+        "text": "I didn't hear a command. Try again.",
+        "chars": 35,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:53.813809",
+      "type": "stt",
+      "data": {
+        "text": "rtk",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:25:57.885169",
+      "type": "stt",
+      "data": {
+        "text": "and you don't know how",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:26:31.560001",
+      "type": "stt",
+      "data": {
+        "text": "i've been added to github as an ad",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:26:39.428710",
+      "type": "stt",
+      "data": {
+        "text": "on github",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:26:46.699849",
+      "type": "stt",
+      "data": {
+        "text": "we need to get in there and start editing",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:26:50.536113",
+      "type": "stt",
+      "data": {
+        "text": "how do we do that",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:26:53.565243",
+      "type": "stt",
+      "data": {
+        "text": "is a screenshot",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T09:27:02.181842",
+      "type": "stt",
+      "data": {
+        "text": "you can copy that and put that in there or just say it to him",
+        "chars": 61,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
-    "tts_events": 107,
-    "stt_events": 2507,
+    "tts_events": 109,
+    "stt_events": 2517,
     "commands_processed": 37,
-    "errors": 398,
-    "total_chars_spoken": 7053,
-    "total_chars_heard": 83704,
+    "errors": 399,
+    "total_chars_spoken": 7102,
+    "total_chars_heard": 83993,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T09:22:35.261897"
+  "last_updated": "2025-11-19T09:27:02.181857"
 }
