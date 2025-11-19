@@ -31207,16 +31207,93 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T06:03:02.351083",
+      "type": "stt",
+      "data": {
+        "text": "so we're all going to work",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:03:39.878688",
+      "type": "stt",
+      "data": {
+        "text": "most people don't even know what character",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:03:46.016393",
+      "type": "stt",
+      "data": {
+        "text": "ethics",
+        "chars": 6,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:04:01.038585",
+      "type": "stt",
+      "data": {
+        "text": "can we get our habitat around",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:04:07.733400",
+      "type": "stt",
+      "data": {
+        "text": "change the fucking numbers change the locks",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:06:36.897183",
+      "type": "stt",
+      "data": {
+        "text": "how do we measure progress",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T06:07:03.718234",
+      "type": "stt",
+      "data": {
+        "text": "i have",
+        "chars": 6,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 105,
-    "stt_events": 2385,
+    "stt_events": 2392,
     "commands_processed": 37,
     "errors": 397,
     "total_chars_spoken": 7004,
-    "total_chars_heard": 80149,
+    "total_chars_heard": 80327,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T06:02:00.339929"
+  "last_updated": "2025-11-19T06:07:03.718248"
 }
