@@ -45108,16 +45108,126 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T23:42:59.707199",
+      "type": "stt",
+      "data": {
+        "text": "for all the tradesmen who have been",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:43:09.153909",
+      "type": "stt",
+      "data": {
+        "text": "where was crushed by washington",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:43:16.716932",
+      "type": "stt",
+      "data": {
+        "text": "corruption",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:43:27.515782",
+      "type": "stt",
+      "data": {
+        "text": "i give you permission",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:44:12.273580",
+      "type": "stt",
+      "data": {
+        "text": "i got a wrestler the third one",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:44:20.885488",
+      "type": "stt",
+      "data": {
+        "text": "i just have to go pay for it",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:46:40.030741",
+      "type": "stt",
+      "data": {
+        "text": "how big is",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:47:18.597006",
+      "type": "stt",
+      "data": {
+        "text": "free parameters what was that thing saying",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:47:28.071088",
+      "type": "stt",
+      "data": {
+        "text": "did you download a cloud version",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:47:40.075192",
+      "type": "stt",
+      "data": {
+        "text": "model quantization",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 123,
-    "stt_events": 3625,
+    "stt_events": 3635,
     "commands_processed": 39,
     "errors": 404,
     "total_chars_spoken": 7675,
-    "total_chars_heard": 116013,
+    "total_chars_heard": 116270,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T23:42:43.712932"
+  "last_updated": "2025-11-19T23:47:40.075211"
 }
