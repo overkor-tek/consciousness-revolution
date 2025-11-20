@@ -44932,16 +44932,192 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T23:37:46.621032",
+      "type": "stt",
+      "data": {
+        "text": "i'm downloading offline",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:37:50.290623",
+      "type": "stt",
+      "data": {
+        "text": "o l",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:37:56.826442",
+      "type": "stt",
+      "data": {
+        "text": "dot-com call the arbonne",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:38:45.282788",
+      "type": "stt",
+      "data": {
+        "text": "search r1 from",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:24.561984",
+      "type": "stt",
+      "data": {
+        "text": "no",
+        "chars": 2,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:31.655786",
+      "type": "stt",
+      "data": {
+        "text": "get some of the",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:36.990575",
+      "type": "stt",
+      "data": {
+        "text": "phone numbers and words covered up",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:40.222418",
+      "type": "stt",
+      "data": {
+        "text": "painting colors",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:44.420845",
+      "type": "stt",
+      "data": {
+        "text": "washington state",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:40:54.456582",
+      "type": "stt",
+      "data": {
+        "text": "just remember purple paint",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:41:42.318249",
+      "type": "stt",
+      "data": {
+        "text": "we can pull up three vans deep to the nicest neighborhood",
+        "chars": 57,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:41:49.076954",
+      "type": "stt",
+      "data": {
+        "text": "can walk in anywhere with",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:42:17.886546",
+      "type": "stt",
+      "data": {
+        "text": "i'm going to simplify cover the letters with black",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:42:22.643344",
+      "type": "stt",
+      "data": {
+        "text": "purple painting will get",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:42:39.722639",
+      "type": "stt",
+      "data": {
+        "text": "seek justice",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T23:42:43.712920",
+      "type": "stt",
+      "data": {
+        "text": "side by side",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 123,
-    "stt_events": 3609,
+    "stt_events": 3625,
     "commands_processed": 39,
     "errors": 404,
     "total_chars_spoken": 7675,
-    "total_chars_heard": 115661,
+    "total_chars_heard": 116013,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T23:37:36.722409"
+  "last_updated": "2025-11-19T23:42:43.712932"
 }
