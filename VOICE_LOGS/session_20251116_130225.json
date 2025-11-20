@@ -35638,16 +35638,247 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T20:16:07.023537",
+      "type": "stt",
+      "data": {
+        "text": "do you know anything about that",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:16:24.123135",
+      "type": "stt",
+      "data": {
+        "text": "yeah go ahead and open up that page in the browser",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:17:16.683467",
+      "type": "stt",
+      "data": {
+        "text": "we got to figure out",
+        "chars": 20,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:17:34.389759",
+      "type": "stt",
+      "data": {
+        "text": "any desk it's it's saying we should download any desk",
+        "chars": 53,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:17:42.597909",
+      "type": "stt",
+      "data": {
+        "text": "what what we got to think about is",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:17:50.269947",
+      "type": "stt",
+      "data": {
+        "text": "open up a bunch of different computers and we're going to get them all to be able to talk",
+        "chars": 89,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:02.078160",
+      "type": "stt",
+      "data": {
+        "text": "download both of them",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:06.331727",
+      "type": "stt",
+      "data": {
+        "text": "is there any",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:41.254564",
+      "type": "stt",
+      "data": {
+        "text": "let's go to syncing net backslash down oh you already did that right now",
+        "chars": 72,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:44.354200",
+      "type": "stt",
+      "data": {
+        "text": "syncing",
+        "chars": 7,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:51.878513",
+      "type": "stt",
+      "data": {
+        "text": "i just want to make sure i don't understand",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:18:58.918634",
+      "type": "stt",
+      "data": {
+        "text": "play a lightweight yet full-featured windows install",
+        "chars": 52,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:19:06.901113",
+      "type": "stt",
+      "data": {
+        "text": "sink tracer v2 windows utility tray file system watcher",
+        "chars": 55,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:19:13.222528",
+      "type": "stt",
+      "data": {
+        "text": "we need to switch over to lennox",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:19:24.241198",
+      "type": "stt",
+      "data": {
+        "text": "sing sing v2",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:19:36.738696",
+      "type": "stt",
+      "data": {
+        "text": "do you want to you want to go to that front window",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:19:49.192733",
+      "type": "stt",
+      "data": {
+        "text": "do you want me to type it in real quick",
+        "chars": 39,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:20:31.501219",
+      "type": "stt",
+      "data": {
+        "text": "text scroll down",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:20:45.627288",
+      "type": "stt",
+      "data": {
+        "text": "okay so that's",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:20:56.557607",
+      "type": "stt",
+      "data": {
+        "text": "can you find the url for any desk",
+        "chars": 33,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:21:01.052134",
+      "type": "stt",
+      "data": {
+        "text": "download",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 117,
-    "stt_events": 2772,
+    "stt_events": 2793,
     "commands_processed": 39,
     "errors": 401,
     "total_chars_spoken": 7528,
-    "total_chars_heard": 91973,
+    "total_chars_heard": 92716,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T20:15:56.200538"
+  "last_updated": "2025-11-19T20:21:01.052151"
 }
