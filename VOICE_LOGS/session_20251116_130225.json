@@ -39759,16 +39759,280 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T21:41:55.804728",
+      "type": "stt",
+      "data": {
+        "text": "communicate",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:00.236478",
+      "type": "stt",
+      "data": {
+        "text": "ask and window",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:04.034865",
+      "type": "stt",
+      "data": {
+        "text": "figure out how to use",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:09.394819",
+      "type": "stt",
+      "data": {
+        "text": "we got to figure out how to",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:13.853876",
+      "type": "stt",
+      "data": {
+        "text": "computer back and forth",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:24.194749",
+      "type": "stt",
+      "data": {
+        "text": "capabilities",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:42:41.640115",
+      "type": "stt",
+      "data": {
+        "text": "play was a",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:43:24.024811",
+      "type": "stt",
+      "data": {
+        "text": "everything from chat gpt from cla",
+        "chars": 33,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:43:28.126923",
+      "type": "stt",
+      "data": {
+        "text": "how much info on both of those",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:43:48.510653",
+      "type": "stt",
+      "data": {
+        "text": "any evidence that the cyclotron is working but let's work on this as much as possible",
+        "chars": 85,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:44:37.755006",
+      "type": "stt",
+      "data": {
+        "text": "did you check the",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:44:58.411193",
+      "type": "stt",
+      "data": {
+        "text": "it doesn't interrupted",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:06.384099",
+      "type": "stt",
+      "data": {
+        "text": "do you know how to do the back",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:15.357117",
+      "type": "stt",
+      "data": {
+        "text": "we got to make sure that we have boot up protocols for pattern theory",
+        "chars": 69,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:18.701226",
+      "type": "stt",
+      "data": {
+        "text": "trinity protocol",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:25.001362",
+      "type": "stt",
+      "data": {
+        "text": "an agent spawning in parallel c1 c2 c3",
+        "chars": 38,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:28.973004",
+      "type": "stt",
+      "data": {
+        "text": "message asking for the protocols",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:45:36.471461",
+      "type": "stt",
+      "data": {
+        "text": "dimensional cascade any other basic commands and process",
+        "chars": 56,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:11.375627",
+      "type": "stt",
+      "data": {
+        "text": "how to figure out how to do that maybe we can extract to do's out of it",
+        "chars": 71,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:16.616160",
+      "type": "stt",
+      "data": {
+        "text": "how are we going to break that",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:21.844942",
+      "type": "stt",
+      "data": {
+        "text": "do we need to run like a 13 phase audit on",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:27.035170",
+      "type": "stt",
+      "data": {
+        "text": "installed all the analytics we",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:31.425828",
+      "type": "stt",
+      "data": {
+        "text": "don't lose the track anything",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:34.044801",
+      "type": "stt",
+      "data": {
+        "text": "what is too",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 119,
-    "stt_events": 3144,
+    "stt_events": 3168,
     "commands_processed": 39,
     "errors": 402,
     "total_chars_spoken": 7577,
-    "total_chars_heard": 102221,
+    "total_chars_heard": 102980,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T21:41:42.395693"
+  "last_updated": "2025-11-19T21:46:34.044819"
 }
