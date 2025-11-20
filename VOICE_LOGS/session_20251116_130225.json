@@ -37343,16 +37343,430 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T20:56:26.573631",
+      "type": "stt",
+      "data": {
+        "text": "oh except the folder share",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:56:31.184351",
+      "type": "stt",
+      "data": {
+        "text": "on the computer",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:56:58.871717",
+      "type": "stt",
+      "data": {
+        "text": "computers on the same wi-fi on each other automatically",
+        "chars": 55,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:04.905991",
+      "type": "stt",
+      "data": {
+        "text": "the world can connect via relay",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:09.588374",
+      "type": "stt",
+      "data": {
+        "text": "firewalls hours automatically",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:12.507640",
+      "type": "stt",
+      "data": {
+        "text": "add travers",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:17.452747",
+      "type": "stt",
+      "data": {
+        "text": "gnat like",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:23.169859",
+      "type": "stt",
+      "data": {
+        "text": "we need to connect anyway pos",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:37.524201",
+      "type": "stt",
+      "data": {
+        "text": "click on edit folder defaults down there",
+        "chars": 40,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:42.478414",
+      "type": "stt",
+      "data": {
+        "text": "i think you got to click mine",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:57:54.536136",
+      "type": "stt",
+      "data": {
+        "text": "how do you get a pop",
+        "chars": 20,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:58:07.062272",
+      "type": "stt",
+      "data": {
+        "text": "information",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:58:12.632222",
+      "type": "stt",
+      "data": {
+        "text": "not forget to save this in the boot up protocols",
+        "chars": 48,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:58:20.132437",
+      "type": "stt",
+      "data": {
+        "text": "i'm going to figure out how to share okay if we're working",
+        "chars": 58,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:58:24.462654",
+      "type": "stt",
+      "data": {
+        "text": "how do we",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:58:36.773323",
+      "type": "stt",
+      "data": {
+        "text": "the same",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:17.150894",
+      "type": "stt",
+      "data": {
+        "text": "are you folder",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:20.436963",
+      "type": "stt",
+      "data": {
+        "text": "sink thing",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:27.949241",
+      "type": "stt",
+      "data": {
+        "text": "i think it's labeled test from commander dot txt",
+        "chars": 48,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:27.987214",
+      "type": "tts",
+      "data": {
+        "text": "Yes Commander?",
+        "chars": 14,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:30.662383",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "Could not understand speech",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:30.692292",
+      "type": "tts",
+      "data": {
+        "text": "I didn't hear a command. Try again.",
+        "chars": 35,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:35.115050",
+      "type": "stt",
+      "data": {
+        "text": "or d wrek",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:49.525431",
+      "type": "stt",
+      "data": {
+        "text": "repository get clone",
+        "chars": 20,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:59:57.015403",
+      "type": "stt",
+      "data": {
+        "text": "sterek future",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:01.926373",
+      "type": "stt",
+      "data": {
+        "text": "commit your change to get commit",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:05.255536",
+      "type": "stt",
+      "data": {
+        "text": "push to get",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:11.471696",
+      "type": "stt",
+      "data": {
+        "text": "exactly what i said",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:16.325471",
+      "type": "stt",
+      "data": {
+        "text": "play fucking bullshit dude",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:18.960289",
+      "type": "stt",
+      "data": {
+        "text": "where is it",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:28.966393",
+      "type": "stt",
+      "data": {
+        "text": "okay see if you see a response",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:33.775137",
+      "type": "stt",
+      "data": {
+        "text": "start looking up the system and see if we can use it any",
+        "chars": 56,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:41.435100",
+      "type": "stt",
+      "data": {
+        "text": "what are all the things these things can do together is there any cl",
+        "chars": 68,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:47.395421",
+      "type": "stt",
+      "data": {
+        "text": "are apis that we can use what are the abilities cap",
+        "chars": 51,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:00:58.940869",
+      "type": "stt",
+      "data": {
+        "text": "sinks ass",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:04.286037",
+      "type": "stt",
+      "data": {
+        "text": "of truth",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:15.023826",
+      "type": "stt",
+      "data": {
+        "text": "commit your change to",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:27.250212",
+      "type": "stt",
+      "data": {
+        "text": "like we're all working on boom boom boom boom and",
+        "chars": 49,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
-    "tts_events": 117,
-    "stt_events": 2927,
+    "tts_events": 119,
+    "stt_events": 2962,
     "commands_processed": 39,
-    "errors": 401,
-    "total_chars_spoken": 7528,
-    "total_chars_heard": 96083,
+    "errors": 402,
+    "total_chars_spoken": 7577,
+    "total_chars_heard": 97016,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T20:56:14.183338"
+  "last_updated": "2025-11-19T21:01:27.250232"
 }
