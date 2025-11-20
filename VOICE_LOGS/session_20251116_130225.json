@@ -37757,16 +37757,346 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:31.128195",
+      "type": "stt",
+      "data": {
+        "text": "and then another note",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:36.540444",
+      "type": "stt",
+      "data": {
+        "text": "write that note is not there",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:40.456417",
+      "type": "stt",
+      "data": {
+        "text": "automatically right there",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:48.314965",
+      "type": "stt",
+      "data": {
+        "text": "for real",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:01:54.074520",
+      "type": "stt",
+      "data": {
+        "text": "things on so that's when it goes live",
+        "chars": 37,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:02:13.900312",
+      "type": "stt",
+      "data": {
+        "text": "are you trying to understand how it works",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:02:18.789032",
+      "type": "stt",
+      "data": {
+        "text": "21 origin and then you push it live",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:02:25.532850",
+      "type": "stt",
+      "data": {
+        "text": "i was using railway",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:02:57.242811",
+      "type": "stt",
+      "data": {
+        "text": "exit live in is live on that a",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:00.536955",
+      "type": "stt",
+      "data": {
+        "text": "what's hosting your website",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:07.765445",
+      "type": "stt",
+      "data": {
+        "text": "what is this",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:11.687182",
+      "type": "stt",
+      "data": {
+        "text": "play playlist project",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:17.995165",
+      "type": "stt",
+      "data": {
+        "text": "okay let's",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:24.242004",
+      "type": "stt",
+      "data": {
+        "text": "is it time to",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:28.459276",
+      "type": "stt",
+      "data": {
+        "text": "advanced capabilities",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:37.205536",
+      "type": "stt",
+      "data": {
+        "text": "what is netify",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:46.591320",
+      "type": "stt",
+      "data": {
+        "text": "nutella fly whatever the fuck you say",
+        "chars": 37,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:03:59.084228",
+      "type": "stt",
+      "data": {
+        "text": "password on odin's computer",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:07.087536",
+      "type": "stt",
+      "data": {
+        "text": "combined",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:15.753667",
+      "type": "stt",
+      "data": {
+        "text": "okay now what's going on",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:21.291712",
+      "type": "stt",
+      "data": {
+        "text": "directions to",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:40.293822",
+      "type": "stt",
+      "data": {
+        "text": "look i'm looking up advanced",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:47.218053",
+      "type": "stt",
+      "data": {
+        "text": "hawaii pipeline build code locally sinks to obd machine",
+        "chars": 55,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:04:58.776103",
+      "type": "stt",
+      "data": {
+        "text": "want me to build the python script to automate syn",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:05:03.791609",
+      "type": "stt",
+      "data": {
+        "text": "we need to maximize",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:05:07.185187",
+      "type": "stt",
+      "data": {
+        "text": "capabilities",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:05:14.455260",
+      "type": "stt",
+      "data": {
+        "text": "we need two-way communication like a telephone with data",
+        "chars": 56,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:05:19.356301",
+      "type": "stt",
+      "data": {
+        "text": "okay i'm going to go get the",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:05:23.835679",
+      "type": "stt",
+      "data": {
+        "text": "i think i actually already",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:06:01.250560",
+      "type": "stt",
+      "data": {
+        "text": "go and take a screenshot and look for yourself",
+        "chars": 46,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 119,
-    "stt_events": 2962,
+    "stt_events": 2992,
     "commands_processed": 39,
     "errors": 402,
     "total_chars_spoken": 7577,
-    "total_chars_heard": 97016,
+    "total_chars_heard": 97807,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T21:01:27.250232"
+  "last_updated": "2025-11-19T21:06:01.250572"
 }
