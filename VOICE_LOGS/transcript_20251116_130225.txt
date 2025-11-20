@@ -3028,3 +3028,51 @@
 
 [2025-11-20 00:12:36] [COMMANDER] to be working together
 
+[2025-11-20 00:13:00] [COMMANDER] sims and things that are highly reg
+
+[2025-11-20 00:13:40] [COMMANDER] what is that that sounds great
+
+[2025-11-20 00:13:52] [COMMANDER] say hi to the commander for me
+
+[2025-11-20 00:13:52] [CLAUDE] Yes Commander?
+
+[2025-11-20 00:13:57] [COMMANDER] turn the heads terminal
+
+[2025-11-20 00:13:57] [CLAUDE] Command received: turn the heads terminal. I'm still learning new commands. Try asking about status, deploy, payment, cloud, or cockpit.
+
+[2025-11-20 00:14:16] [COMMANDER] global terminal know it's a whole processor
+
+[2025-11-20 00:14:30] [COMMANDER] it's made by
+
+[2025-11-20 00:14:35] [COMMANDER] yeah so it's like hooks up to a donut
+
+[2025-11-20 00:14:54] [COMMANDER] who's that dude
+
+[2025-11-20 00:15:06] [COMMANDER] into
+
+[2025-11-20 00:15:16] [COMMANDER] hdmi but the
+
+[2025-11-20 00:15:24] [COMMANDER] is that bitcoin
+
+[2025-11-20 00:15:34] [COMMANDER] this is extremely exciting
+
+[2025-11-20 00:15:41] [COMMANDER] they're playing with quantum computing
+
+[2025-11-20 00:15:44] [COMMANDER] play boot up protocols
+
+[2025-11-20 00:16:34] [COMMANDER] what's up quantum computing sandbox i think
+
+[2025-11-20 00:17:09] [COMMANDER] so yeah let's make this a quantum computer
+
+[2025-11-20 00:17:12] [COMMANDER] yesterday
+
+[2025-11-20 00:17:20] [COMMANDER] it said that we're going to be able to break cryptography
+
+[2025-11-20 00:17:30] [COMMANDER] cryptography has been around for a long time but
+
+[2025-11-20 00:17:42] [COMMANDER] just like cryptologist
+
+[2025-11-20 00:17:49] [COMMANDER] spies
+
+[2025-11-20 00:17:56] [COMMANDER] galaxy express outside
+

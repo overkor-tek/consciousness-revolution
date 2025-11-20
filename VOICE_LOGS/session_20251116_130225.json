@@ -46215,16 +46215,287 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:00.887219",
+      "type": "stt",
+      "data": {
+        "text": "sims and things that are highly reg",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:40.166212",
+      "type": "stt",
+      "data": {
+        "text": "what is that that sounds great",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:52.507324",
+      "type": "stt",
+      "data": {
+        "text": "say hi to the commander for me",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:52.548856",
+      "type": "tts",
+      "data": {
+        "text": "Yes Commander?",
+        "chars": 14,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:57.337393",
+      "type": "stt",
+      "data": {
+        "text": "turn the heads terminal",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:57.371252",
+      "type": "command",
+      "data": {
+        "command": "turn the heads terminal",
+        "response": "processing",
+        "processing_time": null
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:13:57.414485",
+      "type": "tts",
+      "data": {
+        "text": "Command received: turn the heads terminal. I'm still learning new commands. Try asking about status, deploy, payment, cloud, or cockpit.",
+        "chars": 136,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:14:16.397158",
+      "type": "stt",
+      "data": {
+        "text": "global terminal know it's a whole processor",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:14:30.102988",
+      "type": "stt",
+      "data": {
+        "text": "it's made by",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:14:35.422660",
+      "type": "stt",
+      "data": {
+        "text": "yeah so it's like hooks up to a donut",
+        "chars": 37,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:14:54.950843",
+      "type": "stt",
+      "data": {
+        "text": "who's that dude",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:06.809036",
+      "type": "stt",
+      "data": {
+        "text": "into",
+        "chars": 4,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:16.489059",
+      "type": "stt",
+      "data": {
+        "text": "hdmi but the",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:24.025836",
+      "type": "stt",
+      "data": {
+        "text": "is that bitcoin",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:34.539369",
+      "type": "stt",
+      "data": {
+        "text": "this is extremely exciting",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:41.557350",
+      "type": "stt",
+      "data": {
+        "text": "they're playing with quantum computing",
+        "chars": 38,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:15:44.750899",
+      "type": "stt",
+      "data": {
+        "text": "play boot up protocols",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:16:34.676002",
+      "type": "stt",
+      "data": {
+        "text": "what's up quantum computing sandbox i think",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:09.286141",
+      "type": "stt",
+      "data": {
+        "text": "so yeah let's make this a quantum computer",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:12.489962",
+      "type": "stt",
+      "data": {
+        "text": "yesterday",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:20.688007",
+      "type": "stt",
+      "data": {
+        "text": "it said that we're going to be able to break cryptography",
+        "chars": 57,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:30.480139",
+      "type": "stt",
+      "data": {
+        "text": "cryptography has been around for a long time but",
+        "chars": 48,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:42.691641",
+      "type": "stt",
+      "data": {
+        "text": "just like cryptologist",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:49.082301",
+      "type": "stt",
+      "data": {
+        "text": "spies",
+        "chars": 5,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-20T00:17:56.583332",
+      "type": "stt",
+      "data": {
+        "text": "galaxy express outside",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
-    "tts_events": 125,
-    "stt_events": 3723,
-    "commands_processed": 40,
+    "tts_events": 127,
+    "stt_events": 3745,
+    "commands_processed": 41,
     "errors": 404,
-    "total_chars_spoken": 7856,
-    "total_chars_heard": 118683,
+    "total_chars_spoken": 8006,
+    "total_chars_heard": 119273,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-20T00:12:35.985610"
+  "last_updated": "2025-11-20T00:17:56.583343"
 }
