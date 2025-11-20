@@ -43007,16 +43007,170 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T22:52:26.096067",
+      "type": "stt",
+      "data": {
+        "text": "give him instructions",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:52:49.864863",
+      "type": "stt",
+      "data": {
+        "text": "or a computer to auto boot",
+        "chars": 26,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:53:12.599071",
+      "type": "stt",
+      "data": {
+        "text": "i want to know what this fucking sink open source it is",
+        "chars": 55,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:53:36.157969",
+      "type": "stt",
+      "data": {
+        "text": "okay is there anything else we need to do to tidy up all the",
+        "chars": 60,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:53:42.519341",
+      "type": "stt",
+      "data": {
+        "text": "tell me if it's good for boot down",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:54:20.043602",
+      "type": "stt",
+      "data": {
+        "text": "so i think you're going to have to do the same",
+        "chars": 46,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:54:27.353884",
+      "type": "stt",
+      "data": {
+        "text": "in",
+        "chars": 2,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:54:34.655969",
+      "type": "stt",
+      "data": {
+        "text": "you have access to my email",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:55:06.602387",
+      "type": "stt",
+      "data": {
+        "text": "it always keeps coming up as demon",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:55:30.584229",
+      "type": "stt",
+      "data": {
+        "text": "computer daemon status",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:55:36.156329",
+      "type": "stt",
+      "data": {
+        "text": "status monitoring up time",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:56:03.208471",
+      "type": "stt",
+      "data": {
+        "text": "what can you ask the cyclotron for maggie's",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:56:11.794523",
+      "type": "stt",
+      "data": {
+        "text": "as you're going to look for",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:57:22.677240",
+      "type": "stt",
+      "data": {
+        "text": "that's the first time you use a cycl",
+        "chars": 36,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 123,
-    "stt_events": 3434,
+    "stt_events": 3448,
     "commands_processed": 39,
     "errors": 404,
     "total_chars_spoken": 7675,
-    "total_chars_heard": 110696,
+    "total_chars_heard": 111154,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T22:52:20.796094"
+  "last_updated": "2025-11-19T22:57:22.677257"
 }
