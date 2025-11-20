@@ -40210,16 +40210,276 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T21:52:12.700026",
+      "type": "stt",
+      "data": {
+        "text": "i think we need to download",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:52:26.504741",
+      "type": "stt",
+      "data": {
+        "text": "i think we need offline unit",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:52:32.782255",
+      "type": "stt",
+      "data": {
+        "text": "send and receive without having to click this button is that correct",
+        "chars": 68,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:52:50.130886",
+      "type": "stt",
+      "data": {
+        "text": "yes and we should be able to do this autonomously",
+        "chars": 49,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:05.964319",
+      "type": "stt",
+      "data": {
+        "text": "play both computers",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:12.710850",
+      "type": "stt",
+      "data": {
+        "text": "feel free to try",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:16.325087",
+      "type": "stt",
+      "data": {
+        "text": "to sync them together",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:23.754984",
+      "type": "stt",
+      "data": {
+        "text": "we're trying to sync these together",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:26.635022",
+      "type": "stt",
+      "data": {
+        "text": "autonomously",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:41.896703",
+      "type": "stt",
+      "data": {
+        "text": "find the code to initiate",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:44.727157",
+      "type": "stt",
+      "data": {
+        "text": "or just let me know",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:49.979394",
+      "type": "stt",
+      "data": {
+        "text": "you might have to",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:53:55.374943",
+      "type": "stt",
+      "data": {
+        "text": "researching the two systems",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:54:01.631862",
+      "type": "stt",
+      "data": {
+        "text": "i think we still have to put in",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:54:50.563174",
+      "type": "stt",
+      "data": {
+        "text": "file sent to obd",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:54:54.181529",
+      "type": "stt",
+      "data": {
+        "text": "diesel",
+        "chars": 6,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:02.449218",
+      "type": "stt",
+      "data": {
+        "text": "call the commander in alaska",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:02.482095",
+      "type": "tts",
+      "data": {
+        "text": "Yes Commander?",
+        "chars": 14,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:05.701893",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "Could not understand speech",
+        "details": null
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:05.742274",
+      "type": "tts",
+      "data": {
+        "text": "I didn't hear a command. Try again.",
+        "chars": 35,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:21.781859",
+      "type": "stt",
+      "data": {
+        "text": "make sure that i have all the same function",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:25.673848",
+      "type": "stt",
+      "data": {
+        "text": "play agent as he does",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:37.191415",
+      "type": "stt",
+      "data": {
+        "text": "this will happen there any desk",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:55:48.702227",
+      "type": "stt",
+      "data": {
+        "text": "okay run",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
-    "tts_events": 119,
-    "stt_events": 3185,
+    "tts_events": 121,
+    "stt_events": 3206,
     "commands_processed": 39,
-    "errors": 402,
-    "total_chars_spoken": 7577,
-    "total_chars_heard": 103474,
+    "errors": 403,
+    "total_chars_spoken": 7626,
+    "total_chars_heard": 104021,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T21:51:25.201789"
+  "last_updated": "2025-11-19T21:55:48.702239"
 }
