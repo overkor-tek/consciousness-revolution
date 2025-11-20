@@ -35077,16 +35077,225 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:01.250835",
+      "type": "stt",
+      "data": {
+        "text": "let's just divert task for sometimes it takes 5 minutes so we're going to just",
+        "chars": 78,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:04.357048",
+      "type": "stt",
+      "data": {
+        "text": "and then can i talk to",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:21.703051",
+      "type": "stt",
+      "data": {
+        "text": "okay we're going to establish",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:28.984013",
+      "type": "stt",
+      "data": {
+        "text": "this computer needs to be",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:33.757337",
+      "type": "stt",
+      "data": {
+        "text": "business revolution respiratory",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:38.509506",
+      "type": "stt",
+      "data": {
+        "text": "100x platform is",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:56:42.079466",
+      "type": "stt",
+      "data": {
+        "text": "project is",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:57:13.993721",
+      "type": "stt",
+      "data": {
+        "text": "do you have access to that in github this is",
+        "chars": 44,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:57:56.999654",
+      "type": "stt",
+      "data": {
+        "text": "trying to figure out how to establish contact with the other computer",
+        "chars": 69,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:58:00.279783",
+      "type": "stt",
+      "data": {
+        "text": "talk to send a code",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:58:12.438053",
+      "type": "stt",
+      "data": {
+        "text": "i'm waiting for dropbox to send a code i'm not sure what josh was doing",
+        "chars": 71,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:58:50.148462",
+      "type": "stt",
+      "data": {
+        "text": "we got to check all the analytics for everything let's see what's going on with this computer we got to make sure",
+        "chars": 113,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:58:56.819123",
+      "type": "stt",
+      "data": {
+        "text": "we got to make sure we have screen",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:59:02.098567",
+      "type": "stt",
+      "data": {
+        "text": "i think we already have file saving capabilities",
+        "chars": 48,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T19:59:07.070939",
+      "type": "stt",
+      "data": {
+        "text": "play right make sure we have python",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:00:09.349206",
+      "type": "stt",
+      "data": {
+        "text": "option for screenshot write this down",
+        "chars": 37,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:00:11.983931",
+      "type": "stt",
+      "data": {
+        "text": "pyth",
+        "chars": 4,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:00:16.184443",
+      "type": "stt",
+      "data": {
+        "text": "level 10 microsoft pillow",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:00:20.861340",
+      "type": "stt",
+      "data": {
+        "text": "it says like p",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 117,
-    "stt_events": 2721,
+    "stt_events": 2740,
     "commands_processed": 39,
     "errors": 401,
     "total_chars_spoken": 7528,
-    "total_chars_heard": 90294,
+    "total_chars_heard": 91018,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T19:55:44.866633"
+  "last_updated": "2025-11-19T20:00:20.861359"
 }
