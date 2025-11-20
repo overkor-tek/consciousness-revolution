@@ -41273,6 +41273,247 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:16.896433",
+      "type": "stt",
+      "data": {
+        "text": "is to boot up protocol so we don't forget our new capabilities",
+        "chars": 62,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:36.198624",
+      "type": "stt",
+      "data": {
+        "text": "immediate before",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:39.526681",
+      "type": "stt",
+      "data": {
+        "text": "get your",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:49.202763",
+      "type": "stt",
+      "data": {
+        "text": "what is sinking device id",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:57.204673",
+      "type": "stt",
+      "data": {
+        "text": "text obd dealer",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:13:18.355177",
+      "type": "stt",
+      "data": {
+        "text": "okay are you trying to clean it up",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:13:24.375182",
+      "type": "stt",
+      "data": {
+        "text": "my syncing device id where do i find that",
+        "chars": 41,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:13:54.683153",
+      "type": "stt",
+      "data": {
+        "text": "identification",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:14:39.193471",
+      "type": "stt",
+      "data": {
+        "text": "here is my sinking id",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:14:43.399420",
+      "type": "stt",
+      "data": {
+        "text": "say that also",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:14:46.123672",
+      "type": "stt",
+      "data": {
+        "text": "call database",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:14:51.147742",
+      "type": "stt",
+      "data": {
+        "text": "so we're capable of grabbing it",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:15:02.257493",
+      "type": "stt",
+      "data": {
+        "text": "so both computers can sync with each other yeah go ahead and look over the whole situation",
+        "chars": 90,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:15:09.125233",
+      "type": "stt",
+      "data": {
+        "text": "did we make protocols for everything boot up protocols for everything",
+        "chars": 69,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:15:16.203823",
+      "type": "stt",
+      "data": {
+        "text": "what's the score of the second program we downloaded but",
+        "chars": 56,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:15:19.576134",
+      "type": "stt",
+      "data": {
+        "text": "play explored both programs",
+        "chars": 27,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:15:42.517898",
+      "type": "stt",
+      "data": {
+        "text": "disconnect we're about to move down",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:16:07.646077",
+      "type": "stt",
+      "data": {
+        "text": "okay can i",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:16:31.159066",
+      "type": "stt",
+      "data": {
+        "text": "19 with each other one last time",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:16:38.461421",
+      "type": "stt",
+      "data": {
+        "text": "before we leave we need to check obd underscore",
+        "chars": 47,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:16:43.478489",
+      "type": "stt",
+      "data": {
+        "text": "i don't know why",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
-  "statisti
+  "statistics": {
+    "tts_events": 121,
+    "stt_events": 3300,
+    "commands_processed": 39,
+    "errors": 403,
+    "total_chars_spoken": 7626,
+    "total_chars_heard": 106810,
+    "avg_response_time": 0
+  },
+  "last_updated": "2025-11-19T22:16:43.478499"
+}
