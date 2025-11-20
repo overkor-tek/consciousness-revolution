@@ -36243,16 +36243,126 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T20:31:14.289195",
+      "type": "stt",
+      "data": {
+        "text": "that's awesome",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:31:47.829115",
+      "type": "stt",
+      "data": {
+        "text": "so what are the other capabilities",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:31:56.077549",
+      "type": "stt",
+      "data": {
+        "text": "do you know we need our ai's",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:32:03.777852",
+      "type": "stt",
+      "data": {
+        "text": "yes",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:32:07.945678",
+      "type": "stt",
+      "data": {
+        "text": "just the capabilities for",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:32:23.185388",
+      "type": "stt",
+      "data": {
+        "text": "i got to figure out how to use the whole thing i'm going to smoke a cigarette",
+        "chars": 77,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:32:51.398573",
+      "type": "stt",
+      "data": {
+        "text": "what gives you a different address every time",
+        "chars": 45,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:33:23.008002",
+      "type": "stt",
+      "data": {
+        "text": "well you can put it up on this screen and not screen in this",
+        "chars": 60,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:33:31.867726",
+      "type": "stt",
+      "data": {
+        "text": "are you able to get into somebody else's computer",
+        "chars": 49,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T20:33:41.769054",
+      "type": "stt",
+      "data": {
+        "text": "wallpaper tv screens they have squares that go on the wall",
+        "chars": 58,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 117,
-    "stt_events": 2827,
+    "stt_events": 2837,
     "commands_processed": 39,
     "errors": 401,
     "total_chars_spoken": 7528,
-    "total_chars_heard": 93589,
+    "total_chars_heard": 93982,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T20:30:57.522885"
+  "last_updated": "2025-11-19T20:33:41.769064"
 }
