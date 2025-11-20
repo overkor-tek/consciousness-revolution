@@ -40023,16 +40023,203 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T21:46:57.478003",
+      "type": "stt",
+      "data": {
+        "text": "why is there school so fucking crazy on the screen just",
+        "chars": 55,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:47:41.097377",
+      "type": "stt",
+      "data": {
+        "text": "hotel to go on the fucking i keep thinking that there is massive benefit",
+        "chars": 72,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:48:02.255224",
+      "type": "stt",
+      "data": {
+        "text": "turn off bro",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:48:22.855269",
+      "type": "stt",
+      "data": {
+        "text": "what is that did you send that",
+        "chars": 30,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:48:37.655380",
+      "type": "stt",
+      "data": {
+        "text": "it's frosting",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:48:51.757026",
+      "type": "stt",
+      "data": {
+        "text": "fumbling fluttering",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:49:46.317313",
+      "type": "stt",
+      "data": {
+        "text": "i can export the data",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:49:49.457048",
+      "type": "stt",
+      "data": {
+        "text": "if we really need",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:04.205541",
+      "type": "stt",
+      "data": {
+        "text": "i think we've already done that we had a huge clump of data somewhere",
+        "chars": 69,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:14.885418",
+      "type": "stt",
+      "data": {
+        "text": "the documenting god mode autonomous trigger",
+        "chars": 43,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:34.099399",
+      "type": "stt",
+      "data": {
+        "text": "to enter into god",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:39.237438",
+      "type": "stt",
+      "data": {
+        "text": "i'm wondering if i can",
+        "chars": 22,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:48.193516",
+      "type": "stt",
+      "data": {
+        "text": "i think you started saying that cuz i was saying",
+        "chars": 48,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:50:53.515504",
+      "type": "stt",
+      "data": {
+        "text": "backslash commands",
+        "chars": 18,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:51:04.061776",
+      "type": "stt",
+      "data": {
+        "text": "connect with",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:51:09.041219",
+      "type": "stt",
+      "data": {
+        "text": "powershell",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T21:51:25.201775",
+      "type": "stt",
+      "data": {
+        "text": "take over josh's",
+        "chars": 16,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 119,
-    "stt_events": 3168,
+    "stt_events": 3185,
     "commands_processed": 39,
     "errors": 402,
     "total_chars_spoken": 7577,
-    "total_chars_heard": 102980,
+    "total_chars_heard": 103474,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-19T21:46:34.044819"
+  "last_updated": "2025-11-19T21:51:25.201789"
 }
