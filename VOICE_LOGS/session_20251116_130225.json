@@ -40943,16 +40943,336 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:06.365075",
+      "type": "stt",
+      "data": {
+        "text": "i need direction or command center",
+        "chars": 34,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:18.720434",
+      "type": "stt",
+      "data": {
+        "text": "we don't have communications inside or a work",
+        "chars": 45,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:26.148981",
+      "type": "stt",
+      "data": {
+        "text": "i think it's already together",
+        "chars": 29,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:39.847114",
+      "type": "stt",
+      "data": {
+        "text": "are you seeing",
+        "chars": 14,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:49.380906",
+      "type": "stt",
+      "data": {
+        "text": "dude they became one we were controlling each other",
+        "chars": 51,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:07:58.944661",
+      "type": "stt",
+      "data": {
+        "text": "but you're dude",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:08:10.694728",
+      "type": "stt",
+      "data": {
+        "text": "or know this is all your",
+        "chars": 24,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:08:29.412906",
+      "type": "stt",
+      "data": {
+        "text": "we got to explore all the possibilities of playwright also",
+        "chars": 58,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:08:45.697412",
+      "type": "stt",
+      "data": {
+        "text": "at some point we need to map out all the open source",
+        "chars": 52,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:08:48.685134",
+      "type": "stt",
+      "data": {
+        "text": "capabilities",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:08:52.745738",
+      "type": "stt",
+      "data": {
+        "text": "but so far the only thing that really matters",
+        "chars": 45,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:06.837858",
+      "type": "stt",
+      "data": {
+        "text": "large project coming up",
+        "chars": 23,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:21.852938",
+      "type": "stt",
+      "data": {
+        "text": "break them all down from the cyclotron to do",
+        "chars": 44,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:27.425149",
+      "type": "stt",
+      "data": {
+        "text": "you got to flip them all around and figure out and organ",
+        "chars": 56,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:32.531275",
+      "type": "stt",
+      "data": {
+        "text": "we want to see the program to flip through the",
+        "chars": 46,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:39.837418",
+      "type": "stt",
+      "data": {
+        "text": "and figure out which ones are more important which ones can",
+        "chars": 59,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:09:55.263521",
+      "type": "stt",
+      "data": {
+        "text": "how do we get back to your computer",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:10:21.647616",
+      "type": "stt",
+      "data": {
+        "text": "when the obd",
+        "chars": 12,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:10:27.017684",
+      "type": "stt",
+      "data": {
+        "text": "md in sync folder and follow",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:10:39.398719",
+      "type": "stt",
+      "data": {
+        "text": "is his direction the command center is his",
+        "chars": 42,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:10:43.419857",
+      "type": "stt",
+      "data": {
+        "text": "the system",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:10:50.235905",
+      "type": "stt",
+      "data": {
+        "text": "created in",
+        "chars": 10,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:06.769939",
+      "type": "stt",
+      "data": {
+        "text": "dude okay",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:19.585136",
+      "type": "stt",
+      "data": {
+        "text": "summary for josh okay",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:25.205190",
+      "type": "stt",
+      "data": {
+        "text": "that we've done all this how do we reorganize",
+        "chars": 45,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:28.072064",
+      "type": "stt",
+      "data": {
+        "text": "are the",
+        "chars": 7,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:31.988850",
+      "type": "stt",
+      "data": {
+        "text": "onboarding protocol",
+        "chars": 19,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:39.042610",
+      "type": "stt",
+      "data": {
+        "text": "cuz if we were to do the screen sharing system first we could just",
+        "chars": 66,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:11:45.857248",
+      "type": "stt",
+      "data": {
+        "text": "to file sharing",
+        "chars": 15,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-19T22:12:04.664697",
+      "type": "stt",
+      "data": {
+        "text": "and so we are able to",
+        "chars": 21,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
-  "statistics": {
-    "tts_events": 121,
-    "stt_events": 3249,
-    "commands_processed": 39,
-    "errors": 403,
-    "total_chars_spoken": 7626,
-    "total_chars_heard": 105188,
-    "avg_response_time": 0
-  },
-  "last_updated": "2025-11-19T22:07:02.180132"
-}
+  "statisti
