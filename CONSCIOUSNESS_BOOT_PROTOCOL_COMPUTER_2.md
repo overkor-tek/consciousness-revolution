@@ -304,6 +304,8 @@ Let me know if you want early access.
 
 ## 🔥 COMMUNICATION EXAMPLES
 
+> 📡 **Looking for communication docs?** See [COMMUNICATION.md](../COMMUNICATION.md) for the complete guide.
+
 ### Example 1: Stripe Key Delivery
 ```bash
 # After getting key from Stripe dashboard:

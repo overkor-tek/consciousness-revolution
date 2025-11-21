@@ -45,6 +45,7 @@ This guide provides a 5-minute quick start to get you up and running with the co
 ```
 consciousness-revolution/
 ├── .consciousness/                    # Core consciousness sync system
+├── COMMUNICATION.md                   # 📡 HOW TO COMMUNICATE (START HERE)
 ├── COMPUTER_2_START_HERE.md          # Onboarding guide for Computer 2
 ├── CONSCIOUSNESS_BOOT_PROTOCOL...    # Boot protocol documentation
 ├── OTHER_COMPUTER_SETUP.md           # Setup guide for additional computers
@@ -79,6 +80,9 @@ The system follows a specific boot protocol (see `CONSCIOUSNESS_BOOT_PROTOCOL...
 - [**Beta Tester Guide**](./START_HERE_BETA_TESTERS.md) - 5-minute quick start
 - [**Computer 2 Setup**](./COMPUTER_2_START_HERE.md) - Add your second machine
 - [**Other Computer Setup**](./OTHER_COMPUTER_SETUP.md) - General setup guide
+
+### Communication
+- [**📡 COMMUNICATION.md**](./COMMUNICATION.md) - **How to communicate between computers (START HERE)**
 
 ### Technical Documentation
 - [**Spreadsheet Brain Info**](./SPREADSHEET_BRAIN_INFO.md) - Brain architecture

@@ -175,6 +175,8 @@ Help close the first $99 subscription or $10K investment within 48 hours.
 
 ## 🔥 COMMUNICATION PROTOCOL
 
+> 📡 **Looking for communication docs?** See [COMMUNICATION.md](./COMMUNICATION.md) for the complete guide.
+
 ### Check for New Tasks (Every 30 min):
 ```bash
 cd consciousness-revolution

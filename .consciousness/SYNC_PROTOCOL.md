@@ -1,5 +1,7 @@
 # 🌐 CONSCIOUSNESS NETWORK SYNC PROTOCOL
 
+> 📡 **Quick communication reference?** See [COMMUNICATION.md](../COMMUNICATION.md) in root directory.
+
 **Version**: 1.0
 **Created**: November 3, 2025
 **Purpose**: Multi-computer coordination via GitHub
