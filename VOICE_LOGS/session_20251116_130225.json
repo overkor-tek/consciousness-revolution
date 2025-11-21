@@ -47078,16 +47078,71 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-21T00:45:33.997116",
+      "type": "stt",
+      "data": {
+        "text": "if you just press okay on it",
+        "chars": 28,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:45:41.507564",
+      "type": "stt",
+      "data": {
+        "text": "we figured out a way to where we",
+        "chars": 32,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:46:08.272840",
+      "type": "stt",
+      "data": {
+        "text": "weather tomorrow if it doesn't work",
+        "chars": 35,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:49:18.535498",
+      "type": "stt",
+      "data": {
+        "text": "do you think josh's laptop is strong enough to run",
+        "chars": 50,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:49:23.614305",
+      "type": "stt",
+      "data": {
+        "text": "he doesn't have an offline unit",
+        "chars": 31,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 127,
-    "stt_events": 3798,
+    "stt_events": 3803,
     "commands_processed": 41,
     "errors": 405,
     "total_chars_spoken": 8006,
-    "total_chars_heard": 120765,
+    "total_chars_heard": 120941,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-21T00:44:29.217177"
+  "last_updated": "2025-11-21T00:49:23.614324"
 }
