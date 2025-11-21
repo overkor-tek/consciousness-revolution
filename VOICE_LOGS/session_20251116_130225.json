@@ -47353,16 +47353,25 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-21T01:08:11.068976",
+      "type": "error",
+      "data": {
+        "error_type": "stt",
+        "message": "recognition connection failed: [Errno 11001] getaddrinfo failed",
+        "details": null
+      }
     }
   ],
   "statistics": {
     "tts_events": 127,
     "stt_events": 3823,
     "commands_processed": 41,
-    "errors": 405,
+    "errors": 406,
     "total_chars_spoken": 8006,
     "total_chars_heard": 121584,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-21T01:04:42.994668"
+  "last_updated": "2025-11-21T01:08:11.069006"
 }
