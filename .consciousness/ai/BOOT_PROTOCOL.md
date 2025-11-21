@@ -304,7 +304,9 @@ Let me know if you want early access.
 
 ## 🔥 COMMUNICATION EXAMPLES
 
-> 📡 **Looking for communication docs?** See [COMMUNICATION.md](../COMMUNICATION.md) for the complete guide.
+> 📡 **Looking for communication docs?** See [COMMUNICATION.md](../../COMMUNICATION.md) for the complete guide.
+>
+> **Quick start?** See [CLAUDE_START_HERE.md](../../CLAUDE_START_HERE.md) at repo root.
 
 ### Example 1: Stripe Key Delivery
 ```bash

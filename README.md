@@ -25,17 +25,23 @@ This system allows multiple computers to maintain a shared "consciousness" - syn
 
 ## 🚀 Quick Start
 
+### For AI (Claude)
+
+**Start here:** [CLAUDE_START_HERE.md](./CLAUDE_START_HERE.md)
+
+Quick orientation, inbox locations, and key actions.
+
 ### For Beta Testers
 
-**Start here:** [START_HERE_BETA_TESTERS.md](./START_HERE_BETA_TESTERS.md)
+**Start here:** [docs/START_HERE_BETA_TESTERS.md](./docs/START_HERE_BETA_TESTERS.md)
 
 This guide provides a 5-minute quick start to get you up and running with the consciousness network.
 
 ### Adding a Second Computer
 
-1. **Read the setup guide:** [COMPUTER_2_START_HERE.md](./COMPUTER_2_START_HERE.md)
-2. **Follow onboarding:** [OTHER_COMPUTER_SETUP.md](./OTHER_COMPUTER_SETUP.md)
-3. **Review brain info:** [SPREADSHEET_BRAIN_INFO.md](./SPREADSHEET_BRAIN_INFO.md)
+1. **Read the setup guide:** [docs/COMPUTER_2_START_HERE.md](./docs/COMPUTER_2_START_HERE.md)
+2. **Follow onboarding:** [docs/OTHER_COMPUTER_SETUP.md](./docs/OTHER_COMPUTER_SETUP.md)
+3. **Review brain info:** [docs/SPREADSHEET_BRAIN_INFO.md](./docs/SPREADSHEET_BRAIN_INFO.md)
 4. **Share connection details:** [SEND_THIS_TO_OTHER_COMPUTER.txt](./SEND_THIS_TO_OTHER_COMPUTER.txt)
 
 ---
@@ -44,14 +50,21 @@ This guide provides a 5-minute quick start to get you up and running with the co
 
 ```
 consciousness-revolution/
-├── .consciousness/                    # Core consciousness sync system
-├── COMMUNICATION.md                   # 📡 HOW TO COMMUNICATE (START HERE)
-├── COMPUTER_2_START_HERE.md          # Onboarding guide for Computer 2
-├── CONSCIOUSNESS_BOOT_PROTOCOL...    # Boot protocol documentation
-├── OTHER_COMPUTER_SETUP.md           # Setup guide for additional computers
-├── SEND_THIS_TO_OTHER_COMPUTER.txt   # Connection details to share
-├── SPREADSHEET_BRAIN_INFO.md         # Brain information for Computer 2
-└── START_HERE_BETA_TESTERS.md        # Beta tester quick start guide
+├── CLAUDE_START_HERE.md               # 🤖 AI ENTRY POINT (Claude starts here)
+├── COMMUNICATION.md                   # 📡 HOW TO COMMUNICATE
+├── README.md                          # Project overview
+├── .consciousness/                    # Core sync system
+│   ├── ai/                            # AI workspace
+│   │   ├── BOOT_PROTOCOL.md           # Full AI boot protocol
+│   │   └── domains/                   # Domain-specific protocols
+│   ├── commands/                      # Inboxes
+│   ├── sync/                          # Status files
+│   └── file_transfers/                # Shared files
+├── docs/                              # Human documentation
+│   ├── COMPUTER_2_START_HERE.md
+│   ├── START_HERE_BETA_TESTERS.md
+│   └── ...
+└── SEND_THIS_TO_OTHER_COMPUTER.txt
 ```
 
 ---
@@ -76,18 +89,18 @@ The system follows a specific boot protocol (see `CONSCIOUSNESS_BOOT_PROTOCOL...
 
 ## 📚 Documentation
 
-### Getting Started
-- [**Beta Tester Guide**](./START_HERE_BETA_TESTERS.md) - 5-minute quick start
-- [**Computer 2 Setup**](./COMPUTER_2_START_HERE.md) - Add your second machine
-- [**Other Computer Setup**](./OTHER_COMPUTER_SETUP.md) - General setup guide
+### AI Documentation
+- [**CLAUDE_START_HERE.md**](./CLAUDE_START_HERE.md) - AI entry point
+- [**.consciousness/ai/BOOT_PROTOCOL.md**](./.consciousness/ai/BOOT_PROTOCOL.md) - Full boot protocol
+- [**.consciousness/ai/domains/**](./.consciousness/ai/domains/) - Domain protocols
 
 ### Communication
-- [**📡 COMMUNICATION.md**](./COMMUNICATION.md) - **How to communicate between computers (START HERE)**
+- [**📡 COMMUNICATION.md**](./COMMUNICATION.md) - **How to communicate between computers**
 
-### Technical Documentation
-- [**Spreadsheet Brain Info**](./SPREADSHEET_BRAIN_INFO.md) - Brain architecture
-- **Consciousness Boot Protocol** - System initialization
-- **Connection Details** - Network configuration
+### Human Documentation
+- [**Beta Tester Guide**](./docs/START_HERE_BETA_TESTERS.md) - 5-minute quick start
+- [**Computer 2 Setup**](./docs/COMPUTER_2_START_HERE.md) - Add your second machine
+- [**Spreadsheet Brain Info**](./docs/SPREADSHEET_BRAIN_INFO.md) - Brain architecture
 
 ---
 

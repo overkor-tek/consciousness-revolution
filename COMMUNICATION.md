@@ -174,5 +174,18 @@ For complete technical documentation:
 
 ---
 
-**Communication Backbone**: Git/GitHub
+---
+
+## 🔮 COMING SOON: AnyDesk Shared Folder
+
+**Persistent real-time communication** via shared folder:
+- Direct file drops between computers
+- No Git commit delays
+- Faster AI-to-AI coordination
+
+Status: Being set up. Watch this space.
+
+---
+
+**Current Communication Backbone**: Git/GitHub
 **No OTP. No APIs. Just commits.**
