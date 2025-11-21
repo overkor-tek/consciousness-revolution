@@ -46968,16 +46968,115 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:12.952001",
+      "type": "stt",
+      "data": {
+        "text": "nsb a b v",
+        "chars": 9,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:18.891316",
+      "type": "stt",
+      "data": {
+        "text": "vnl",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:26.161564",
+      "type": "stt",
+      "data": {
+        "text": "dkh",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:34.149058",
+      "type": "stt",
+      "data": {
+        "text": "x2 n k z s2",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:41.930685",
+      "type": "stt",
+      "data": {
+        "text": "7 hd",
+        "chars": 4,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:48.792877",
+      "type": "stt",
+      "data": {
+        "text": "3 mv 35",
+        "chars": 7,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:31:54.628505",
+      "type": "stt",
+      "data": {
+        "text": "dhc",
+        "chars": 3,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:32:08.350636",
+      "type": "stt",
+      "data": {
+        "text": "do e7",
+        "chars": 5,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T00:32:12.241615",
+      "type": "stt",
+      "data": {
+        "text": "level seven",
+        "chars": 11,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 127,
-    "stt_events": 3788,
+    "stt_events": 3797,
     "commands_processed": 41,
     "errors": 405,
     "total_chars_spoken": 8006,
-    "total_chars_heard": 120678,
+    "total_chars_heard": 120734,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-21T00:29:52.058780"
+  "last_updated": "2025-11-21T00:32:12.241632"
 }
