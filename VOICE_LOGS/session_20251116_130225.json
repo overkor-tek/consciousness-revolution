@@ -47450,16 +47450,71 @@
         "duration": null,
         "success": true
       }
+    },
+    {
+      "timestamp": "2025-11-21T17:32:50.378417",
+      "type": "stt",
+      "data": {
+        "text": "build the firewall round out worth not every ad",
+        "chars": 47,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T17:34:18.947958",
+      "type": "stt",
+      "data": {
+        "text": "see any reference to that",
+        "chars": 25,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T17:34:36.806543",
+      "type": "stt",
+      "data": {
+        "text": "or jason",
+        "chars": 8,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T17:34:50.768613",
+      "type": "stt",
+      "data": {
+        "text": "more than one",
+        "chars": 13,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
+    },
+    {
+      "timestamp": "2025-11-21T17:35:57.577465",
+      "type": "stt",
+      "data": {
+        "text": "more than one man",
+        "chars": 17,
+        "confidence": null,
+        "duration": null,
+        "success": true
+      }
     }
   ],
   "statistics": {
     "tts_events": 127,
-    "stt_events": 3831,
+    "stt_events": 3836,
     "commands_processed": 41,
     "errors": 406,
     "total_chars_spoken": 8006,
-    "total_chars_heard": 121986,
+    "total_chars_heard": 122096,
     "avg_response_time": 0
   },
-  "last_updated": "2025-11-21T07:43:42.205838"
+  "last_updated": "2025-11-21T17:35:57.577483"
 }
