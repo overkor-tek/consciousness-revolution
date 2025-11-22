@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commitment Tracker | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .add-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .commit-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .commit-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .person-input {
+            width: 120px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .add-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat { text-align: center; }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .stat-value.good { color: #2ecc71; }
+        .stat-value.warn { color: #f1c40f; }
+        .stat-value.bad { color: #e74c3c; }
+
+        .stat-label {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .commitments {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .commitments h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .commitment {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .commitment.pending {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .commitment.kept {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .commitment.broken {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .commit-info {
+            flex: 1;
+        }
+
+        .commit-text {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .commit-meta {
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        .commit-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .action-btn {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .action-btn.keep {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+        }
+
+        .action-btn.break {
+            background: rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+        }
+
+        .action-btn.delete {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .no-commits {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.5;
+            font-size: 13px;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .pattern:last-child { border-bottom: none; }
+
+        .pattern-person {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .insight {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .insight-text {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; }
+            .person-input { width: 100%; }
+            .stats-bar { flex-wrap: wrap; gap: 12px; }
+            .stat { flex: 1 1 30%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Commitment Tracker</h1>
+            <p>Track commitments made to/by others and identify patterns</p>
+        </div>
+
+        <div class="add-section">
+            <h3>Add New Commitment</h3>
+            <div class="input-row">
+                <input type="text" class="commit-input" id="commitText" placeholder="What was committed?">
+                <input type="text" class="person-input" id="personName" placeholder="By whom?">
+            </div>
+            <button class="add-btn" onclick="addCommitment()">Add Commitment</button>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="totalStat">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value good" id="keptStat">0</div>
+                <div class="stat-label">Kept</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value bad" id="brokenStat">0</div>
+                <div class="stat-label">Broken</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="rateStat">-</div>
+                <div class="stat-label">Keep Rate</div>
+            </div>
+        </div>
+
+        <div class="commitments">
+            <h3>Commitments</h3>
+            <div id="commitmentsList"></div>
+        </div>
+
+        <div class="patterns">
+            <h3>Pattern Analysis</h3>
+            <div id="patternsList"></div>
+        </div>
+
+        <div class="insight">
+            <div class="insight-text" id="insight">"Patterns don't lie. Track commitments, trust emerges from data." - Pattern Theory</div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let commitments = JSON.parse(localStorage.getItem('commitmentTracker') || '[]');
+
+        function render() {
+            // Sort: pending first, then by date
+            const sorted = [...commitments].sort((a, b) => {
+                if (a.status === 'pending' && b.status !== 'pending') return -1;
+                if (a.status !== 'pending' && b.status === 'pending') return 1;
+                return b.date - a.date;
+            });
+
+            // Render commitments
+            if (sorted.length === 0) {
+                document.getElementById('commitmentsList').innerHTML =
+                    '<div class="no-commits">No commitments tracked yet</div>';
+            } else {
+                document.getElementById('commitmentsList').innerHTML = sorted.map((c, i) => `
+                    <div class="commitment ${c.status}">
+                        <div class="commit-info">
+                            <div class="commit-text">${c.text}</div>
+                            <div class="commit-meta">${c.person} • ${formatDate(c.date)}</div>
+                        </div>
+                        <div class="commit-actions">
+                            ${c.status === 'pending' ? `
+                                <button class="action-btn keep" onclick="updateStatus(${i}, 'kept')">✓</button>
+                                <button class="action-btn break" onclick="updateStatus(${i}, 'broken')">✗</button>
+                            ` : ''}
+                            <button class="action-btn delete" onclick="deleteCommitment(${i})">🗑</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Update stats
+            const total = commitments.length;
+            const kept = commitments.filter(c => c.status === 'kept').length;
+            const broken = commitments.filter(c => c.status === 'broken').length;
+            const resolved = kept + broken;
+            const rate = resolved > 0 ? Math.round((kept / resolved) * 100) : 0;
+
+            document.getElementById('totalStat').textContent = total;
+            document.getElementById('keptStat').textContent = kept;
+            document.getElementById('brokenStat').textContent = broken;
+
+            const rateStat = document.getElementById('rateStat');
+            rateStat.textContent = resolved > 0 ? rate + '%' : '-';
+            rateStat.className = 'stat-value ' + (rate >= 80 ? 'good' : rate >= 50 ? 'warn' : 'bad');
+
+            // Analyze patterns
+            analyzePatterns();
+        }
+
+        function addCommitment() {
+            const text = document.getElementById('commitText').value.trim();
+            const person = document.getElementById('personName').value.trim() || 'Unknown';
+
+            if (!text) return;
+
+            commitments.push({
+                text,
+                person,
+                status: 'pending',
+                date: Date.now()
+            });
+
+            save();
+            render();
+
+            document.getElementById('commitText').value = '';
+            document.getElementById('personName').value = '';
+        }
+
+        function updateStatus(index, status) {
+            commitments[index].status = status;
+            commitments[index].resolvedDate = Date.now();
+            save();
+            render();
+        }
+
+        function deleteCommitment(index) {
+            commitments.splice(index, 1);
+            save();
+            render();
+        }
+
+        function analyzePatterns() {
+            const patternsList = document.getElementById('patternsList');
+
+            if (commitments.length < 2) {
+                patternsList.innerHTML = '<div class="pattern">Track more commitments to see patterns</div>';
+                return;
+            }
+
+            // Group by person
+            const byPerson = {};
+            commitments.forEach(c => {
+                if (!byPerson[c.person]) {
+                    byPerson[c.person] = { kept: 0, broken: 0, pending: 0 };
+                }
+                byPerson[c.person][c.status]++;
+            });
+
+            // Generate patterns
+            const patterns = [];
+            Object.entries(byPerson).forEach(([person, stats]) => {
+                const total = stats.kept + stats.broken;
+                if (total >= 2) {
+                    const rate = Math.round((stats.kept / total) * 100);
+                    if (rate >= 80) {
+                        patterns.push(`<span class="pattern-person">${person}</span> keeps ${rate}% of commitments - high reliability`);
+                    } else if (rate <= 40) {
+                        patterns.push(`<span class="pattern-person">${person}</span> keeps ${rate}% of commitments - pattern of broken promises`);
+                    } else {
+                        patterns.push(`<span class="pattern-person">${person}</span> keeps ${rate}% of commitments - inconsistent`);
+                    }
+                }
+                if (stats.pending >= 3) {
+                    patterns.push(`<span class="pattern-person">${person}</span> has ${stats.pending} unresolved commitments - watch for follow-through`);
+                }
+            });
+
+            if (patterns.length === 0) {
+                patterns.push('Need more data points to identify patterns');
+            }
+
+            patternsList.innerHTML = patterns.map(p =>
+                `<div class="pattern">• ${p}</div>`
+            ).join('');
+
+            // Update insight
+            const totalBroken = commitments.filter(c => c.status === 'broken').length;
+            const totalKept = commitments.filter(c => c.status === 'kept').length;
+
+            let insight;
+            if (totalBroken > totalKept) {
+                insight = '"When someone shows you who they are, believe them the first time." - Maya Angelou';
+            } else if (totalKept > 3 && totalBroken === 0) {
+                insight = '"Trust is built in drops and lost in buckets." Continue tracking to confirm pattern.';
+            } else {
+                insight = '"Words are cheap. Track actions. Patterns don\'t lie." - Pattern Theory';
+            }
+            document.getElementById('insight').textContent = insight;
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString();
+        }
+
+        function save() {
+            localStorage.setItem('commitmentTracker', JSON.stringify(commitments));
+        }
+
+        // Initialize
+        render();
+    </script>
+</body>
+</html>

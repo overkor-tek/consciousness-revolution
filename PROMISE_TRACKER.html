@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Tracker | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .add-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .name-input, .promise-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .name-input::placeholder, .promise-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .promises-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .promises-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .promise-card {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .promise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .promise-person {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .promise-date {
+            font-size: 10px;
+            opacity: 0.5;
+        }
+
+        .promise-text {
+            font-size: 12px;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .promise-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .action-btn.kept {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .action-btn.broken {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .action-btn.pending {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .person-stats {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .person-name {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .stat-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .stat-numbers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+
+        .no-promises {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.5;
+            font-size: 13px;
+        }
+
+        .insight {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .insight-text {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Promise Tracker</h1>
+            <p>Track promises to reveal reliability patterns</p>
+        </div>
+
+        <div class="add-section">
+            <h3>Record a Promise</h3>
+            <div class="input-row">
+                <input type="text" class="name-input" id="personName" placeholder="Who made the promise?">
+                <input type="text" class="promise-input" id="promiseText" placeholder="What did they promise?">
+            </div>
+            <button class="add-btn" onclick="addPromise()">Add Promise</button>
+        </div>
+
+        <div class="promises-section">
+            <h3>Active Promises</h3>
+            <div id="promisesList"></div>
+        </div>
+
+        <div class="stats-section">
+            <h3>Reliability Scores</h3>
+            <div id="statsList"></div>
+        </div>
+
+        <div class="insight">
+            <div class="insight-text" id="insight">"A promise is a debt." - Proverb</div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let promises = JSON.parse(localStorage.getItem('promiseTracker') || '[]');
+
+        function addPromise() {
+            const person = document.getElementById('personName').value.trim();
+            const text = document.getElementById('promiseText').value.trim();
+
+            if (!person || !text) return;
+
+            promises.push({
+                id: Date.now(),
+                person,
+                text,
+                status: 'pending',
+                date: new Date().toLocaleDateString()
+            });
+
+            save();
+            render();
+
+            document.getElementById('personName').value = '';
+            document.getElementById('promiseText').value = '';
+        }
+
+        function updateStatus(id, status) {
+            const promise = promises.find(p => p.id === id);
+            if (promise) {
+                promise.status = status;
+                promise.resolvedDate = new Date().toLocaleDateString();
+                save();
+                render();
+            }
+        }
+
+        function render() {
+            const list = document.getElementById('promisesList');
+            const pending = promises.filter(p => p.status === 'pending');
+
+            if (pending.length === 0) {
+                list.innerHTML = '<div class="no-promises">No active promises to track</div>';
+            } else {
+                list.innerHTML = pending.map(p => `
+                    <div class="promise-card">
+                        <div class="promise-header">
+                            <span class="promise-person">${p.person}</span>
+                            <span class="promise-date">${p.date}</span>
+                        </div>
+                        <div class="promise-text">"${p.text}"</div>
+                        <div class="promise-actions">
+                            <button class="action-btn kept" onclick="updateStatus(${p.id}, 'kept')">✓ Kept</button>
+                            <button class="action-btn broken" onclick="updateStatus(${p.id}, 'broken')">✗ Broken</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderStats();
+            updateInsight();
+        }
+
+        function renderStats() {
+            const statsList = document.getElementById('statsList');
+
+            // Group by person
+            const people = {};
+            promises.forEach(p => {
+                if (!people[p.person]) {
+                    people[p.person] = { kept: 0, broken: 0, pending: 0 };
+                }
+                people[p.person][p.status]++;
+            });
+
+            if (Object.keys(people).length === 0) {
+                statsList.innerHTML = '<div class="no-promises">Add promises to see reliability stats</div>';
+                return;
+            }
+
+            statsList.innerHTML = Object.entries(people).map(([name, stats]) => {
+                const total = stats.kept + stats.broken;
+                const score = total > 0 ? Math.round((stats.kept / total) * 100) : 0;
+                const color = score >= 80 ? '#2ecc71' : score >= 50 ? '#f1c40f' : '#e74c3c';
+
+                return `
+                    <div class="person-stats">
+                        <div class="person-name">${name}</div>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: ${score}%; background: ${color}"></div>
+                        </div>
+                        <div class="stat-numbers">
+                            <span>${score}% reliable</span>
+                            <span>${stats.kept} kept / ${stats.broken} broken / ${stats.pending} pending</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateInsight() {
+            const insights = [
+                '"A promise is a debt." - Proverb',
+                '"Watch what they do, not what they say." - Pattern Theory',
+                '"Reliability is built one kept promise at a time."',
+                '"Broken promises are data, not attacks."',
+                '"Trust the pattern, not the person."'
+            ];
+
+            // Check for concerning patterns
+            const people = {};
+            promises.forEach(p => {
+                if (!people[p.person]) {
+                    people[p.person] = { kept: 0, broken: 0 };
+                }
+                if (p.status !== 'pending') {
+                    people[p.person][p.status]++;
+                }
+            });
+
+            let hasBad = false;
+            Object.values(people).forEach(stats => {
+                if (stats.broken > stats.kept && (stats.kept + stats.broken) >= 2) {
+                    hasBad = true;
+                }
+            });
+
+            if (hasBad) {
+                document.getElementById('insight').textContent =
+                    '"When someone repeatedly breaks promises, believe them." - Pattern Theory';
+            } else {
+                document.getElementById('insight').textContent =
+                    insights[Math.floor(Math.random() * insights.length)];
+            }
+        }
+
+        function save() {
+            localStorage.setItem('promiseTracker', JSON.stringify(promises));
+        }
+
+        render();
+    </script>
+</body>
+</html>

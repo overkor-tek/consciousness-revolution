@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Alignment Check | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .check-group {
+            margin-bottom: 16px;
+        }
+
+        .check-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .check-label:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .check-label input {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        .check-text {
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .check-hint {
+            font-size: 11px;
+            opacity: 0.5;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .score-ring {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #667eea 0deg,
+                #667eea calc(var(--score) * 3.6deg),
+                rgba(255,255,255,0.1) calc(var(--score) * 3.6deg)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .score-inner {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #0a0a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        .alignment-level {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .alignment-level.high { color: #2ecc71; }
+        .alignment-level.medium { color: #f1c40f; }
+        .alignment-level.low { color: #e74c3c; }
+
+        .breakdown {
+            margin-bottom: 20px;
+        }
+
+        .breakdown h4 {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .factor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .factor-icon { font-size: 18px; }
+        .factor-name { flex: 1; font-size: 13px; }
+        .factor-status { font-size: 12px; font-weight: bold; }
+        .factor-status.pass { color: #2ecc71; }
+        .factor-status.warn { color: #f1c40f; }
+        .factor-status.fail { color: #e74c3c; }
+
+        .recommendations {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .recommendations h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .rec-item {
+            font-size: 12px;
+            padding: 4px 0;
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Goal Alignment Check</h1>
+            <p>Verify your goals align with consciousness principles</p>
+        </div>
+
+        <div class="section">
+            <h3>What's your goal?</h3>
+            <textarea class="text-input" id="goal" rows="3" placeholder="Describe your goal clearly...
+
+Example: Start a business that generates $10k/month"></textarea>
+        </div>
+
+        <div class="section">
+            <h3>Motivation Check</h3>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="longTerm">
+                    <div>
+                        <div class="check-text">This goal serves long-term wellbeing (not just short-term gain)</div>
+                        <div class="check-hint">Foundation over quick fix</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="authentic">
+                    <div>
+                        <div class="check-text">This is MY goal (not pressure from others)</div>
+                        <div class="check-hint">Internal drive over external manipulation</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="evidence">
+                    <div>
+                        <div class="check-text">I have evidence this is achievable</div>
+                        <div class="check-hint">Research over blind faith</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="value">
+                    <div>
+                        <div class="check-text">This creates genuine value for others</div>
+                        <div class="check-hint">Contribution over extraction</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="sustainable">
+                    <div>
+                        <div class="check-text">The process is sustainable (not burnout-inducing)</div>
+                        <div class="check-hint">Marathon over sprint</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Reality Check</h3>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="noUrgency">
+                    <div>
+                        <div class="check-text">Not driven by false urgency or FOMO</div>
+                        <div class="check-hint">"Act now" is usually manipulation</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="noGuarantee">
+                    <div>
+                        <div class="check-text">I'm not expecting guaranteed results</div>
+                        <div class="check-hint">Nothing is 100% guaranteed</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check-group">
+                <label class="check-label">
+                    <input type="checkbox" id="notEasy">
+                    <div>
+                        <div class="check-text">I accept this will require real effort</div>
+                        <div class="check-hint">"Easy money" is usually a trap</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <button class="analyze-btn" onclick="analyze()">Check Alignment</button>
+
+        <div class="result" id="result">
+            <div class="score-display">
+                <div class="score-ring" id="scoreRing" style="--score: 0">
+                    <div class="score-inner">
+                        <div class="score-value" id="scoreValue">0</div>
+                        <div class="score-label">ALIGNMENT</div>
+                    </div>
+                </div>
+                <div class="alignment-level" id="level">-</div>
+            </div>
+
+            <div class="breakdown">
+                <h4>Factor Analysis</h4>
+                <div id="factors"></div>
+            </div>
+
+            <div class="recommendations" id="recommendations">
+                <h4>Recommendations</h4>
+                <div id="recList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const FACTORS = [
+            { id: 'longTerm', name: 'Long-term Focus', icon: '🏔️', weight: 15 },
+            { id: 'authentic', name: 'Authentic Drive', icon: '💎', weight: 15 },
+            { id: 'evidence', name: 'Evidence-based', icon: '📊', weight: 12 },
+            { id: 'value', name: 'Value Creation', icon: '🌱', weight: 15 },
+            { id: 'sustainable', name: 'Sustainability', icon: '⚡', weight: 13 },
+            { id: 'noUrgency', name: 'No False Urgency', icon: '⏰', weight: 10 },
+            { id: 'noGuarantee', name: 'Realistic Expectations', icon: '⚖️', weight: 10 },
+            { id: 'notEasy', name: 'Effort Acceptance', icon: '💪', weight: 10 }
+        ];
+
+        function analyze() {
+            const goal = document.getElementById('goal').value.trim();
+            if (!goal) {
+                alert('Please enter your goal');
+                return;
+            }
+
+            let score = 0;
+            const results = [];
+            const missing = [];
+
+            FACTORS.forEach(f => {
+                const checked = document.getElementById(f.id).checked;
+                if (checked) {
+                    score += f.weight;
+                    results.push({ ...f, pass: true });
+                } else {
+                    results.push({ ...f, pass: false });
+                    missing.push(f);
+                }
+            });
+
+            // Update display
+            document.getElementById('scoreRing').style.setProperty('--score', score);
+            document.getElementById('scoreValue').textContent = score;
+
+            const level = document.getElementById('level');
+            if (score >= 80) {
+                level.textContent = 'HIGH ALIGNMENT';
+                level.className = 'alignment-level high';
+            } else if (score >= 50) {
+                level.textContent = 'MODERATE ALIGNMENT';
+                level.className = 'alignment-level medium';
+            } else {
+                level.textContent = 'LOW ALIGNMENT';
+                level.className = 'alignment-level low';
+            }
+
+            // Factors
+            document.getElementById('factors').innerHTML = results.map(r => `
+                <div class="factor">
+                    <span class="factor-icon">${r.icon}</span>
+                    <span class="factor-name">${r.name}</span>
+                    <span class="factor-status ${r.pass ? 'pass' : 'fail'}">
+                        ${r.pass ? 'PASS' : 'REVIEW'}
+                    </span>
+                </div>
+            `).join('');
+
+            // Recommendations
+            let recs = [];
+            if (score >= 80) {
+                recs = [
+                    '• Goal is well-aligned with consciousness principles',
+                    '• Proceed with confidence',
+                    '• Monitor progress and stay adaptable'
+                ];
+            } else {
+                if (!document.getElementById('longTerm').checked) {
+                    recs.push('• Reconsider: Is this building lasting value or chasing quick gains?');
+                }
+                if (!document.getElementById('authentic').checked) {
+                    recs.push('• Question: Is this really YOUR goal or external pressure?');
+                }
+                if (!document.getElementById('evidence').checked) {
+                    recs.push('• Research more: Find evidence this approach actually works');
+                }
+                if (!document.getElementById('value').checked) {
+                    recs.push('• Add value: How does this genuinely help others?');
+                }
+                if (!document.getElementById('noUrgency').checked) {
+                    recs.push('• Slow down: False urgency is a manipulation red flag');
+                }
+                if (recs.length === 0) {
+                    recs = ['• Review unchecked items and adjust your approach'];
+                }
+            }
+
+            document.getElementById('recList').innerHTML = recs.map(r =>
+                `<div class="rec-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('result').classList.add('active');
+        }
+    </script>
+</body>
+</html>

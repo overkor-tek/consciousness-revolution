@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Goalposts Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.low { color: #2ecc71; }
+        .verdict-label.medium { color: #f1c40f; }
+        .verdict-label.high { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .pattern {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .pattern h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .response {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .response h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .response-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .response-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Moving Goalposts Detector</h1>
+            <p>Identify when success criteria keeps changing</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check what you're experiencing:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze Pattern</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="pattern">
+                <h3>What's Happening</h3>
+                <div id="patternList"></div>
+            </div>
+
+            <div class="response">
+                <h3>How to Respond</h3>
+                <div id="responseList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>The Truth</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const GOALPOST_SIGNS = [
+            { text: 'Requirements changed after you met the original ones', weight: 3 },
+            { text: 'What was "enough" before is suddenly not enough', weight: 3 },
+            { text: 'They added new conditions you didn\'t know about', weight: 3 },
+            { text: 'Your accomplishment was dismissed or minimized', weight: 2 },
+            { text: '"Yes but..." - always something else needed', weight: 3 },
+            { text: 'The target keeps getting further away', weight: 2 },
+            { text: 'Rules seem to apply differently to you than others', weight: 2 },
+            { text: 'No matter what you do, it\'s never quite right', weight: 3 },
+            { text: 'Expectations were retroactively changed', weight: 3 },
+            { text: 'Success gets redefined right as you achieve it', weight: 3 }
+        ];
+
+        let selected = new Set();
+
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = GOALPOST_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            let score = 0;
+            const analysis = [];
+            selected.forEach(i => {
+                score += GOALPOST_SIGNS[i].weight;
+                analysis.push(GOALPOST_SIGNS[i].text);
+            });
+
+            const maxScore = GOALPOST_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            let icon, label, desc, labelClass;
+            if (percentage <= 20) {
+                icon = '✅';
+                label = 'MINIMAL GOALPOST MOVING';
+                desc = 'Normal expectation adjustments';
+                labelClass = 'low';
+            } else if (percentage <= 50) {
+                icon = '⚠️';
+                label = 'MODERATE GOALPOST MOVING';
+                desc = 'Pattern of changing expectations';
+                labelClass = 'medium';
+            } else {
+                icon = '🥅';
+                label = 'SIGNIFICANT GOALPOST MOVING';
+                desc = 'You\'re being set up to always fail';
+                labelClass = 'high';
+            }
+
+            const responses = generateResponses(percentage);
+            const truths = generateTruths(percentage);
+
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (analysis.length > 0) {
+                document.getElementById('patternList').innerHTML = analysis.slice(0, 5).map(a =>
+                    `<div class="pattern-item">⚠️ ${a}</div>`
+                ).join('');
+            } else {
+                document.getElementById('patternList').innerHTML =
+                    '<div class="pattern-item" style="background: rgba(46, 204, 113, 0.1);">✓ No patterns selected</div>';
+            }
+
+            document.getElementById('responseList').innerHTML = responses.map(r =>
+                `<div class="response-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateResponses(percentage) {
+            const responses = [];
+
+            if (percentage > 50) {
+                responses.push('State: "I met the original agreement. That\'s complete."');
+                responses.push('Document all requirements IN WRITING before starting');
+                responses.push('Refuse to accept retroactive changes to deals');
+            } else if (percentage > 20) {
+                responses.push('Ask: "What specifically needs to happen for this to be done?"');
+                responses.push('Get agreement in writing before proceeding');
+            }
+
+            responses.push('Name the pattern: "The requirements seem to keep changing"');
+            responses.push('Stop chasing - they don\'t want you to catch the goal');
+            responses.push('Your effort is valid even if they won\'t acknowledge it');
+
+            return responses.slice(0, 5);
+        }
+
+        function generateTruths(percentage) {
+            const truths = [
+                'If the goal keeps moving, you\'re not meant to reach it',
+                'This is about control, not standards',
+                'You can\'t win a rigged game'
+            ];
+
+            if (percentage > 50) {
+                truths.push('Consider whether this relationship/situation is viable');
+            }
+
+            truths.push('Your worth isn\'t defined by their impossible standards');
+
+            return truths.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

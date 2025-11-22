@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breadcrumbing Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-level {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-level.low { color: #2ecc71; }
+        .verdict-level.medium { color: #f1c40f; }
+        .verdict-level.high { color: #e74c3c; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .analysis-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .response {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .response h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .response-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .response-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Breadcrumbing Detector</h1>
+            <p>Identify minimal effort designed to keep you interested</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check behaviors you're experiencing:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze Pattern</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-level" id="verdictLevel">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="analysis">
+                <h3>What's Happening</h3>
+                <div id="analysisList"></div>
+            </div>
+
+            <div class="response">
+                <h3>How to Respond</h3>
+                <div id="responseList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>The Hard Truth</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const BREADCRUMB_SIGNS = [
+            { text: 'They only text late at night or sporadically', weight: 2 },
+            { text: 'Messages are short and non-committal ("hey" "thinking of you")', weight: 2 },
+            { text: 'They like/comment on social media but won\'t make real plans', weight: 3 },
+            { text: 'Plans get cancelled or rescheduled repeatedly', weight: 3 },
+            { text: 'They disappear then reappear when you start moving on', weight: 3 },
+            { text: 'Conversations never progress to deeper topics', weight: 2 },
+            { text: 'They\'re available for texting but not for calls or meetups', weight: 2 },
+            { text: 'You\'re always the one initiating contact', weight: 2 },
+            { text: 'They give just enough attention to keep you hoping', weight: 3 },
+            { text: 'You feel anxious waiting for their next crumb', weight: 2 }
+        ];
+
+        let selected = new Set();
+
+        // Render checks
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = BREADCRUMB_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            // Calculate score
+            let score = 0;
+            const analysis = [];
+            selected.forEach(i => {
+                score += BREADCRUMB_SIGNS[i].weight;
+                analysis.push(BREADCRUMB_SIGNS[i].text);
+            });
+
+            const maxScore = BREADCRUMB_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Determine level
+            let level, label, desc, levelClass;
+            if (percentage <= 20) {
+                level = percentage + '%';
+                label = 'MINIMAL BREADCRUMBING';
+                desc = 'Low concern - but keep observing';
+                levelClass = 'low';
+            } else if (percentage <= 50) {
+                level = percentage + '%';
+                label = 'MODERATE BREADCRUMBING';
+                desc = 'Pattern emerging - needs addressing';
+                levelClass = 'medium';
+            } else {
+                level = percentage + '%';
+                label = 'SIGNIFICANT BREADCRUMBING';
+                desc = 'You\'re being kept on the hook';
+                levelClass = 'high';
+            }
+
+            // Generate responses
+            const responses = generateResponses(percentage);
+
+            // Generate truths
+            const truths = generateTruths(percentage);
+
+            // Render results
+            const levelEl = document.getElementById('verdictLevel');
+            levelEl.textContent = level;
+            levelEl.className = 'verdict-level ' + levelClass;
+            document.getElementById('verdictLabel').textContent = label;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (analysis.length > 0) {
+                document.getElementById('analysisList').innerHTML = analysis.slice(0, 5).map(a =>
+                    `<div class="analysis-item">⚠️ ${a}</div>`
+                ).join('');
+            } else {
+                document.getElementById('analysisList').innerHTML =
+                    '<div class="analysis-item" style="background: rgba(46, 204, 113, 0.1);">✓ No breadcrumbing signs selected</div>';
+            }
+
+            document.getElementById('responseList').innerHTML = responses.map(r =>
+                `<div class="response-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateResponses(percentage) {
+            const responses = [];
+
+            if (percentage > 50) {
+                responses.push('Stop initiating - see if they make effort');
+                responses.push('State clearly: "I need consistent communication"');
+                responses.push('Set a deadline in your mind - if no change, move on');
+            } else if (percentage > 20) {
+                responses.push('Notice the pattern before confronting');
+                responses.push('Match their energy - don\'t over-invest');
+            }
+
+            responses.push('Your time and attention have value');
+            responses.push('Someone who wants you will make that clear');
+            responses.push('Crumbs won\'t become a meal');
+
+            return responses.slice(0, 5);
+        }
+
+        function generateTruths(percentage) {
+            const truths = [
+                'If they wanted to, they would',
+                'Inconsistent availability = inconsistent interest',
+                'You deserve consistent effort, not crumbs'
+            ];
+
+            if (percentage > 50) {
+                truths.push('They\'re keeping you as a backup option');
+            }
+
+            truths.push('Your peace > their occasional attention');
+
+            return truths.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

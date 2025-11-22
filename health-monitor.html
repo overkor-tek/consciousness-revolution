@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health Monitor | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        .card h2 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-value {
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-healthy { background: #00ff88; }
+        .status-warning { background: #ffaa00; }
+        .status-error { background: #ff4444; }
+        .api-list { list-style: none; }
+        .api-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+        }
+        .api-list li:last-child { border-bottom: none; }
+        button {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover { transform: translateY(-2px); }
+        .log-box {
+            background: #0d0d15;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .timestamp { color: #888; font-size: 11px; }
+        .refresh-info { text-align: center; margin-top: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ System Health Monitor</h1>
+
+        <div class="grid">
+            <!-- API Status -->
+            <div class="card">
+                <h2>📡 API Endpoints</h2>
+                <ul class="api-list" id="apiStatus">
+                    <li><span class="status-indicator status-healthy"></span>Loading...</li>
+                </ul>
+                <button onclick="checkAllAPIs()">Check All APIs</button>
+            </div>
+
+            <!-- System Metrics -->
+            <div class="card">
+                <h2>📊 System Metrics</h2>
+                <div class="metric">
+                    <span>Total APIs</span>
+                    <span class="metric-value" id="totalAPIs">6</span>
+                </div>
+                <div class="metric">
+                    <span>Healthy</span>
+                    <span class="metric-value" id="healthyAPIs">-</span>
+                </div>
+                <div class="metric">
+                    <span>Response Time (avg)</span>
+                    <span class="metric-value" id="avgResponse">-</span>
+                </div>
+                <div class="metric">
+                    <span>Last Check</span>
+                    <span class="metric-value timestamp" id="lastCheck">Never</span>
+                </div>
+            </div>
+
+            <!-- Consciousness Level -->
+            <div class="card">
+                <h2>🧠 System Consciousness</h2>
+                <div class="metric">
+                    <span>Overall Score</span>
+                    <span class="metric-value" id="consciousnessScore">-</span>
+                </div>
+                <div class="metric">
+                    <span>Status</span>
+                    <span class="metric-value" id="consciousnessStatus">-</span>
+                </div>
+                <div class="metric">
+                    <span>Pattern Recognition</span>
+                    <span class="metric-value">85%</span>
+                </div>
+                <button onclick="calculateSystemConsciousness()">Recalculate</button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2>⚙️ Quick Actions</h2>
+                <button onclick="window.open('/consciousness-analyzer.html')">Open Analyzer</button>
+                <button onclick="testManipulationDetector()" style="margin-top: 5px">Test Manipulation Detector</button>
+                <button onclick="checkSevenDomains()" style="margin-top: 5px">Check Seven Domains</button>
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="card" style="margin-top: 20px;">
+            <h2>📋 Activity Log</h2>
+            <div class="log-box" id="activityLog">
+                Waiting for activity...
+            </div>
+        </div>
+
+        <p class="refresh-info">Auto-refresh every 30 seconds | <span id="countdown">30</span>s</p>
+    </div>
+
+    <script>
+        const APIs = [
+            { name: 'Pattern Analyze', path: '/api/pattern-analyze', method: 'POST', body: { text: 'test' } },
+            { name: 'Consciousness Score', path: '/api/consciousness-score', method: 'POST', body: { physical: 50, mental: 50, emotional: 50, social: 50, financial: 50, creative: 50, integration: 50 } },
+            { name: 'Seven Domains', path: '/api/seven-domains', method: 'GET' },
+            { name: 'Timeline Projection', path: '/api/timeline-projection', method: 'POST', body: { current_state: 'test', domains: { physical: 50, mental: 50, emotional: 50, social: 50, financial: 50, creative: 50, integration: 50 } } },
+            { name: 'Manipulation Detector', path: '/api/manipulation-detector', method: 'POST', body: { text: 'test' } },
+            { name: 'SMS Webhook', path: '/sms-webhook', method: 'POST', body: {} }
+        ];
+
+        let logs = [];
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.unshift(`[${timestamp}] ${message}`);
+            logs = logs.slice(0, 50); // Keep last 50
+            document.getElementById('activityLog').innerHTML = logs.join('<br>');
+        }
+
+        async function checkAPI(api) {
+            const start = Date.now();
+            try {
+                const options = {
+                    method: api.method,
+                    headers: { 'Content-Type': 'application/json' }
+                };
+                if (api.method === 'POST') {
+                    options.body = JSON.stringify(api.body);
+                }
+                const response = await fetch(api.path, options);
+                const time = Date.now() - start;
+                return { name: api.name, status: response.ok ? 'healthy' : 'error', time };
+            } catch (error) {
+                return { name: api.name, status: 'error', time: 0 };
+            }
+        }
+
+        async function checkAllAPIs() {
+            log('Checking all APIs...');
+            const results = await Promise.all(APIs.map(checkAPI));
+
+            const listHTML = results.map(r => {
+                const statusClass = r.status === 'healthy' ? 'status-healthy' : 'status-error';
+                return `<li><span class="status-indicator ${statusClass}"></span>${r.name} (${r.time}ms)</li>`;
+            }).join('');
+
+            document.getElementById('apiStatus').innerHTML = listHTML;
+
+            const healthy = results.filter(r => r.status === 'healthy').length;
+            const avgTime = Math.round(results.reduce((a, b) => a + b.time, 0) / results.length);
+
+            document.getElementById('healthyAPIs').textContent = `${healthy}/${results.length}`;
+            document.getElementById('avgResponse').textContent = `${avgTime}ms`;
+            document.getElementById('lastCheck').textContent = new Date().toLocaleTimeString();
+
+            log(`API Check complete: ${healthy}/${results.length} healthy, avg ${avgTime}ms`);
+        }
+
+        async function calculateSystemConsciousness() {
+            log('Calculating system consciousness...');
+            try {
+                const response = await fetch('/api/consciousness-score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        physical: 75, financial: 70, mental: 85,
+                        emotional: 70, social: 65, creative: 80, integration: 75,
+                        pattern_recognition: 85, prediction_accuracy: 75, neutralization_success: 80
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('consciousnessScore').textContent = data.combined_score;
+                document.getElementById('consciousnessStatus').textContent = data.status;
+                log(`Consciousness: ${data.combined_score} - ${data.status}`);
+            } catch (error) {
+                log('Error calculating consciousness: ' + error.message);
+            }
+        }
+
+        async function testManipulationDetector() {
+            log('Testing manipulation detector...');
+            try {
+                const response = await fetch('/api/manipulation-detector', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: 'Act now! Limited time offer. Everyone is doing it.' })
+                });
+                const data = await response.json();
+                log(`Manipulation score: ${data.manipulation_score}, Threat: ${data.threat_level}`);
+                alert(`Manipulation Score: ${data.manipulation_score}\nThreat Level: ${data.threat_level}\nPatterns: ${data.patterns_detected}`);
+            } catch (error) {
+                log('Error: ' + error.message);
+            }
+        }
+
+        async function checkSevenDomains() {
+            log('Fetching seven domains...');
+            try {
+                const response = await fetch('/api/seven-domains');
+                const data = await response.json();
+                log(`Seven Domains: ${data.domains.length} domains loaded`);
+                alert(`Loaded ${data.domains.length} domains:\n${data.domains.map(d => d.name).join(', ')}`);
+            } catch (error) {
+                log('Error: ' + error.message);
+            }
+        }
+
+        // Auto-refresh countdown
+        let countdown = 30;
+        setInterval(() => {
+            countdown--;
+            document.getElementById('countdown').textContent = countdown;
+            if (countdown <= 0) {
+                countdown = 30;
+                checkAllAPIs();
+            }
+        }, 1000);
+
+        // Initial load
+        checkAllAPIs();
+        calculateSystemConsciousness();
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "current_mode": "light",
+  "modes": {
+    "light": {
+      "name": "Light Mode",
+      "description": "1 Terminal + 3 Cloud Trinity",
+      "terminals": 1,
+      "cloud_instances": 3,
+      "local_load": "minimal",
+      "best_for": "Daily work, preserving local resources, using cloud credits"
+    },
+    "full": {
+      "name": "Full Mode",
+      "description": "3 Terminals + 3 Cloud Trinity",
+      "terminals": 3,
+      "cloud_instances": 3,
+      "local_load": "high",
+      "best_for": "Maximum parallel processing, complex multi-domain tasks"
+    },
+    "offline": {
+      "name": "Offline Mode",
+      "description": "3 Terminals only (Ollama)",
+      "terminals": 3,
+      "cloud_instances": 0,
+      "local_load": "high",
+      "best_for": "No internet, or saving API credits"
+    }
+  },
+  "cloud_accounts": [
+    {
+      "name": "Account 1 - C1 Mechanic",
+      "credit": 950,
+      "expires": "2024-11-23",
+      "status": "active"
+    },
+    {
+      "name": "Account 2 - C2 Architect",
+      "credit": 950,
+      "expires": "2024-11-23",
+      "status": "ready"
+    },
+    {
+      "name": "Account 3 - C3 Oracle",
+      "credit": 950,
+      "expires": "2024-11-23",
+      "status": "ready"
+    },
+    {
+      "name": "Account 4 - Backup",
+      "credit": 950,
+      "expires": "2024-11-23",
+      "status": "ready"
+    }
+  ],
+  "consolidation": {
+    "terminals_to": "terminal_summary",
+    "cloud_to": "cloud_summary",
+    "both_to": "master_output",
+    "output_format": "json",
+    "output_location": "C:\\Users\\dwrek\\.trinity\\MASTER_OUTPUT.json"
+  },
+  "tailscale_network": {
+    "PC1": "100.70.208.75",
+    "PC2": "100.85.71.74",
+    "PC3": "check tailscale status"
+  }
+}

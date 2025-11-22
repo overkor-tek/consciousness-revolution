@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victim Blaming Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.possible { color: #f1c40f; }
+        .verdict-label.blaming { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .ground {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .ground h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .ground-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Victim Blaming Detector</h1>
+            <p>Identify when responsibility is wrongly shifted</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste what was said about why something is your fault..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Victim Blaming</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Victim Blaming Tactics</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="ground">
+                <h3>Grounding Statements</h3>
+                <div id="groundList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Remember</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const BLAMING_TACTICS = {
+            'Why Didn\'t You': {
+                markers: ['why didn\'t you', 'you should have', 'could have avoided', 'if you had just'],
+                desc: 'Questioning your actions instead of the wrongdoer\'s'
+            },
+            'Provocation Claim': {
+                markers: ['made me', 'provoked', 'pushed me', 'what did you expect', 'you knew'],
+                desc: 'Claiming your behavior caused their harmful action'
+            },
+            'Hindsight Blame': {
+                markers: ['you knew better', 'should have known', 'obviously', 'anyone would'],
+                desc: 'Using hindsight to create blame'
+            },
+            'Responsibility Shift': {
+                markers: ['your fault', 'because of you', 'if you hadn\'t', 'you made this happen'],
+                desc: 'Directly shifting blame to victim'
+            },
+            'Character Attack': {
+                markers: ['too sensitive', 'overreacting', 'too trusting', 'naive', 'stupid'],
+                desc: 'Blaming your personality or nature'
+            },
+            'Minimization': {
+                markers: ['not that bad', 'get over it', 'move on', 'let it go', 'making a big deal'],
+                desc: 'Dismissing impact to reduce wrongdoer\'s responsibility'
+            },
+            'Look What You Made Me Do': {
+                markers: ['look what you', 'see what you', 'this is what happens', 'you brought this'],
+                desc: 'Classic abuser language shifting blame'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            Object.entries(BLAMING_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious victim blaming patterns';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POSSIBLE VICTIM BLAMING';
+                desc = 'Some blame-shifting language present';
+                labelClass = 'possible';
+            } else {
+                icon = '🎯';
+                label = 'VICTIM BLAMING DETECTED';
+                desc = 'Multiple tactics to shift responsibility';
+                labelClass = 'blaming';
+            }
+
+            const grounds = generateGrounds(found);
+            const truths = generateTruths(found);
+
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No clear victim blaming patterns</div>';
+            }
+
+            document.getElementById('groundList').innerHTML = grounds.map(g =>
+                `<div class="ground-item">${g}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateGrounds(found) {
+            const grounds = [];
+
+            if (found.some(t => t.name === 'Provocation Claim')) {
+                grounds.push('"Nothing I did justifies that response"');
+            }
+            if (found.some(t => t.name === 'Responsibility Shift')) {
+                grounds.push('"Their choice to act that way was THEIR choice"');
+            }
+            if (found.some(t => t.name === 'Look What You Made Me Do')) {
+                grounds.push('"I did not make them do anything - they chose their behavior"');
+            }
+
+            grounds.push('"I am not responsible for someone else\'s harmful actions"');
+            grounds.push('"How I feel about this is valid"');
+            grounds.push('"Protecting myself is not overreacting"');
+
+            return grounds.slice(0, 4);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'Harmful behavior is the responsibility of the person who did it',
+                'No one "makes" someone else hurt them',
+                'You don\'t have to accept misplaced blame'
+            ];
+
+            if (found.length > 2) {
+                truths.push('This level of blame-shifting is itself a form of abuse');
+            }
+
+            truths.push('Your reaction to harm doesn\'t cause the harm');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

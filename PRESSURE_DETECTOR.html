@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressure Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 80px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .detect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pressure-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pressure-level {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .pressure-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .pressure-label.low { color: #2ecc71; }
+        .pressure-label.medium { color: #f1c40f; }
+        .pressure-label.high { color: #e74c3c; }
+
+        .pressure-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic:last-child { margin-bottom: 0; }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-example {
+            font-size: 12px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        .defenses {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .defenses h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .defense {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .defense:last-child { border-bottom: none; }
+
+        .defense-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .defense-text {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .reminder {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .reminder-text {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .pressure-level { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pressure Detector</h1>
+            <p>Identify pressure tactics in messages and sales pitches</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste a message, email, or sales pitch to analyze for pressure tactics..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Pressure</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="pressure-card">
+                <div class="pressure-level" id="pressureLevel">🌡️</div>
+                <div class="pressure-label" id="pressureLabel">-</div>
+                <div class="pressure-desc" id="pressureDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Pressure Tactics Detected</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="defenses">
+                <h3>Defense Strategies</h3>
+                <div id="defensesList"></div>
+            </div>
+
+            <div class="reminder">
+                <div class="reminder-text" id="reminder">-</div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PRESSURE_TACTICS = {
+            'Time Pressure': {
+                markers: ['act now', 'limited time', 'expires', 'deadline', 'today only', 'last chance', 'ending soon', 'hurry'],
+                example: '"This offer expires in 2 hours!"'
+            },
+            'Scarcity': {
+                markers: ['only', 'left', 'remaining', 'running out', 'limited', 'few spots', 'almost gone', 'while supplies'],
+                example: '"Only 3 spots remaining!"'
+            },
+            'Social Proof Pressure': {
+                markers: ['everyone', 'thousands', 'don\'t miss out', 'fomo', 'trending', 'sold out', 'waitlist'],
+                example: '"10,000 people already signed up!"'
+            },
+            'Authority Pressure': {
+                markers: ['experts recommend', 'doctors say', 'according to studies', 'professional advice'],
+                example: '"Experts recommend acting immediately"'
+            },
+            'Fear Appeal': {
+                markers: ['risk', 'dangerous', 'warning', 'before it\'s too late', 'protect yourself', 'threat', 'avoid'],
+                example: '"Don\'t risk losing everything"'
+            },
+            'Guilt/Obligation': {
+                markers: ['after all', 'least you can do', 'owe it to', 'disappointed', 'let down', 'deserve'],
+                example: '"After all I\'ve done for you"'
+            },
+            'Reciprocity Pressure': {
+                markers: ['free gift', 'we gave you', 'in return', 'now it\'s your turn', 'favor'],
+                example: '"We gave you this free trial, now..."'
+            },
+            'Commitment Escalation': {
+                markers: ['you agreed', 'you said', 'you already', 'consistent with', 'follow through'],
+                example: '"You already said you were interested"'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check each tactic
+            Object.entries(PRESSURE_TACTICS).forEach(([name, data]) => {
+                const matches = data.markers.filter(m => lower.includes(m));
+                if (matches.length > 0) {
+                    found.push({
+                        name,
+                        example: data.example,
+                        matches
+                    });
+                }
+            });
+
+            // Calculate pressure level
+            let level, label, desc, emoji;
+            if (found.length === 0) {
+                level = 'low';
+                label = 'LOW PRESSURE';
+                desc = 'No significant pressure tactics detected';
+                emoji = '✅';
+            } else if (found.length <= 2) {
+                level = 'medium';
+                label = 'MODERATE PRESSURE';
+                desc = `${found.length} pressure tactic(s) detected - stay aware`;
+                emoji = '⚠️';
+            } else {
+                level = 'high';
+                label = 'HIGH PRESSURE';
+                desc = `${found.length} pressure tactics detected - proceed with caution`;
+                emoji = '🚨';
+            }
+
+            // Generate defenses
+            const defenses = generateDefenses(found);
+
+            // Generate reminder
+            const reminder = getReminder(found);
+
+            // Render results
+            document.getElementById('pressureLevel').textContent = emoji;
+            const labelEl = document.getElementById('pressureLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'pressure-label ' + level;
+            document.getElementById('pressureDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-example">${t.example}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">No pressure tactics detected in this text</div>';
+            }
+
+            document.getElementById('defensesList').innerHTML = defenses.map(d => `
+                <div class="defense">
+                    <span class="defense-icon">🛡️</span>
+                    <span class="defense-text">${d}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('reminder').textContent = reminder;
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateDefenses(tactics) {
+            const defenses = [];
+
+            if (tactics.some(t => t.name === 'Time Pressure')) {
+                defenses.push('Genuine opportunities rarely have artificial deadlines. Take your time to decide.');
+            }
+            if (tactics.some(t => t.name === 'Scarcity')) {
+                defenses.push('Scarcity is often manufactured. If it\'s truly scarce, it will be available elsewhere.');
+            }
+            if (tactics.some(t => t.name === 'Social Proof Pressure')) {
+                defenses.push('What others do is irrelevant to your specific situation and needs.');
+            }
+            if (tactics.some(t => t.name === 'Fear Appeal')) {
+                defenses.push('Fear bypasses rational thinking. Ask: What is the actual evidence of risk?');
+            }
+            if (tactics.some(t => t.name === 'Guilt/Obligation')) {
+                defenses.push('You don\'t owe anyone a decision. Guilt is a manipulation tool.');
+            }
+
+            if (defenses.length === 0) {
+                defenses.push('This message appears to respect your autonomy.');
+                defenses.push('You can evaluate this calmly without time pressure.');
+            }
+
+            defenses.push('Sleep on any major decision. Pressure tactics lose power with time.');
+
+            return defenses.slice(0, 4);
+        }
+
+        function getReminder(tactics) {
+            if (tactics.length >= 3) {
+                return '"If they need to pressure you, the value isn\'t self-evident." - Pattern Theory';
+            } else if (tactics.length > 0) {
+                return '"A good deal tomorrow is better than a bad deal today." - Pattern Theory';
+            } else {
+                return '"Truth doesn\'t need urgency. It remains true tomorrow." - Pattern Theory';
+            }
+        }
+    </script>
+</body>
+</html>

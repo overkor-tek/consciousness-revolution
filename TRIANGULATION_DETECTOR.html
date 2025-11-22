@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangulation Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.possible { color: #f1c40f; }
+        .verdict-label.likely { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .defense {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .defense h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .defense-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Triangulation Detector</h1>
+            <p>Identify when a third party is used to manipulate</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Describe what they said about another person, or how they brought someone else into your conflict..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Triangulation</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Triangulation Tactics</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="defense">
+                <h3>How to Counter</h3>
+                <div id="defenseList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Reality Check</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const TRIANGULATION_TACTICS = {
+            'Comparison to Ex': {
+                markers: ['my ex', 'ex would', 'ex never', 'ex always', 'previous', 'last partner'],
+                desc: 'Using past relationships to create competition/insecurity'
+            },
+            'Third Party Agreement': {
+                markers: ['everyone agrees', 'they all think', 'everyone says', 'my friends say', 'people think'],
+                desc: 'Claiming others agree to strengthen their position'
+            },
+            'Secret Information': {
+                markers: ['told me about you', 'said that you', 'heard that you', 'they mentioned'],
+                desc: 'Bringing in outside "information" about you'
+            },
+            'Jealousy Induction': {
+                markers: ['interested in me', 'flirting with', 'attracted to', 'paying attention', 'complimenting'],
+                desc: 'Mentioning others\' interest to provoke jealousy'
+            },
+            'Flying Monkeys': {
+                markers: ['told them', 'they agree', 'on my side', 'support me', 'believe me'],
+                desc: 'Recruiting others to their cause against you'
+            },
+            'Comparison Shame': {
+                markers: ['unlike you', 'better than you', 'would never', 'not like you', 'at least they'],
+                desc: 'Using others to make you feel inadequate'
+            },
+            'Messenger Manipulation': {
+                markers: ['tell them', 'let them know', 'pass this on', 'make sure they know'],
+                desc: 'Using you as messenger to another person'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check tactics
+            Object.entries(TRIANGULATION_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate likelihood
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious triangulation patterns';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POSSIBLE TRIANGULATION';
+                desc = 'Some indicators present';
+                labelClass = 'possible';
+            } else {
+                icon = '🔺';
+                label = 'TRIANGULATION DETECTED';
+                desc = 'Multiple tactics to involve third parties';
+                labelClass = 'likely';
+            }
+
+            // Generate defense
+            const defense = generateDefense(found);
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No clear triangulation patterns</div>';
+            }
+
+            document.getElementById('defenseList').innerHTML = defense.map(d =>
+                `<div class="defense-item">${d}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateDefense(found) {
+            const defense = [];
+
+            if (found.some(t => t.name === 'Third Party Agreement')) {
+                defense.push('"I\'d like to hear their opinion directly"');
+            }
+            if (found.some(t => t.name === 'Comparison to Ex')) {
+                defense.push('"I\'m not interested in comparisons - let\'s discuss us"');
+            }
+            if (found.some(t => t.name === 'Flying Monkeys')) {
+                defense.push('Go directly to that person for the real story');
+            }
+
+            defense.push('Refuse to discuss the third party - stay on the direct issue');
+            defense.push('Don\'t take the bait to compete or defend');
+            defense.push('Trust actions over reported words');
+
+            return defense.slice(0, 4);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'Healthy communication is direct, not through third parties',
+                'If they wanted to resolve it, they\'d talk to YOU',
+                'You don\'t need to prove yourself against anyone'
+            ];
+
+            if (found.length > 0) {
+                truths.push('Triangulation creates chaos - that\'s the goal');
+            }
+
+            truths.push('Their relationship with others isn\'t about you');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

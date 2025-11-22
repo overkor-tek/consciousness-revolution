@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Projection | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .scenario-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 80px;
+            margin-bottom: 16px;
+        }
+
+        .scenario-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .factor-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .factor-label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 6px;
+        }
+
+        .factor-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .factor-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .project-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .timeline h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .timeline-track {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .timeline-track::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-point {
+            position: relative;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-point:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .timeline-point::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+
+        .point-time {
+            font-size: 11px;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+
+        .point-title {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .point-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .outcomes {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .outcomes h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .outcome {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .outcome:last-child { margin-bottom: 0; }
+
+        .outcome.best {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .outcome.likely {
+            background: rgba(241, 196, 15, 0.1);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+        }
+
+        .outcome.worst {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .outcome-label {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .outcome.best .outcome-label { color: #2ecc71; }
+        .outcome.likely .outcome-label { color: #f1c40f; }
+        .outcome.worst .outcome-label { color: #e74c3c; }
+
+        .outcome-text {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .probability-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .probability-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        .outcome.best .probability-fill { background: #2ecc71; }
+        .outcome.likely .probability-fill { background: #f1c40f; }
+        .outcome.worst .probability-fill { background: #e74c3c; }
+
+        .leverage {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .leverage h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .leverage-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .factors-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Timeline Projection</h1>
+            <p>Project future outcomes based on current patterns</p>
+        </div>
+
+        <div class="input-section">
+            <h3>Describe Your Situation</h3>
+            <textarea class="scenario-input" id="scenario" placeholder="Describe the situation, decision, or relationship you want to project..."></textarea>
+
+            <div class="factors-grid">
+                <div class="factor-item">
+                    <div class="factor-label">Information Available</div>
+                    <input type="range" class="factor-slider" id="info" min="1" max="10" value="5">
+                </div>
+                <div class="factor-item">
+                    <div class="factor-label">Emotional Clarity</div>
+                    <input type="range" class="factor-slider" id="clarity" min="1" max="10" value="5">
+                </div>
+                <div class="factor-item">
+                    <div class="factor-label">External Pressure</div>
+                    <input type="range" class="factor-slider" id="pressure" min="1" max="10" value="5">
+                </div>
+                <div class="factor-item">
+                    <div class="factor-label">Trust Level</div>
+                    <input type="range" class="factor-slider" id="trust" min="1" max="10" value="5">
+                </div>
+            </div>
+
+            <button class="project-btn" onclick="project()">Project Timeline</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="timeline">
+                <h3>Projected Timeline</h3>
+                <div class="timeline-track" id="timeline"></div>
+            </div>
+
+            <div class="outcomes">
+                <h3>Possible Outcomes</h3>
+                <div id="outcomesList"></div>
+            </div>
+
+            <div class="leverage">
+                <h4>Leverage Points</h4>
+                <div id="leverageList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        function project() {
+            const scenario = document.getElementById('scenario').value.trim();
+            if (!scenario) return;
+
+            const factors = {
+                info: parseInt(document.getElementById('info').value),
+                clarity: parseInt(document.getElementById('clarity').value),
+                pressure: parseInt(document.getElementById('pressure').value),
+                trust: parseInt(document.getElementById('trust').value)
+            };
+
+            // Calculate projection based on factors
+            const avgPositive = (factors.info + factors.clarity + factors.trust) / 3;
+            const riskLevel = factors.pressure;
+
+            // Generate timeline
+            const timeline = generateTimeline(factors);
+            const outcomes = generateOutcomes(avgPositive, riskLevel);
+            const leverage = generateLeverage(factors);
+
+            // Render results
+            document.getElementById('timeline').innerHTML = timeline.map(point => `
+                <div class="timeline-point">
+                    <div class="point-time">${point.time}</div>
+                    <div class="point-title">${point.title}</div>
+                    <div class="point-desc">${point.desc}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('outcomesList').innerHTML = outcomes.map(outcome => `
+                <div class="outcome ${outcome.type}">
+                    <div class="outcome-label">${outcome.label} (${outcome.prob}%)</div>
+                    <div class="outcome-text">${outcome.text}</div>
+                    <div class="probability-bar">
+                        <div class="probability-fill" style="width: ${outcome.prob}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('leverageList').innerHTML = leverage.map(item =>
+                `<div class="leverage-item">• ${item}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateTimeline(factors) {
+            const timeline = [];
+
+            // Immediate
+            if (factors.pressure > 7) {
+                timeline.push({
+                    time: 'Immediate',
+                    title: 'High Pressure Phase',
+                    desc: 'External pressure may force quick decisions. Focus on maintaining clarity.'
+                });
+            } else {
+                timeline.push({
+                    time: 'Immediate',
+                    title: 'Assessment Phase',
+                    desc: 'Gather information and evaluate the situation from a neutral state.'
+                });
+            }
+
+            // Short-term
+            if (factors.info < 4) {
+                timeline.push({
+                    time: '1-2 Weeks',
+                    title: 'Information Gap',
+                    desc: 'Missing information may lead to assumptions. Seek clarity before proceeding.'
+                });
+            } else if (factors.clarity < 4) {
+                timeline.push({
+                    time: '1-2 Weeks',
+                    title: 'Emotional Processing',
+                    desc: 'Allow time for emotional clarity. Decisions made in reactive states have higher regret rates.'
+                });
+            } else {
+                timeline.push({
+                    time: '1-2 Weeks',
+                    title: 'Evaluation Period',
+                    desc: 'Good position to evaluate options systematically. Use decision matrix if needed.'
+                });
+            }
+
+            // Medium-term
+            if (factors.trust < 4) {
+                timeline.push({
+                    time: '1 Month',
+                    title: 'Trust Verification',
+                    desc: 'Low trust suggests pattern of broken agreements. Watch for consistency vs. promises.'
+                });
+            } else {
+                timeline.push({
+                    time: '1 Month',
+                    title: 'Pattern Emergence',
+                    desc: 'True patterns will become clear. Watch for consistency between words and actions.'
+                });
+            }
+
+            // Long-term
+            const avgScore = (factors.info + factors.clarity + factors.trust - factors.pressure) / 4;
+            if (avgScore > 5) {
+                timeline.push({
+                    time: '3+ Months',
+                    title: 'Resolution & Growth',
+                    desc: 'Conditions favor positive resolution. Maintain awareness and adjust as patterns reveal.'
+                });
+            } else {
+                timeline.push({
+                    time: '3+ Months',
+                    title: 'Crossroads Point',
+                    desc: 'Critical decision point ahead. Current patterns suggest need for significant change or boundary setting.'
+                });
+            }
+
+            return timeline;
+        }
+
+        function generateOutcomes(avgPositive, riskLevel) {
+            // Calculate probabilities
+            let bestProb = Math.round(avgPositive * 7 - riskLevel * 2);
+            let worstProb = Math.round(riskLevel * 5 - avgPositive * 2);
+
+            // Clamp values
+            bestProb = Math.max(10, Math.min(70, bestProb));
+            worstProb = Math.max(10, Math.min(50, worstProb));
+            const likelyProb = 100 - bestProb - worstProb;
+
+            return [
+                {
+                    type: 'best',
+                    label: 'Best Case',
+                    prob: bestProb,
+                    text: avgPositive > 6
+                        ? 'Clear communication leads to mutual understanding. Patterns align with stated intentions.'
+                        : 'With improved information and clarity, positive resolution is possible but requires active effort.'
+                },
+                {
+                    type: 'likely',
+                    label: 'Most Likely',
+                    prob: likelyProb,
+                    text: riskLevel > 6
+                        ? 'Pressure continues, requiring ongoing boundary management. Incremental progress possible.'
+                        : 'Gradual clarification of situation. Some friction but workable with awareness.'
+                },
+                {
+                    type: 'worst',
+                    label: 'Worst Case',
+                    prob: worstProb,
+                    text: avgPositive < 4
+                        ? 'Pattern of manipulation continues. Exit strategy may be necessary.'
+                        : 'Miscommunication leads to conflict. Recoverable with direct, honest conversation.'
+                }
+            ];
+        }
+
+        function generateLeverage(factors) {
+            const leverage = [];
+
+            if (factors.info < 5) {
+                leverage.push('Ask direct questions to fill information gaps');
+            }
+            if (factors.clarity < 5) {
+                leverage.push('Take 24-48 hours before major decisions');
+            }
+            if (factors.pressure > 6) {
+                leverage.push('False urgency is a manipulation tactic - resist artificial deadlines');
+            }
+            if (factors.trust < 5) {
+                leverage.push('Document agreements and watch for pattern consistency');
+            }
+
+            // Add general leverage points
+            if (factors.info >= 5 && factors.clarity >= 5) {
+                leverage.push('Good foundation - use systematic evaluation (decision matrix)');
+            }
+            if (factors.trust >= 7) {
+                leverage.push('High trust - direct communication will accelerate resolution');
+            }
+
+            leverage.push('Monitor for 15° turns - real intentions follow "but", "however"');
+
+            return leverage;
+        }
+    </script>
+</body>
+</html>

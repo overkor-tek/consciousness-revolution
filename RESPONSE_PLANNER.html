@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Planner | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .situation-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 80px;
+            margin-bottom: 12px;
+        }
+
+        .situation-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .tactic-select {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tactic-btn {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tactic-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .tactic-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .response-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .response-card h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .response-option {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .response-option:last-child { margin-bottom: 0; }
+
+        .response-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .response-text {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .response-example {
+            font-size: 12px;
+            opacity: 0.7;
+            font-style: italic;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .principles {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .principles h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .principle {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .principle:last-child { border-bottom: none; }
+
+        .avoid {
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .avoid h4 {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-bottom: 8px;
+        }
+
+        .avoid-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .tactic-select { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Response Planner</h1>
+            <p>Plan effective responses to manipulation tactics</p>
+        </div>
+
+        <div class="input-section">
+            <h3>What manipulation are you facing?</h3>
+            <textarea class="situation-input" id="situation" placeholder="Describe the situation or what they said..."></textarea>
+
+            <div class="tactic-select" id="tactics">
+                <button class="tactic-btn" data-tactic="urgency">Time Pressure</button>
+                <button class="tactic-btn" data-tactic="guilt">Guilt Trip</button>
+                <button class="tactic-btn" data-tactic="authority">Authority Appeal</button>
+                <button class="tactic-btn" data-tactic="social">Social Pressure</button>
+                <button class="tactic-btn" data-tactic="fear">Fear/Threat</button>
+                <button class="tactic-btn" data-tactic="flattery">Flattery</button>
+                <button class="tactic-btn" data-tactic="gaslighting">Gaslighting</button>
+                <button class="tactic-btn" data-tactic="silence">Silent Treatment</button>
+            </div>
+
+            <button class="plan-btn" onclick="planResponse()">Plan My Response</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="response-card">
+                <h3>Recommended Responses</h3>
+                <div id="responsesList"></div>
+            </div>
+
+            <div class="principles">
+                <h3>Response Principles</h3>
+                <div id="principlesList"></div>
+            </div>
+
+            <div class="avoid">
+                <h4>Avoid These Reactions</h4>
+                <div id="avoidList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let selectedTactic = null;
+
+        // Tactic selection
+        document.querySelectorAll('.tactic-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tactic-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedTactic = btn.dataset.tactic;
+            });
+        });
+
+        const RESPONSES = {
+            urgency: {
+                responses: [
+                    {
+                        label: 'Buy Time',
+                        text: 'Remove the artificial deadline by requesting time to think.',
+                        example: '"I need to think about this. I\'ll get back to you by [your timeline]."'
+                    },
+                    {
+                        label: 'Call It Out',
+                        text: 'Name the urgency tactic directly.',
+                        example: '"Why does this need to be decided right now? Good decisions rarely require immediate action."'
+                    },
+                    {
+                        label: 'Test the Deadline',
+                        text: 'See if the deadline is real by letting it pass.',
+                        example: '"If this opportunity truly expires, then it wasn\'t meant for me."'
+                    }
+                ],
+                principles: [
+                    'Genuine opportunities return. Artificial ones don\'t.',
+                    'Any decision you can\'t sleep on deserves suspicion.',
+                    'Your pace, not theirs.'
+                ],
+                avoid: [
+                    'Making decisions under time pressure',
+                    'Apologizing for needing time',
+                    'Explaining why you need to wait'
+                ]
+            },
+            guilt: {
+                responses: [
+                    {
+                        label: 'Separate Issues',
+                        text: 'Don\'t let guilt about one thing control a different decision.',
+                        example: '"I appreciate [past thing], and this decision is separate from that."'
+                    },
+                    {
+                        label: 'Set the Boundary',
+                        text: 'Make clear that guilt won\'t change your decision.',
+                        example: '"I understand you\'re disappointed, and my answer is still no."'
+                    },
+                    {
+                        label: 'Name the Pattern',
+                        text: 'Identify the guilt manipulation directly.',
+                        example: '"It sounds like you\'re trying to make me feel guilty to change my mind."'
+                    }
+                ],
+                principles: [
+                    'Past favors don\'t create unlimited future obligations.',
+                    'Guilt is a manipulation tool, not a valid argument.',
+                    'Your boundaries are not up for negotiation.'
+                ],
+                avoid: [
+                    'Over-explaining your reasons',
+                    'Apologizing for your decision',
+                    'Promising to "make it up"'
+                ]
+            },
+            authority: {
+                responses: [
+                    {
+                        label: 'Request Evidence',
+                        text: 'Ask for the actual source and data.',
+                        example: '"Can you share the specific study? I\'d like to review it myself."'
+                    },
+                    {
+                        label: 'Question Relevance',
+                        text: 'Check if the authority is relevant to this situation.',
+                        example: '"Is that expert qualified in this specific area?"'
+                    },
+                    {
+                        label: 'Do Your Own Research',
+                        text: 'Don\'t take authority claims at face value.',
+                        example: '"I\'ll look into what other experts say about this."'
+                    }
+                ],
+                principles: [
+                    'Authority is not proof.',
+                    'Unnamed experts are no experts at all.',
+                    'Verify, don\'t trust.'
+                ],
+                avoid: [
+                    'Deferring automatically to claimed authority',
+                    'Feeling stupid for asking questions',
+                    'Accepting "trust me" as evidence'
+                ]
+            },
+            social: {
+                responses: [
+                    {
+                        label: 'Reject the Frame',
+                        text: 'What others do is irrelevant to your situation.',
+                        example: '"That may be right for them. I\'ll decide what\'s right for me."'
+                    },
+                    {
+                        label: 'Question the Claim',
+                        text: 'Is "everyone" really doing this?',
+                        example: '"Who specifically? And how do you know they\'re satisfied?"'
+                    },
+                    {
+                        label: 'Stand Alone',
+                        text: 'Be comfortable with being different.',
+                        example: '"I\'m okay being the one who chooses differently."'
+                    }
+                ],
+                principles: [
+                    'Popularity is not validity.',
+                    'FOMO is manufactured.',
+                    'Your situation is unique.'
+                ],
+                avoid: [
+                    'Changing position just to conform',
+                    'Fearing being "left out"',
+                    'Assuming majority is right'
+                ]
+            },
+            fear: {
+                responses: [
+                    {
+                        label: 'Evaluate the Risk',
+                        text: 'Check if the threat is real or manufactured.',
+                        example: '"What specifically will happen, and what\'s the evidence?"'
+                    },
+                    {
+                        label: 'Separate Emotion from Decision',
+                        text: 'Don\'t let fear drive your choice.',
+                        example: '"I need to think about this when I\'m calm."'
+                    },
+                    {
+                        label: 'Get Outside Input',
+                        text: 'Consult someone not invested in the outcome.',
+                        example: '"I\'m going to get another perspective on this."'
+                    }
+                ],
+                principles: [
+                    'Fear bypasses rational thinking by design.',
+                    'Real risks don\'t need to be dramatized.',
+                    'Decide from clarity, not fear.'
+                ],
+                avoid: [
+                    'Making decisions in a fearful state',
+                    'Accepting worst-case as likely',
+                    'Letting anxiety drive urgency'
+                ]
+            },
+            flattery: {
+                responses: [
+                    {
+                        label: 'Stay Skeptical',
+                        text: 'Recognize flattery as a manipulation tactic.',
+                        example: '"Thank you - now what is it you\'re actually asking for?"'
+                    },
+                    {
+                        label: 'Separate Compliment from Request',
+                        text: 'Evaluate the request on its own merits.',
+                        example: '"I appreciate that. Let me evaluate this request separately."'
+                    },
+                    {
+                        label: 'Check Timing',
+                        text: 'Why the compliment now?',
+                        example: '"This compliment right before a request is interesting timing."'
+                    }
+                ],
+                principles: [
+                    'Flattery usually precedes a request.',
+                    'Compliments don\'t change the facts.',
+                    'Evaluate what\'s being asked, not how.'
+                ],
+                avoid: [
+                    'Reciprocating with agreement',
+                    'Feeling obligated due to nice words',
+                    'Letting ego override judgment'
+                ]
+            },
+            gaslighting: {
+                responses: [
+                    {
+                        label: 'Trust Your Experience',
+                        text: 'Your memory and perception are valid.',
+                        example: '"I know what I experienced. We can disagree, but that\'s my reality."'
+                    },
+                    {
+                        label: 'Document Everything',
+                        text: 'Keep records of agreements and events.',
+                        example: '"I have this in writing from [date]. Would you like me to share it?"'
+                    },
+                    {
+                        label: 'Seek Outside Validation',
+                        text: 'Check with others who witnessed events.',
+                        example: '"I\'m going to confirm this with [third party] who was there."'
+                    }
+                ],
+                principles: [
+                    'Your reality is your reality.',
+                    'Documentation defeats denial.',
+                    'Persistent doubt is a red flag.'
+                ],
+                avoid: [
+                    'Doubting your own memory',
+                    'Accepting their version without evidence',
+                    'Engaging in endless clarification'
+                ]
+            },
+            silence: {
+                responses: [
+                    {
+                        label: 'Don\'t Chase',
+                        text: 'Resist the urge to fill the silence.',
+                        example: '"When you\'re ready to communicate, I\'m here."'
+                    },
+                    {
+                        label: 'Name It',
+                        text: 'Call out the silent treatment directly.',
+                        example: '"This silence feels like punishment. I don\'t respond to that."'
+                    },
+                    {
+                        label: 'Set a Boundary',
+                        text: 'Make clear what communication you need.',
+                        example: '"I need direct communication. Let me know when you can provide that."'
+                    }
+                ],
+                principles: [
+                    'Silence is control, not communication.',
+                    'You can\'t fix what they won\'t discuss.',
+                    'Their silence is not your emergency.'
+                ],
+                avoid: [
+                    'Over-apologizing to end the silence',
+                    'Making concessions just for response',
+                    'Filling silence with your anxiety'
+                ]
+            }
+        };
+
+        function planResponse() {
+            if (!selectedTactic) {
+                alert('Please select the manipulation tactic you\'re facing');
+                return;
+            }
+
+            const data = RESPONSES[selectedTactic];
+
+            // Render responses
+            document.getElementById('responsesList').innerHTML = data.responses.map(r => `
+                <div class="response-option">
+                    <div class="response-label">${r.label}</div>
+                    <div class="response-text">${r.text}</div>
+                    <div class="response-example">${r.example}</div>
+                </div>
+            `).join('');
+
+            // Render principles
+            document.getElementById('principlesList').innerHTML = data.principles.map(p =>
+                `<div class="principle">• ${p}</div>`
+            ).join('');
+
+            // Render avoid
+            document.getElementById('avoidList').innerHTML = data.avoid.map(a =>
+                `<div class="avoid-item">• ${a}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+    </script>
+</body>
+</html>

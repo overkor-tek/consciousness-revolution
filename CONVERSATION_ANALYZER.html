@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Analyzer | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            line-height: 1.6;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-value.good { color: #2ecc71; }
+        .stat-value.warn { color: #f1c40f; }
+        .stat-value.bad { color: #e74c3c; }
+
+        .stat-label {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+
+        .patterns-found {
+            margin-bottom: 24px;
+        }
+
+        .pattern-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pattern-icon { font-size: 20px; }
+
+        .pattern-info { flex: 1; }
+
+        .pattern-name {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .pattern-quote {
+            font-size: 11px;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .pattern-type {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .type-deceit { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+        .type-truth { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .type-turn { background: rgba(241, 196, 15, 0.3); color: #f1c40f; }
+
+        .assessment {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .assessment.safe {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .assessment.caution {
+            background: rgba(241, 196, 15, 0.1);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+        }
+
+        .assessment.danger {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .assessment h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .assessment p {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .suggestions {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .suggestions h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 22px; }
+            .overview { grid-template-columns: 1fr; gap: 8px; }
+            .stat { padding: 12px; }
+            .stat-value { font-size: 24px; }
+            .analyze-btn { padding: 14px; font-size: 14px; }
+            .pattern-item { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Conversation Analyzer</h1>
+            <p>Paste a conversation to detect manipulation patterns and communication quality</p>
+        </div>
+
+        <div class="input-section">
+            <h3>Paste Conversation</h3>
+            <textarea class="text-input" id="conversation" rows="10" placeholder="Paste the conversation here...
+
+Example:
+Person A: I have a great opportunity for you!
+Person B: What is it?
+Person A: Trust me, this is the best investment you'll ever make. But you need to act now - only 3 spots left!"></textarea>
+        </div>
+
+        <button class="analyze-btn" onclick="analyze()">Analyze Conversation</button>
+
+        <div class="results" id="results">
+            <div class="overview">
+                <div class="stat">
+                    <div class="stat-value" id="truthScore">0</div>
+                    <div class="stat-label">TRUTH SIGNALS</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="deceitScore">0</div>
+                    <div class="stat-label">RED FLAGS</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="turnScore">0</div>
+                    <div class="stat-label">15° TURNS</div>
+                </div>
+            </div>
+
+            <div class="patterns-found">
+                <div class="section-title">Patterns Detected</div>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="assessment" id="assessment">
+                <h4 id="assessmentTitle">Assessment</h4>
+                <p id="assessmentText">...</p>
+            </div>
+
+            <div class="suggestions">
+                <h4>Suggested Responses</h4>
+                <div id="suggestionsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PATTERNS = {
+            deceit: [
+                { marker: "trust me", name: "Trust Appeal", icon: "🎭" },
+                { marker: "believe me", name: "Trust Appeal", icon: "🎭" },
+                { marker: "act now", name: "False Urgency", icon: "⏰" },
+                { marker: "limited time", name: "False Urgency", icon: "⏰" },
+                { marker: "only", name: "Artificial Scarcity", icon: "📦" },
+                { marker: "guaranteed", name: "False Promise", icon: "✨" },
+                { marker: "easy", name: "Oversimplification", icon: "🎯" },
+                { marker: "everyone", name: "False Consensus", icon: "👥" },
+                { marker: "you should", name: "Directive", icon: "👆" },
+                { marker: "you must", name: "Compulsion", icon: "⚠️" },
+                { marker: "free", name: "Bait Hook", icon: "🎣" },
+                { marker: "secret", name: "False Exclusivity", icon: "🤫" }
+            ],
+            truth: [
+                { marker: "because", name: "Reasoning", icon: "🔗" },
+                { marker: "evidence", name: "Evidence", icon: "📊" },
+                { marker: "research", name: "Research", icon: "🔬" },
+                { marker: "in my experience", name: "Personal Experience", icon: "👤" },
+                { marker: "i think", name: "Opinion Qualifier", icon: "💭" },
+                { marker: "may not", name: "Limitation", icon: "⚖️" },
+                { marker: "consider", name: "Invitation", icon: "🤔" },
+                { marker: "long-term", name: "Future Focus", icon: "🏔️" }
+            ],
+            turn: [
+                { marker: "but", name: "But Pivot", icon: "↪️" },
+                { marker: "however", name: "However Pivot", icon: "↪️" },
+                { marker: "yes, but", name: "Yes-But Negation", icon: "❌" },
+                { marker: "actually", name: "Actually Correction", icon: "☝️" }
+            ]
+        };
+
+        function analyze() {
+            const text = document.getElementById('conversation').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = { deceit: [], truth: [], turn: [] };
+
+            // Find patterns
+            Object.keys(PATTERNS).forEach(type => {
+                PATTERNS[type].forEach(p => {
+                    if (lower.includes(p.marker)) {
+                        // Find context
+                        const idx = lower.indexOf(p.marker);
+                        const start = Math.max(0, idx - 30);
+                        const end = Math.min(text.length, idx + p.marker.length + 30);
+                        const context = '...' + text.slice(start, end) + '...';
+
+                        found[type].push({
+                            ...p,
+                            context: context.replace(new RegExp(p.marker, 'gi'), `**${p.marker}**`)
+                        });
+                    }
+                });
+            });
+
+            // Update scores
+            const truthEl = document.getElementById('truthScore');
+            const deceitEl = document.getElementById('deceitScore');
+            const turnEl = document.getElementById('turnScore');
+
+            truthEl.textContent = found.truth.length;
+            truthEl.className = 'stat-value ' + (found.truth.length > 0 ? 'good' : '');
+
+            deceitEl.textContent = found.deceit.length;
+            deceitEl.className = 'stat-value ' + (found.deceit.length > 2 ? 'bad' : found.deceit.length > 0 ? 'warn' : '');
+
+            turnEl.textContent = found.turn.length;
+            turnEl.className = 'stat-value ' + (found.turn.length > 2 ? 'warn' : '');
+
+            // Pattern list
+            const allPatterns = [
+                ...found.deceit.map(p => ({ ...p, type: 'deceit' })),
+                ...found.turn.map(p => ({ ...p, type: 'turn' })),
+                ...found.truth.map(p => ({ ...p, type: 'truth' }))
+            ];
+
+            document.getElementById('patternsList').innerHTML = allPatterns.length > 0
+                ? allPatterns.map(p => `
+                    <div class="pattern-item">
+                        <span class="pattern-icon">${p.icon}</span>
+                        <div class="pattern-info">
+                            <div class="pattern-name">${p.name}</div>
+                            <div class="pattern-quote">${p.context}</div>
+                        </div>
+                        <span class="pattern-type type-${p.type}">${p.type.toUpperCase()}</span>
+                    </div>
+                `).join('')
+                : '<div style="opacity: 0.5; font-size: 13px;">No strong patterns detected</div>';
+
+            // Assessment
+            const assessment = document.getElementById('assessment');
+            const title = document.getElementById('assessmentTitle');
+            const textEl = document.getElementById('assessmentText');
+
+            if (found.deceit.length > 3) {
+                assessment.className = 'assessment danger';
+                title.textContent = '⚠️ High Manipulation Risk';
+                textEl.textContent = 'This conversation contains multiple manipulation patterns. Exercise extreme caution and verify all claims independently before making any decisions.';
+            } else if (found.deceit.length > 1 || found.turn.length > 2) {
+                assessment.className = 'assessment caution';
+                title.textContent = '⚡ Proceed with Caution';
+                textEl.textContent = 'Some red flags detected. Ask clarifying questions and don\'t be pressured into quick decisions.';
+            } else {
+                assessment.className = 'assessment safe';
+                title.textContent = '✅ Appears Balanced';
+                textEl.textContent = 'No major manipulation patterns detected. The conversation appears to be reasonably balanced.';
+            }
+
+            // Suggestions
+            let suggestions = [];
+            if (found.deceit.some(p => p.marker === 'trust me' || p.marker === 'believe me')) {
+                suggestions.push('• "Can you show me the evidence for that?"');
+            }
+            if (found.deceit.some(p => p.marker.includes('act now') || p.marker.includes('limited'))) {
+                suggestions.push('• "I need time to think about this. Will this still be available tomorrow?"');
+            }
+            if (found.deceit.some(p => p.marker === 'guaranteed')) {
+                suggestions.push('• "What happens if it doesn\'t work out as promised?"');
+            }
+            if (found.turn.length > 0) {
+                suggestions.push('• Focus on what comes AFTER the "but" - that\'s the real message');
+            }
+            if (suggestions.length === 0) {
+                suggestions = ['• Continue the conversation normally', '• Ask for specific details when needed'];
+            }
+
+            document.getElementById('suggestionsList').innerHTML = suggestions.map(s =>
+                `<div class="suggestion-item">${s}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+    </script>
+</body>
+</html>

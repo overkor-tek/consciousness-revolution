@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Library | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p { opacity: 0.6; }
+
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .filter-btn {
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .tab {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab:hover, .tab.active {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pattern-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .pattern-card:hover {
+            transform: translateY(-3px);
+            border-color: #667eea;
+        }
+
+        .pattern-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pattern-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-deceit { background: rgba(231, 76, 60, 0.2); }
+        .icon-truth { background: rgba(46, 204, 113, 0.2); }
+        .icon-turn { background: rgba(241, 196, 15, 0.2); }
+
+        .pattern-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .pattern-type {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        .type-deceit { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+        .type-truth { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .type-turn { background: rgba(241, 196, 15, 0.3); color: #f1c40f; }
+
+        .pattern-desc {
+            font-size: 13px;
+            opacity: 0.8;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .pattern-example {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .pattern-example::before {
+            content: '"';
+        }
+
+        .pattern-example::after {
+            content: '"';
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 { font-size: 20px; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body { padding: 24px; }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 8px;
+        }
+
+        .detail-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .examples-list {
+            list-style: none;
+        }
+
+        .examples-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        .counter-section {
+            padding: 16px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+        }
+
+        .counter-section h4 { color: #2ecc71; margin-bottom: 8px; }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 28px; }
+            .patterns-grid { grid-template-columns: 1fr; }
+            .category-tabs { gap: 4px; }
+            .tab { padding: 8px 12px; font-size: 12px; }
+            .modal-content { margin: 10px; max-height: 90vh; }
+            .modal-header { padding: 16px; }
+            .modal-body { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pattern Library</h1>
+            <p>Learn to recognize manipulation patterns and truth indicators</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" id="search" placeholder="Search patterns...">
+        </div>
+
+        <div class="category-tabs" id="tabs">
+            <button class="tab active" data-category="all">All Patterns</button>
+            <button class="tab" data-category="deceit">Deceit Markers</button>
+            <button class="tab" data-category="truth">Truth Indicators</button>
+            <button class="tab" data-category="turn">15° Turns</button>
+        </div>
+
+        <div class="patterns-grid" id="patternsGrid"></div>
+
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Pattern Name</h2>
+                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • 92.2% Accuracy • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PATTERNS = [
+            // Deceit patterns
+            {
+                id: 1, name: "Trust Appeal", category: "deceit", icon: "🎭",
+                desc: "Asking for trust without providing evidence or reasoning.",
+                example: "Trust me, this is the best option.",
+                markers: ["trust me", "believe me", "just trust"],
+                examples: [
+                    "Trust me, I know what's best for you.",
+                    "Believe me, everyone is doing this.",
+                    "Just trust me on this one."
+                ],
+                counter: "Ask: 'Can you show me the evidence?' or 'Why should I trust this?'"
+            },
+            {
+                id: 2, name: "False Urgency", category: "deceit", icon: "⏰",
+                desc: "Creating artificial time pressure to prevent rational decision-making.",
+                example: "Act now! Limited time only!",
+                markers: ["act now", "limited time", "expires soon", "don't wait"],
+                examples: [
+                    "This offer expires in 10 minutes!",
+                    "Only 3 spots left - act now!",
+                    "Don't miss out - today only!"
+                ],
+                counter: "Ask: 'Will this still be available tomorrow?' Real opportunities don't vanish."
+            },
+            {
+                id: 3, name: "Guaranteed Results", category: "deceit", icon: "✨",
+                desc: "Promising certainty where none exists.",
+                example: "Guaranteed to double your money!",
+                markers: ["guaranteed", "100%", "definitely", "certainly"],
+                examples: [
+                    "Guaranteed results or your money back!",
+                    "This will definitely work for you.",
+                    "100% success rate!"
+                ],
+                counter: "Nothing in life is guaranteed. Ask for historical data and realistic expectations."
+            },
+            {
+                id: 4, name: "False Consensus", category: "deceit", icon: "👥",
+                desc: "Claiming everyone agrees to pressure conformity.",
+                example: "Everyone knows this is true.",
+                markers: ["everyone knows", "everybody", "no one disputes"],
+                examples: [
+                    "Everyone is switching to this platform.",
+                    "Everybody knows this is the best option.",
+                    "No one disputes these facts."
+                ],
+                counter: "Ask: 'Who specifically?' and 'What's their expertise?'"
+            },
+            {
+                id: 5, name: "Artificial Scarcity", category: "deceit", icon: "📦",
+                desc: "Creating false scarcity to drive fear-based decisions.",
+                example: "Only 2 left in stock!",
+                markers: ["only", "limited", "exclusive", "rare"],
+                examples: [
+                    "Only 5 spots remaining!",
+                    "Limited edition - won't last!",
+                    "Exclusive access for select few."
+                ],
+                counter: "Real scarcity doesn't need to be advertised. Wait and verify."
+            },
+            {
+                id: 6, name: "Oversimplification", category: "deceit", icon: "🎯",
+                desc: "Making complex things seem trivially easy.",
+                example: "It's so simple, anyone can do it!",
+                markers: ["simple", "easy", "quick", "just"],
+                examples: [
+                    "It's so easy, even a child could do it!",
+                    "Just follow these 3 simple steps.",
+                    "Quick and painless process."
+                ],
+                counter: "If it's that easy, why isn't everyone doing it? Ask about real challenges."
+            },
+            // Truth patterns
+            {
+                id: 7, name: "Evidence Citation", category: "truth", icon: "📊",
+                desc: "Providing specific, verifiable evidence for claims.",
+                example: "Research from Stanford shows a 23% improvement.",
+                markers: ["research shows", "data indicates", "evidence", "study"],
+                examples: [
+                    "According to the 2023 study by MIT...",
+                    "The data shows a 15% increase over 3 years.",
+                    "Evidence from multiple trials indicates..."
+                ],
+                counter: "Verify the source independently. Good evidence welcomes scrutiny."
+            },
+            {
+                id: 8, name: "Personal Experience", category: "truth", icon: "👤",
+                desc: "Speaking from genuine personal experience with appropriate qualifiers.",
+                example: "In my 10 years of experience, I've found...",
+                markers: ["in my experience", "from my perspective", "i've found"],
+                examples: [
+                    "In my experience working with clients...",
+                    "From what I've observed over 5 years...",
+                    "Based on my personal journey..."
+                ],
+                counter: "Authentic experience is valuable. Ask follow-up questions about specifics."
+            },
+            {
+                id: 9, name: "Causal Reasoning", category: "truth", icon: "🔗",
+                desc: "Explaining the 'why' behind claims with logical reasoning.",
+                example: "This works because it reduces friction in the process.",
+                markers: ["because", "therefore", "here's why", "the reason"],
+                examples: [
+                    "This approach works because...",
+                    "Therefore, we can conclude...",
+                    "Here's why this matters..."
+                ],
+                counter: "Good reasoning can be questioned. Ask: 'What if that assumption is wrong?'"
+            },
+            {
+                id: 10, name: "Acknowledged Limitations", category: "truth", icon: "⚖️",
+                desc: "Openly admitting when something won't work or has drawbacks.",
+                example: "This may not be right for everyone.",
+                markers: ["may not", "it depends", "limitation", "drawback"],
+                examples: [
+                    "This approach has some limitations...",
+                    "It may not work for everyone.",
+                    "There are some drawbacks to consider..."
+                ],
+                counter: "Honesty about limitations is a strong trust signal. Ask for more details."
+            },
+            {
+                id: 11, name: "Long-term Focus", category: "truth", icon: "🏔️",
+                desc: "Emphasizing sustainable, long-term outcomes over quick fixes.",
+                example: "This builds a foundation for lasting results.",
+                markers: ["long-term", "foundation", "permanent", "sustainable"],
+                examples: [
+                    "This creates lasting change over time.",
+                    "We're building a foundation here.",
+                    "This is a long-term investment in..."
+                ],
+                counter: "Long-term thinking is healthy. Ask: 'What does this look like in 5 years?'"
+            },
+            // Turn patterns
+            {
+                id: 12, name: "But Pivot", category: "turn", icon: "↪️",
+                desc: "Starting positive then pivoting to the real (negative) message.",
+                example: "That's a great idea, but...",
+                markers: ["but", "however", "although"],
+                examples: [
+                    "I love your work, but we need changes.",
+                    "That's interesting, however...",
+                    "You're right, but consider this..."
+                ],
+                counter: "The real message comes after 'but'. Focus on what follows."
+            },
+            {
+                id: 13, name: "Yes-But Negation", category: "turn", icon: "❌",
+                desc: "Appearing to agree while actually disagreeing.",
+                example: "Yes, but you're missing the point.",
+                markers: ["yes, but", "sure, but", "true, but"],
+                examples: [
+                    "Yes, but that's not how it works.",
+                    "Sure, but you're forgetting...",
+                    "True, but actually..."
+                ],
+                counter: "This isn't agreement - it's diplomatic disagreement. Ask for their real position."
+            },
+            {
+                id: 14, name: "Compliment Sandwich", category: "turn", icon: "🥪",
+                desc: "Hiding criticism between two compliments to soften it.",
+                example: "Great job, but this needs work. Keep it up!",
+                markers: ["great job", "good effort", "nice try"],
+                examples: [
+                    "Nice effort! The results were poor. But you tried!",
+                    "Love your enthusiasm! This is wrong. Thanks though!",
+                    "Good start! But this is bad. Keep going!"
+                ],
+                counter: "Extract the middle criticism - that's the actual feedback."
+            },
+            {
+                id: 15, name: "Actually Correction", category: "turn", icon: "☝️",
+                desc: "Using 'actually' to assert superiority while correcting.",
+                example: "Actually, that's not quite right.",
+                markers: ["actually", "well actually", "in fact"],
+                examples: [
+                    "Actually, that's a common misconception.",
+                    "Well actually, studies show...",
+                    "In fact, you're mistaken about..."
+                ],
+                counter: "Evaluate the correction on its merits, not the delivery tone."
+            }
+        ];
+
+        let currentCategory = 'all';
+        let searchTerm = '';
+
+        function renderPatterns() {
+            const filtered = PATTERNS.filter(p => {
+                const matchCategory = currentCategory === 'all' || p.category === currentCategory;
+                const matchSearch = !searchTerm ||
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.desc.toLowerCase().includes(searchTerm) ||
+                    p.markers.some(m => m.includes(searchTerm));
+                return matchCategory && matchSearch;
+            });
+
+            document.getElementById('patternsGrid').innerHTML = filtered.map(p => `
+                <div class="pattern-card" onclick="showPattern(${p.id})">
+                    <div class="pattern-header">
+                        <div class="pattern-icon icon-${p.category}">${p.icon}</div>
+                        <span class="pattern-name">${p.name}</span>
+                        <span class="pattern-type type-${p.category}">${p.category.toUpperCase()}</span>
+                    </div>
+                    <div class="pattern-desc">${p.desc}</div>
+                    <div class="pattern-example">${p.example}</div>
+                </div>
+            `).join('');
+        }
+
+        function showPattern(id) {
+            const p = PATTERNS.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('modalTitle').textContent = p.name;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="detail-section">
+                    <h4>Description</h4>
+                    <div class="detail-content">${p.desc}</div>
+                </div>
+
+                <div class="detail-section">
+                    <h4>Key Markers</h4>
+                    <div class="detail-content">${p.markers.map(m => `<code>${m}</code>`).join(', ')}</div>
+                </div>
+
+                <div class="detail-section">
+                    <h4>Examples</h4>
+                    <ul class="examples-list">
+                        ${p.examples.map(e => `<li>${e}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="counter-section">
+                    <h4>How to Counter</h4>
+                    <div class="detail-content">${p.counter}</div>
+                </div>
+            `;
+
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Tab click
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.category;
+                renderPatterns();
+            });
+        });
+
+        // Search
+        document.getElementById('search').addEventListener('input', (e) => {
+            searchTerm = e.target.value.toLowerCase();
+            renderPatterns();
+        });
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initial render
+        renderPatterns();
+    </script>
+</body>
+</html>

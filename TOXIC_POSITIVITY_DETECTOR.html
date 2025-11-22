@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toxic Positivity Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.genuine { color: #2ecc71; }
+        .verdict-label.mixed { color: #f1c40f; }
+        .verdict-label.toxic { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .pattern-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 4px;
+        }
+
+        .pattern-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-patterns {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .alternatives {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .alternatives h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .alternative {
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Toxic Positivity Detector</h1>
+            <p>Identify dismissive positivity in responses</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste what someone said to you about a difficult situation..."></textarea>
+            <button class="detect-btn" onclick="detect()">Analyze Response</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Toxic Positivity Patterns</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="alternatives">
+                <h3>What Supportive Responses Look Like</h3>
+                <div id="alternativesList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Reality Check</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const TOXIC_PATTERNS = {
+            'Feeling Dismissal': {
+                markers: ['don\'t feel that way', 'don\'t be sad', 'stop being', 'cheer up', 'smile'],
+                desc: 'Invalidates your right to feel what you feel'
+            },
+            'Silver Lining Force': {
+                markers: ['at least', 'could be worse', 'be grateful', 'look on the bright side', 'think positive'],
+                desc: 'Forces optimism when validation is needed'
+            },
+            'Spiritual Bypass': {
+                markers: ['everything happens for a reason', 'meant to be', 'god\'s plan', 'universe wants', 'karma'],
+                desc: 'Uses spirituality to avoid processing pain'
+            },
+            'Comparison Minimizing': {
+                markers: ['others have it worse', 'people are dying', 'first world problem', 'be thankful'],
+                desc: 'Invalidates pain by comparing to others'
+            },
+            'Solution Jumping': {
+                markers: ['just', 'simply', 'all you need to do', 'easy fix', 'just think about'],
+                desc: 'Skips validation and jumps to fixing'
+            },
+            'Time Pressure': {
+                markers: ['get over it', 'move on', 'let it go', 'it\'s time to', 'you should be'],
+                desc: 'Puts timeline on your healing'
+            },
+            'Happiness Demand': {
+                markers: ['choose happiness', 'happiness is a choice', 'decide to be happy', 'want to be happy'],
+                desc: 'Makes emotions seem like simple choices'
+            },
+            'Toxic Optimism': {
+                markers: ['good vibes only', 'no negativity', 'stay positive', 'negative energy', 'bad energy'],
+                desc: 'Treats normal emotions as contagious negativity'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check patterns
+            Object.entries(TOXIC_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate toxicity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'APPEARS SUPPORTIVE';
+                desc = 'No toxic positivity patterns detected';
+                labelClass = 'genuine';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'MIXED RESPONSE';
+                desc = 'Some dismissive patterns present';
+                labelClass = 'mixed';
+            } else {
+                icon = '🚫';
+                label = 'TOXIC POSITIVITY';
+                desc = 'Multiple patterns that invalidate your feelings';
+                labelClass = 'toxic';
+            }
+
+            // Generate alternatives
+            const alternatives = generateAlternatives(found);
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('patternsList').innerHTML = found.map(p => `
+                    <div class="pattern">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="no-patterns">✓ No toxic positivity patterns detected</div>';
+            }
+
+            document.getElementById('alternativesList').innerHTML = alternatives.map(a =>
+                `<div class="alternative">${a}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateAlternatives(found) {
+            const alternatives = [
+                '"That sounds really hard. I\'m here for you."',
+                '"Your feelings are valid."',
+                '"I don\'t know what to say, but I\'m listening."',
+                '"Take whatever time you need."'
+            ];
+
+            if (found.some(p => p.name === 'Solution Jumping')) {
+                alternatives.push('"Do you want advice or just need to vent?"');
+            }
+
+            return alternatives.slice(0, 4);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'All emotions are valid and have information',
+                'Feeling negative emotions is not weakness',
+                'Healing has no timeline'
+            ];
+
+            if (found.length > 0) {
+                truths.push('Their discomfort with your pain is theirs to manage');
+                truths.push('You can seek support from people who can hold space');
+            } else {
+                truths.push('Genuine support validates before advising');
+            }
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Treatment Decoder | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .quiz-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question-label {
+            font-size: 13px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .option-btn:hover, .option-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.space { color: #2ecc71; }
+        .verdict-label.mixed { color: #f1c40f; }
+        .verdict-label.manipulation { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .point {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .point.red {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .point.yellow {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .point.green {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .guidance {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .guidance h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .guide-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .guide-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Silent Treatment Decoder</h1>
+            <p>Understand if silence is healthy or manipulative</p>
+        </div>
+
+        <div class="quiz-section">
+            <div class="question">
+                <label class="question-label">Did they communicate they needed space?</label>
+                <div class="options" id="q1">
+                    <button class="option-btn" data-value="yes">Yes - they said they needed time</button>
+                    <button class="option-btn" data-value="vague">Vague - mentioned being busy/tired</button>
+                    <button class="option-btn" data-value="no">No - just stopped responding</button>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="question-label">What's the context?</label>
+                <div class="options" id="q2">
+                    <button class="option-btn" data-value="disagreement">After a disagreement/conflict</button>
+                    <button class="option-btn" data-value="boundary">After you set a boundary</button>
+                    <button class="option-btn" data-value="random">Seems random/unprovoked</button>
+                    <button class="option-btn" data-value="stress">They're going through stress</button>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="question-label">How does it make you feel?</label>
+                <div class="options" id="q3">
+                    <button class="option-btn" data-value="anxious">Anxious - walking on eggshells</button>
+                    <button class="option-btn" data-value="guilty">Guilty - like I did something wrong</button>
+                    <button class="option-btn" data-value="concerned">Concerned for them</button>
+                    <button class="option-btn" data-value="understanding">Understanding - we all need space</button>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Is this a pattern?</label>
+                <div class="options" id="q4">
+                    <button class="option-btn" data-value="first">First time this has happened</button>
+                    <button class="option-btn" data-value="occasional">Happens occasionally</button>
+                    <button class="option-btn" data-value="frequent">Frequent pattern in this relationship</button>
+                </div>
+            </div>
+
+            <button class="analyze-btn" onclick="analyze()">Decode Silent Treatment</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="analysis">
+                <h3>Analysis</h3>
+                <div id="analysisList"></div>
+            </div>
+
+            <div class="guidance">
+                <h3>What to Do</h3>
+                <div id="guidanceList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Reality Check</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let answers = { q1: null, q2: null, q3: null, q4: null };
+
+        // Option selection
+        document.querySelectorAll('.options').forEach(group => {
+            group.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    answers[group.id] = btn.dataset.value;
+                });
+            });
+        });
+
+        function analyze() {
+            if (!answers.q1 || !answers.q2 || !answers.q3 || !answers.q4) {
+                alert('Please answer all questions');
+                return;
+            }
+
+            const points = [];
+            let manipulationScore = 0;
+
+            // Analyze communication
+            if (answers.q1 === 'yes') {
+                points.push({ text: 'They communicated their need - healthy boundary', type: 'green' });
+            } else if (answers.q1 === 'vague') {
+                points.push({ text: 'Vague communication - may need clarification', type: 'yellow' });
+                manipulationScore += 1;
+            } else {
+                points.push({ text: 'No communication - concerning pattern', type: 'red' });
+                manipulationScore += 2;
+            }
+
+            // Analyze context
+            if (answers.q2 === 'boundary') {
+                points.push({ text: 'Silence after your boundary - possible punishment', type: 'red' });
+                manipulationScore += 2;
+            } else if (answers.q2 === 'disagreement') {
+                points.push({ text: 'Post-conflict silence - may be processing or punishing', type: 'yellow' });
+                manipulationScore += 1;
+            } else if (answers.q2 === 'stress') {
+                points.push({ text: 'During stress - more likely genuine need for space', type: 'green' });
+            } else {
+                points.push({ text: 'Unprovoked silence - may be testing your response', type: 'yellow' });
+                manipulationScore += 1;
+            }
+
+            // Analyze your feelings
+            if (answers.q3 === 'anxious' || answers.q3 === 'guilty') {
+                points.push({ text: 'Your anxiety/guilt may be the intended effect', type: 'red' });
+                manipulationScore += 2;
+            } else if (answers.q3 === 'concerned') {
+                points.push({ text: 'Concern is appropriate - but set boundaries', type: 'yellow' });
+            } else {
+                points.push({ text: 'Healthy response - respecting their space', type: 'green' });
+            }
+
+            // Analyze pattern
+            if (answers.q4 === 'frequent') {
+                points.push({ text: 'Repeated pattern - this is their conflict style', type: 'red' });
+                manipulationScore += 2;
+            } else if (answers.q4 === 'occasional') {
+                points.push({ text: 'Occasional occurrence - monitor the pattern', type: 'yellow' });
+                manipulationScore += 1;
+            } else {
+                points.push({ text: 'First occurrence - give benefit of doubt', type: 'green' });
+            }
+
+            // Calculate verdict
+            let icon, label, desc, labelClass;
+            if (manipulationScore >= 5) {
+                icon = '🚨';
+                label = 'LIKELY MANIPULATION';
+                desc = 'Multiple signs of silent treatment as punishment/control';
+                labelClass = 'manipulation';
+            } else if (manipulationScore >= 3) {
+                icon = '⚠️';
+                label = 'MIXED SIGNALS';
+                desc = 'Some concerning patterns - needs direct conversation';
+                labelClass = 'mixed';
+            } else {
+                icon = '✅';
+                label = 'LIKELY HEALTHY SPACE';
+                desc = 'Appears to be legitimate need for processing time';
+                labelClass = 'space';
+            }
+
+            // Generate guidance
+            const guidance = generateGuidance(manipulationScore, answers);
+
+            // Generate truths
+            const truths = generateTruths(manipulationScore);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            document.getElementById('analysisList').innerHTML = points.map(p =>
+                `<div class="point ${p.type}">${p.text}</div>`
+            ).join('');
+
+            document.getElementById('guidanceList').innerHTML = guidance.map(g =>
+                `<div class="guide-item">${g}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateGuidance(score, answers) {
+            const guidance = [];
+
+            if (score >= 5) {
+                guidance.push('Do not chase or apologize repeatedly');
+                guidance.push('State once: "I\'m here when you\'re ready to talk"');
+                guidance.push('Continue your normal life - do not put it on hold');
+                guidance.push('When they return, address the pattern directly');
+            } else if (score >= 3) {
+                guidance.push('Send one calm message asking about their needs');
+                guidance.push('Give them time, but set your own boundary');
+                guidance.push('After X days, communicate your needs');
+            } else {
+                guidance.push('Respect their stated need for space');
+                guidance.push('Use this time for your own wellbeing');
+                guidance.push('Check in after reasonable time passes');
+            }
+
+            if (answers.q3 === 'guilty') {
+                guidance.push('Examine: Did you actually do something wrong, or just something they didn\'t like?');
+            }
+
+            return guidance.slice(0, 5);
+        }
+
+        function generateTruths(score) {
+            const truths = [
+                'Healthy space is communicated. Punishment is not.',
+                'You cannot fix what they won\'t discuss',
+                'Your peace is not dependent on their response'
+            ];
+
+            if (score >= 5) {
+                truths.push('Repeated silent treatment is emotional abuse');
+                truths.push('You teach people how to treat you');
+            } else {
+                truths.push('People have different processing styles');
+            }
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

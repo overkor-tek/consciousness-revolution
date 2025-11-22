@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Decision Checker | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .question-group {
+            margin-bottom: 16px;
+        }
+
+        .question-label {
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .amount-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .option-btn {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: transparent;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .option-btn:hover, .option-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.go { color: #2ecc71; }
+        .verdict-label.wait { color: #f1c40f; }
+        .verdict-label.stop { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .factors {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .factors h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .factor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .factor:last-child { border-bottom: none; }
+
+        .factor-name { font-size: 12px; }
+
+        .factor-status {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .factor-status.good {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .factor-status.warn {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+
+        .factor-status.bad {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .rule {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .rule h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .rule-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .options { flex-direction: column; }
+            .option-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Financial Decision Checker</h1>
+            <p>Determine if you're making emotional or rational decisions</p>
+        </div>
+
+        <div class="input-section">
+            <div class="question-group">
+                <label class="question-label">Purchase amount ($)</label>
+                <input type="number" class="amount-input" id="amount" placeholder="Enter amount">
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">How long have you wanted this?</label>
+                <div class="options" id="timeWanted">
+                    <button class="option-btn" data-value="impulse">Just now</button>
+                    <button class="option-btn" data-value="week">< 1 week</button>
+                    <button class="option-btn" data-value="month">1+ month</button>
+                    <button class="option-btn" data-value="long">6+ months</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Current emotional state?</label>
+                <div class="options" id="emotion">
+                    <button class="option-btn" data-value="excited">Excited</button>
+                    <button class="option-btn" data-value="stressed">Stressed</button>
+                    <button class="option-btn" data-value="calm">Calm</button>
+                    <button class="option-btn" data-value="sad">Sad</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Time pressure?</label>
+                <div class="options" id="pressure">
+                    <button class="option-btn" data-value="high">"Act now!"</button>
+                    <button class="option-btn" data-value="medium">Limited time</button>
+                    <button class="option-btn" data-value="none">No pressure</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Emergency fund status?</label>
+                <div class="options" id="emergency">
+                    <button class="option-btn" data-value="none">None</button>
+                    <button class="option-btn" data-value="low">< 3 months</button>
+                    <button class="option-btn" data-value="good">3-6 months</button>
+                    <button class="option-btn" data-value="strong">6+ months</button>
+                </div>
+            </div>
+
+            <button class="check-btn" onclick="check()">Check Decision</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="factors">
+                <h3>Decision Factors</h3>
+                <div id="factorsList"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Questions Before Buying</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="rule">
+                <h4>Financial Rules</h4>
+                <div id="rulesList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let selections = {
+            timeWanted: null,
+            emotion: null,
+            pressure: null,
+            emergency: null
+        };
+
+        // Option selection
+        document.querySelectorAll('.options').forEach(group => {
+            group.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selections[group.id] = btn.dataset.value;
+                });
+            });
+        });
+
+        function check() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+
+            if (amount === 0 || !selections.timeWanted || !selections.emotion ||
+                !selections.pressure || !selections.emergency) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const factors = [];
+            let score = 100;
+
+            // Analyze time wanted
+            if (selections.timeWanted === 'impulse') {
+                factors.push({ name: 'Consideration Time', status: 'bad', text: 'Impulse' });
+                score -= 30;
+            } else if (selections.timeWanted === 'week') {
+                factors.push({ name: 'Consideration Time', status: 'warn', text: '< 1 week' });
+                score -= 15;
+            } else if (selections.timeWanted === 'month') {
+                factors.push({ name: 'Consideration Time', status: 'good', text: '1+ month' });
+            } else {
+                factors.push({ name: 'Consideration Time', status: 'good', text: '6+ months' });
+                score += 10;
+            }
+
+            // Analyze emotion
+            if (selections.emotion === 'excited' || selections.emotion === 'stressed' || selections.emotion === 'sad') {
+                factors.push({ name: 'Emotional State', status: 'warn', text: selections.emotion });
+                score -= 20;
+            } else {
+                factors.push({ name: 'Emotional State', status: 'good', text: 'Calm' });
+            }
+
+            // Analyze pressure
+            if (selections.pressure === 'high') {
+                factors.push({ name: 'Sales Pressure', status: 'bad', text: 'High pressure' });
+                score -= 25;
+            } else if (selections.pressure === 'medium') {
+                factors.push({ name: 'Sales Pressure', status: 'warn', text: 'Some pressure' });
+                score -= 10;
+            } else {
+                factors.push({ name: 'Sales Pressure', status: 'good', text: 'No pressure' });
+            }
+
+            // Analyze emergency fund
+            if (selections.emergency === 'none') {
+                factors.push({ name: 'Emergency Fund', status: 'bad', text: 'None' });
+                score -= 30;
+            } else if (selections.emergency === 'low') {
+                factors.push({ name: 'Emergency Fund', status: 'warn', text: '< 3 months' });
+                score -= 15;
+            } else if (selections.emergency === 'good') {
+                factors.push({ name: 'Emergency Fund', status: 'good', text: '3-6 months' });
+            } else {
+                factors.push({ name: 'Emergency Fund', status: 'good', text: '6+ months' });
+                score += 10;
+            }
+
+            // Amount relative check
+            if (amount > 500) {
+                factors.push({ name: 'Large Purchase', status: 'warn', text: '$' + amount });
+                if (selections.timeWanted === 'impulse') score -= 20;
+            }
+
+            // Cap score
+            score = Math.max(0, Math.min(100, score));
+
+            // Generate verdict
+            let icon, label, desc, labelClass;
+            if (score >= 70) {
+                icon = '✅';
+                label = 'PROCEED WITH CAUTION';
+                desc = 'Conditions look reasonable - but still sleep on it';
+                labelClass = 'go';
+            } else if (score >= 40) {
+                icon = '⚠️';
+                label = 'WAIT 48 HOURS';
+                desc = 'Multiple warning signs - delay this decision';
+                labelClass = 'wait';
+            } else {
+                icon = '🛑';
+                label = 'DO NOT BUY';
+                desc = 'High risk of emotional/impulse purchase';
+                labelClass = 'stop';
+            }
+
+            // Generate questions
+            const questions = generateQuestions(amount, selections);
+
+            // Generate rules
+            const rules = generateRules(amount, selections);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            document.getElementById('factorsList').innerHTML = factors.map(f => `
+                <div class="factor">
+                    <span class="factor-name">${f.name}</span>
+                    <span class="factor-status ${f.status}">${f.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question-item">${q}</div>`
+            ).join('');
+
+            document.getElementById('rulesList').innerHTML = rules.map(r =>
+                `<div class="rule-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(amount, selections) {
+            const questions = [
+                'Would I buy this at full price without any sale?',
+                'Will I still want this in 30 days?',
+                'What else could I do with this money?'
+            ];
+
+            if (amount > 100) {
+                questions.push('Have I researched alternatives?');
+            }
+            if (selections.emotion !== 'calm') {
+                questions.push('Am I buying this to feel better?');
+            }
+            if (selections.pressure !== 'none') {
+                questions.push('Would this deal still be good tomorrow?');
+            }
+
+            return questions.slice(0, 5);
+        }
+
+        function generateRules(amount, selections) {
+            const rules = [];
+
+            if (amount > 100) {
+                rules.push(`For $${amount}+ purchases: wait 1 day per $100`);
+            }
+
+            if (selections.emergency === 'none' || selections.emergency === 'low') {
+                rules.push('Build 3-6 month emergency fund before discretionary spending');
+            }
+
+            rules.push('Never buy when excited, stressed, or sad');
+            rules.push('If "limited time" - wait. Real value stays valuable');
+            rules.push('Ask: "Would I trade X hours of work for this?"');
+
+            return rules.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

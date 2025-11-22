@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermittent Reinforcement Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 22px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.low { color: #2ecc71; }
+        .verdict-label.medium { color: #f1c40f; }
+        .verdict-label.high { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .science {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .science h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .science-text {
+            font-size: 12px;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .effects {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .effects h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .effect-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .recovery {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .recovery h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .recovery-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .recovery-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Intermittent Reinforcement Detector</h1>
+            <p>Identify the pattern that creates addiction to relationships</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check what you're experiencing:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze Pattern</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="science">
+                <h3>Why This Is So Powerful</h3>
+                <div class="science-text" id="scienceText"></div>
+            </div>
+
+            <div class="effects">
+                <h3>Effects You May Be Experiencing</h3>
+                <div id="effectsList"></div>
+            </div>
+
+            <div class="recovery">
+                <h3>Breaking the Pattern</h3>
+                <div id="recoveryList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Remember</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const IR_SIGNS = [
+            { text: 'Their affection/attention is unpredictable', weight: 3 },
+            { text: 'Good moments feel incredibly intense and valuable', weight: 2 },
+            { text: 'You obsessively analyze their behavior for clues', weight: 3 },
+            { text: 'You feel anxious between positive interactions', weight: 3 },
+            { text: 'Small acts of kindness feel like huge wins', weight: 2 },
+            { text: 'You keep trying harder hoping to "unlock" consistent treatment', weight: 3 },
+            { text: 'The relationship feels like a roller coaster', weight: 2 },
+            { text: 'You can\'t leave despite the pain', weight: 3 },
+            { text: 'Friends/family say you\'re addicted to this person', weight: 2 },
+            { text: 'You feel a rush when they finally respond/show up', weight: 3 }
+        ];
+
+        let selected = new Set();
+
+        // Render checks
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = IR_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            // Calculate score
+            let score = 0;
+            selected.forEach(i => {
+                score += IR_SIGNS[i].weight;
+            });
+
+            const maxScore = IR_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Determine level
+            let icon, label, desc, labelClass;
+            if (percentage <= 20) {
+                icon = '✅';
+                label = 'LOW CONCERN';
+                desc = 'Pattern not clearly present';
+                labelClass = 'low';
+            } else if (percentage <= 50) {
+                icon = '⚠️';
+                label = 'PATTERN EMERGING';
+                desc = 'Some intermittent reinforcement signs';
+                labelClass = 'medium';
+            } else {
+                icon = '🎰';
+                label = 'INTERMITTENT REINFORCEMENT';
+                desc = 'Strong pattern creating trauma bond';
+                labelClass = 'high';
+            }
+
+            // Science explanation
+            const science = generateScience(percentage);
+
+            // Effects
+            const effects = generateEffects(percentage);
+
+            // Recovery steps
+            const recovery = generateRecovery(percentage);
+
+            // Truths
+            const truths = generateTruths(percentage);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            document.getElementById('scienceText').textContent = science;
+
+            document.getElementById('effectsList').innerHTML = effects.map(e =>
+                `<div class="effect-item">⚠️ ${e}</div>`
+            ).join('');
+
+            document.getElementById('recoveryList').innerHTML = recovery.map(r =>
+                `<div class="recovery-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateScience(percentage) {
+            if (percentage > 50) {
+                return "Intermittent reinforcement is the most powerful form of conditioning. Like slot machines, unpredictable rewards create stronger addiction than consistent ones. Your brain releases more dopamine for uncertain rewards, creating a biochemical bond that feels like love but is actually addiction.";
+            } else if (percentage > 20) {
+                return "Variable reward schedules create stronger behavior patterns than consistent ones. This is why the 'good times' feel so valuable - your brain is being conditioned to work harder for unpredictable rewards.";
+            } else {
+                return "Healthy relationships provide consistent care and respect. While all relationships have ups and downs, the baseline should be stability, not unpredictability.";
+            }
+        }
+
+        function generateEffects(percentage) {
+            const effects = [];
+
+            if (percentage > 20) {
+                effects.push('Difficulty focusing on other areas of life');
+                effects.push('Constant checking of phone/social media');
+            }
+            if (percentage > 50) {
+                effects.push('Anxiety and obsessive thinking');
+                effects.push('Loss of self-esteem and boundaries');
+                effects.push('Withdrawal symptoms when apart');
+            }
+
+            effects.push('Emotional exhaustion from the cycle');
+
+            return effects.slice(0, 4);
+        }
+
+        function generateRecovery(percentage) {
+            const recovery = [];
+
+            if (percentage > 50) {
+                recovery.push('Consider complete no-contact to break the cycle');
+                recovery.push('Recognize this as addiction, not love');
+                recovery.push('Seek support from friends, family, or therapist');
+            } else if (percentage > 20) {
+                recovery.push('Notice the pattern before it deepens');
+                recovery.push('Journal to track the highs and lows objectively');
+            }
+
+            recovery.push('Redirect focus to consistent, nurturing relationships');
+            recovery.push('Practice self-soothing when triggered');
+            recovery.push('Remember: You deserve consistency, not crumbs');
+
+            return recovery.slice(0, 5);
+        }
+
+        function generateTruths(percentage) {
+            const truths = [
+                'Intensity is not intimacy',
+                'Chaos is not chemistry',
+                'You can\'t earn consistent love - it\'s given freely'
+            ];
+
+            if (percentage > 50) {
+                truths.push('This pattern creates trauma bonds, not healthy attachment');
+            }
+
+            truths.push('You deserve stable, predictable love');
+
+            return truths.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

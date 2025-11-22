@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Signal Finder | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .find-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .find-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .score-value.high { color: #2ecc71; }
+        .score-value.medium { color: #f1c40f; }
+        .score-value.low { color: #e74c3c; }
+
+        .score-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .signals {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .signals h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .signal {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .signal:last-child { margin-bottom: 0; }
+
+        .signal-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 4px;
+        }
+
+        .signal-example {
+            font-size: 12px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .no-signals {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        .indicators {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .indicators h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .indicator:last-child { border-bottom: none; }
+
+        .indicator-name { font-size: 12px; }
+
+        .indicator-status {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .indicator-status.present {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .indicator-status.absent {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .assessment {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .assessment h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .assessment-text {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Truth Signal Finder</h1>
+            <p>Identify markers of honest, truth-aligned communication</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste text to find truth signals and honest communication markers..."></textarea>
+            <button class="find-btn" onclick="findSignals()">Find Truth Signals</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-card">
+                <div class="score-value" id="score">0</div>
+                <div class="score-label" id="scoreLabel">Truth Signal Score</div>
+            </div>
+
+            <div class="signals">
+                <h3>Truth Signals Found</h3>
+                <div id="signalsList"></div>
+            </div>
+
+            <div class="indicators">
+                <h3>Truth Indicators</h3>
+                <div id="indicatorsList"></div>
+            </div>
+
+            <div class="assessment">
+                <h4>Overall Assessment</h4>
+                <div class="assessment-text" id="assessment">-</div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const TRUTH_SIGNALS = {
+            'Provides reasoning': {
+                markers: ['because', 'the reason', 'this is why', 'given that', 'considering'],
+                desc: 'Explains the logic behind claims'
+            },
+            'Acknowledges limits': {
+                markers: ['i don\'t know', 'i\'m not sure', 'might be wrong', 'could be', 'possibly', 'uncertain'],
+                desc: 'Admits uncertainty or limitations'
+            },
+            'Cites sources': {
+                markers: ['according to', 'research shows', 'study', 'data', 'evidence', 'source'],
+                desc: 'References verifiable information'
+            },
+            'Respects autonomy': {
+                markers: ['you decide', 'up to you', 'your choice', 'consider', 'think about', 'evaluate'],
+                desc: 'Leaves decision to the listener'
+            },
+            'No urgency pressure': {
+                markers: ['take your time', 'no rush', 'when you\'re ready', 'think it over'],
+                desc: 'Allows time for evaluation'
+            },
+            'Specific details': {
+                markers: ['specifically', 'exactly', 'precisely', '%', 'percent', /\d{4}/],
+                desc: 'Uses precise, verifiable details'
+            },
+            'Balanced view': {
+                markers: ['on the other hand', 'alternatively', 'pros and cons', 'tradeoff', 'downside'],
+                desc: 'Presents multiple perspectives'
+            },
+            'Direct language': {
+                markers: ['i think', 'in my opinion', 'i believe', 'my view is', 'i recommend'],
+                desc: 'States position clearly'
+            }
+        };
+
+        const INDICATORS = [
+            { name: 'Provides reasoning', key: 'reasoning' },
+            { name: 'Acknowledges limitations', key: 'limits' },
+            { name: 'Cites sources/evidence', key: 'sources' },
+            { name: 'Respects your autonomy', key: 'autonomy' },
+            { name: 'No pressure tactics', key: 'pressure' },
+            { name: 'Uses specific details', key: 'specific' }
+        ];
+
+        function findSignals() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+            const indicatorResults = {};
+
+            // Check each truth signal
+            Object.entries(TRUTH_SIGNALS).forEach(([name, data]) => {
+                const matches = data.markers.filter(m => {
+                    if (m instanceof RegExp) return m.test(text);
+                    return lower.includes(m);
+                });
+
+                if (matches.length > 0) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        matches
+                    });
+                }
+            });
+
+            // Map to indicators
+            indicatorResults.reasoning = found.some(f => f.name === 'Provides reasoning');
+            indicatorResults.limits = found.some(f => f.name === 'Acknowledges limits');
+            indicatorResults.sources = found.some(f => f.name === 'Cites sources');
+            indicatorResults.autonomy = found.some(f => f.name === 'Respects autonomy');
+            indicatorResults.pressure = found.some(f => f.name === 'No urgency pressure');
+            indicatorResults.specific = found.some(f => f.name === 'Specific details');
+
+            // Calculate score
+            const score = found.length;
+            const maxScore = Object.keys(TRUTH_SIGNALS).length;
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Render results
+            const scoreEl = document.getElementById('score');
+            scoreEl.textContent = score + '/' + maxScore;
+            scoreEl.className = 'score-value ' +
+                (percentage >= 60 ? 'high' : percentage >= 30 ? 'medium' : 'low');
+
+            document.getElementById('scoreLabel').textContent =
+                percentage >= 60 ? 'Strong truth signals' :
+                percentage >= 30 ? 'Some truth signals' : 'Few truth signals';
+
+            if (found.length > 0) {
+                document.getElementById('signalsList').innerHTML = found.map(s => `
+                    <div class="signal">
+                        <div class="signal-name">✓ ${s.name}</div>
+                        <div class="signal-example">${s.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('signalsList').innerHTML =
+                    '<div class="no-signals">No truth signals detected in this text</div>';
+            }
+
+            document.getElementById('indicatorsList').innerHTML = INDICATORS.map(ind => `
+                <div class="indicator">
+                    <span class="indicator-name">${ind.name}</span>
+                    <span class="indicator-status ${indicatorResults[ind.key] ? 'present' : 'absent'}">
+                        ${indicatorResults[ind.key] ? '✓ Present' : '— Absent'}
+                    </span>
+                </div>
+            `).join('');
+
+            // Generate assessment
+            const assessment = generateAssessment(found, percentage);
+            document.getElementById('assessment').textContent = assessment;
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateAssessment(found, percentage) {
+            if (percentage >= 60) {
+                return 'This communication shows strong truth-aligned patterns. It provides reasoning, acknowledges limitations, and respects your ability to evaluate. This is the Pattern Theory "Truth Algorithm" in action.';
+            } else if (percentage >= 30) {
+                return 'Some truth signals present. The communication shows partial truth-alignment. Look for what\'s missing: Does it provide evidence? Acknowledge uncertainty? Respect your autonomy to decide?';
+            } else {
+                return 'Few truth signals detected. This could mean: (1) Very short text, (2) Communication style is more assertive than explanatory, or (3) Potential deceit algorithm. Cross-reference with manipulation detection.';
+            }
+        }
+    </script>
+</body>
+</html>

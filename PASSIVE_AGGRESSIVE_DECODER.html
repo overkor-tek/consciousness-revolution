@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passive Aggressive Decoder | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .decode-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.mild { color: #f1c40f; }
+        .verdict-label.strong { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .pattern-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 4px;
+        }
+
+        .pattern-meaning {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .pattern-real {
+            font-size: 11px;
+            color: #e74c3c;
+            font-style: italic;
+        }
+
+        .no-patterns {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .response {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .response h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .response-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .response-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Passive Aggressive Decoder</h1>
+            <p>Translate hidden hostility into clear meaning</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the message that feels hostile but sounds 'nice'..."></textarea>
+            <button class="decode-btn" onclick="decode()">Decode Real Meaning</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Passive Aggressive Patterns</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="response">
+                <h3>How to Respond</h3>
+                <div id="responseList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Remember</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PA_PATTERNS = {
+            'Backhanded Compliment': {
+                markers: ['actually good', 'for once', 'surprisingly', 'didn\'t expect', 'finally'],
+                meaning: 'Compliment wrapped in insult',
+                real: '"I usually think you\'re incompetent"'
+            },
+            'Fine/Whatever': {
+                markers: ['fine', 'whatever', 'if you want', 'i guess', 'sure'],
+                meaning: 'Fake agreement hiding resentment',
+                real: '"I\'m not okay with this but won\'t say so"'
+            },
+            'Sarcastic Praise': {
+                markers: ['oh great', 'wow amazing', 'how wonderful', 'oh perfect', 'just great'],
+                meaning: 'Using "positive" words sarcastically',
+                real: '"I\'m angry but being indirect about it"'
+            },
+            'Indirect Criticism': {
+                markers: ['some people', 'certain people', 'unlike some', 'not everyone'],
+                meaning: 'Criticizing you without naming you',
+                real: '"I mean YOU but won\'t say it directly"'
+            },
+            'Weaponized Silence': {
+                markers: ['nothing', 'nevermind', 'forget it', 'doesn\'t matter', 'no problem'],
+                meaning: 'Punishing through withdrawal',
+                real: '"Something is very wrong but I won\'t tell you"'
+            },
+            'Guilty Assignment': {
+                markers: ['must be nice', 'wish i could', 'if only i', 'some of us'],
+                meaning: 'Making you feel guilty for having/doing something',
+                real: '"I resent you for this"'
+            },
+            'Fake Concern': {
+                markers: ['just concerned', 'just worried', 'just checking', 'just saying'],
+                meaning: '"Just" minimizes while still attacking',
+                real: '"I\'m criticizing but pretending I\'m not"'
+            },
+            'Historical Jab': {
+                markers: ['like last time', 'as usual', 'typical', 'again', 'of course'],
+                meaning: 'Bringing up past to attack present',
+                real: '"I\'m keeping score and you\'re losing"'
+            }
+        };
+
+        function decode() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check patterns
+            Object.entries(PA_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        meaning: data.meaning,
+                        real: data.real
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious passive aggressive patterns';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '😏';
+                label = 'MILDLY PASSIVE AGGRESSIVE';
+                desc = 'Some indirect communication';
+                labelClass = 'mild';
+            } else {
+                icon = '🎭';
+                label = 'STRONGLY PASSIVE AGGRESSIVE';
+                desc = 'Multiple patterns of hidden hostility';
+                labelClass = 'strong';
+            }
+
+            // Generate responses
+            const responses = generateResponses(found);
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('patternsList').innerHTML = found.map(p => `
+                    <div class="pattern">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-meaning">${p.meaning}</div>
+                        <div class="pattern-real">Translation: ${p.real}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="no-patterns">✓ No clear passive aggressive patterns</div>';
+            }
+
+            document.getElementById('responseList').innerHTML = responses.map(r =>
+                `<div class="response-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateResponses(found) {
+            const responses = [];
+
+            if (found.length > 0) {
+                responses.push('Name what you notice: "It sounds like you might be upset"');
+                responses.push('Ask directly: "Do you want to talk about what\'s bothering you?"');
+            }
+
+            if (found.some(p => p.name === 'Weaponized Silence')) {
+                responses.push('Say: "I\'d like to discuss this when you\'re ready"');
+            }
+
+            responses.push('Don\'t take the bait - stay calm and direct');
+            responses.push('You\'re not responsible for decoding their feelings');
+            responses.push('Model direct communication in your response');
+
+            return responses.slice(0, 5);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'Their indirect communication is not your fault',
+                'You can\'t fix their communication style',
+                'You deserve direct, honest expression'
+            ];
+
+            if (found.length > 2) {
+                truths.push('Chronic passive aggression is exhausting - protect your energy');
+            }
+
+            truths.push('Trust your gut - if it feels hostile, it probably is');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

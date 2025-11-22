@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Truth Detector | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a1a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            opacity: 0.9;
+        }
+
+        .main-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            resize: none;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .main-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .main-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .detect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .detect-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 20px; }
+            .main-input { height: 120px; font-size: 14px; }
+            .result { padding: 20px; }
+            .result-icon { font-size: 48px; }
+            .result-text { font-size: 22px; }
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            display: none;
+            animation: pop 0.4s ease;
+        }
+
+        .result.active { display: block; }
+
+        @keyframes pop {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .result.truth { background: rgba(46, 204, 113, 0.15); border: 2px solid #2ecc71; }
+        .result.deceit { background: rgba(231, 76, 60, 0.15); border: 2px solid #e74c3c; }
+        .result.neutral { background: rgba(241, 196, 15, 0.15); border: 2px solid #f1c40f; }
+
+        .result-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+
+        .result-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .result.truth .result-text { color: #2ecc71; }
+        .result.deceit .result-text { color: #e74c3c; }
+        .result.neutral .result-text { color: #f1c40f; }
+
+        .result-detail {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .confidence {
+            margin-top: 16px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 11px;
+            opacity: 0.3;
+        }
+
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quick Truth Detector</h1>
+
+        <textarea class="main-input" id="input" placeholder="Paste any text here...
+
+Sales pitch, email, ad, news headline, social media post - anything you want to check."></textarea>
+
+        <button class="detect-btn" onclick="detect()">DETECT</button>
+
+        <div class="result" id="result">
+            <div class="result-icon" id="icon">-</div>
+            <div class="result-text" id="verdict">-</div>
+            <div class="result-detail" id="detail">-</div>
+            <div class="confidence" id="confidence">-</div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html">More Tools</a> • <a href="PATTERN_LIBRARY.html">Learn Patterns</a>
+        </footer>
+    </div>
+
+    <script>
+        const DECEIT = [
+            "trust me", "believe me", "guaranteed", "act now", "limited time",
+            "don't miss", "exclusive", "secret", "free", "easy", "quick",
+            "everyone knows", "obviously", "clearly", "just", "only",
+            "you should", "you must", "you need to", "no brainer"
+        ];
+
+        const TRUTH = [
+            "because", "therefore", "evidence", "data", "research",
+            "in my experience", "i think", "i believe", "it seems",
+            "from my perspective", "let me explain", "here's why",
+            "the reason", "consider", "may not", "limitation",
+            "long-term", "foundation", "permanent"
+        ];
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            let d = 0, t = 0;
+
+            DECEIT.forEach(m => { if (lower.includes(m)) d++; });
+            TRUTH.forEach(m => { if (lower.includes(m)) t++; });
+
+            const result = document.getElementById('result');
+            const icon = document.getElementById('icon');
+            const verdict = document.getElementById('verdict');
+            const detail = document.getElementById('detail');
+            const confidence = document.getElementById('confidence');
+
+            let type, iconEmoji, verdictText, detailText;
+            const conf = Math.abs(t - d) * 10 + 30;
+
+            if (t > d + 1) {
+                type = 'truth';
+                iconEmoji = '✅';
+                verdictText = 'LIKELY TRUE';
+                detailText = `Found ${t} truth indicators, ${d} red flags`;
+            } else if (d > t + 1) {
+                type = 'deceit';
+                iconEmoji = '❌';
+                verdictText = 'LIKELY DECEIT';
+                detailText = `Found ${d} red flags, ${t} truth indicators`;
+            } else {
+                type = 'neutral';
+                iconEmoji = '⚠️';
+                verdictText = 'INCONCLUSIVE';
+                detailText = 'Balanced signals - analyze further';
+            }
+
+            result.className = 'result active ' + type;
+            icon.textContent = iconEmoji;
+            verdict.textContent = verdictText;
+            detail.textContent = detailText;
+            confidence.textContent = `${Math.min(conf, 95)}% confidence`;
+        }
+
+        // Enter key
+        document.getElementById('input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) detect();
+        });
+    </script>
+</body>
+</html>

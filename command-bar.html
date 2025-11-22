@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Bar | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a1a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .command-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .command-input-wrapper {
+            position: relative;
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 20px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            outline: none;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .command-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .command-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .suggestions {
+            margin-top: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .suggestions.active {
+            display: block;
+        }
+
+        .suggestion {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.1s;
+        }
+
+        .suggestion:hover, .suggestion.selected {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-icon {
+            font-size: 20px;
+        }
+
+        .suggestion-text {
+            flex: 1;
+        }
+
+        .suggestion-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .suggestion-text span {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .result-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .result-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .result-header h3 {
+            font-size: 16px;
+        }
+
+        .result-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .help-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            opacity: 0.4;
+        }
+
+        .shortcut {
+            display: inline-block;
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="command-container">
+        <div class="command-input-wrapper">
+            <input type="text" class="command-input" id="command" placeholder="Type a command... (e.g., /analyze, /score)" autofocus>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+
+        <div class="result-panel" id="result">
+            <div class="result-header">
+                <h3 id="result-title">Result</h3>
+            </div>
+            <div class="result-content" id="result-content"></div>
+        </div>
+
+        <div class="help-text">
+            Press <span class="shortcut">Tab</span> to autocomplete • <span class="shortcut">Enter</span> to execute • <span class="shortcut">↑↓</span> to navigate
+        </div>
+    </div>
+
+    <script>
+        const commands = [
+            {
+                name: '/analyze',
+                icon: '🔍',
+                description: 'Analyze text for truth/deceit patterns',
+                usage: '/analyze <text>',
+                action: (args) => analyzeText(args)
+            },
+            {
+                name: '/score',
+                icon: '🧠',
+                description: 'Calculate consciousness score',
+                usage: '/score <pr> <pa> <ns>',
+                action: (args) => scoreConsciousness(args)
+            },
+            {
+                name: '/quick',
+                icon: '⚡',
+                description: 'Quick truth/deceit check',
+                usage: '/quick <text>',
+                action: (args) => quickCheck(args)
+            },
+            {
+                name: '/domain',
+                icon: '🌐',
+                description: 'Domain-specific analysis (1-7)',
+                usage: '/domain <num> <text>',
+                action: (args) => domainAnalysis(args)
+            },
+            {
+                name: '/timeline',
+                icon: '⏱️',
+                description: 'Project decision timeline',
+                usage: '/timeline <decision>',
+                action: (args) => timelineProject(args)
+            },
+            {
+                name: '/tools',
+                icon: '🛠️',
+                description: 'Open consciousness tools hub',
+                usage: '/tools',
+                action: () => { window.open('consciousness-tools.html', '_blank'); return 'Opening tools...'; }
+            },
+            {
+                name: '/chat',
+                icon: '💬',
+                description: 'Open Araya conscious chat',
+                usage: '/chat',
+                action: () => { window.open('ARAYA_CONSCIOUS_CHAT.html', '_blank'); return 'Opening chat...'; }
+            },
+            {
+                name: '/train',
+                icon: '🎮',
+                description: 'Open consciousness trainer',
+                usage: '/train',
+                action: () => { window.open('CONSCIOUSNESS_TRAINER.html', '_blank'); return 'Opening trainer...'; }
+            },
+            {
+                name: '/help',
+                icon: '❓',
+                description: 'Show all commands',
+                usage: '/help',
+                action: () => showHelp()
+            }
+        ];
+
+        let selectedIndex = -1;
+        let filteredCommands = [];
+
+        const input = document.getElementById('command');
+        const suggestionsEl = document.getElementById('suggestions');
+        const resultPanel = document.getElementById('result');
+        const resultTitle = document.getElementById('result-title');
+        const resultContent = document.getElementById('result-content');
+
+        input.addEventListener('input', () => {
+            const value = input.value.trim();
+
+            if (value.startsWith('/')) {
+                const cmdPart = value.split(' ')[0].toLowerCase();
+                filteredCommands = commands.filter(c =>
+                    c.name.toLowerCase().startsWith(cmdPart)
+                );
+                showSuggestions();
+            } else {
+                hideSuggestions();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && filteredCommands.length > 0) {
+                e.preventDefault();
+                const cmd = filteredCommands[Math.max(0, selectedIndex)];
+                const parts = input.value.split(' ');
+                parts[0] = cmd.name;
+                input.value = parts.join(' ') + ' ';
+                hideSuggestions();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = Math.min(selectedIndex + 1, filteredCommands.length - 1);
+                updateSelection();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = Math.max(selectedIndex - 1, 0);
+                updateSelection();
+            } else if (e.key === 'Enter') {
+                executeCommand();
+            } else if (e.key === 'Escape') {
+                hideSuggestions();
+            }
+        });
+
+        function showSuggestions() {
+            if (filteredCommands.length === 0) {
+                hideSuggestions();
+                return;
+            }
+
+            suggestionsEl.innerHTML = filteredCommands.map((cmd, i) => `
+                <div class="suggestion ${i === selectedIndex ? 'selected' : ''}" data-index="${i}">
+                    <span class="suggestion-icon">${cmd.icon}</span>
+                    <div class="suggestion-text">
+                        <strong>${cmd.name}</strong>
+                        <span>${cmd.description}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            suggestionsEl.classList.add('active');
+
+            // Click handlers
+            suggestionsEl.querySelectorAll('.suggestion').forEach(el => {
+                el.addEventListener('click', () => {
+                    const idx = parseInt(el.dataset.index);
+                    input.value = filteredCommands[idx].name + ' ';
+                    input.focus();
+                    hideSuggestions();
+                });
+            });
+        }
+
+        function hideSuggestions() {
+            suggestionsEl.classList.remove('active');
+            selectedIndex = -1;
+        }
+
+        function updateSelection() {
+            suggestionsEl.querySelectorAll('.suggestion').forEach((el, i) => {
+                el.classList.toggle('selected', i === selectedIndex);
+            });
+        }
+
+        function executeCommand() {
+            const value = input.value.trim();
+            if (!value.startsWith('/')) return;
+
+            const parts = value.split(' ');
+            const cmdName = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
+
+            const cmd = commands.find(c => c.name === cmdName);
+            if (!cmd) {
+                showResult('Error', `Unknown command: ${cmdName}`);
+                return;
+            }
+
+            const result = cmd.action(args);
+            if (result) {
+                showResult(cmd.name, result);
+            }
+
+            hideSuggestions();
+        }
+
+        function showResult(title, content) {
+            resultTitle.textContent = title;
+            resultContent.innerHTML = content;
+            resultPanel.classList.add('active');
+        }
+
+        // Command implementations
+        function analyzeText(text) {
+            if (!text) return 'Usage: /analyze <text to analyze>';
+
+            const lower = text.toLowerCase();
+            const deceitMarkers = ["trust me", "guaranteed", "act now", "limited", "free", "easy"];
+            const truthMarkers = ["because", "evidence", "research", "experience", "long-term"];
+
+            let d = 0, t = 0;
+            deceitMarkers.forEach(m => { if (lower.includes(m)) d++; });
+            truthMarkers.forEach(m => { if (lower.includes(m)) t++; });
+
+            const total = d + t || 1;
+            const truthScore = Math.round((t / total) * 100);
+            const deceitScore = Math.round((d / total) * 100);
+            const algo = truthScore >= deceitScore ? 'TRUTH' : 'DECEIT';
+
+            return `
+                <strong>${algo} Algorithm</strong><br>
+                Truth: ${truthScore}% | Deceit: ${deceitScore}%<br>
+                Confidence: ${Math.abs(truthScore - deceitScore)}%
+            `;
+        }
+
+        function scoreConsciousness(args) {
+            const nums = args.split(' ').map(n => parseFloat(n)).filter(n => !isNaN(n));
+            if (nums.length !== 3) return 'Usage: /score <pattern_rec> <pred_acc> <neutral_success><br>Example: /score 85 80 90';
+
+            const [pr, pa, ns] = nums;
+            const level = pr * 0.4 + pa * 0.3 + ns * 0.3;
+            const immunity = pr * 0.5 + ns * 0.5;
+
+            let name = 'Unconscious';
+            if (level >= 85) name = 'Elevated';
+            else if (level >= 75) name = 'Conscious';
+            else if (level >= 50) name = 'Aware';
+            else if (level >= 25) name = 'Awakening';
+
+            return `
+                <strong>Consciousness Level: ${level.toFixed(1)}%</strong><br>
+                Name: ${name}<br>
+                Manipulation Immunity: ${immunity.toFixed(1)}%
+            `;
+        }
+
+        function quickCheck(text) {
+            if (!text) return 'Usage: /quick <text>';
+
+            const lower = text.toLowerCase();
+            const bad = ["trust me", "guaranteed", "act now", "easy", "free"].some(m => lower.includes(m));
+            const good = ["because", "evidence", "research"].some(m => lower.includes(m));
+
+            if (bad && !good) return '❌ <strong>DECEIT</strong>';
+            if (good && !bad) return '✅ <strong>TRUTH</strong>';
+            return '⚠️ <strong>NEUTRAL</strong>';
+        }
+
+        function domainAnalysis(args) {
+            const parts = args.split(' ');
+            const domain = parseInt(parts[0]);
+            const text = parts.slice(1).join(' ');
+
+            if (!domain || domain < 1 || domain > 7 || !text) {
+                return 'Usage: /domain <1-7> <text><br>Domains: 1=Legal, 2=Finance, 3=Digital, 4=Consciousness, 5=Communication, 6=Showcase, 7=Transparency';
+            }
+
+            const names = ['', 'Legal', 'Finance', 'Digital', 'Consciousness', 'Communication', 'Showcase', 'Transparency'];
+            return `
+                <strong>Domain ${domain}: ${names[domain]}</strong><br>
+                ${quickCheck(text)}
+            `;
+        }
+
+        function timelineProject(decision) {
+            if (!decision) return 'Usage: /timeline <decision>';
+            return `Opening Timeline Projector...<script>window.open('TIMELINE_PROJECTOR.html', '_blank')<\/script>`;
+        }
+
+        function showHelp() {
+            return commands.map(c =>
+                `<strong>${c.name}</strong> - ${c.description}<br><span style="opacity:0.6;font-size:12px">${c.usage}</span>`
+            ).join('<br><br>');
+        }
+
+        // Focus on load
+        input.focus();
+    </script>
+</body>
+</html>

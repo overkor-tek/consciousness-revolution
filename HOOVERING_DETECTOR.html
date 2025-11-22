@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoovering Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .context-label {
+            font-size: 12px;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.safe { color: #2ecc71; }
+        .verdict-label.caution { color: #f1c40f; }
+        .verdict-label.hoover { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .protection {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .protection h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .protect-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .protect-item::before {
+            content: "🛡️";
+            position: absolute;
+            left: 0;
+        }
+
+        .reminder {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reminder h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .reminder-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hoovering Detector</h1>
+            <p>Identify attempts to suck you back into toxic dynamics</p>
+        </div>
+
+        <div class="input-section">
+            <div class="context-label">After you've set boundaries or ended contact, paste their message:</div>
+            <textarea class="text-input" id="input" placeholder="Paste the message from someone trying to re-establish contact..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Hoovering</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Hoovering Tactics</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="protection">
+                <h3>How to Protect Yourself</h3>
+                <div id="protectionList"></div>
+            </div>
+
+            <div class="reminder">
+                <h4>Remember Why You Left</h4>
+                <div id="reminderList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const HOOVERING_TACTICS = {
+            'Sudden Niceness': {
+                markers: ['i miss you', 'thinking about you', 'been thinking', 'remember when', 'good times'],
+                desc: 'Unexpected affection after conflict/separation'
+            },
+            'Fake Emergency': {
+                markers: ['emergency', 'hospital', 'accident', 'sick', 'dying', 'urgent', 'need you'],
+                desc: 'Creating crisis to force contact'
+            },
+            'Promise of Change': {
+                markers: ['i\'ve changed', 'different now', 'getting help', 'in therapy', 'realized', 'sorry'],
+                desc: 'Claiming transformation without evidence'
+            },
+            'Guilt Appeal': {
+                markers: ['worried about you', 'just checking', 'care about you', 'thought you should know'],
+                desc: 'Using concern as excuse to reconnect'
+            },
+            'Third Party': {
+                markers: ['friend told me', 'family said', 'heard that', 'someone mentioned'],
+                desc: 'Using others to justify contact'
+            },
+            'Special Occasion': {
+                markers: ['birthday', 'holiday', 'anniversary', 'new year', 'christmas'],
+                desc: 'Using events as excuse to reach out'
+            },
+            'Victim Playing': {
+                markers: ['so hurt', 'devastated', 'destroyed me', 'can\'t go on', 'nothing without you'],
+                desc: 'Making you feel responsible for their pain'
+            },
+            'Minimizing Past': {
+                markers: ['wasn\'t that bad', 'misunderstanding', 'blown out of proportion', 'overreacted'],
+                desc: 'Downplaying the reasons you left'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check tactics
+            Object.entries(HOOVERING_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate likelihood
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious hoovering patterns - but trust your gut';
+                labelClass = 'safe';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POTENTIAL HOOVERING';
+                desc = `${found.length} tactic(s) detected - proceed carefully`;
+                labelClass = 'caution';
+            } else {
+                icon = '🚨';
+                label = 'HOOVERING ATTEMPT';
+                desc = 'Multiple tactics to pull you back in';
+                labelClass = 'hoover';
+            }
+
+            // Generate protection
+            const protection = generateProtection(found);
+
+            // Generate reminders
+            const reminders = generateReminders(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No clear hoovering patterns</div>';
+            }
+
+            document.getElementById('protectionList').innerHTML = protection.map(p =>
+                `<div class="protect-item">${p}</div>`
+            ).join('');
+
+            document.getElementById('reminderList').innerHTML = reminders.map(r =>
+                `<div class="reminder-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateProtection(found) {
+            const protection = [];
+
+            if (found.some(t => t.name === 'Fake Emergency')) {
+                protection.push('Verify emergencies through third parties before responding');
+            }
+            if (found.some(t => t.name === 'Promise of Change')) {
+                protection.push('Change takes months/years to demonstrate - not messages');
+            }
+
+            protection.push('You don\'t have to respond at all');
+            protection.push('No response IS a response - silence is valid');
+            protection.push('Block if needed - you owe no explanation');
+            protection.push('Screenshot and save in case you need documentation');
+
+            return protection.slice(0, 5);
+        }
+
+        function generateReminders(found) {
+            const reminders = [
+                'You left for valid reasons',
+                'Their words now don\'t erase their actions then',
+                'The cycle: Tension → Incident → Reconciliation → Calm → Repeat'
+            ];
+
+            if (found.length > 0) {
+                reminders.push('This contact is about their needs, not yours');
+            }
+
+            reminders.push('Your peace is worth more than their comfort');
+
+            return reminders.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

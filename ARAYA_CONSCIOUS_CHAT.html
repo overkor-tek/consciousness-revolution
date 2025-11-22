@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araya Conscious Chat</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        .chat-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .user .message-content {
+            background: #4ECDC4;
+            color: #000;
+            border-bottom-right-radius: 4px;
+        }
+
+        .araya .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 4px;
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .truth {
+            background: #2ecc71;
+            color: #000;
+        }
+
+        .deceit {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .neutral {
+            background: #f39c12;
+            color: #000;
+        }
+
+        .pattern-analysis {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .pattern-analysis .score {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .pattern-analysis .bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .pattern-analysis .bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .truth-bar { background: #2ecc71; }
+        .deceit-bar { background: #e74c3c; }
+
+        .turns {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .turns li {
+            font-size: 11px;
+            margin-left: 15px;
+            opacity: 0.8;
+        }
+
+        .input-container {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-wrapper button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 24px;
+            background: #4ECDC4;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .input-wrapper button:hover {
+            transform: scale(1.05);
+        }
+
+        .analyze-toggle {
+            max-width: 800px;
+            margin: 10px auto 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .analyze-toggle input {
+            accent-color: #4ECDC4;
+        }
+
+        .consciousness-meter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 12px;
+            min-width: 150px;
+        }
+
+        .consciousness-meter h3 {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .consciousness-meter .level {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+
+        .consciousness-meter .name {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 Araya Conscious Chat</h1>
+        <p>Pattern Theory Analysis • 92.2% Reality Accuracy</p>
+    </div>
+
+    <div class="consciousness-meter">
+        <h3>SESSION CONSCIOUSNESS</h3>
+        <div class="level" id="consciousness-level">50%</div>
+        <div class="name" id="consciousness-name">Aware</div>
+    </div>
+
+    <div class="chat-container" id="chat">
+        <div class="message araya">
+            <div class="message-content">
+                Hello! I'm Araya with Pattern Theory integration. I'll analyze messages for Truth vs Deceit algorithms, detect 15-degree manipulation turns, and help elevate consciousness. What would you like to explore?
+            </div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div class="input-wrapper">
+            <input type="text" id="user-input" placeholder="Type a message to analyze..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <div class="analyze-toggle">
+            <input type="checkbox" id="auto-analyze" checked />
+            <label for="auto-analyze">Auto-analyze all messages for patterns</label>
+        </div>
+    </div>
+
+    <script>
+        // Pattern Theory Engine (client-side implementation)
+        const PatternTheory = {
+            DECEIT_MARKERS: [
+                "but", "however", "actually", "trust me", "believe me",
+                "obviously", "clearly", "everyone knows", "you should",
+                "you must", "you need to", "just", "only", "simple",
+                "easy", "quick", "free", "guaranteed", "limited time",
+                "act now", "don't miss", "exclusive", "secret"
+            ],
+
+            TRUTH_MARKERS: [
+                "because", "therefore", "evidence shows", "data indicates",
+                "research suggests", "in my experience", "i think", "i believe",
+                "it seems", "from my perspective", "let me explain",
+                "here's why", "the reason is", "consider this",
+                "permanent", "foundation", "long-term", "quality"
+            ],
+
+            analyze(text) {
+                const lower = text.toLowerCase();
+
+                let deceitCount = 0;
+                let truthCount = 0;
+
+                this.DECEIT_MARKERS.forEach(m => {
+                    if (lower.includes(m)) deceitCount++;
+                });
+
+                this.TRUTH_MARKERS.forEach(m => {
+                    if (lower.includes(m)) truthCount++;
+                });
+
+                // Detect 15-degree turns
+                const turns = [];
+                if (lower.includes('but ')) turns.push('Pivot after positive');
+                if (lower.includes('however ')) turns.push('Contradiction introduced');
+                if (lower.includes('yes, but')) turns.push('Agreement negation');
+                if (lower.match(/\b(now|immediately|urgent)\b/) && lower.match(/\b(must|need|have to)\b/)) {
+                    turns.push('False urgency creation');
+                }
+
+                // Calculate scores
+                const total = deceitCount + truthCount;
+                let truthScore = total ? (truthCount / total) * 100 : 50;
+                let deceitScore = total ? (deceitCount / total) * 100 : 50;
+
+                // Adjust for turns
+                const turnPenalty = turns.length * 10;
+                deceitScore = Math.min(100, deceitScore + turnPenalty);
+                truthScore = Math.max(0, truthScore - turnPenalty);
+
+                // Normalize
+                const newTotal = truthScore + deceitScore;
+                if (newTotal > 0) {
+                    truthScore = (truthScore / newTotal) * 100;
+                    deceitScore = (deceitScore / newTotal) * 100;
+                }
+
+                const algorithm = truthScore > deceitScore ? 'Truth' : 'Deceit';
+                const confidence = Math.abs(truthScore - deceitScore) / 100;
+
+                return {
+                    algorithm,
+                    truthScore: Math.round(truthScore),
+                    deceitScore: Math.round(deceitScore),
+                    confidence: Math.round(confidence * 100),
+                    turns
+                };
+            }
+        };
+
+        // Session consciousness tracking
+        let sessionScores = [];
+
+        function updateConsciousness() {
+            if (sessionScores.length === 0) return;
+
+            const avg = sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length;
+            const level = Math.round(avg);
+
+            document.getElementById('consciousness-level').textContent = level + '%';
+
+            let name = 'Unconscious';
+            if (level >= 85) name = 'Elevated';
+            else if (level >= 75) name = 'Conscious';
+            else if (level >= 50) name = 'Aware';
+            else if (level >= 25) name = 'Awakening';
+
+            document.getElementById('consciousness-name').textContent = name;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add user message
+            const chat = document.getElementById('chat');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerHTML = `<div class="message-content">${escapeHtml(text)}</div>`;
+            chat.appendChild(userDiv);
+
+            // Analyze if enabled
+            const autoAnalyze = document.getElementById('auto-analyze').checked;
+            if (autoAnalyze) {
+                const analysis = PatternTheory.analyze(text);
+
+                // Add analysis badge to user message
+                const badgeClass = analysis.algorithm === 'Truth' ? 'truth' :
+                                   analysis.confidence < 30 ? 'neutral' : 'deceit';
+                const badge = document.createElement('span');
+                badge.className = `analysis-badge ${badgeClass}`;
+                badge.textContent = analysis.algorithm.toUpperCase();
+                userDiv.querySelector('.message-content').appendChild(badge);
+
+                // Track consciousness
+                sessionScores.push(analysis.truthScore);
+                updateConsciousness();
+
+                // Add Araya analysis response
+                setTimeout(() => {
+                    const arayaDiv = document.createElement('div');
+                    arayaDiv.className = 'message araya';
+
+                    let turnsHtml = '';
+                    if (analysis.turns.length > 0) {
+                        turnsHtml = `
+                            <div class="turns">
+                                <strong>⚠️ 15° Turns Detected:</strong>
+                                <ul>
+                                    ${analysis.turns.map(t => `<li>${t}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+
+                    arayaDiv.innerHTML = `
+                        <div class="message-content">
+                            <div class="pattern-analysis">
+                                <div class="score">
+                                    <span>Truth</span>
+                                    <span>${analysis.truthScore}%</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="bar-fill truth-bar" style="width: ${analysis.truthScore}%"></div>
+                                </div>
+                                <div class="score">
+                                    <span>Deceit</span>
+                                    <span>${analysis.deceitScore}%</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="bar-fill deceit-bar" style="width: ${analysis.deceitScore}%"></div>
+                                </div>
+                                <div style="margin-top: 8px; opacity: 0.8;">
+                                    Confidence: ${analysis.confidence}%
+                                </div>
+                                ${turnsHtml}
+                            </div>
+                        </div>
+                    `;
+                    chat.appendChild(arayaDiv);
+                    chat.scrollTop = chat.scrollHeight;
+                }, 300);
+            }
+
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Enter key handler
+        document.getElementById('user-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

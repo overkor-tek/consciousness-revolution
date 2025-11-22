@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaslighting Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.warn { color: #f1c40f; }
+        .verdict-label.danger { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .grounding {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .grounding h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .ground-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .reality {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reality h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .reality-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gaslighting Detector</h1>
+            <p>Identify reality-denying manipulation</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste what someone said that made you question your reality..."></textarea>
+            <button class="detect-btn" onclick="detect()">Analyze for Gaslighting</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Gaslighting Tactics Detected</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="grounding">
+                <h3>Grounding Responses</h3>
+                <div id="groundingList"></div>
+            </div>
+
+            <div class="reality">
+                <h4>Reality Check</h4>
+                <div id="realityList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const GASLIGHTING_TACTICS = {
+            'Reality Denial': {
+                markers: ['that never happened', 'didn\'t happen', 'you\'re imagining', 'making it up', 'in your head'],
+                desc: 'Denying events that actually occurred',
+                ground: '"I know what happened. I was there."'
+            },
+            'Memory Attack': {
+                markers: ['you\'re forgetting', 'don\'t remember', 'bad memory', 'can\'t remember', 'always forget'],
+                desc: 'Attacking your memory to create doubt',
+                ground: '"My memory is fine. I remember this clearly."'
+            },
+            'Perception Invalidation': {
+                markers: ['too sensitive', 'overreacting', 'crazy', 'paranoid', 'seeing things'],
+                desc: 'Making you doubt your perception',
+                ground: '"My perception is valid. I experienced what I experienced."'
+            },
+            'Emotion Dismissal': {
+                markers: ['shouldn\'t feel', 'no reason to', 'being dramatic', 'making a big deal', 'not that bad'],
+                desc: 'Telling you how to feel about your experience',
+                ground: '"I decide how I feel about things that happen to me."'
+            },
+            'Rewriting History': {
+                markers: ['that\'s not what i said', 'what i meant was', 'you misunderstood', 'took it wrong', 'twisted my words'],
+                desc: 'Changing the narrative after the fact',
+                ground: '"I understood exactly what you said."'
+            },
+            'Blame Reversal': {
+                markers: ['your fault', 'you made me', 'because of you', 'look what you', 'wouldn\'t have if you'],
+                desc: 'Making you responsible for their actions',
+                ground: '"You are responsible for your own actions."'
+            },
+            'Isolation Attempt': {
+                markers: ['no one else', 'everyone agrees', 'ask anyone', 'they all think', 'only one who'],
+                desc: 'Making you feel alone in your perception',
+                ground: '"Others\' opinions don\'t change my experience."'
+            },
+            'Sanity Questioning': {
+                markers: ['need help', 'see someone', 'something wrong with you', 'losing it', 'not well'],
+                desc: 'Suggesting you\'re mentally unstable',
+                ground: '"I\'m perfectly capable of assessing my own mental state."'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check tactics
+            Object.entries(GASLIGHTING_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        ground: data.ground
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'NO GASLIGHTING DETECTED';
+                desc = 'No obvious reality-denying patterns found';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'GASLIGHTING INDICATORS';
+                desc = `${found.length} tactic(s) detected - stay grounded`;
+                labelClass = 'warn';
+            } else {
+                icon = '🚨';
+                label = 'STRONG GASLIGHTING';
+                desc = `${found.length} tactics - serious manipulation attempt`;
+                labelClass = 'danger';
+            }
+
+            // Get grounding responses
+            const grounding = found.map(f => f.ground);
+            if (grounding.length === 0) {
+                grounding.push('"I trust my perception and memory."');
+            }
+
+            // Generate reality checks
+            const reality = generateReality(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No gaslighting patterns detected</div>';
+            }
+
+            document.getElementById('groundingList').innerHTML = grounding.slice(0, 4).map(g =>
+                `<div class="ground-item">${g}</div>`
+            ).join('');
+
+            document.getElementById('realityList').innerHTML = reality.map(r =>
+                `<div class="reality-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateReality(found) {
+            const reality = [
+                'Your experience is real - you lived it',
+                'Confusion after conversations is a red flag',
+                'Document incidents in writing'
+            ];
+
+            if (found.length >= 2) {
+                reality.push('Repeated gaslighting is emotional abuse');
+                reality.push('Trust your gut - if something feels wrong, it is');
+            }
+
+            reality.push('Talk to someone you trust about these incidents');
+
+            return reality.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

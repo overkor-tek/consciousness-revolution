@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argument Mapper | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .argument-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .argument-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .map-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .structure {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .structure h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .component {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .component:last-child { margin-bottom: 0; }
+
+        .component.claim {
+            background: rgba(102, 126, 234, 0.2);
+            border-left: 3px solid #667eea;
+        }
+
+        .component.evidence {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .component.assumption {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .component.conclusion {
+            background: rgba(155, 89, 182, 0.2);
+            border-left: 3px solid #9b59b6;
+        }
+
+        .component-label {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            opacity: 0.7;
+        }
+
+        .component-text {
+            font-size: 13px;
+        }
+
+        .fallacies {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .fallacies h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .fallacy {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .fallacy:last-child { margin-bottom: 0; }
+
+        .fallacy-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .fallacy-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-fallacies {
+            font-size: 13px;
+            opacity: 0.6;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .strength {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .strength h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strength-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .strength-fill.strong { background: #2ecc71; }
+        .strength-fill.moderate { background: #f1c40f; }
+        .strength-fill.weak { background: #e74c3c; }
+
+        .strength-label {
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .improve {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .improve h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .improve-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Argument Mapper</h1>
+            <p>Break down arguments into their logical components</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="argument-input" id="argument" placeholder="Paste an argument to analyze its structure and logic..."></textarea>
+            <button class="map-btn" onclick="mapArgument()">Map Argument</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="structure">
+                <h3>Argument Structure</h3>
+                <div id="components"></div>
+            </div>
+
+            <div class="fallacies">
+                <h3>Logical Fallacies</h3>
+                <div id="fallaciesList"></div>
+            </div>
+
+            <div class="strength">
+                <h3>Argument Strength</h3>
+                <div class="strength-meter">
+                    <div class="strength-fill" id="strengthFill"></div>
+                </div>
+                <div class="strength-label" id="strengthLabel">-</div>
+            </div>
+
+            <div class="improve">
+                <h4>To Strengthen This Argument</h4>
+                <div id="improveList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const FALLACY_PATTERNS = {
+            'Ad Hominem': {
+                markers: ['you\'re just', 'typical', 'people like you', 'of course you would'],
+                desc: 'Attacks the person instead of the argument'
+            },
+            'Appeal to Authority': {
+                markers: ['experts say', 'scientists agree', 'studies show', 'everyone knows'],
+                desc: 'Uses unnamed or irrelevant authorities as proof'
+            },
+            'False Dichotomy': {
+                markers: ['either', 'or else', 'only two choices', 'if not then'],
+                desc: 'Presents only two options when more exist'
+            },
+            'Slippery Slope': {
+                markers: ['will lead to', 'next thing', 'before you know it', 'eventually'],
+                desc: 'Assumes one thing inevitably leads to extreme consequences'
+            },
+            'Straw Man': {
+                markers: ['so you\'re saying', 'what you really mean', 'in other words'],
+                desc: 'Misrepresents the opposing view to attack it'
+            },
+            'Appeal to Emotion': {
+                markers: ['imagine', 'think of the children', 'how would you feel', 'heartbreaking'],
+                desc: 'Uses emotion instead of logic'
+            },
+            'Circular Reasoning': {
+                markers: ['because it is', 'that\'s just how', 'obviously'],
+                desc: 'Uses the conclusion as a premise'
+            }
+        };
+
+        function mapArgument() {
+            const argument = document.getElementById('argument').value.trim();
+            if (!argument) return;
+
+            const lower = argument.toLowerCase();
+            const sentences = argument.split(/[.!?]+/).filter(s => s.trim());
+
+            // Extract components
+            const components = extractComponents(argument, sentences);
+
+            // Detect fallacies
+            const fallacies = detectFallacies(lower);
+
+            // Calculate strength
+            const strength = calculateStrength(components, fallacies);
+
+            // Generate improvements
+            const improvements = generateImprovements(components, fallacies);
+
+            // Render results
+            document.getElementById('components').innerHTML = components.map(comp => `
+                <div class="component ${comp.type}">
+                    <div class="component-label">${comp.label}</div>
+                    <div class="component-text">${comp.text}</div>
+                </div>
+            `).join('');
+
+            if (fallacies.length > 0) {
+                document.getElementById('fallaciesList').innerHTML = fallacies.map(f => `
+                    <div class="fallacy">
+                        <div class="fallacy-name">${f.name}</div>
+                        <div class="fallacy-desc">${f.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('fallaciesList').innerHTML =
+                    '<div class="no-fallacies">No obvious fallacies detected</div>';
+            }
+
+            const fill = document.getElementById('strengthFill');
+            fill.style.width = strength + '%';
+            fill.className = 'strength-fill ' +
+                (strength >= 70 ? 'strong' : strength >= 40 ? 'moderate' : 'weak');
+
+            document.getElementById('strengthLabel').textContent =
+                strength >= 70 ? `Strong Argument (${strength}%)` :
+                strength >= 40 ? `Moderate Argument (${strength}%)` :
+                `Weak Argument (${strength}%)`;
+
+            document.getElementById('improveList').innerHTML = improvements.map(i =>
+                `<div class="improve-item">• ${i}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function extractComponents(argument, sentences) {
+            const components = [];
+            const lower = argument.toLowerCase();
+
+            // Identify claim markers
+            const claimMarkers = ['i believe', 'my point is', 'the fact is', 'clearly', 'obviously'];
+            const evidenceMarkers = ['because', 'since', 'data shows', 'research', 'according to', 'study'];
+            const assumptionMarkers = ['assuming', 'if we accept', 'given that', 'naturally'];
+            const conclusionMarkers = ['therefore', 'thus', 'so', 'consequently', 'in conclusion'];
+
+            sentences.forEach(sentence => {
+                const sentLower = sentence.toLowerCase().trim();
+
+                if (conclusionMarkers.some(m => sentLower.includes(m))) {
+                    components.push({ type: 'conclusion', label: 'Conclusion', text: sentence.trim() });
+                } else if (evidenceMarkers.some(m => sentLower.includes(m))) {
+                    components.push({ type: 'evidence', label: 'Supporting Evidence', text: sentence.trim() });
+                } else if (assumptionMarkers.some(m => sentLower.includes(m))) {
+                    components.push({ type: 'assumption', label: 'Assumption', text: sentence.trim() });
+                } else if (claimMarkers.some(m => sentLower.includes(m)) || components.length === 0) {
+                    components.push({ type: 'claim', label: 'Main Claim', text: sentence.trim() });
+                } else {
+                    components.push({ type: 'evidence', label: 'Supporting Point', text: sentence.trim() });
+                }
+            });
+
+            return components;
+        }
+
+        function detectFallacies(text) {
+            const found = [];
+
+            Object.entries(FALLACY_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => text.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            return found;
+        }
+
+        function calculateStrength(components, fallacies) {
+            let score = 50;
+
+            // Has evidence?
+            const hasEvidence = components.some(c => c.type === 'evidence');
+            if (hasEvidence) score += 15;
+            else score -= 15;
+
+            // Has conclusion?
+            const hasConclusion = components.some(c => c.type === 'conclusion');
+            if (hasConclusion) score += 10;
+
+            // Multiple points?
+            if (components.length >= 3) score += 10;
+
+            // Fallacy penalties
+            score -= fallacies.length * 15;
+
+            // Clamp
+            return Math.max(0, Math.min(100, score));
+        }
+
+        function generateImprovements(components, fallacies) {
+            const improvements = [];
+
+            const hasEvidence = components.some(c => c.type === 'evidence');
+            const hasConclusion = components.some(c => c.type === 'conclusion');
+
+            if (!hasEvidence) {
+                improvements.push('Add specific evidence or data to support claims');
+            }
+            if (!hasConclusion) {
+                improvements.push('Include a clear conclusion that follows from premises');
+            }
+            if (components.length < 3) {
+                improvements.push('Develop more supporting points');
+            }
+
+            fallacies.forEach(f => {
+                if (f.name === 'Appeal to Authority') {
+                    improvements.push('Name specific sources rather than vague "experts"');
+                } else if (f.name === 'Appeal to Emotion') {
+                    improvements.push('Replace emotional appeals with logical reasoning');
+                } else if (f.name === 'Ad Hominem') {
+                    improvements.push('Focus on the argument, not the person');
+                }
+            });
+
+            if (improvements.length === 0) {
+                improvements.push('Argument structure is solid');
+                improvements.push('Consider addressing potential counterarguments');
+            }
+
+            return improvements.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boundary Violation Tracker | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        textarea.text-input {
+            resize: none;
+            height: 80px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .violations-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .violations-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .violations-header h3 {
+            font-size: 14px;
+        }
+
+        .count-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .violation-item {
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .violation-date {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+
+        .violation-person {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .violation-boundary {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .violation-what {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .violation-delete {
+            font-size: 11px;
+            color: #667eea;
+            cursor: pointer;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            font-size: 13px;
+            opacity: 0.5;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern-alert {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .action-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .action-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .clear-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            background: transparent;
+            color: #e74c3c;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Boundary Violation Tracker</h1>
+            <p>Document and recognize patterns over time</p>
+        </div>
+
+        <div class="input-section">
+            <h3>Log a Violation</h3>
+            <div class="form-group">
+                <label class="form-label">Who violated the boundary?</label>
+                <input type="text" class="text-input" id="person" placeholder="Name or relationship">
+            </div>
+            <div class="form-group">
+                <label class="form-label">What boundary was crossed?</label>
+                <input type="text" class="text-input" id="boundary" placeholder="e.g., Privacy, Time, Physical space">
+            </div>
+            <div class="form-group">
+                <label class="form-label">What happened?</label>
+                <textarea class="text-input" id="what" placeholder="Describe the specific incident..."></textarea>
+            </div>
+            <button class="add-btn" onclick="addViolation()">Log Violation</button>
+        </div>
+
+        <div class="violations-section">
+            <div class="violations-header">
+                <h3>Logged Violations</h3>
+                <span class="count-badge" id="countBadge">0</span>
+            </div>
+            <div id="violationsList">
+                <div class="empty-state">No violations logged yet</div>
+            </div>
+        </div>
+
+        <div class="analysis" id="analysisSection" style="display: none;">
+            <h3>Pattern Analysis</h3>
+            <div id="patternAlerts"></div>
+            <div id="actionItems"></div>
+        </div>
+
+        <button class="clear-btn" onclick="clearAll()">Clear All Data</button>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let violations = JSON.parse(localStorage.getItem('boundaryViolations') || '[]');
+
+        function renderViolations() {
+            const list = document.getElementById('violationsList');
+            document.getElementById('countBadge').textContent = violations.length;
+
+            if (violations.length === 0) {
+                list.innerHTML = '<div class="empty-state">No violations logged yet</div>';
+                document.getElementById('analysisSection').style.display = 'none';
+                return;
+            }
+
+            list.innerHTML = violations.map((v, i) => `
+                <div class="violation-item">
+                    <div class="violation-date">${v.date}</div>
+                    <div class="violation-person">${v.person}</div>
+                    <div class="violation-boundary">Boundary: ${v.boundary}</div>
+                    <div class="violation-what">${v.what}</div>
+                    <span class="violation-delete" onclick="deleteViolation(${i})">Delete</span>
+                </div>
+            `).join('');
+
+            analyzePatterns();
+        }
+
+        function addViolation() {
+            const person = document.getElementById('person').value.trim();
+            const boundary = document.getElementById('boundary').value.trim();
+            const what = document.getElementById('what').value.trim();
+
+            if (!person || !boundary || !what) return;
+
+            violations.unshift({
+                date: new Date().toLocaleDateString(),
+                person,
+                boundary,
+                what
+            });
+
+            localStorage.setItem('boundaryViolations', JSON.stringify(violations));
+
+            document.getElementById('person').value = '';
+            document.getElementById('boundary').value = '';
+            document.getElementById('what').value = '';
+
+            renderViolations();
+        }
+
+        function deleteViolation(index) {
+            violations.splice(index, 1);
+            localStorage.setItem('boundaryViolations', JSON.stringify(violations));
+            renderViolations();
+        }
+
+        function clearAll() {
+            if (confirm('Clear all logged violations? This cannot be undone.')) {
+                violations = [];
+                localStorage.removeItem('boundaryViolations');
+                renderViolations();
+            }
+        }
+
+        function analyzePatterns() {
+            if (violations.length < 2) {
+                document.getElementById('analysisSection').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('analysisSection').style.display = 'block';
+
+            // Find repeat offenders
+            const personCounts = {};
+            violations.forEach(v => {
+                personCounts[v.person] = (personCounts[v.person] || 0) + 1;
+            });
+
+            const repeatOffenders = Object.entries(personCounts)
+                .filter(([_, count]) => count > 1)
+                .sort((a, b) => b[1] - a[1]);
+
+            // Find common boundaries
+            const boundaryCounts = {};
+            violations.forEach(v => {
+                boundaryCounts[v.boundary] = (boundaryCounts[v.boundary] || 0) + 1;
+            });
+
+            const commonBoundaries = Object.entries(boundaryCounts)
+                .filter(([_, count]) => count > 1)
+                .sort((a, b) => b[1] - a[1]);
+
+            // Generate alerts
+            const alerts = [];
+            repeatOffenders.forEach(([person, count]) => {
+                alerts.push(`⚠️ ${person} has violated your boundaries ${count} times`);
+            });
+            commonBoundaries.forEach(([boundary, count]) => {
+                alerts.push(`📍 "${boundary}" boundary crossed ${count} times`);
+            });
+
+            document.getElementById('patternAlerts').innerHTML = alerts.map(a =>
+                `<div class="pattern-alert">${a}</div>`
+            ).join('');
+
+            // Generate action items
+            const actions = [];
+            if (repeatOffenders.length > 0) {
+                actions.push(`Consider stronger boundaries with ${repeatOffenders[0][0]}`);
+                actions.push('Document for potential boundary conversations');
+            }
+            if (violations.length >= 5) {
+                actions.push('Pattern is clear - time for action, not more data');
+            }
+            actions.push('You have evidence - trust what you\'ve recorded');
+
+            document.getElementById('actionItems').innerHTML = actions.slice(0, 4).map(a =>
+                `<div class="action-item">${a}</div>`
+            ).join('');
+        }
+
+        renderViolations();
+    </script>
+</body>
+</html>

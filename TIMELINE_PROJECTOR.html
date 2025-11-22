@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Projector - Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #2a1a4e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        .input-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            padding: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: rgba(162,155,254,0.5);
+        }
+        button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            color: #fff;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108,92,231,0.4);
+        }
+        .results { display: none; }
+        .timelines-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .timeline-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(162,155,254,0.5);
+        }
+        .timeline-card.recommended {
+            border-color: #00b894;
+            box-shadow: 0 0 30px rgba(0,184,148,0.3);
+        }
+        .timeline-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .timeline-force { color: #ff7675; }
+        .timeline-pivot { color: #fdcb6e; }
+        .timeline-transcend { color: #00b894; }
+        .probability {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .outcome {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .actions-title {
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            color: #a29bfe;
+        }
+        .action-item {
+            font-size: 0.85em;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .recommended-badge {
+            background: #00b894;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .consciousness-level {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .level-value {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #a29bfe;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .timelines-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Timeline Projector</h1>
+        <p class="subtitle">Pattern Theory - Project possible futures based on your current situation</p>
+
+        <div class="input-section">
+            <textarea id="situation" placeholder="Describe your current situation...&#10;&#10;Example: I'm considering leaving my corporate job to start a business. I have 6 months savings, a business idea, but my family is concerned about stability."></textarea>
+            <button onclick="project()">Project Timelines</button>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <div>Projecting possible timelines...</div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="consciousness-level">
+                <div>Consciousness Level Required</div>
+                <div class="level-value" id="consciousnessLevel">0</div>
+            </div>
+
+            <div class="timelines-container" id="timelinesContainer">
+                <!-- Timeline cards will be inserted here -->
+            </div>
+
+            <button onclick="reset()" style="background: rgba(255,255,255,0.1);">Project Another Scenario</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5002';
+
+        async function project() {
+            const situation = document.getElementById('situation').value.trim();
+            if (!situation) {
+                alert('Please describe your situation');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/project`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ situation })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                showResults(data.result);
+            } catch (error) {
+                alert('Error projecting timelines: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('results').style.display = 'block';
+
+            // Animate consciousness level
+            let level = 0;
+            const target = Math.round(result.consciousness_level);
+            const interval = setInterval(() => {
+                level += Math.ceil(target / 30);
+                if (level >= target) {
+                    level = target;
+                    clearInterval(interval);
+                }
+                document.getElementById('consciousnessLevel').textContent = level;
+            }, 20);
+
+            // Render timelines
+            const container = document.getElementById('timelinesContainer');
+            container.innerHTML = '';
+
+            const timelineColors = {
+                'Force': 'timeline-force',
+                'Pivot': 'timeline-pivot',
+                'Transcend': 'timeline-transcend'
+            };
+
+            result.timelines.forEach(timeline => {
+                const isRecommended = timeline.name === result.recommended;
+                const colorClass = timelineColors[timeline.name] || '';
+
+                const card = document.createElement('div');
+                card.className = `timeline-card ${isRecommended ? 'recommended' : ''}`;
+                card.innerHTML = `
+                    ${isRecommended ? '<span class="recommended-badge">RECOMMENDED</span>' : ''}
+                    <div class="timeline-name ${colorClass}">${timeline.name}</div>
+                    <div class="probability">${Math.round(timeline.probability * 100)}%</div>
+                    <div class="outcome">${timeline.outcome}</div>
+                    <div class="actions-title">Key Actions:</div>
+                    ${timeline.actions.map(a => `<div class="action-item">• ${a}</div>`).join('')}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function reset() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('situation').value = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projection Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.possible { color: #f1c40f; }
+        .verdict-label.likely { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .pattern-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .pattern-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-patterns {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .truth {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Projection Detector</h1>
+            <p>Identify when someone accuses you of their behavior</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the accusation or criticism that seems to describe THEM more than you..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Projection</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Projection Patterns</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Questions to Ask Yourself</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>How to Respond</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PROJECTION_PATTERNS = {
+            'Accusation of Their Behavior': {
+                markers: ['you always', 'you never', 'you\'re the one who', 'you do the same'],
+                desc: 'Accusing you of exactly what they do'
+            },
+            'Sudden Character Attack': {
+                markers: ['you\'re so', 'you\'re such a', 'you\'re being', 'you\'re just'],
+                desc: 'Labels that come from nowhere and describe them'
+            },
+            'Preemptive Defense': {
+                markers: ['i\'m not', 'don\'t call me', 'i would never', 'unlike you'],
+                desc: 'Defending against accusations you didn\'t make'
+            },
+            'DARVO Pattern': {
+                markers: ['i\'m the victim', 'you\'re attacking me', 'you\'re the abusive one', 'i\'m being abused'],
+                desc: 'Deny, Attack, Reverse Victim and Offender'
+            },
+            'Excessive Suspicion': {
+                markers: ['you\'re lying', 'you\'re cheating', 'you\'re hiding', 'you\'re plotting', 'you\'re manipulating'],
+                desc: 'Extreme suspicion often reveals their own behavior'
+            },
+            'Jealousy Accusation': {
+                markers: ['you\'re jealous', 'you\'re envious', 'you can\'t stand that', 'you\'re threatened'],
+                desc: 'Accusing you of jealousy they actually feel'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check patterns
+            Object.entries(PROJECTION_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate likelihood
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious projection patterns detected';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POSSIBLE PROJECTION';
+                desc = 'Some indicators present - examine further';
+                labelClass = 'possible';
+            } else {
+                icon = '🪞';
+                label = 'LIKELY PROJECTION';
+                desc = 'Strong signs they\'re describing themselves';
+                labelClass = 'likely';
+            }
+
+            // Generate questions
+            const questions = generateQuestions(found);
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('patternsList').innerHTML = found.map(p => `
+                    <div class="pattern">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="no-patterns">✓ No clear projection patterns</div>';
+            }
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question">? ${q}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(found) {
+            const questions = [
+                'Have YOU actually done this, or are you just being told you have?',
+                'Does this accusation describe THEIR behavior more accurately?',
+                'Did they bring this up right when you confronted them about something?'
+            ];
+
+            if (found.some(p => p.name === 'DARVO Pattern')) {
+                questions.push('Were you the one actually harmed in this situation?');
+            }
+            if (found.some(p => p.name === 'Excessive Suspicion')) {
+                questions.push('Do THEY show signs of the behavior they\'re accusing you of?');
+            }
+
+            return questions.slice(0, 4);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'You don\'t have to defend against false accusations',
+                'Redirect: "Let\'s stay on the original topic"',
+                'Their perception of you says more about them'
+            ];
+
+            if (found.length >= 2) {
+                truths.push('Projection is a defense mechanism - they can\'t face their own behavior');
+            }
+
+            truths.push('Document incidents - patterns become clear over time');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

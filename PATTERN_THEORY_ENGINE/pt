@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""
+PATTERN THEORY CLI
+==================
+Quick command-line access to Pattern Theory analysis.
+
+Usage:
+    python pt "Trust me, this is a great deal!"
+    python pt --score 85 80 90
+    python pt --domain 2 "This investment guarantees returns"
+    python pt --batch file.txt
+
+Created: 2025-11-22
+"""
+
+import sys
+import json
+import argparse
+from pathlib import Path
+
+# Add API to path
+API_DIR = Path(__file__).parent / "api"
+sys.path.insert(0, str(API_DIR))
+
+from PATTERN_THEORY_API import PatternTheoryAPI
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Pattern Theory Analysis CLI",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  pt "Trust me, this is guaranteed!"
+  pt --quick "Limited time offer!"
+  pt --score 85 80 90
+  pt --domain 2 "This investment is risk-free"
+  pt --json "Analyze this text"
+        """
+    )
+
+    parser.add_argument("text", nargs="?", help="Text to analyze")
+    parser.add_argument("--quick", "-q", action="store_true",
+                        help="Quick TRUTH/DECEIT check only")
+    parser.add_argument("--score", "-s", nargs=3, type=float,
+                        metavar=("PR", "PA", "NS"),
+                        help="Score consciousness (pattern_rec, pred_acc, neutral_success)")
+    parser.add_argument("--domain", "-d", type=int, choices=range(1, 8),
+                        help="Domain-specific analysis (1-7)")
+    parser.add_argument("--json", "-j", action="store_true",
+                        help="Output as JSON")
+    parser.add_argument("--batch", "-b", type=str,
+                        help="Analyze all lines in a file")
+
+    args = parser.parse_args()
+    api = PatternTheoryAPI()
+
+    # Consciousness scoring mode
+    if args.score:
+        pr, pa, ns = args.score
+        result = api.score_user(pr, pa, ns)
+
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            print(f"\n🧠 CONSCIOUSNESS SCORE")
+            print(f"   Level: {result['score']['consciousness_level']}%")
+            print(f"   Name: {result['score']['level_name']}")
+            print(f"   Immunity: {result['score']['manipulation_immunity']}%")
+            print(f"\n📊 Breakdown:")
+            print(f"   Pattern Recognition: {result['breakdown']['pattern_recognition']}%")
+            print(f"   Prediction Accuracy: {result['breakdown']['prediction_accuracy']}%")
+            print(f"   Neutralization: {result['breakdown']['neutralization_success']}%")
+        return
+
+    # Batch mode
+    if args.batch:
+        with open(args.batch, 'r') as f:
+            lines = [line.strip() for line in f if line.strip()]
+        result = api.batch_analyze(lines)
+
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            print(f"\n📋 BATCH ANALYSIS ({len(lines)} items)")
+            print(f"   Truth: {result['summary']['truth_count']}")
+            print(f"   Deceit: {result['summary']['deceit_count']}")
+            print(f"   Neutral: {result['summary']['neutral_count']}")
+            print(f"   Ratio: {result['summary']['truth_ratio']:.1%}")
+        return
+
+    # Need text for remaining modes
+    if not args.text:
+        parser.print_help()
+        return
+
+    # Quick check mode
+    if args.quick:
+        result = api.quick_check(args.text)
+        print(result)
+        return
+
+    # Domain-specific mode
+    if args.domain:
+        result = api.seven_domains_analysis(args.domain, args.text)
+
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            analysis = result['analysis']['pattern']
+            domain = result['domain']
+
+            print(f"\n🌐 DOMAIN {domain['number']}: {domain['name']}")
+            print(f"\n📊 ANALYSIS")
+            print(f"   Algorithm: {analysis['algorithm']}")
+            print(f"   Truth: {analysis['truth_score']}%")
+            print(f"   Deceit: {analysis['deceit_score']}%")
+            print(f"   Confidence: {analysis['confidence']:.1%}")
+
+            if analysis['fifteen_degree_turns']:
+                print(f"\n⚠️  15° TURNS DETECTED:")
+                for turn in analysis['fifteen_degree_turns']:
+                    print(f"   • {turn}")
+
+            print(f"\n💡 GUIDANCE: {domain['guidance']}")
+        return
+
+    # Full analysis mode (default)
+    result = api.analyze(args.text)
+
+    if args.json:
+        print(json.dumps(result, indent=2))
+    else:
+        analysis = result['analysis']['pattern']
+        consciousness = result['analysis']['consciousness']
+
+        # Colorful output
+        algo = analysis['algorithm']
+        symbol = "✅" if algo == "Truth" else "❌"
+
+        print(f"\n{symbol} {algo.upper()} ALGORITHM DETECTED")
+        print(f"\n📊 SCORES")
+        print(f"   Truth: {analysis['truth_score']}%")
+        print(f"   Deceit: {analysis['deceit_score']}%")
+        print(f"   Confidence: {analysis['confidence']:.1%}")
+        print(f"   Golden Ratio: {analysis['golden_ratio_alignment']:.3f}")
+
+        print(f"\n🏷️  Pattern Type: {analysis['pattern_type']}")
+
+        if analysis['fifteen_degree_turns']:
+            print(f"\n⚠️  15° MANIPULATION TURNS:")
+            for turn in analysis['fifteen_degree_turns']:
+                print(f"   • {turn}")
+
+        print(f"\n💡 RECOMMENDATION: {analysis['recommendation']}")
+
+        print(f"\n🧠 CONSCIOUSNESS INDICATORS")
+        print(f"   Level: {consciousness['level']}%")
+        print(f"   Name: {consciousness['level_name']}")
+
+
+if __name__ == "__main__":
+    main()

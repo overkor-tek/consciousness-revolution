@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influence Detector | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 120px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .detect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .risk-meter {
+            text-align: center;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .risk-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .risk-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .risk-low { background: #2ecc71; }
+        .risk-medium { background: #f1c40f; }
+        .risk-high { background: #e74c3c; }
+
+        .risk-label {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .tactics-found {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics-found h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .tactic-icon { font-size: 24px; }
+
+        .tactic-info { flex: 1; }
+
+        .tactic-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 6px;
+        }
+
+        .tactic-quote {
+            font-size: 11px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .defense {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .defense h3 {
+            font-size: 14px;
+            color: #2ecc71;
+            margin-bottom: 12px;
+        }
+
+        .defense-item {
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 22px; }
+            .text-input { height: 100px; font-size: 14px; }
+            .detect-btn { padding: 14px; font-size: 14px; }
+            .tactic { flex-direction: column; align-items: flex-start; }
+            .tactic-icon { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Influence Detector</h1>
+            <p>Detect psychological influence tactics in ads, marketing, and pitches</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste ad copy, marketing email, sales pitch, or any persuasive content..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Tactics</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="risk-meter">
+                <div class="risk-label" id="riskLabel">-</div>
+                <div class="risk-bar">
+                    <div class="risk-fill" id="riskFill" style="width: 0%"></div>
+                </div>
+                <div style="font-size: 12px; opacity: 0.6;" id="riskDesc">-</div>
+            </div>
+
+            <div class="tactics-found">
+                <h3>Influence Tactics Detected</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="defense">
+                <h3>Defense Strategies</h3>
+                <div id="defenseList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const TACTICS = [
+            {
+                name: "Scarcity",
+                icon: "⏳",
+                markers: ["limited", "only", "few left", "running out", "last chance", "exclusive"],
+                desc: "Creating artificial scarcity to trigger fear of missing out",
+                defense: "Ask: Will this really be unavailable, or is this a sales tactic?"
+            },
+            {
+                name: "Urgency",
+                icon: "⏰",
+                markers: ["act now", "today only", "expires", "don't wait", "immediately", "hurry"],
+                desc: "Pressuring immediate action to bypass careful thinking",
+                defense: "Sleep on it. Real opportunities don't disappear overnight."
+            },
+            {
+                name: "Social Proof",
+                icon: "👥",
+                markers: ["everyone", "thousands", "bestselling", "most popular", "join", "people are"],
+                desc: "Using crowd behavior to imply you should follow",
+                defense: "Others' choices don't determine what's right for you."
+            },
+            {
+                name: "Authority",
+                icon: "🎓",
+                markers: ["expert", "doctor", "studies show", "research", "proven", "certified"],
+                desc: "Leveraging authority figures to increase trust",
+                defense: "Verify credentials and check if the 'authority' is relevant."
+            },
+            {
+                name: "Reciprocity",
+                icon: "🎁",
+                markers: ["free", "gift", "bonus", "complimentary", "no cost", "on us"],
+                desc: "Giving something to create obligation to give back",
+                defense: "A 'gift' with strings attached isn't really free."
+            },
+            {
+                name: "Liking",
+                icon: "😊",
+                markers: ["friend", "like you", "people like us", "we", "together", "community"],
+                desc: "Building rapport to increase compliance",
+                defense: "Separate how you feel about the person from the offer itself."
+            },
+            {
+                name: "Fear Appeal",
+                icon: "😱",
+                markers: ["risk", "danger", "before it's too late", "don't miss", "lose", "fail"],
+                desc: "Using fear to motivate action",
+                defense: "Fear-based decisions are rarely good decisions. Calm down first."
+            },
+            {
+                name: "Anchoring",
+                icon: "⚓",
+                markers: ["was $", "normally", "compare", "value", "save", "discount"],
+                desc: "Setting high reference point to make offer seem better",
+                defense: "Judge value independently, not compared to inflated 'original' prices."
+            },
+            {
+                name: "Commitment",
+                icon: "🤝",
+                markers: ["you agreed", "you said", "consistent", "promise", "committed"],
+                desc: "Using past commitments to push for more",
+                defense: "You can change your mind when you have new information."
+            },
+            {
+                name: "Future Pacing",
+                icon: "🔮",
+                markers: ["imagine", "picture yourself", "what if", "when you", "you'll be"],
+                desc: "Having you imagine positive outcomes to create desire",
+                defense: "Imagination isn't evidence. Ask for real case studies."
+            }
+        ];
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            TACTICS.forEach(t => {
+                const matched = t.markers.filter(m => lower.includes(m));
+                if (matched.length > 0) {
+                    // Find context
+                    const marker = matched[0];
+                    const idx = lower.indexOf(marker);
+                    const start = Math.max(0, idx - 20);
+                    const end = Math.min(text.length, idx + marker.length + 30);
+                    const context = text.slice(start, end);
+
+                    found.push({
+                        ...t,
+                        matched,
+                        context: (start > 0 ? '...' : '') + context + (end < text.length ? '...' : '')
+                    });
+                }
+            });
+
+            // Calculate risk
+            const riskScore = Math.min(100, found.length * 15);
+            let riskClass, riskText, riskDesc;
+
+            if (riskScore >= 60) {
+                riskClass = 'risk-high';
+                riskText = 'HIGH INFLUENCE';
+                riskDesc = 'Multiple manipulation tactics detected. Proceed with extreme caution.';
+            } else if (riskScore >= 30) {
+                riskClass = 'risk-medium';
+                riskText = 'MODERATE INFLUENCE';
+                riskDesc = 'Some influence tactics present. Take time to evaluate objectively.';
+            } else {
+                riskClass = 'risk-low';
+                riskText = 'LOW INFLUENCE';
+                riskDesc = 'Minimal manipulation tactics detected.';
+            }
+
+            // Update UI
+            document.getElementById('riskLabel').textContent = riskText;
+            document.getElementById('riskDesc').textContent = riskDesc;
+            const fill = document.getElementById('riskFill');
+            fill.style.width = riskScore + '%';
+            fill.className = 'risk-fill ' + riskClass;
+
+            // Tactics list
+            document.getElementById('tacticsList').innerHTML = found.length > 0
+                ? found.map(t => `
+                    <div class="tactic">
+                        <span class="tactic-icon">${t.icon}</span>
+                        <div class="tactic-info">
+                            <div class="tactic-name">${t.name}</div>
+                            <div class="tactic-desc">${t.desc}</div>
+                            <div class="tactic-quote">"${t.context}"</div>
+                        </div>
+                    </div>
+                `).join('')
+                : '<div style="opacity: 0.5;">No major influence tactics detected</div>';
+
+            // Defense strategies
+            const defenses = found.length > 0
+                ? found.map(t => `<div class="defense-item">• ${t.defense}</div>`).join('')
+                : '<div class="defense-item">• Content appears straightforward</div>';
+
+            document.getElementById('defenseList').innerHTML = defenses;
+
+            document.getElementById('results').classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Matrix | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 32px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .text-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .add-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn:hover { background: #764ba2; }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 8px 12px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .weight-input {
+            width: 60px;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-align: center;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .matrix-table th, .matrix-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .matrix-table th {
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 12px;
+        }
+
+        .matrix-table th:first-child { text-align: left; }
+
+        .score-input {
+            width: 50px;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-align: center;
+        }
+
+        .option-name {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-card {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .winner {
+            border: 2px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .result-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .result-score {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+
+        .result-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .result-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+
+        .winner-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #2ecc71;
+            color: #000;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .criteria-breakdown {
+            margin-top: 12px;
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .tip-box {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .tip-box strong { color: #667eea; }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            .matrix-table { font-size: 12px; }
+            .matrix-table th, .matrix-table td { padding: 8px 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Decision Matrix</h1>
+            <p>Weighted comparison tool for objective decision making</p>
+        </div>
+
+        <div class="section">
+            <h3>Decision Question</h3>
+            <input type="text" class="text-input" id="question" placeholder="What are you trying to decide? (e.g., Which job offer to accept?)">
+        </div>
+
+        <div class="section">
+            <h3>Options to Compare</h3>
+            <div class="input-row">
+                <input type="text" class="text-input" id="optionInput" placeholder="Add an option (e.g., Company A)">
+                <button class="add-btn" onclick="addOption()">Add</button>
+            </div>
+            <div class="tag-list" id="optionList"></div>
+        </div>
+
+        <div class="section">
+            <h3>Criteria & Weights</h3>
+            <div class="input-row">
+                <input type="text" class="text-input" id="criteriaInput" placeholder="Add criteria (e.g., Salary, Growth, Culture)">
+                <button class="add-btn" onclick="addCriteria()">Add</button>
+            </div>
+            <div class="tag-list" id="criteriaList"></div>
+        </div>
+
+        <div class="section" id="matrixSection" style="display: none;">
+            <h3>Score Each Option (1-10)</h3>
+            <div style="overflow-x: auto;">
+                <table class="matrix-table" id="matrixTable">
+                    <thead id="matrixHead"></thead>
+                    <tbody id="matrixBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculate()">Calculate Best Option</button>
+
+        <div class="results section" id="results">
+            <h3>Results</h3>
+            <div id="resultsList"></div>
+            <div class="tip-box" id="tipBox"></div>
+        </div>
+
+        <footer>
+            Pattern Theory Decision Making • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let options = [];
+        let criteria = [];
+
+        function addOption() {
+            const input = document.getElementById('optionInput');
+            const value = input.value.trim();
+            if (value && !options.includes(value)) {
+                options.push(value);
+                input.value = '';
+                renderOptions();
+                updateMatrix();
+            }
+        }
+
+        function addCriteria() {
+            const input = document.getElementById('criteriaInput');
+            const value = input.value.trim();
+            if (value && !criteria.find(c => c.name === value)) {
+                criteria.push({ name: value, weight: 1 });
+                input.value = '';
+                renderCriteria();
+                updateMatrix();
+            }
+        }
+
+        function removeOption(index) {
+            options.splice(index, 1);
+            renderOptions();
+            updateMatrix();
+        }
+
+        function removeCriteria(index) {
+            criteria.splice(index, 1);
+            renderCriteria();
+            updateMatrix();
+        }
+
+        function updateWeight(index, value) {
+            criteria[index].weight = parseFloat(value) || 1;
+        }
+
+        function renderOptions() {
+            document.getElementById('optionList').innerHTML = options.map((o, i) =>
+                `<div class="tag">
+                    ${o}
+                    <button class="tag-remove" onclick="removeOption(${i})">&times;</button>
+                </div>`
+            ).join('');
+        }
+
+        function renderCriteria() {
+            document.getElementById('criteriaList').innerHTML = criteria.map((c, i) =>
+                `<div class="tag">
+                    ${c.name}
+                    <input type="number" class="weight-input" value="${c.weight}" min="0.1" max="10" step="0.1"
+                           onchange="updateWeight(${i}, this.value)" title="Weight">
+                    <button class="tag-remove" onclick="removeCriteria(${i})">&times;</button>
+                </div>`
+            ).join('');
+        }
+
+        function updateMatrix() {
+            const section = document.getElementById('matrixSection');
+            if (options.length === 0 || criteria.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+
+            // Header
+            document.getElementById('matrixHead').innerHTML = `
+                <tr>
+                    <th>Option</th>
+                    ${criteria.map(c => `<th>${c.name}<br><small>(×${c.weight})</small></th>`).join('')}
+                </tr>
+            `;
+
+            // Body
+            document.getElementById('matrixBody').innerHTML = options.map((o, oi) =>
+                `<tr>
+                    <td class="option-name">${o}</td>
+                    ${criteria.map((c, ci) =>
+                        `<td><input type="number" class="score-input" id="score-${oi}-${ci}" min="1" max="10" value="5"></td>`
+                    ).join('')}
+                </tr>`
+            ).join('');
+        }
+
+        function calculate() {
+            if (options.length < 2 || criteria.length === 0) {
+                alert('Add at least 2 options and 1 criteria');
+                return;
+            }
+
+            // Calculate scores
+            const results = options.map((option, oi) => {
+                let total = 0;
+                let maxPossible = 0;
+                const breakdown = [];
+
+                criteria.forEach((c, ci) => {
+                    const score = parseInt(document.getElementById(`score-${oi}-${ci}`).value) || 5;
+                    const weighted = score * c.weight;
+                    total += weighted;
+                    maxPossible += 10 * c.weight;
+                    breakdown.push(`${c.name}: ${score}×${c.weight}=${weighted.toFixed(1)}`);
+                });
+
+                const percentage = Math.round((total / maxPossible) * 100);
+                return { option, total, percentage, breakdown };
+            });
+
+            // Sort by score
+            results.sort((a, b) => b.total - a.total);
+
+            // Display results
+            const maxScore = results[0].total;
+            document.getElementById('resultsList').innerHTML = results.map((r, i) =>
+                `<div class="result-card ${i === 0 ? 'winner' : ''}">
+                    <div class="result-header">
+                        <span class="result-name">
+                            ${r.option}
+                            ${i === 0 ? '<span class="winner-badge">BEST CHOICE</span>' : ''}
+                        </span>
+                        <span class="result-score">${r.percentage}%</span>
+                    </div>
+                    <div class="result-bar">
+                        <div class="result-fill" style="width: ${(r.total / maxScore) * 100}%"></div>
+                    </div>
+                    <div class="criteria-breakdown">${r.breakdown.join(' • ')}</div>
+                </div>`
+            ).join('');
+
+            // Generate tip
+            const diff = results[0].percentage - results[1].percentage;
+            let tip = '';
+            if (diff > 20) {
+                tip = `<strong>Clear winner!</strong> ${results[0].option} scores significantly higher. Trust this analysis.`;
+            } else if (diff > 10) {
+                tip = `<strong>Good choice:</strong> ${results[0].option} edges out. Consider if weights reflect your true priorities.`;
+            } else {
+                tip = `<strong>Close call:</strong> Options are very similar. Review criteria weights or add more factors.`;
+            }
+            document.getElementById('tipBox').innerHTML = tip;
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        // Enter key handlers
+        document.getElementById('optionInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addOption();
+        });
+
+        document.getElementById('criteriaInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addCriteria();
+        });
+
+        // Pre-populate common criteria
+        function loadCommon() {
+            const common = ['Cost', 'Quality', 'Time', 'Risk', 'Alignment'];
+            common.forEach(c => {
+                if (!criteria.find(x => x.name === c)) {
+                    criteria.push({ name: c, weight: 1 });
+                }
+            });
+            renderCriteria();
+            updateMatrix();
+        }
+    </script>
+</body>
+</html>

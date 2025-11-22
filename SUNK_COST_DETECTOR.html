@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunk Cost Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-level {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-level.low { color: #2ecc71; }
+        .verdict-level.medium { color: #f1c40f; }
+        .verdict-level.high { color: #e74c3c; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .reframe {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .reframe h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .reframe-item {
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .question {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .question h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #f1c40f;
+            font-weight: bold;
+        }
+
+        .truth {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sunk Cost Detector</h1>
+            <p>Identify when past investment is trapping you</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check statements you're telling yourself:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze My Thinking</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-level" id="verdictLevel">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="reframe">
+                <h3>Reframe Your Thinking</h3>
+                <div id="reframeList"></div>
+            </div>
+
+            <div class="question">
+                <h3>Better Questions to Ask</h3>
+                <div id="questionList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>The Truth About Sunk Costs</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const SUNK_COST_SIGNS = [
+            { text: '"I\'ve already invested so much time in this"', weight: 3 },
+            { text: '"I can\'t leave now after all these years"', weight: 3 },
+            { text: '"But I\'ve spent so much money on this"', weight: 2 },
+            { text: '"I\'ve come this far, I have to see it through"', weight: 2 },
+            { text: '"All my effort will be wasted if I stop"', weight: 3 },
+            { text: '"I\'ve put up with so much already"', weight: 2 },
+            { text: '"It would be stupid to quit now"', weight: 2 },
+            { text: '"Maybe if I just invest a little more..."', weight: 3 },
+            { text: '"I\'m in too deep to walk away"', weight: 3 },
+            { text: '"I\'d hate for it all to be for nothing"', weight: 2 }
+        ];
+
+        let selected = new Set();
+
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = SUNK_COST_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            let score = 0;
+            selected.forEach(i => {
+                score += SUNK_COST_SIGNS[i].weight;
+            });
+
+            const maxScore = SUNK_COST_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            let level, label, desc, levelClass;
+            if (percentage <= 20) {
+                level = percentage + '%';
+                label = 'LOW SUNK COST TRAP';
+                desc = 'Good awareness of rational decision-making';
+                levelClass = 'low';
+            } else if (percentage <= 50) {
+                level = percentage + '%';
+                label = 'MODERATE SUNK COST TRAP';
+                desc = 'Past investment may be clouding judgment';
+                levelClass = 'medium';
+            } else {
+                level = percentage + '%';
+                label = 'HIGH SUNK COST TRAP';
+                desc = 'Strongly trapped by past investment';
+                levelClass = 'high';
+            }
+
+            const reframes = generateReframes(percentage);
+            const questions = generateQuestions(percentage);
+            const truths = generateTruths(percentage);
+
+            const levelEl = document.getElementById('verdictLevel');
+            levelEl.textContent = level;
+            levelEl.className = 'verdict-level ' + levelClass;
+            document.getElementById('verdictLabel').textContent = label;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            document.getElementById('reframeList').innerHTML = reframes.map(r =>
+                `<div class="reframe-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('questionList').innerHTML = questions.map(q =>
+                `<div class="question-item">${q}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateReframes(percentage) {
+            const reframes = [
+                'Past time/money is gone regardless of your next choice',
+                'The best time to leave was earlier; second best is now',
+                'Continuing to lose doesn\'t honor past investment'
+            ];
+
+            if (percentage > 50) {
+                reframes.push('"Throwing good money after bad" is a real trap');
+                reframes.push('What would you advise a friend in this situation?');
+            }
+
+            return reframes.slice(0, 4);
+        }
+
+        function generateQuestions(percentage) {
+            const questions = [
+                'If I started fresh today, would I choose this?',
+                'What are the FUTURE costs of staying vs leaving?',
+                'Am I staying because I want to, or because I\'ve already stayed?'
+            ];
+
+            if (percentage > 50) {
+                questions.push('What is staying actually costing me right now?');
+            }
+
+            questions.push('What could I gain with the resources I\'m still spending here?');
+
+            return questions.slice(0, 5);
+        }
+
+        function generateTruths(percentage) {
+            const truths = [
+                'Past costs are gone - only future costs/benefits matter',
+                'Staying doesn\'t recover what you\'ve lost',
+                'Leaving is not "wasting" - staying can be'
+            ];
+
+            if (percentage > 50) {
+                truths.push('The sunk cost fallacy is one of the most common thinking errors');
+            }
+
+            truths.push('Your future self will thank you for deciding based on what\'s ahead');
+
+            return truths.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

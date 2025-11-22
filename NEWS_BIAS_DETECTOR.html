@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Bias Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .news-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            resize: none;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .news-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bias-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .bias-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .bias-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .bias-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .bias-label.low { color: #2ecc71; }
+        .bias-label.medium { color: #f1c40f; }
+        .bias-label.high { color: #e74c3c; }
+
+        .bias-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .indicators {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .indicators h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .indicator {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .indicator.found {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .indicator.clear {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .indicator-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .indicator.found .indicator-name { color: #e74c3c; }
+        .indicator.clear .indicator-name { color: #2ecc71; }
+
+        .indicator-desc {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .missing-context {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .missing-context h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .context-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .context-item::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .balance-tips {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .balance-tips h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .tip-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>News Bias Detector</h1>
+            <p>Identify bias and manipulation in news articles</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="news-input" id="news" placeholder="Paste news article or headline to analyze..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Bias</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="bias-card">
+                <div class="bias-meter">
+                    <div class="bias-fill" id="biasFill"></div>
+                </div>
+                <div class="bias-label" id="biasLabel">-</div>
+                <div class="bias-desc" id="biasDesc">-</div>
+            </div>
+
+            <div class="indicators">
+                <h3>Bias Indicators</h3>
+                <div id="indicatorsList"></div>
+            </div>
+
+            <div class="missing-context">
+                <h3>Questions to Ask</h3>
+                <div id="contextList"></div>
+            </div>
+
+            <div class="balance-tips">
+                <h4>Media Literacy Tips</h4>
+                <div id="tipsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const BIAS_INDICATORS = {
+            'Loaded Language': {
+                markers: ['slammed', 'blasted', 'destroyed', 'crushed', 'shocking', 'outrageous', 'horrific'],
+                desc: 'Emotionally charged words to influence reader reaction'
+            },
+            'One-Sided Sources': {
+                markers: ['critics say', 'supporters claim', 'experts say', 'sources say', 'insiders report'],
+                desc: 'Vague attribution without naming specific sources'
+            },
+            'Sensationalism': {
+                markers: ['breaking', 'bombshell', 'explosive', 'unprecedented', 'stunning', 'jaw-dropping'],
+                desc: 'Exaggerated language to grab attention'
+            },
+            'Omission Signals': {
+                markers: ['some say', 'many believe', 'growing concern', 'raising questions'],
+                desc: 'Vague claims without evidence or specifics'
+            },
+            'Attack Framing': {
+                markers: ['attacks', 'slams', 'rips', 'fires back', 'hits out', 'lashes out'],
+                desc: 'Combat language frames everything as conflict'
+            },
+            'Fear Appeals': {
+                markers: ['threat', 'dangerous', 'alarming', 'warning', 'crisis', 'emergency'],
+                desc: 'Fear-based language to drive emotional response'
+            },
+            'Headline Bait': {
+                markers: ['you won\'t believe', 'what happened next', 'the truth about', 'exposed', 'revealed'],
+                desc: 'Clickbait patterns designed to manipulate clicks'
+            },
+            'Political Framing': {
+                markers: ['left-wing', 'right-wing', 'liberal', 'conservative', 'radical', 'extremist'],
+                desc: 'Political labels that may oversimplify positions'
+            }
+        };
+
+        function detect() {
+            const news = document.getElementById('news').value.trim();
+            if (!news) return;
+
+            const lower = news.toLowerCase();
+            const found = [];
+            const clear = [];
+
+            // Check each indicator
+            Object.entries(BIAS_INDICATORS).forEach(([name, data]) => {
+                const matches = data.markers.filter(m => lower.includes(m));
+                if (matches.length > 0) {
+                    found.push({ name, desc: data.desc, matches });
+                } else {
+                    clear.push({ name, desc: 'Not detected' });
+                }
+            });
+
+            // Calculate bias score
+            const biasScore = Math.min(100, found.length * 15);
+
+            let label, desc, labelClass, fillColor;
+            if (biasScore <= 20) {
+                label = 'LOW BIAS';
+                desc = 'Relatively neutral language detected';
+                labelClass = 'low';
+                fillColor = '#2ecc71';
+            } else if (biasScore <= 50) {
+                label = 'MODERATE BIAS';
+                desc = 'Some biased language patterns present';
+                labelClass = 'medium';
+                fillColor = '#f1c40f';
+            } else {
+                label = 'HIGH BIAS';
+                desc = 'Multiple bias indicators detected';
+                labelClass = 'high';
+                fillColor = '#e74c3c';
+            }
+
+            // Generate context questions
+            const context = generateContext(found);
+
+            // Generate tips
+            const tips = generateTips(found);
+
+            // Render results
+            const fill = document.getElementById('biasFill');
+            fill.style.width = biasScore + '%';
+            fill.style.background = fillColor;
+
+            const labelEl = document.getElementById('biasLabel');
+            labelEl.textContent = label + ' (' + biasScore + '%)';
+            labelEl.className = 'bias-label ' + labelClass;
+            document.getElementById('biasDesc').textContent = desc;
+
+            // Render indicators (found first, then clear)
+            const allIndicators = [
+                ...found.map(f => ({ ...f, type: 'found' })),
+                ...clear.slice(0, 2).map(c => ({ ...c, type: 'clear' }))
+            ];
+
+            document.getElementById('indicatorsList').innerHTML = allIndicators.slice(0, 6).map(ind => `
+                <div class="indicator ${ind.type}">
+                    <div class="indicator-name">${ind.type === 'found' ? '⚠️ ' : '✓ '}${ind.name}</div>
+                    <div class="indicator-desc">${ind.desc}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('contextList').innerHTML = context.map(c =>
+                `<div class="context-item">${c}</div>`
+            ).join('');
+
+            document.getElementById('tipsList').innerHTML = tips.map(t =>
+                `<div class="tip-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateContext(found) {
+            const context = [
+                'Who benefits from this narrative?',
+                'What perspectives are missing?',
+                'What would the other side say?'
+            ];
+
+            if (found.some(f => f.name === 'One-Sided Sources')) {
+                context.push('Who exactly are these unnamed sources?');
+            }
+            if (found.some(f => f.name === 'Omission Signals')) {
+                context.push('What specific evidence supports these claims?');
+            }
+            if (found.some(f => f.name === 'Attack Framing')) {
+                context.push('Is this actually a conflict, or just disagreement?');
+            }
+
+            return context.slice(0, 5);
+        }
+
+        function generateTips(found) {
+            const tips = [];
+
+            if (found.length > 0) {
+                tips.push('Read multiple sources on this topic');
+                tips.push('Check the original sources cited');
+            }
+
+            tips.push('Separate facts from opinions');
+            tips.push('Notice your emotional reaction - that\'s often the goal');
+            tips.push('Ask: "What am I not being told?"');
+            tips.push('Check if headline matches article content');
+
+            return tips.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

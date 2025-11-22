@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belief Checker | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .question-group {
+            margin-bottom: 16px;
+        }
+
+        .question-label {
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .option-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover, .option-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-value.high { color: #2ecc71; }
+        .score-value.medium { color: #f1c40f; }
+        .score-value.low { color: #e74c3c; }
+
+        .score-label { font-size: 12px; opacity: 0.6; }
+
+        .verdict {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .analysis {
+            margin-bottom: 20px;
+        }
+
+        .analysis h4 {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+
+        .factor {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        .factor-status { font-weight: bold; }
+        .factor-status.good { color: #2ecc71; }
+        .factor-status.warn { color: #f1c40f; }
+        .factor-status.bad { color: #e74c3c; }
+
+        .suggestions {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .suggestions h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Belief Checker</h1>
+            <p>Examine if your beliefs are evidence-based or assumption-based</p>
+        </div>
+
+        <div class="section">
+            <h3>What belief do you want to examine?</h3>
+            <input type="text" class="text-input" id="belief" placeholder="Example: I need to work 80 hours/week to be successful">
+        </div>
+
+        <div class="section">
+            <h3>Evidence Questions</h3>
+
+            <div class="question-group">
+                <label class="question-label">Do you have direct personal experience supporting this?</label>
+                <div class="options" data-question="experience">
+                    <button class="option-btn" data-value="3">Yes, extensive</button>
+                    <button class="option-btn" data-value="2">Some</button>
+                    <button class="option-btn" data-value="1">Little</button>
+                    <button class="option-btn" data-value="0">None</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Can you cite specific data or research?</label>
+                <div class="options" data-question="data">
+                    <button class="option-btn" data-value="3">Yes, multiple sources</button>
+                    <button class="option-btn" data-value="2">One source</button>
+                    <button class="option-btn" data-value="1">Heard it somewhere</button>
+                    <button class="option-btn" data-value="0">No</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Have you actively looked for counterexamples?</label>
+                <div class="options" data-question="counter">
+                    <button class="option-btn" data-value="3">Yes, thoroughly</button>
+                    <button class="option-btn" data-value="2">Somewhat</button>
+                    <button class="option-btn" data-value="1">Not really</button>
+                    <button class="option-btn" data-value="0">Never</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">Where did this belief come from?</label>
+                <div class="options" data-question="origin">
+                    <button class="option-btn" data-value="3">My own analysis</button>
+                    <button class="option-btn" data-value="2">Trusted expert</button>
+                    <button class="option-btn" data-value="1">Social circle</button>
+                    <button class="option-btn" data-value="0">Unknown/always had it</button>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label class="question-label">How would you feel if this belief was wrong?</label>
+                <div class="options" data-question="attachment">
+                    <button class="option-btn" data-value="3">Open to it</button>
+                    <button class="option-btn" data-value="2">Slightly uncomfortable</button>
+                    <button class="option-btn" data-value="1">Very uncomfortable</button>
+                    <button class="option-btn" data-value="0">Threatened</button>
+                </div>
+            </div>
+        </div>
+
+        <button class="check-btn" onclick="check()">Check Belief</button>
+
+        <div class="result" id="result">
+            <div class="score-display">
+                <div class="score-value" id="scoreValue">0</div>
+                <div class="score-label">EVIDENCE SCORE</div>
+            </div>
+
+            <div class="verdict" id="verdict">-</div>
+
+            <div class="analysis">
+                <h4>Factor Analysis</h4>
+                <div id="factors"></div>
+            </div>
+
+            <div class="suggestions">
+                <h4>Recommendations</h4>
+                <div id="suggestions"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const answers = {
+            experience: null,
+            data: null,
+            counter: null,
+            origin: null,
+            attachment: null
+        };
+
+        // Button click handlers
+        document.querySelectorAll('.options').forEach(group => {
+            const question = group.dataset.question;
+            group.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    answers[question] = parseInt(btn.dataset.value);
+                });
+            });
+        });
+
+        function check() {
+            const belief = document.getElementById('belief').value.trim();
+            if (!belief) {
+                alert('Please enter a belief to examine');
+                return;
+            }
+
+            // Check all answered
+            const allAnswered = Object.values(answers).every(v => v !== null);
+            if (!allAnswered) {
+                alert('Please answer all questions');
+                return;
+            }
+
+            // Calculate score
+            const total = Object.values(answers).reduce((a, b) => a + b, 0);
+            const maxScore = 15;
+            const percentage = Math.round((total / maxScore) * 100);
+
+            // Update score display
+            const scoreEl = document.getElementById('scoreValue');
+            scoreEl.textContent = percentage + '%';
+
+            let verdict, scoreClass;
+            if (percentage >= 70) {
+                verdict = 'WELL-EVIDENCED BELIEF';
+                scoreClass = 'high';
+            } else if (percentage >= 40) {
+                verdict = 'PARTIALLY EVIDENCED';
+                scoreClass = 'medium';
+            } else {
+                verdict = 'WEAKLY EVIDENCED';
+                scoreClass = 'low';
+            }
+
+            scoreEl.className = 'score-value ' + scoreClass;
+            document.getElementById('verdict').textContent = verdict;
+
+            // Factors
+            const factorLabels = {
+                experience: 'Personal Experience',
+                data: 'Data/Research',
+                counter: 'Counter-evidence Search',
+                origin: 'Source Quality',
+                attachment: 'Emotional Detachment'
+            };
+
+            document.getElementById('factors').innerHTML = Object.keys(answers).map(key => {
+                const val = answers[key];
+                let status, statusClass;
+                if (val >= 2) { status = 'Strong'; statusClass = 'good'; }
+                else if (val >= 1) { status = 'Weak'; statusClass = 'warn'; }
+                else { status = 'Missing'; statusClass = 'bad'; }
+
+                return `
+                    <div class="factor">
+                        <span>${factorLabels[key]}</span>
+                        <span class="factor-status ${statusClass}">${status}</span>
+                    </div>
+                `;
+            }).join('');
+
+            // Suggestions
+            let suggestions = [];
+            if (answers.experience < 2) {
+                suggestions.push('• Seek direct experience or case studies');
+            }
+            if (answers.data < 2) {
+                suggestions.push('• Research peer-reviewed studies on this topic');
+            }
+            if (answers.counter < 2) {
+                suggestions.push('• Actively search for evidence that contradicts this belief');
+            }
+            if (answers.origin < 2) {
+                suggestions.push('• Trace where this belief came from and evaluate that source');
+            }
+            if (answers.attachment < 2) {
+                suggestions.push('• Practice holding this belief more loosely');
+            }
+
+            if (suggestions.length === 0) {
+                suggestions = ['• This belief appears well-grounded', '• Continue updating it as you learn more'];
+            }
+
+            document.getElementById('suggestions').innerHTML = suggestions.map(s =>
+                `<div class="suggestion-item">${s}</div>`
+            ).join('');
+
+            document.getElementById('result').classList.add('active');
+        }
+    </script>
+</body>
+</html>

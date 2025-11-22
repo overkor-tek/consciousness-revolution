@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Talk Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tone-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tone-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .tone-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .tone-label.supportive { color: #2ecc71; }
+        .tone-label.mixed { color: #f1c40f; }
+        .tone-label.harsh { color: #e74c3c; }
+
+        .tone-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pattern.negative {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .pattern.positive {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .pattern-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .pattern.negative .pattern-name { color: #e74c3c; }
+        .pattern.positive .pattern-name { color: #2ecc71; }
+
+        .pattern-desc {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .reframes {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .reframes h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .reframe {
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .practice {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .practice h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .practice-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Self-Talk Analyzer</h1>
+            <p>Identify and reframe harsh inner dialogue</p>
+        </div>
+
+        <div class="input-section">
+            <h3>What are you saying to yourself?</h3>
+            <textarea class="text-input" id="input" placeholder="Write your inner dialogue... e.g., &quot;I'm so stupid for making that mistake&quot;"></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Self-Talk</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="tone-card">
+                <div class="tone-icon" id="toneIcon">-</div>
+                <div class="tone-label" id="toneLabel">-</div>
+                <div class="tone-desc" id="toneDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Thought Patterns</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="reframes">
+                <h3>Healthier Reframes</h3>
+                <div id="reframesList"></div>
+            </div>
+
+            <div class="practice">
+                <h4>Practice Prompts</h4>
+                <div id="practiceList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const NEGATIVE_PATTERNS = {
+            'All-or-Nothing': {
+                markers: ['always', 'never', 'completely', 'totally', 'nothing', 'everything'],
+                desc: 'Black-and-white thinking without nuance',
+                reframe: 'Replace "always/never" with "sometimes" or "this time"'
+            },
+            'Labeling': {
+                markers: ['i\'m stupid', 'i\'m an idiot', 'i\'m worthless', 'i\'m a failure', 'i\'m useless'],
+                desc: 'Reducing yourself to a single negative label',
+                reframe: 'Separate action from identity: "I made a mistake" not "I am a mistake"'
+            },
+            'Should Statements': {
+                markers: ['should have', 'shouldn\'t have', 'should be', 'must be', 'have to be'],
+                desc: 'Rigid rules that create guilt and shame',
+                reframe: 'Replace "should" with "could" or "would like to"'
+            },
+            'Mind Reading': {
+                markers: ['they think', 'everyone thinks', 'they probably', 'they must think'],
+                desc: 'Assuming you know what others think',
+                reframe: 'You don\'t actually know their thoughts - stick to facts'
+            },
+            'Fortune Telling': {
+                markers: ['will never', 'will always', 'won\'t work', 'will fail', 'will hate'],
+                desc: 'Predicting negative futures as certain',
+                reframe: 'You can\'t know the future - try "might" instead of "will"'
+            },
+            'Catastrophizing': {
+                markers: ['worst', 'disaster', 'terrible', 'awful', 'horrible', 'end of the world'],
+                desc: 'Magnifying to worst-case scenarios',
+                reframe: 'Ask: "What\'s the most likely outcome?" not worst'
+            },
+            'Self-Attack': {
+                markers: ['hate myself', 'so dumb', 'such an idiot', 'can\'t do anything', 'what\'s wrong with me'],
+                desc: 'Direct attacks on self-worth',
+                reframe: 'Would you say this to a friend? Speak to yourself with that kindness'
+            }
+        };
+
+        const POSITIVE_PATTERNS = {
+            'Self-Compassion': {
+                markers: ['it\'s okay', 'doing my best', 'learning', 'growing', 'human'],
+                desc: 'Treating yourself with kindness'
+            },
+            'Growth Mindset': {
+                markers: ['getting better', 'can improve', 'will learn', 'next time', 'opportunity'],
+                desc: 'Seeing failures as learning opportunities'
+            }
+        };
+
+        function analyze() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const negative = [];
+            const positive = [];
+
+            // Check negative patterns
+            Object.entries(NEGATIVE_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    negative.push({ name, desc: data.desc, reframe: data.reframe });
+                }
+            });
+
+            // Check positive patterns
+            Object.entries(POSITIVE_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    positive.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate tone
+            let icon, label, desc, labelClass;
+            if (negative.length === 0 && positive.length > 0) {
+                icon = '💚';
+                label = 'SUPPORTIVE SELF-TALK';
+                desc = 'You\'re speaking to yourself with kindness';
+                labelClass = 'supportive';
+            } else if (negative.length <= 1) {
+                icon = '💛';
+                label = 'MIXED SELF-TALK';
+                desc = 'Some harsh patterns to watch';
+                labelClass = 'mixed';
+            } else {
+                icon = '🔴';
+                label = 'HARSH SELF-TALK';
+                desc = 'Multiple harmful thought patterns detected';
+                labelClass = 'harsh';
+            }
+
+            // Combine patterns
+            const allPatterns = [
+                ...negative.map(p => ({ ...p, type: 'negative' })),
+                ...positive.map(p => ({ ...p, type: 'positive' }))
+            ];
+
+            // Get reframes
+            const reframes = negative.map(n => n.reframe);
+            if (reframes.length === 0) {
+                reframes.push('Continue speaking to yourself with this compassion');
+            }
+
+            // Generate practice
+            const practice = generatePractice(negative);
+
+            // Render results
+            document.getElementById('toneIcon').textContent = icon;
+            const labelEl = document.getElementById('toneLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'tone-label ' + labelClass;
+            document.getElementById('toneDesc').textContent = desc;
+
+            if (allPatterns.length > 0) {
+                document.getElementById('patternsList').innerHTML = allPatterns.map(p => `
+                    <div class="pattern ${p.type}">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="pattern positive"><div class="pattern-name">Neutral</div><div class="pattern-desc">No strong patterns detected</div></div>';
+            }
+
+            document.getElementById('reframesList').innerHTML = reframes.slice(0, 4).map(r =>
+                `<div class="reframe">${r}</div>`
+            ).join('');
+
+            document.getElementById('practiceList').innerHTML = practice.map(p =>
+                `<div class="practice-item">• ${p}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generatePractice(negative) {
+            const practice = [
+                'Notice the thought without judgment',
+                'Ask: "Is this thought true? Is it helpful?"'
+            ];
+
+            if (negative.some(n => n.name === 'Labeling' || n.name === 'Self-Attack')) {
+                practice.push('Speak to yourself like you\'d speak to a friend');
+            }
+
+            practice.push('Replace criticism with curiosity: "What can I learn?"');
+            practice.push('Add "and" instead of "but": "I made a mistake AND I can improve"');
+
+            return practice.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boundary Setter | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .situation-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 80px;
+            margin-bottom: 12px;
+        }
+
+        .situation-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .category-select {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .category-btn {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-btn:hover, .category-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .boundary-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .boundary-card h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .script {
+            padding: 16px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #2ecc71;
+            margin-bottom: 12px;
+        }
+
+        .script-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .script-text {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .variations {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .variations h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .variation {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .variation:last-child { margin-bottom: 0; }
+
+        .variation-label {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+
+        .principles {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .principles h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .principle {
+            font-size: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .principle:last-child { border-bottom: none; }
+
+        .reminder {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .reminder-text {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .category-select { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Boundary Setter</h1>
+            <p>Generate clear, firm boundary statements</p>
+        </div>
+
+        <div class="input-section">
+            <h3>What boundary do you need to set?</h3>
+            <textarea class="situation-input" id="situation" placeholder="Describe what you need to stop or what you need from the other person..."></textarea>
+
+            <div class="category-select" id="categories">
+                <button class="category-btn" data-cat="time">Time/Availability</button>
+                <button class="category-btn" data-cat="emotional">Emotional Energy</button>
+                <button class="category-btn" data-cat="physical">Physical Space</button>
+                <button class="category-btn" data-cat="financial">Financial</button>
+                <button class="category-btn" data-cat="communication">Communication</button>
+                <button class="category-btn" data-cat="work">Work/Professional</button>
+            </div>
+
+            <button class="generate-btn" onclick="generateBoundary()">Generate Boundary Script</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="boundary-card">
+                <h3>Your Boundary Statement</h3>
+                <div id="scriptsList"></div>
+            </div>
+
+            <div class="variations">
+                <h3>Tone Variations</h3>
+                <div id="variationsList"></div>
+            </div>
+
+            <div class="principles">
+                <h3>Boundary Principles</h3>
+                <div id="principlesList"></div>
+            </div>
+
+            <div class="reminder">
+                <div class="reminder-text" id="reminder">-</div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let selectedCategory = null;
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCategory = btn.dataset.cat;
+            });
+        });
+
+        const TEMPLATES = {
+            time: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'I\'m not available for [specific thing] at [time/frequency]. I can [alternative] instead.'
+                    },
+                    {
+                        label: 'With Consequence',
+                        text: 'Going forward, I won\'t be responding to [requests] outside of [time frame]. If you contact me then, I\'ll respond during my next available time.'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"I need to protect my time better. Can we schedule this for [specific time] instead?"' },
+                    { label: 'Firm', text: '"I\'m not available then. My schedule allows [alternative]."' },
+                    { label: 'Direct', text: '"No, that doesn\'t work for me. I can do [alternative] or nothing."' }
+                ],
+                principles: [
+                    'Your time is yours to allocate',
+                    'Availability is a gift, not an obligation',
+                    '"No" is a complete sentence'
+                ]
+            },
+            emotional: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'I\'m not able to be your support for [specific issue] right now. I need to protect my own energy.'
+                    },
+                    {
+                        label: 'With Redirect',
+                        text: 'I care about you, and I\'m not the right person to help with this. Have you considered [therapist/other resource]?'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"I want to help, but I\'m at my limit right now. Can we talk about this another time?"' },
+                    { label: 'Firm', text: '"I\'m not in a place to take this on. You\'ll need to find another support for this."' },
+                    { label: 'Direct', text: '"I can\'t be your emotional support for this issue. That\'s my boundary."' }
+                ],
+                principles: [
+                    'You can\'t pour from an empty cup',
+                    'Not being available doesn\'t mean not caring',
+                    'Their emergency is not your emergency'
+                ]
+            },
+            physical: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'I need you to [stop/not do] [specific behavior]. My space needs to be [what you need].'
+                    },
+                    {
+                        label: 'With Consequence',
+                        text: 'If [boundary violation] continues, I will [consequence]. This isn\'t negotiable.'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"I\'d really appreciate if you could [request]. It would help me a lot."' },
+                    { label: 'Firm', text: '"I need you to [request]. This is important to me."' },
+                    { label: 'Direct', text: '"Don\'t [action]. I\'ve made my boundary clear."' }
+                ],
+                principles: [
+                    'Your space is yours to control',
+                    'Physical boundaries are non-negotiable',
+                    'Comfort in your environment matters'
+                ]
+            },
+            financial: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'I\'m not able to [lend/pay/fund] [amount/thing]. My financial boundaries don\'t allow for this.'
+                    },
+                    {
+                        label: 'With Firmness',
+                        text: 'No. I don\'t discuss my finances or lend money. That\'s a firm boundary for me.'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"I wish I could help, but that\'s not possible for me financially right now."' },
+                    { label: 'Firm', text: '"I don\'t lend money. I hope you find another solution."' },
+                    { label: 'Direct', text: '"No. Don\'t ask me about money."' }
+                ],
+                principles: [
+                    'Your money is not a group resource',
+                    'Financial requests test relationships',
+                    'A "no" now is better than resentment later'
+                ]
+            },
+            communication: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'I need our communication to be [respectful/calm/specific]. When it\'s [current problem], I will [consequence].'
+                    },
+                    {
+                        label: 'Topic Boundary',
+                        text: 'I\'m not willing to discuss [topic] anymore. If you bring it up, I\'ll [end conversation/leave/etc].'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"Can we try to keep this conversation [calm/focused]? I respond better that way."' },
+                    { label: 'Firm', text: '"I won\'t continue this conversation if [condition]. Let me know when you\'re ready to [alternative]."' },
+                    { label: 'Direct', text: '"This conversation is over. We can try again when [condition is met]."' }
+                ],
+                principles: [
+                    'You control how you\'re spoken to',
+                    'Walking away is always an option',
+                    'Tone matters as much as content'
+                ]
+            },
+            work: {
+                scripts: [
+                    {
+                        label: 'Clear Statement',
+                        text: 'That\'s outside my role/hours/capacity. I can [alternative within scope] instead.'
+                    },
+                    {
+                        label: 'With Redirect',
+                        text: 'I\'m not the right person for this. You\'ll want to reach out to [appropriate person/department].'
+                    }
+                ],
+                variations: [
+                    { label: 'Soft', text: '"I\'d love to help but that\'s not something I can take on. Maybe [alternative]?"' },
+                    { label: 'Firm', text: '"That\'s outside my scope. Here\'s who can help: [redirect]."' },
+                    { label: 'Direct', text: '"No, that\'s not my responsibility. Talk to [appropriate person]."' }
+                ],
+                principles: [
+                    'Your job description exists for a reason',
+                    'Overwork leads to burnout, not promotion',
+                    'Clear boundaries increase respect'
+                ]
+            }
+        };
+
+        function generateBoundary() {
+            if (!selectedCategory) {
+                alert('Please select a boundary category');
+                return;
+            }
+
+            const data = TEMPLATES[selectedCategory];
+
+            document.getElementById('scriptsList').innerHTML = data.scripts.map(s => `
+                <div class="script">
+                    <div class="script-label">${s.label}</div>
+                    <div class="script-text">"${s.text}"</div>
+                </div>
+            `).join('');
+
+            document.getElementById('variationsList').innerHTML = data.variations.map(v => `
+                <div class="variation">
+                    <div class="variation-label">${v.label}</div>
+                    ${v.text}
+                </div>
+            `).join('');
+
+            document.getElementById('principlesList').innerHTML = data.principles.map(p =>
+                `<div class="principle">• ${p}</div>`
+            ).join('');
+
+            const reminders = [
+                '"A boundary without a consequence is just a suggestion."',
+                '"You don\'t need their permission to set your boundary."',
+                '"Their reaction to your boundary is not your responsibility."',
+                '"Boundaries aren\'t mean. They\'re clear."'
+            ];
+            document.getElementById('reminder').textContent = reminders[Math.floor(Math.random() * reminders.length)];
+
+            document.getElementById('results').classList.add('active');
+        }
+    </script>
+</body>
+</html>

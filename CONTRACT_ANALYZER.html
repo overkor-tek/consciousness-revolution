@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .contract-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            resize: none;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .contract-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .risk-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .risk-level {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .risk-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .risk-label.low { color: #2ecc71; }
+        .risk-label.medium { color: #f1c40f; }
+        .risk-label.high { color: #e74c3c; }
+
+        .risk-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .flags {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .flags h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .flag {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .flag:last-child { margin-bottom: 0; }
+
+        .flag-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .flag-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-flags {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question {
+            padding: 8px 0;
+            font-size: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .advice {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .advice h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .advice-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Contract Analyzer</h1>
+            <p>Identify red flags and unfair terms in agreements</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="contract-input" id="contract" placeholder="Paste contract text, terms of service, or agreement language to analyze..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Contract</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="risk-card">
+                <div class="risk-level" id="riskLevel">-</div>
+                <div class="risk-label" id="riskLabel">-</div>
+                <div class="risk-desc" id="riskDesc">-</div>
+            </div>
+
+            <div class="flags">
+                <h3>Red Flags Found</h3>
+                <div id="flagsList"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Questions to Ask</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="advice">
+                <h4>Contract Review Advice</h4>
+                <div id="adviceList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const RED_FLAGS = {
+            'Unilateral Changes': {
+                markers: ['may change', 'reserves the right to modify', 'at our sole discretion', 'without notice', 'at any time'],
+                desc: 'They can change terms without your consent'
+            },
+            'Automatic Renewal': {
+                markers: ['automatically renew', 'auto-renew', 'will renew unless', 'tacit renewal'],
+                desc: 'Contract renews without explicit consent'
+            },
+            'Broad Indemnification': {
+                markers: ['indemnify', 'hold harmless', 'defend at your expense', 'release from liability'],
+                desc: 'You\'re responsible for their mistakes'
+            },
+            'Arbitration Clause': {
+                markers: ['binding arbitration', 'waive right to jury', 'class action waiver', 'individual basis only'],
+                desc: 'Limits your legal recourse'
+            },
+            'Non-Compete/Non-Solicit': {
+                markers: ['non-compete', 'non-solicit', 'shall not engage in', 'competing business'],
+                desc: 'Restricts your future work options'
+            },
+            'Broad IP Assignment': {
+                markers: ['assign all rights', 'work made for hire', 'transfer intellectual property', 'perpetual license'],
+                desc: 'You give up ownership of your work'
+            },
+            'Termination Without Cause': {
+                markers: ['terminate at will', 'terminate for any reason', 'with or without cause', 'at our convenience'],
+                desc: 'They can end contract without justification'
+            },
+            'Limitation of Liability': {
+                markers: ['not liable for', 'maximum liability', 'in no event shall', 'consequential damages'],
+                desc: 'Limits what you can recover if things go wrong'
+            },
+            'Vague Performance Terms': {
+                markers: ['reasonable efforts', 'best efforts', 'as soon as practicable', 'generally'],
+                desc: 'Unclear obligations that are hard to enforce'
+            },
+            'Data Rights': {
+                markers: ['collect and use', 'share with third parties', 'sell your data', 'aggregate data', 'marketing purposes'],
+                desc: 'They claim rights to your data'
+            },
+            'Fee Changes': {
+                markers: ['adjust fees', 'change pricing', 'increase rates', 'revised pricing'],
+                desc: 'Can increase costs during contract'
+            },
+            'Confidentiality Overreach': {
+                markers: ['shall not disclose', 'confidential information includes', 'perpetual confidentiality'],
+                desc: 'Overly broad secrecy requirements'
+            }
+        };
+
+        function analyze() {
+            const contract = document.getElementById('contract').value.trim();
+            if (!contract) return;
+
+            const lower = contract.toLowerCase();
+            const found = [];
+
+            // Check each red flag
+            Object.entries(RED_FLAGS).forEach(([name, data]) => {
+                const matches = data.markers.filter(m => lower.includes(m));
+                if (matches.length > 0) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        matches
+                    });
+                }
+            });
+
+            // Calculate risk level
+            let level, label, desc, emoji;
+            if (found.length === 0) {
+                level = 'low';
+                label = 'LOW RISK';
+                desc = 'No major red flags detected (still review carefully)';
+                emoji = '✅';
+            } else if (found.length <= 3) {
+                level = 'medium';
+                label = 'MODERATE RISK';
+                desc = `${found.length} concerning clause(s) found - negotiate or get legal review`;
+                emoji = '⚠️';
+            } else {
+                level = 'high';
+                label = 'HIGH RISK';
+                desc = `${found.length} red flags - consider declining or major negotiation`;
+                emoji = '🚨';
+            }
+
+            // Generate questions
+            const questions = generateQuestions(found);
+
+            // Generate advice
+            const advice = generateAdvice(found);
+
+            // Render results
+            document.getElementById('riskLevel').textContent = emoji;
+            const labelEl = document.getElementById('riskLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'risk-label ' + level;
+            document.getElementById('riskDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('flagsList').innerHTML = found.map(f => `
+                    <div class="flag">
+                        <div class="flag-name">⚠️ ${f.name}</div>
+                        <div class="flag-desc">${f.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('flagsList').innerHTML =
+                    '<div class="no-flags">✓ No major red flags detected</div>';
+            }
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question">${q}</div>`
+            ).join('');
+
+            document.getElementById('adviceList').innerHTML = advice.map(a =>
+                `<div class="advice-item">• ${a}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(found) {
+            const questions = [];
+
+            if (found.some(f => f.name === 'Unilateral Changes')) {
+                questions.push('Can we add language requiring notice before changes?');
+            }
+            if (found.some(f => f.name === 'Automatic Renewal')) {
+                questions.push('Can we change to manual renewal with advance notice?');
+            }
+            if (found.some(f => f.name === 'Arbitration Clause')) {
+                questions.push('Can arbitration be removed or made optional?');
+            }
+            if (found.some(f => f.name === 'Broad IP Assignment')) {
+                questions.push('Can IP rights be limited to work-specific deliverables only?');
+            }
+
+            questions.push('What happens if either party wants to exit early?');
+            questions.push('Are there any fees or penalties not explicitly listed?');
+            questions.push('Who bears risk if something goes wrong?');
+
+            return questions.slice(0, 5);
+        }
+
+        function generateAdvice(found) {
+            const advice = [];
+
+            if (found.length >= 3) {
+                advice.push('Consider having a lawyer review before signing');
+            }
+
+            advice.push('Every clause is negotiable - ask for changes');
+            advice.push('If they refuse all changes, that\'s information');
+            advice.push('Get everything in writing - verbal promises don\'t count');
+            advice.push('Keep a copy of the signed version');
+
+            if (found.some(f => f.name === 'Termination Without Cause')) {
+                advice.push('Negotiate for mutual termination rights or notice period');
+            }
+
+            return advice.slice(0, 5);
+        }
+    </script>
+</body>
+</html>

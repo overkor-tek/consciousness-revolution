@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Pattern Tracker | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .add-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-section h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .name-input, .event-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .name-input::placeholder, .event-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .type-select {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .type-btn:hover, .type-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .type-btn.positive.selected { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; }
+        .type-btn.negative.selected { background: rgba(231, 76, 60, 0.3); border-color: #e74c3c; }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .people-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .people-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .person-card {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .person-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .person-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .person-score {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .person-score.good { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .person-score.warn { background: rgba(241, 196, 15, 0.2); color: #f1c40f; }
+        .person-score.bad { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+        .person-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .person-pattern {
+            font-size: 11px;
+            padding: 8px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 4px;
+        }
+
+        .events-list {
+            margin-top: 8px;
+        }
+
+        .event {
+            font-size: 11px;
+            padding: 4px 0;
+            display: flex;
+            gap: 8px;
+        }
+
+        .event-type {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 4px;
+        }
+
+        .event-type.positive { background: #2ecc71; }
+        .event-type.negative { background: #e74c3c; }
+        .event-type.neutral { background: #f1c40f; }
+
+        .no-people {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.5;
+            font-size: 13px;
+        }
+
+        .insight {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .insight-text {
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; }
+            .type-select { flex-wrap: wrap; }
+            .type-btn { flex: 1 1 45%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Relationship Pattern Tracker</h1>
+            <p>Track interactions to reveal true patterns</p>
+        </div>
+
+        <div class="add-section">
+            <h3>Log an Interaction</h3>
+            <div class="input-row">
+                <input type="text" class="name-input" id="personName" placeholder="Person's name">
+                <input type="text" class="event-input" id="eventDesc" placeholder="What happened?">
+            </div>
+            <div class="type-select">
+                <button class="type-btn positive" data-type="positive">Positive</button>
+                <button class="type-btn" data-type="neutral">Neutral</button>
+                <button class="type-btn negative" data-type="negative">Negative</button>
+            </div>
+            <button class="add-btn" onclick="addEvent()">Log Interaction</button>
+        </div>
+
+        <div class="people-section">
+            <h3>Relationship Patterns</h3>
+            <div id="peopleList"></div>
+        </div>
+
+        <div class="insight">
+            <div class="insight-text" id="insight">"Track actions, not words. Patterns reveal truth." - Pattern Theory</div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let selectedType = 'neutral';
+        let people = JSON.parse(localStorage.getItem('relationshipTracker') || '{}');
+
+        // Type selection
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedType = btn.dataset.type;
+            });
+        });
+
+        function addEvent() {
+            const name = document.getElementById('personName').value.trim();
+            const desc = document.getElementById('eventDesc').value.trim();
+
+            if (!name || !desc) return;
+
+            if (!people[name]) {
+                people[name] = { events: [] };
+            }
+
+            people[name].events.push({
+                desc,
+                type: selectedType,
+                date: Date.now()
+            });
+
+            save();
+            render();
+
+            document.getElementById('personName').value = '';
+            document.getElementById('eventDesc').value = '';
+        }
+
+        function render() {
+            const list = document.getElementById('peopleList');
+
+            if (Object.keys(people).length === 0) {
+                list.innerHTML = '<div class="no-people">No interactions logged yet</div>';
+                return;
+            }
+
+            // Sort by most recent
+            const sorted = Object.entries(people).sort((a, b) => {
+                const aLast = a[1].events[a[1].events.length - 1]?.date || 0;
+                const bLast = b[1].events[b[1].events.length - 1]?.date || 0;
+                return bLast - aLast;
+            });
+
+            list.innerHTML = sorted.map(([name, data]) => {
+                const positive = data.events.filter(e => e.type === 'positive').length;
+                const negative = data.events.filter(e => e.type === 'negative').length;
+                const total = data.events.length;
+
+                // Calculate health score
+                const score = total > 0 ? Math.round(((positive - negative) / total + 1) * 50) : 50;
+                let scoreClass = score >= 60 ? 'good' : score >= 40 ? 'warn' : 'bad';
+                let scoreText = score >= 60 ? 'Healthy' : score >= 40 ? 'Mixed' : 'Concerning';
+
+                // Detect pattern
+                const pattern = detectPattern(data.events);
+
+                // Recent events (last 3)
+                const recent = data.events.slice(-3).reverse();
+
+                return `
+                    <div class="person-card">
+                        <div class="person-header">
+                            <span class="person-name">${name}</span>
+                            <span class="person-score ${scoreClass}">${scoreText} (${score}%)</span>
+                        </div>
+                        <div class="person-stats">
+                            <span>+${positive} positive</span>
+                            <span>-${negative} negative</span>
+                            <span>${total} total</span>
+                        </div>
+                        <div class="person-pattern">${pattern}</div>
+                        <div class="events-list">
+                            ${recent.map(e => `
+                                <div class="event">
+                                    <span class="event-type ${e.type}"></span>
+                                    <span>${e.desc}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            updateInsight();
+        }
+
+        function detectPattern(events) {
+            if (events.length < 3) return 'Need more data points to detect pattern';
+
+            const recent = events.slice(-5);
+            const positive = recent.filter(e => e.type === 'positive').length;
+            const negative = recent.filter(e => e.type === 'negative').length;
+
+            // Check for trends
+            if (negative >= 4) {
+                return '⚠️ Pattern: Consistently negative - evaluate this relationship';
+            } else if (positive >= 4) {
+                return '✅ Pattern: Consistently positive - reliable relationship';
+            } else if (negative > positive && events.length >= 5) {
+                return '⚠️ Pattern: More negative than positive - watch carefully';
+            } else if (events.length >= 5 && negative === 0) {
+                return '✅ Pattern: No negative interactions recorded';
+            } else {
+                return '📊 Pattern: Mixed interactions - continue tracking';
+            }
+        }
+
+        function updateInsight() {
+            const insights = [
+                '"When someone shows you who they are, believe them." - Maya Angelou',
+                '"Track actions, not words. Patterns reveal truth." - Pattern Theory',
+                '"Trust is built in drops and lost in buckets." - Pattern Theory',
+                '"The best predictor of future behavior is past behavior." - Psychology',
+                '"Pay attention to how you feel after interactions." - Pattern Theory'
+            ];
+
+            // Show concerning insight if any relationships are bad
+            let hasBad = false;
+            Object.values(people).forEach(data => {
+                const positive = data.events.filter(e => e.type === 'positive').length;
+                const negative = data.events.filter(e => e.type === 'negative').length;
+                if (negative > positive && data.events.length >= 3) hasBad = true;
+            });
+
+            if (hasBad) {
+                document.getElementById('insight').textContent =
+                    '"If someone consistently makes you feel worse, that\'s data." - Pattern Theory';
+            } else {
+                document.getElementById('insight').textContent =
+                    insights[Math.floor(Math.random() * insights.length)];
+            }
+        }
+
+        function save() {
+            localStorage.setItem('relationshipTracker', JSON.stringify(people));
+        }
+
+        render();
+    </script>
+</body>
+</html>

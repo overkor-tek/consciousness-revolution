@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Verifier | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .claim-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 80px;
+            margin-bottom: 16px;
+        }
+
+        .claim-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .source-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .source-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .verify-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .score-value.high { color: #2ecc71; }
+        .score-value.medium { color: #f1c40f; }
+        .score-value.low { color: #e74c3c; }
+
+        .score-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .check-item:last-child { border-bottom: none; }
+
+        .check-name { font-size: 13px; }
+
+        .check-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .check-status.pass {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .check-status.warn {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+
+        .check-status.fail {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tips {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .tips h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .score-value { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Source Verifier</h1>
+            <p>Check the credibility of claims and their sources</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="claim-input" id="claim" placeholder="Enter the claim being made..."></textarea>
+            <input type="text" class="source-input" id="source" placeholder="Source cited (if any)...">
+            <input type="text" class="source-input" id="context" placeholder="Where did you see this claim?">
+            <button class="verify-btn" onclick="verify()">Verify Claim</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-card">
+                <div class="score-value" id="score">0%</div>
+                <div class="score-label" id="scoreLabel">Credibility Score</div>
+            </div>
+
+            <div class="analysis">
+                <h3>Verification Checks</h3>
+                <div id="checks"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Questions to Investigate</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="tips">
+                <h4>Verification Tips</h4>
+                <div id="tipsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const SOURCE_INDICATORS = {
+            credible: ['university', '.edu', '.gov', 'journal', 'peer-reviewed', 'study', 'research', 'data'],
+            questionable: ['blog', 'opinion', 'anonymous', 'rumor', 'sources say', 'reportedly'],
+            weak: ['facebook', 'twitter', 'tiktok', 'viral', 'friend said', 'i heard']
+        };
+
+        const CLAIM_RED_FLAGS = [
+            'always', 'never', 'everyone', 'no one', 'proven', 'guaranteed',
+            'secret', 'they don\'t want you to know', 'miracle', 'cure'
+        ];
+
+        function verify() {
+            const claim = document.getElementById('claim').value.trim();
+            const source = document.getElementById('source').value.trim();
+            const context = document.getElementById('context').value.trim();
+
+            if (!claim) return;
+
+            const lower = claim.toLowerCase();
+            const sourceLower = source.toLowerCase();
+            const contextLower = context.toLowerCase();
+
+            // Run checks
+            const checks = [];
+            let score = 50; // Start neutral
+
+            // Check 1: Source provided
+            if (source) {
+                score += 10;
+                checks.push({ name: 'Source provided', status: 'pass' });
+            } else {
+                score -= 20;
+                checks.push({ name: 'Source provided', status: 'fail' });
+            }
+
+            // Check 2: Credible source indicators
+            const hasCredible = SOURCE_INDICATORS.credible.some(s => sourceLower.includes(s));
+            if (hasCredible) {
+                score += 15;
+                checks.push({ name: 'Credible source type', status: 'pass' });
+            } else if (SOURCE_INDICATORS.weak.some(s => sourceLower.includes(s) || contextLower.includes(s))) {
+                score -= 15;
+                checks.push({ name: 'Credible source type', status: 'fail' });
+            } else {
+                checks.push({ name: 'Credible source type', status: 'warn' });
+            }
+
+            // Check 3: Red flag language
+            const redFlags = CLAIM_RED_FLAGS.filter(f => lower.includes(f));
+            if (redFlags.length === 0) {
+                score += 10;
+                checks.push({ name: 'No absolutist language', status: 'pass' });
+            } else if (redFlags.length <= 2) {
+                score -= 10;
+                checks.push({ name: 'No absolutist language', status: 'warn' });
+            } else {
+                score -= 20;
+                checks.push({ name: 'No absolutist language', status: 'fail' });
+            }
+
+            // Check 4: Specific vs vague
+            const hasNumbers = /\d+/.test(claim);
+            const hasSpecifics = /\d{4}|january|february|march|april|may|june|july|august|september|october|november|december/i.test(claim);
+            if (hasNumbers || hasSpecifics) {
+                score += 10;
+                checks.push({ name: 'Specific details', status: 'pass' });
+            } else {
+                checks.push({ name: 'Specific details', status: 'warn' });
+            }
+
+            // Check 5: Verifiable
+            const isVerifiable = source && (hasNumbers || hasSpecifics);
+            if (isVerifiable) {
+                score += 15;
+                checks.push({ name: 'Independently verifiable', status: 'pass' });
+            } else if (source) {
+                checks.push({ name: 'Independently verifiable', status: 'warn' });
+            } else {
+                score -= 10;
+                checks.push({ name: 'Independently verifiable', status: 'fail' });
+            }
+
+            // Clamp score
+            score = Math.max(0, Math.min(100, score));
+
+            // Generate questions
+            const questions = generateQuestions(claim, source, context);
+
+            // Generate tips
+            const tips = generateTips(checks);
+
+            // Render results
+            const scoreEl = document.getElementById('score');
+            scoreEl.textContent = score + '%';
+            scoreEl.className = 'score-value ' + (score >= 70 ? 'high' : score >= 40 ? 'medium' : 'low');
+
+            document.getElementById('scoreLabel').textContent =
+                score >= 70 ? 'Likely Credible' :
+                score >= 40 ? 'Needs Verification' : 'Low Credibility';
+
+            document.getElementById('checks').innerHTML = checks.map(check => `
+                <div class="check-item">
+                    <span class="check-name">${check.name}</span>
+                    <span class="check-status ${check.status}">
+                        ${check.status === 'pass' ? '✓ Pass' : check.status === 'warn' ? '⚠ Check' : '✗ Fail'}
+                    </span>
+                </div>
+            `).join('');
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question">${q}</div>`
+            ).join('');
+
+            document.getElementById('tipsList').innerHTML = tips.map(t =>
+                `<div class="tip">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(claim, source, context) {
+            const questions = [];
+
+            if (!source) {
+                questions.push('What is the original source of this claim?');
+            } else {
+                questions.push('Can you access and review the original source?');
+            }
+
+            questions.push('Who benefits if this claim spreads?');
+            questions.push('Have other credible sources reported the same?');
+
+            if (claim.toLowerCase().includes('study') || claim.toLowerCase().includes('research')) {
+                questions.push('Who funded the research?');
+                questions.push('What was the sample size and methodology?');
+            }
+
+            if (context) {
+                questions.push('Is this source known for accuracy on this topic?');
+            }
+
+            return questions.slice(0, 5);
+        }
+
+        function generateTips(checks) {
+            const tips = [];
+
+            const failedChecks = checks.filter(c => c.status === 'fail');
+            if (failedChecks.some(c => c.name === 'Source provided')) {
+                tips.push('Claims without sources should be treated with skepticism');
+            }
+            if (failedChecks.some(c => c.name === 'No absolutist language')) {
+                tips.push('Absolutist words like "always" or "never" often indicate oversimplification');
+            }
+
+            tips.push('Cross-reference with multiple independent sources');
+            tips.push('Check the date - old information may be outdated');
+            tips.push('Look for the original source, not just reports about it');
+
+            return tips.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

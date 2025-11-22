@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            resize: none;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .email-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .score-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .score-label.clear { color: #2ecc71; }
+        .score-label.caution { color: #f1c40f; }
+        .score-label.suspect { color: #e74c3c; }
+
+        .score-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .finding {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .finding.red {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .finding.yellow {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .finding.green {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .finding-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .finding.red .finding-title { color: #e74c3c; }
+        .finding.yellow .finding-title { color: #f1c40f; }
+        .finding.green .finding-title { color: #2ecc71; }
+
+        .finding-desc {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .tone {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tone h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .tone-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .tone-item {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .tone-label {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+
+        .tone-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .response-tips {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .response-tips h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .tone-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Email Analyzer</h1>
+            <p>Detect manipulation patterns in email communications</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="email-input" id="email" placeholder="Paste the email content to analyze..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Email</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-card">
+                <div class="score-icon" id="scoreIcon">-</div>
+                <div class="score-label" id="scoreLabel">-</div>
+                <div class="score-desc" id="scoreDesc">-</div>
+            </div>
+
+            <div class="analysis">
+                <h3>Findings</h3>
+                <div id="findingsList"></div>
+            </div>
+
+            <div class="tone">
+                <h3>Tone Analysis</h3>
+                <div class="tone-grid" id="toneGrid"></div>
+            </div>
+
+            <div class="response-tips">
+                <h4>Response Recommendations</h4>
+                <div id="tipsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const PATTERNS = {
+            red: {
+                'Phishing Indicators': ['click here', 'verify your account', 'confirm your identity', 'suspended', 'urgent action'],
+                'Pressure Tactics': ['immediately', 'asap', 'right away', 'deadline today', 'must respond'],
+                'Guilt/Obligation': ['disappointed', 'let me down', 'after everything', 'counting on you'],
+                'Hidden Threats': ['consequences', 'no choice', 'forced to', 'will have to']
+            },
+            yellow: {
+                'Soft Manipulation': ['i thought you would', 'everyone else has', 'i assumed'],
+                'Passive Aggressive': ['fine', 'whatever you want', 'if you say so', 'i guess'],
+                'Vague Urgency': ['soon', 'when you can', 'at your earliest'],
+                'Emotional Appeals': ['really need', 'means so much', 'please help']
+            },
+            green: {
+                'Clear Communication': ['specifically', 'the reason is', 'because'],
+                'Respect for Time': ['when convenient', 'no rush', 'take your time'],
+                'Accountability': ['i will', 'i\'ll follow up', 'my responsibility']
+            }
+        };
+
+        function analyze() {
+            const email = document.getElementById('email').value.trim();
+            if (!email) return;
+
+            const lower = email.toLowerCase();
+            const findings = [];
+
+            // Check patterns
+            Object.entries(PATTERNS.red).forEach(([name, markers]) => {
+                if (markers.some(m => lower.includes(m))) {
+                    findings.push({ type: 'red', name, desc: 'High concern - potential manipulation' });
+                }
+            });
+
+            Object.entries(PATTERNS.yellow).forEach(([name, markers]) => {
+                if (markers.some(m => lower.includes(m))) {
+                    findings.push({ type: 'yellow', name, desc: 'Moderate concern - unclear intent' });
+                }
+            });
+
+            Object.entries(PATTERNS.green).forEach(([name, markers]) => {
+                if (markers.some(m => lower.includes(m))) {
+                    findings.push({ type: 'green', name, desc: 'Positive indicator - clear communication' });
+                }
+            });
+
+            // Calculate score
+            const redCount = findings.filter(f => f.type === 'red').length;
+            const yellowCount = findings.filter(f => f.type === 'yellow').length;
+            const greenCount = findings.filter(f => f.type === 'green').length;
+
+            let icon, label, desc, labelClass;
+            if (redCount >= 2) {
+                icon = '🚨';
+                label = 'HIGH SUSPICION';
+                desc = 'Multiple manipulation patterns detected';
+                labelClass = 'suspect';
+            } else if (redCount >= 1 || yellowCount >= 2) {
+                icon = '⚠️';
+                label = 'PROCEED WITH CAUTION';
+                desc = 'Some concerning patterns detected';
+                labelClass = 'caution';
+            } else {
+                icon = '✅';
+                label = 'APPEARS CLEAR';
+                desc = 'No major manipulation patterns detected';
+                labelClass = 'clear';
+            }
+
+            // Analyze tone
+            const tone = analyzeTone(email);
+
+            // Generate tips
+            const tips = generateTips(findings, tone);
+
+            // Render results
+            document.getElementById('scoreIcon').textContent = icon;
+            const labelEl = document.getElementById('scoreLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'score-label ' + labelClass;
+            document.getElementById('scoreDesc').textContent = desc;
+
+            if (findings.length > 0) {
+                document.getElementById('findingsList').innerHTML = findings.map(f => `
+                    <div class="finding ${f.type}">
+                        <div class="finding-title">${f.name}</div>
+                        <div class="finding-desc">${f.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('findingsList').innerHTML =
+                    '<div class="finding green"><div class="finding-title">No Patterns</div><div class="finding-desc">No specific manipulation patterns detected</div></div>';
+            }
+
+            document.getElementById('toneGrid').innerHTML = `
+                <div class="tone-item">
+                    <div class="tone-label">Formality</div>
+                    <div class="tone-value">${tone.formality}</div>
+                </div>
+                <div class="tone-item">
+                    <div class="tone-label">Urgency</div>
+                    <div class="tone-value">${tone.urgency}</div>
+                </div>
+                <div class="tone-item">
+                    <div class="tone-label">Emotion</div>
+                    <div class="tone-value">${tone.emotion}</div>
+                </div>
+                <div class="tone-item">
+                    <div class="tone-label">Clarity</div>
+                    <div class="tone-value">${tone.clarity}</div>
+                </div>
+            `;
+
+            document.getElementById('tipsList').innerHTML = tips.map(t =>
+                `<div class="tip">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function analyzeTone(email) {
+            const lower = email.toLowerCase();
+            const words = email.split(/\s+/).length;
+
+            // Formality
+            const formalMarkers = ['dear', 'sincerely', 'regards', 'please', 'kindly'];
+            const informalMarkers = ['hey', 'hi', 'yeah', 'cool', 'thanks'];
+            const formalScore = formalMarkers.filter(m => lower.includes(m)).length;
+            const informalScore = informalMarkers.filter(m => lower.includes(m)).length;
+            const formality = formalScore > informalScore ? 'Formal' : informalScore > formalScore ? 'Casual' : 'Neutral';
+
+            // Urgency
+            const urgentMarkers = ['urgent', 'asap', 'immediately', 'now', 'today', 'deadline'];
+            const urgentScore = urgentMarkers.filter(m => lower.includes(m)).length;
+            const urgency = urgentScore >= 2 ? 'High' : urgentScore === 1 ? 'Medium' : 'Low';
+
+            // Emotion
+            const emotionMarkers = ['!', 'please', 'really', 'very', 'so much'];
+            const emotionScore = emotionMarkers.filter(m => lower.includes(m)).length;
+            const emotion = emotionScore >= 3 ? 'High' : emotionScore >= 1 ? 'Medium' : 'Neutral';
+
+            // Clarity
+            const clarityMarkers = ['specifically', 'exactly', 'the reason', 'because', 'therefore'];
+            const vagueMarkers = ['somehow', 'whatever', 'stuff', 'things', 'etc'];
+            const clarityScore = clarityMarkers.filter(m => lower.includes(m)).length - vagueMarkers.filter(m => lower.includes(m)).length;
+            const clarity = clarityScore > 0 ? 'Clear' : clarityScore < 0 ? 'Vague' : 'Average';
+
+            return { formality, urgency, emotion, clarity };
+        }
+
+        function generateTips(findings, tone) {
+            const tips = [];
+
+            const hasRed = findings.some(f => f.type === 'red');
+            const hasYellow = findings.some(f => f.type === 'yellow');
+
+            if (hasRed) {
+                tips.push('Verify the sender through independent channels before responding');
+                tips.push('Don\'t click any links - go to websites directly');
+            }
+
+            if (tone.urgency === 'High') {
+                tips.push('Artificial urgency is a manipulation tactic - take your time');
+            }
+
+            if (hasYellow) {
+                tips.push('Ask clarifying questions before committing');
+            }
+
+            if (tone.clarity === 'Vague') {
+                tips.push('Request specific details before proceeding');
+            }
+
+            if (!hasRed && !hasYellow) {
+                tips.push('Email appears straightforward - respond as appropriate');
+            }
+
+            tips.push('When in doubt, wait 24 hours before responding');
+
+            return tips.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

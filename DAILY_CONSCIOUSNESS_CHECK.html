@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Consciousness Check | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .date-display {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.5;
+            margin-bottom: 30px;
+        }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .slider-label span:first-child { opacity: 0.7; }
+        .slider-value { font-weight: bold; color: #667eea; }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .quick-select {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover, .quick-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            resize: none;
+            height: 80px;
+        }
+
+        .notes-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-card.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-score {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .big-score {
+            font-size: 64px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-label { font-size: 14px; opacity: 0.6; }
+
+        .result-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .breakdown-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .breakdown-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+
+        .breakdown-label {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .insights {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .insights h4 {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .insight-item {
+            font-size: 12px;
+            padding: 4px 0;
+            opacity: 0.9;
+        }
+
+        .history-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .history-panel {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .history-panel.active { display: block; }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .history-date { font-size: 12px; opacity: 0.7; }
+        .history-score { font-weight: bold; color: #667eea; }
+
+        .streak-display {
+            text-align: center;
+            padding: 16px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .streak-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .streak-label { font-size: 11px; opacity: 0.6; }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 22px; }
+            .score-circle { width: 140px; height: 140px; }
+            .score-inner { width: 110px; height: 110px; }
+            .score-value { font-size: 36px; }
+            .result-breakdown { grid-template-columns: 1fr; gap: 8px; }
+            .quick-btn { min-height: 44px; padding: 10px; }
+            .slider { height: 8px; }
+            .slider::-webkit-slider-thumb { width: 24px; height: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Daily Consciousness Check</h1>
+            <p>Quick daily assessment to track your consciousness state</p>
+        </div>
+
+        <div class="date-display" id="dateDisplay"></div>
+
+        <div id="checkForm">
+            <div class="check-section">
+                <h3>Mental Clarity</h3>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>How clear is your thinking today?</span>
+                        <span class="slider-value" id="clarityValue">50</span>
+                    </div>
+                    <input type="range" class="slider" id="clarity" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <div class="check-section">
+                <h3>Pattern Recognition</h3>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>How easily are you spotting patterns/manipulation?</span>
+                        <span class="slider-value" id="patternValue">50</span>
+                    </div>
+                    <input type="range" class="slider" id="pattern" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <div class="check-section">
+                <h3>Emotional State</h3>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>How balanced are your emotions?</span>
+                        <span class="slider-value" id="emotionValue">50</span>
+                    </div>
+                    <input type="range" class="slider" id="emotion" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <div class="check-section">
+                <h3>Energy & Focus</h3>
+                <div class="quick-select" id="energySelect">
+                    <button class="quick-btn" data-value="20">Low</button>
+                    <button class="quick-btn" data-value="40">Below Avg</button>
+                    <button class="quick-btn selected" data-value="60">Average</button>
+                    <button class="quick-btn" data-value="80">Good</button>
+                    <button class="quick-btn" data-value="100">Peak</button>
+                </div>
+            </div>
+
+            <div class="check-section">
+                <h3>Notes (Optional)</h3>
+                <textarea class="notes-input" id="notes" placeholder="Any observations, patterns noticed, or insights..."></textarea>
+            </div>
+
+            <button class="submit-btn" onclick="submitCheck()">Complete Daily Check</button>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <div class="streak-display">
+                <div class="streak-value" id="streakValue">0</div>
+                <div class="streak-label">DAY STREAK</div>
+            </div>
+
+            <div class="result-score">
+                <div class="big-score" id="totalScore">0</div>
+                <div class="score-label">TODAY'S CONSCIOUSNESS SCORE</div>
+            </div>
+
+            <div class="result-breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-value" id="resultClarity">0</div>
+                    <div class="breakdown-label">Clarity</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-value" id="resultPattern">0</div>
+                    <div class="breakdown-label">Pattern</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-value" id="resultEmotion">0</div>
+                    <div class="breakdown-label">Emotion</div>
+                </div>
+            </div>
+
+            <div class="insights" id="insights">
+                <h4>Today's Insights</h4>
+                <div id="insightList"></div>
+            </div>
+
+            <button class="history-btn" onclick="toggleHistory()">View History</button>
+            <div class="history-panel" id="historyPanel"></div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let energy = 60;
+
+        // Setup date
+        const today = new Date();
+        document.getElementById('dateDisplay').textContent = today.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Slider updates
+        ['clarity', 'pattern', 'emotion'].forEach(id => {
+            const slider = document.getElementById(id);
+            const value = document.getElementById(id + 'Value');
+            slider.addEventListener('input', () => {
+                value.textContent = slider.value;
+            });
+        });
+
+        // Energy select
+        document.querySelectorAll('#energySelect .quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#energySelect .quick-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                energy = parseInt(btn.dataset.value);
+            });
+        });
+
+        // Submit check
+        function submitCheck() {
+            const clarity = parseInt(document.getElementById('clarity').value);
+            const pattern = parseInt(document.getElementById('pattern').value);
+            const emotion = parseInt(document.getElementById('emotion').value);
+            const notes = document.getElementById('notes').value;
+
+            // Calculate score
+            const score = Math.round((clarity * 0.3) + (pattern * 0.3) + (emotion * 0.2) + (energy * 0.2));
+
+            // Save to history
+            const history = JSON.parse(localStorage.getItem('daily_checks') || '[]');
+            const todayStr = today.toISOString().split('T')[0];
+
+            // Check if already submitted today
+            const existingIndex = history.findIndex(h => h.date === todayStr);
+            const entry = {
+                date: todayStr,
+                clarity,
+                pattern,
+                emotion,
+                energy,
+                score,
+                notes,
+                timestamp: Date.now()
+            };
+
+            if (existingIndex >= 0) {
+                history[existingIndex] = entry;
+            } else {
+                history.push(entry);
+            }
+
+            localStorage.setItem('daily_checks', JSON.stringify(history));
+
+            // Calculate streak
+            let streak = 1;
+            const sorted = history.sort((a, b) => new Date(b.date) - new Date(a.date));
+            for (let i = 1; i < sorted.length; i++) {
+                const prev = new Date(sorted[i - 1].date);
+                const curr = new Date(sorted[i].date);
+                const diff = (prev - curr) / (1000 * 60 * 60 * 24);
+                if (diff === 1) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+
+            // Update results
+            document.getElementById('streakValue').textContent = streak;
+            document.getElementById('totalScore').textContent = score;
+            document.getElementById('resultClarity').textContent = clarity;
+            document.getElementById('resultPattern').textContent = pattern;
+            document.getElementById('resultEmotion').textContent = emotion;
+
+            // Generate insights
+            const insights = [];
+            if (clarity < 40) insights.push("• Low clarity - consider meditation or sleep");
+            if (clarity > 80) insights.push("• High clarity - great time for important decisions");
+            if (pattern < 40) insights.push("• Pattern recognition low - be extra careful with decisions");
+            if (pattern > 80) insights.push("• Strong pattern recognition - trust your instincts");
+            if (emotion < 40) insights.push("• Emotions may be affecting judgment");
+            if (emotion > 80) insights.push("• Emotional balance is excellent");
+            if (energy < 40) insights.push("• Low energy - prioritize rest");
+            if (energy > 80) insights.push("• High energy - tackle challenging tasks");
+
+            if (insights.length === 0) {
+                insights.push("• Balanced state - maintain current practices");
+            }
+
+            document.getElementById('insightList').innerHTML = insights.map(i =>
+                `<div class="insight-item">${i}</div>`
+            ).join('');
+
+            // Show results
+            document.getElementById('checkForm').style.display = 'none';
+            document.getElementById('resultCard').classList.add('active');
+        }
+
+        // Toggle history
+        function toggleHistory() {
+            const panel = document.getElementById('historyPanel');
+            panel.classList.toggle('active');
+
+            if (panel.classList.contains('active')) {
+                const history = JSON.parse(localStorage.getItem('daily_checks') || '[]');
+                const sorted = history.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                panel.innerHTML = sorted.slice(0, 30).map(h =>
+                    `<div class="history-item">
+                        <span class="history-date">${new Date(h.date).toLocaleDateString()}</span>
+                        <span class="history-score">${h.score}</span>
+                    </div>`
+                ).join('');
+            }
+        }
+
+        // Check if already submitted today
+        function checkToday() {
+            const history = JSON.parse(localStorage.getItem('daily_checks') || '[]');
+            const todayStr = today.toISOString().split('T')[0];
+            const todayEntry = history.find(h => h.date === todayStr);
+
+            if (todayEntry) {
+                // Restore values and show result
+                document.getElementById('clarity').value = todayEntry.clarity;
+                document.getElementById('clarityValue').textContent = todayEntry.clarity;
+                document.getElementById('pattern').value = todayEntry.pattern;
+                document.getElementById('patternValue').textContent = todayEntry.pattern;
+                document.getElementById('emotion').value = todayEntry.emotion;
+                document.getElementById('emotionValue').textContent = todayEntry.emotion;
+                document.getElementById('notes').value = todayEntry.notes || '';
+
+                // Update energy
+                energy = todayEntry.energy;
+                document.querySelectorAll('#energySelect .quick-btn').forEach(btn => {
+                    btn.classList.toggle('selected', parseInt(btn.dataset.value) === energy);
+                });
+            }
+        }
+
+        checkToday();
+    </script>
+</body>
+</html>

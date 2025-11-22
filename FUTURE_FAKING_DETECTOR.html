@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Faking Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.caution { color: #f1c40f; }
+        .verdict-label.fake { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .pattern-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .pattern-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-patterns {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .reality-check {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .reality-check h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .protection {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .protection h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .protect-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Future Faking Detector</h1>
+            <p>Identify promises made with no intention to fulfill</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the promise or plan they made about your future together..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Future Faking</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Future Faking Patterns</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="reality-check">
+                <h3>Reality Check Questions</h3>
+                <div id="checkList"></div>
+            </div>
+
+            <div class="protection">
+                <h4>How to Protect Yourself</h4>
+                <div id="protectionList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const FUTURE_FAKING_PATTERNS = {
+            'Vague Timeline': {
+                markers: ['someday', 'one day', 'eventually', 'when the time is right', 'soon', 'later'],
+                desc: 'No specific date or timeline for the promise'
+            },
+            'Conditional Promise': {
+                markers: ['when i', 'once i', 'after i', 'if things', 'as soon as'],
+                desc: 'Promise depends on conditions they control'
+            },
+            'Grand Plans': {
+                markers: ['we\'ll travel', 'we\'ll buy', 'we\'ll move', 'our wedding', 'our kids', 'our house'],
+                desc: 'Big life plans used to keep you invested'
+            },
+            'Repeated Promise': {
+                markers: ['i promise', 'i swear', 'this time', 'trust me', 'believe me', 'i mean it'],
+                desc: 'Emphasizing commitment often indicates the opposite'
+            },
+            'Perfect Future': {
+                markers: ['perfect', 'amazing', 'incredible', 'everything', 'always', 'forever'],
+                desc: 'Unrealistic idealization of future together'
+            },
+            'Excuses Built In': {
+                markers: ['unless', 'except', 'might not', 'probably', 'hopefully', 'if possible'],
+                desc: 'Pre-loaded reasons why it won\'t happen'
+            },
+            'Your Sacrifice Required': {
+                markers: ['just wait', 'be patient', 'hang in there', 'i need you to', 'if you really'],
+                desc: 'You must sacrifice now for uncertain future payoff'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check patterns
+            Object.entries(FUTURE_FAKING_PATTERNS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            // Calculate likelihood
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious future faking patterns';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POSSIBLE FUTURE FAKING';
+                desc = 'Some concerning patterns - verify with actions';
+                labelClass = 'caution';
+            } else {
+                icon = '🎭';
+                label = 'FUTURE FAKING DETECTED';
+                desc = 'Multiple patterns suggest empty promises';
+                labelClass = 'fake';
+            }
+
+            // Generate reality checks
+            const checks = generateChecks(found);
+
+            // Generate protection
+            const protection = generateProtection(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('patternsList').innerHTML = found.map(p => `
+                    <div class="pattern">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="no-patterns">✓ No clear future faking patterns</div>';
+            }
+
+            document.getElementById('checkList').innerHTML = checks.map(c =>
+                `<div class="check-item">? ${c}</div>`
+            ).join('');
+
+            document.getElementById('protectionList').innerHTML = protection.map(p =>
+                `<div class="protect-item">• ${p}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateChecks(found) {
+            const checks = [
+                'Have they followed through on previous promises?',
+                'Are they taking concrete steps toward this goal?',
+                'Would you stay if this never happened?'
+            ];
+
+            if (found.some(p => p.name === 'Vague Timeline')) {
+                checks.push('Can they give you a specific date?');
+            }
+            if (found.some(p => p.name === 'Your Sacrifice Required')) {
+                checks.push('What are THEY sacrificing for this future?');
+            }
+
+            return checks.slice(0, 4);
+        }
+
+        function generateProtection(found) {
+            const protection = [
+                'Actions > Words: Watch what they do, not say',
+                'Set a timeline: "Let\'s revisit this in 30 days"',
+                'Ask for specifics: Who, what, when, where, how?'
+            ];
+
+            if (found.length > 2) {
+                protection.push('Consider: Are you being kept waiting intentionally?');
+            }
+
+            protection.push('Make decisions based on TODAY\'s reality, not promised future');
+
+            return protection.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

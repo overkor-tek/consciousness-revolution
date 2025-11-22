@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seven Domains Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.6;
+        }
+
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .domain-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--domain-color);
+        }
+
+        .domain-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--domain-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .domain-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .domain-icon {
+            font-size: 32px;
+        }
+
+        .domain-title {
+            flex: 1;
+        }
+
+        .domain-title h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .domain-title .number {
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        .domain-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--domain-color);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .domain-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .domain-actions button {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--domain-color);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: scale(1.05);
+        }
+
+        .consciousness-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 200px;
+        }
+
+        .consciousness-panel h4 {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-bottom: 10px;
+        }
+
+        .overall-score {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quick-analyze {
+            max-width: 800px;
+            margin: 40px auto 0;
+            background: rgba(255,255,255,0.05);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .quick-analyze h3 {
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .analyze-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .analyze-form select {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .analyze-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .analyze-form input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .analyze-form button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .result-panel {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌐 Seven Domains Dashboard</h1>
+        <p>Consciousness Revolution Command Center • Pattern Theory Integrated</p>
+    </div>
+
+    <div class="domains-grid">
+        <!-- Domain 1: Legal Arsenal -->
+        <div class="domain-card" style="--domain-color: #FF6B6B;" onclick="selectDomain(1)">
+            <div class="domain-header">
+                <span class="domain-icon">⚖️</span>
+                <div class="domain-title">
+                    <h3>Legal Arsenal</h3>
+                    <span class="number">Domain 1</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Active Cases</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Protection</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 2: Finance/Business -->
+        <div class="domain-card" style="--domain-color: #4ECDC4;" onclick="selectDomain(2)">
+            <div class="domain-header">
+                <span class="domain-icon">💼</span>
+                <div class="domain-title">
+                    <h3>Finance/Business</h3>
+                    <span class="number">Domain 2</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Revenue Streams</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Health</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 3: Digital Infrastructure -->
+        <div class="domain-card" style="--domain-color: #45B7D1;" onclick="selectDomain(3)">
+            <div class="domain-header">
+                <span class="domain-icon">🖥️</span>
+                <div class="domain-title">
+                    <h3>Digital Infrastructure</h3>
+                    <span class="number">Domain 3</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Computers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">99%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 4: Consciousness Tools -->
+        <div class="domain-card" style="--domain-color: #96CEB4;" onclick="selectDomain(4)">
+            <div class="domain-header">
+                <span class="domain-icon">🧠</span>
+                <div class="domain-title">
+                    <h3>Consciousness Tools</h3>
+                    <span class="number">Domain 4</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Active Tools</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 5: Communication -->
+        <div class="domain-card" style="--domain-color: #FFEAA7;" onclick="selectDomain(5)">
+            <div class="domain-header">
+                <span class="domain-icon">📡</span>
+                <div class="domain-title">
+                    <h3>Communication</h3>
+                    <span class="number">Domain 5</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Channels</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">88%</div>
+                    <div class="stat-label">Clarity</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 6: Showcase/Portfolio -->
+        <div class="domain-card" style="--domain-color: #DDA0DD;" onclick="selectDomain(6)">
+            <div class="domain-header">
+                <span class="domain-icon">🎨</span>
+                <div class="domain-title">
+                    <h3>Showcase/Portfolio</h3>
+                    <span class="number">Domain 6</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">78%</div>
+                    <div class="stat-label">Complete</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+
+        <!-- Domain 7: Transparency/Trust -->
+        <div class="domain-card" style="--domain-color: #98D8C8;" onclick="selectDomain(7)">
+            <div class="domain-header">
+                <span class="domain-icon">🔮</span>
+                <div class="domain-title">
+                    <h3>Transparency/Trust</h3>
+                    <span class="number">Domain 7</span>
+                </div>
+            </div>
+            <div class="domain-stats">
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Open Source</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Trust Score</div>
+                </div>
+            </div>
+            <div class="domain-actions">
+                <button class="btn-primary">Analyze</button>
+                <button class="btn-secondary">View</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-analyze">
+        <h3>🔍 Quick Domain Analysis</h3>
+        <div class="analyze-form">
+            <select id="domain-select">
+                <option value="1">⚖️ Legal</option>
+                <option value="2">💼 Finance</option>
+                <option value="3">🖥️ Digital</option>
+                <option value="4">🧠 Consciousness</option>
+                <option value="5">📡 Communication</option>
+                <option value="6">🎨 Showcase</option>
+                <option value="7">🔮 Transparency</option>
+            </select>
+            <input type="text" id="analyze-input" placeholder="Enter situation to analyze...">
+            <button onclick="analyzeInput()">Analyze</button>
+        </div>
+        <div class="result-panel" id="result-panel"></div>
+    </div>
+
+    <div class="consciousness-panel">
+        <h4>OVERALL CONSCIOUSNESS</h4>
+        <div class="overall-score">89%</div>
+        <div style="font-size: 12px; opacity: 0.6; margin-top: 5px;">Elevated</div>
+    </div>
+
+    <script>
+        let selectedDomain = 1;
+
+        function selectDomain(num) {
+            selectedDomain = num;
+            document.getElementById('domain-select').value = num;
+        }
+
+        function analyzeInput() {
+            const domain = document.getElementById('domain-select').value;
+            const text = document.getElementById('analyze-input').value.trim();
+
+            if (!text) {
+                alert('Please enter text to analyze');
+                return;
+            }
+
+            // Client-side Pattern Theory analysis
+            const analysis = analyzeText(text, parseInt(domain));
+
+            const panel = document.getElementById('result-panel');
+            panel.innerHTML = `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="font-weight: bold;">${analysis.algorithm} Algorithm</span>
+                    <span style="color: ${analysis.algorithm === 'Truth' ? '#2ecc71' : '#e74c3c'};">
+                        ${analysis.confidence}% confidence
+                    </span>
+                </div>
+                <div style="margin-bottom: 8px;">
+                    Truth: ${analysis.truthScore}% | Deceit: ${analysis.deceitScore}%
+                </div>
+                <div style="font-size: 12px; opacity: 0.8; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px;">
+                    💡 ${analysis.guidance}
+                </div>
+            `;
+            panel.classList.add('active');
+        }
+
+        function analyzeText(text, domain) {
+            const lower = text.toLowerCase();
+
+            const deceitMarkers = ["trust me", "guaranteed", "act now", "limited", "free", "easy"];
+            const truthMarkers = ["because", "evidence", "research", "experience", "long-term"];
+
+            let deceit = 0, truth = 0;
+            deceitMarkers.forEach(m => { if (lower.includes(m)) deceit++; });
+            truthMarkers.forEach(m => { if (lower.includes(m)) truth++; });
+
+            const total = deceit + truth || 1;
+            let truthScore = Math.round((truth / total) * 100);
+            let deceitScore = Math.round((deceit / total) * 100);
+
+            if (deceit === 0 && truth === 0) {
+                truthScore = 50;
+                deceitScore = 50;
+            }
+
+            const algorithm = truthScore >= deceitScore ? 'Truth' : 'Deceit';
+            const confidence = Math.abs(truthScore - deceitScore);
+
+            const guidance = getGuidance(domain, algorithm);
+
+            return { algorithm, truthScore, deceitScore, confidence, guidance };
+        }
+
+        function getGuidance(domain, algorithm) {
+            const guidanceMap = {
+                1: { Truth: "Document with evidence. Proceed with legal action.", Deceit: "Potential fraud. Gather evidence first." },
+                2: { Truth: "Sound reasoning. Verify numbers.", Deceit: "Financial manipulation. Do not invest." },
+                3: { Truth: "Technical claims valid. Test before deploy.", Deceit: "Technical smoke screen. Request proof." },
+                4: { Truth: "Consciousness-aligned. Safe to internalize.", Deceit: "Manipulation attempt. Reject and document." },
+                5: { Truth: "Authentic communication. Respond genuinely.", Deceit: "Manipulative messaging. Set boundaries." },
+                6: { Truth: "Authentic presentation. Good for portfolio.", Deceit: "Inflated claims. Verify before featuring." },
+                7: { Truth: "Transparent and trustworthy. Safe to share.", Deceit: "Hidden agenda. Do not endorse." }
+            };
+
+            return guidanceMap[domain][algorithm];
+        }
+
+        // Enter key
+        document.getElementById('analyze-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') analyzeInput();
+        });
+    </script>
+</body>
+</html>

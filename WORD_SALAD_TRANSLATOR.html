@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Salad Translator | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 120px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .translate-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.confuse { color: #f1c40f; }
+        .verdict-label.salad { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .translation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .translation h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .translate-item {
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .response {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .response h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .response-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Word Salad Translator</h1>
+            <p>Cut through confusing circular communication</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the confusing message that seems to say a lot without actually answering your question..."></textarea>
+            <button class="translate-btn" onclick="translate()">Translate to Plain English</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Obfuscation Tactics</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="translation">
+                <h3>What They're Really Saying</h3>
+                <div id="translationList"></div>
+            </div>
+
+            <div class="response">
+                <h4>How to Respond</h4>
+                <div id="responseList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const WORD_SALAD_TACTICS = {
+            'Circular Logic': {
+                markers: ['because', 'therefore', 'which means', 'so that\'s why', 'obviously'],
+                desc: 'Repeats the question as if it\'s the answer',
+                translation: 'They\'re not actually explaining anything'
+            },
+            'Topic Shifting': {
+                markers: ['but what about', 'speaking of', 'that reminds me', 'the real issue', 'let\'s talk about'],
+                desc: 'Changes subject to avoid the point',
+                translation: 'They don\'t want to address your actual question'
+            },
+            'Over-Explanation': {
+                markers: ['basically', 'essentially', 'fundamentally', 'the thing is', 'you have to understand'],
+                desc: 'Uses many words to say nothing specific',
+                translation: 'More words ≠ more meaning'
+            },
+            'Vague Generalities': {
+                markers: ['things', 'stuff', 'everything', 'all of it', 'you know', 'whatever'],
+                desc: 'Avoids specifics entirely',
+                translation: 'They\'re refusing to be pinned down'
+            },
+            'Contradiction Patterns': {
+                markers: ['yes but', 'no but', 'i agree but', 'true but', 'maybe but'],
+                desc: 'Seems to agree but immediately negates',
+                translation: 'The "but" cancels everything before it'
+            },
+            'Future Promises': {
+                markers: ['we\'ll see', 'eventually', 'when the time is right', 'down the road', 'someday'],
+                desc: 'Pushes resolution to undefined future',
+                translation: 'They have no intention of addressing this'
+            },
+            'Emotional Filler': {
+                markers: ['i feel like', 'it seems like', 'kind of', 'sort of', 'in a way'],
+                desc: 'Hedging language that avoids commitment',
+                translation: 'They won\'t commit to a clear position'
+            }
+        };
+
+        function translate() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check tactics
+            Object.entries(WORD_SALAD_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        translation: data.translation
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'RELATIVELY CLEAR';
+                desc = 'Communication appears straightforward';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '🌀';
+                label = 'SOMEWHAT CONFUSING';
+                desc = 'Some obfuscation tactics present';
+                labelClass = 'confuse';
+            } else {
+                icon = '🥗';
+                label = 'WORD SALAD DETECTED';
+                desc = 'Multiple tactics to avoid clear communication';
+                labelClass = 'salad';
+            }
+
+            // Get translations
+            const translations = found.map(f => f.translation);
+            if (translations.length === 0) {
+                translations.push('The message appears to have clear content');
+            }
+
+            // Generate responses
+            const responses = generateResponses(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No major obfuscation patterns</div>';
+            }
+
+            document.getElementById('translationList').innerHTML = translations.slice(0, 4).map(t =>
+                `<div class="translate-item">→ ${t}</div>`
+            ).join('');
+
+            document.getElementById('responseList').innerHTML = responses.map(r =>
+                `<div class="response-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateResponses(found) {
+            const responses = [];
+
+            if (found.length > 0) {
+                responses.push('Ask: "Can you answer my specific question with a yes or no?"');
+                responses.push('Say: "I\'m confused. Can you give me one concrete example?"');
+            }
+
+            responses.push('Restate your question simply and wait for direct answer');
+            responses.push('If they can\'t be clear, that IS the answer');
+            responses.push('Confusion is often the goal - don\'t blame yourself');
+
+            return responses.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

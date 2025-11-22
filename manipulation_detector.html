@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulation Detector - Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        .input-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            padding: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: rgba(255,107,107,0.5);
+        }
+        textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: #fff;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            display: none;
+        }
+        .result-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .score-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .m-score {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .severity-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .severity-none { background: rgba(46,204,113,0.3); color: #2ecc71; }
+        .severity-low { background: rgba(241,196,15,0.3); color: #f1c40f; }
+        .severity-medium { background: rgba(230,126,34,0.3); color: #e67e22; }
+        .severity-high { background: rgba(231,76,60,0.3); color: #e74c3c; }
+        .severity-critical { background: rgba(155,89,182,0.3); color: #9b59b6; }
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #feca57;
+        }
+        .techniques-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .technique-tag {
+            padding: 8px 15px;
+            background: rgba(255,107,107,0.2);
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255,107,107,0.3);
+        }
+        .counter-strategy {
+            background: rgba(46,204,113,0.1);
+            border: 1px solid rgba(46,204,113,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .counter-title {
+            color: #2ecc71;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .examples {
+            margin-top: 20px;
+        }
+        .example-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+        .example-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manipulation Detector</h1>
+        <p class="subtitle">Pattern Theory Analysis - Detect manipulation techniques in any text</p>
+
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Paste text here to analyze for manipulation patterns...&#10;&#10;Examples: sales pitches, political speeches, marketing copy, social media posts, emails"></textarea>
+
+            <div class="examples">
+                <span style="opacity: 0.7; font-size: 0.9em;">Try examples:</span>
+                <button class="example-btn" onclick="loadExample('sales')">Sales Pitch</button>
+                <button class="example-btn" onclick="loadExample('fomo')">FOMO</button>
+                <button class="example-btn" onclick="loadExample('gaslighting')">Gaslighting</button>
+                <button class="example-btn" onclick="loadExample('clean')">Clean Text</button>
+            </div>
+
+            <button id="analyzeBtn" onclick="analyze()" style="margin-top: 20px;">Detect Manipulation</button>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <div>Analyzing patterns...</div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-card">
+                <div class="score-display">
+                    <div class="m-score" id="mScore">0</div>
+                    <div>M-Score (Manipulation Level)</div>
+                    <div class="severity-badge" id="severityBadge">NONE</div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="section-title">Techniques Detected</div>
+                <div class="techniques-list" id="techniquesList">
+                    <span style="opacity: 0.7;">None detected</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="section-title">Counter Strategy</div>
+                <div class="counter-strategy">
+                    <div class="counter-title">How to respond:</div>
+                    <div id="counterStrategy">No manipulation detected.</div>
+                </div>
+            </div>
+
+            <button onclick="reset()" style="background: rgba(255,255,255,0.1);">Analyze Another Text</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5002';
+
+        const examples = {
+            sales: "ACT NOW! This EXCLUSIVE offer expires in just 2 HOURS! Everyone is buying this - don't be the only one left out. You'd be CRAZY to pass this up. Our experts agree this is the best deal you'll EVER see. Limited stock remaining!",
+            fomo: "I wasn't going to tell you this, but since we're friends... This opportunity is closing tonight and I'd hate for you to miss out like last time. Remember how bad you felt? Others are already seeing results. This is your last chance.",
+            gaslighting: "That never happened. You're remembering it wrong. Everyone else agrees with me - maybe you should see someone about these memory issues. I'm only saying this because I care about you. Why do you always have to make things difficult?",
+            clean: "The meeting is scheduled for Tuesday at 2pm in Conference Room B. Please bring your quarterly reports and any questions you'd like to discuss. Let me know if you need to reschedule."
+        };
+
+        function loadExample(type) {
+            document.getElementById('inputText').value = examples[type];
+        }
+
+        async function analyze() {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) {
+                alert('Please enter text to analyze');
+                return;
+            }
+
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/detect`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                showResults(data.result);
+            } catch (error) {
+                alert('Error analyzing text: ' + error.message);
+            } finally {
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('results').style.display = 'block';
+
+            // Animate M-Score
+            let score = 0;
+            const target = Math.round(result.m_score);
+            const interval = setInterval(() => {
+                score += Math.ceil(target / 30);
+                if (score >= target) {
+                    score = target;
+                    clearInterval(interval);
+                }
+                document.getElementById('mScore').textContent = score;
+            }, 20);
+
+            // Set severity
+            const badge = document.getElementById('severityBadge');
+            badge.textContent = result.severity.toUpperCase();
+            badge.className = 'severity-badge severity-' + result.severity.toLowerCase();
+
+            // Show techniques
+            const techniquesList = document.getElementById('techniquesList');
+            if (result.techniques && result.techniques.length > 0) {
+                techniquesList.innerHTML = result.techniques
+                    .map(t => `<span class="technique-tag">${t}</span>`)
+                    .join('');
+            } else {
+                techniquesList.innerHTML = '<span style="opacity: 0.7;">No manipulation techniques detected</span>';
+            }
+
+            // Show counter strategy
+            document.getElementById('counterStrategy').textContent =
+                result.counter_strategy || 'This text appears to be straightforward communication without manipulation.';
+        }
+
+        function reset() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('inputText').value = '';
+            document.getElementById('mScore').textContent = '0';
+        }
+    </script>
+</body>
+</html>

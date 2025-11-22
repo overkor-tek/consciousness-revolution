@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stonewalling Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-level {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-level.low { color: #2ecc71; }
+        .verdict-level.medium { color: #f1c40f; }
+        .verdict-level.high { color: #e74c3c; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .analysis-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .strategies {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .strategies h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strategy {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .strategy::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Stonewalling Analyzer</h1>
+            <p>Understand and respond to shut-down behavior</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check behaviors you're experiencing:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze Stonewalling</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-level" id="verdictLevel">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="analysis">
+                <h3>What's Happening</h3>
+                <div id="analysisList"></div>
+            </div>
+
+            <div class="strategies">
+                <h3>How to Respond</h3>
+                <div id="strategiesList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Important Distinctions</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const STONEWALLING_SIGNS = [
+            { text: 'Refusing to discuss the issue at all', weight: 3 },
+            { text: 'Walking away without explanation', weight: 2 },
+            { text: 'Giving one-word answers only', weight: 2 },
+            { text: 'Changing the subject repeatedly', weight: 2 },
+            { text: 'Pretending not to hear or understand', weight: 3 },
+            { text: 'Eye rolling or dismissive body language', weight: 1 },
+            { text: 'Saying "whatever" or "fine" to end discussion', weight: 2 },
+            { text: 'Claiming they "don\'t remember" the issue', weight: 2 },
+            { text: 'Saying they\'re "too busy" to discuss it', weight: 2 },
+            { text: 'This happens every time you raise concerns', weight: 3 }
+        ];
+
+        let selected = new Set();
+
+        // Render checks
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = STONEWALLING_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            // Calculate score
+            let score = 0;
+            const analysis = [];
+            selected.forEach(i => {
+                score += STONEWALLING_SIGNS[i].weight;
+                analysis.push(STONEWALLING_SIGNS[i].text);
+            });
+
+            const maxScore = STONEWALLING_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Determine level
+            let level, label, desc, levelClass;
+            if (percentage <= 20) {
+                level = percentage + '%';
+                label = 'MINIMAL STONEWALLING';
+                desc = 'May just need space - check in later';
+                levelClass = 'low';
+            } else if (percentage <= 50) {
+                level = percentage + '%';
+                label = 'MODERATE STONEWALLING';
+                desc = 'Communication breakdown - needs addressing';
+                levelClass = 'medium';
+            } else {
+                level = percentage + '%';
+                label = 'SEVERE STONEWALLING';
+                desc = 'Chronic avoidance pattern';
+                levelClass = 'high';
+            }
+
+            // Generate strategies
+            const strategies = generateStrategies(percentage);
+
+            // Generate truths
+            const truths = generateTruths(percentage);
+
+            // Render results
+            const levelEl = document.getElementById('verdictLevel');
+            levelEl.textContent = level;
+            levelEl.className = 'verdict-level ' + levelClass;
+            document.getElementById('verdictLabel').textContent = label;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (analysis.length > 0) {
+                document.getElementById('analysisList').innerHTML = analysis.slice(0, 5).map(a =>
+                    `<div class="analysis-item">⚠️ ${a}</div>`
+                ).join('');
+            } else {
+                document.getElementById('analysisList').innerHTML =
+                    '<div class="analysis-item" style="background: rgba(46, 204, 113, 0.1);">✓ No stonewalling signs selected</div>';
+            }
+
+            document.getElementById('strategiesList').innerHTML = strategies.map(s =>
+                `<div class="strategy">${s}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateStrategies(percentage) {
+            const strategies = [];
+
+            if (percentage > 50) {
+                strategies.push('State clearly: "We need to discuss this for our relationship to work"');
+                strategies.push('Set a boundary: "If you won\'t engage, I\'ll make my own decision"');
+                strategies.push('Consider whether this relationship meets your needs');
+            } else if (percentage > 20) {
+                strategies.push('Give them time to cool down, then revisit');
+                strategies.push('Try: "When would be a good time to discuss this?"');
+                strategies.push('Write a letter if verbal communication is blocked');
+            }
+
+            strategies.push('Don\'t pursue or escalate - that usually backfires');
+            strategies.push('State your need once clearly, then disengage');
+            strategies.push('Focus on your own wellbeing while they process');
+
+            return strategies.slice(0, 5);
+        }
+
+        function generateTruths(percentage) {
+            const truths = [
+                'Taking a short break to calm down is healthy',
+                'Refusing to engage over extended time is stonewalling',
+                'You deserve a partner who will work through conflict'
+            ];
+
+            if (percentage > 50) {
+                truths.push('Chronic stonewalling is one of the "Four Horsemen" of relationship failure');
+            }
+
+            truths.push('You can\'t force someone to communicate - but you can choose your response');
+
+            return truths.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

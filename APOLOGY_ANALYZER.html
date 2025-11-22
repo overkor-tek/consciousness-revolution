@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apology Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .apology-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .apology-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.genuine { color: #2ecc71; }
+        .verdict-label.partial { color: #f1c40f; }
+        .verdict-label.non { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .components {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .components h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .component {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .component:last-child { border-bottom: none; }
+
+        .component-name { font-size: 12px; }
+
+        .component-status {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .component-status.present {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .component-status.absent {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .red-flags {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .red-flags h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .flag {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .flag:last-child { margin-bottom: 0; }
+
+        .no-flags {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: #2ecc71;
+        }
+
+        .guidance {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .guidance h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .guidance-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Apology Analyzer</h1>
+            <p>Determine if an apology is genuine or manipulative</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="apology-input" id="apology" placeholder="Paste the apology to analyze..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Apology</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="components">
+                <h3>Apology Components</h3>
+                <div id="componentsList"></div>
+            </div>
+
+            <div class="red-flags">
+                <h3>Red Flags</h3>
+                <div id="flagsList"></div>
+            </div>
+
+            <div class="guidance">
+                <h4>What to Do</h4>
+                <div id="guidanceList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        // Components of a genuine apology
+        const COMPONENTS = {
+            'Acknowledges wrongdoing': ['i was wrong', 'i made a mistake', 'i shouldn\'t have', 'that was wrong of me'],
+            'Takes responsibility': ['i take responsibility', 'my fault', 'i own', 'i\'m responsible', 'i did'],
+            'Shows understanding': ['i understand', 'i see how', 'i know that', 'i realize'],
+            'Expresses remorse': ['i\'m sorry', 'i apologize', 'i regret', 'i feel bad'],
+            'Commits to change': ['i will', 'i\'ll make sure', 'going forward', 'in the future', 'i promise']
+        };
+
+        // Red flags that indicate non-apology
+        const RED_FLAGS = {
+            'Blame shifting': ['you made me', 'because you', 'if you hadn\'t', 'your fault'],
+            'Conditional apology': ['if i', 'if you feel', 'if you think', 'if that\'s how you'],
+            'Minimizing': ['just', 'only', 'it\'s not a big deal', 'you\'re overreacting'],
+            'Deflection': ['but you', 'what about when you', 'you also', 'you did the same'],
+            'Excuse making': ['i had to', 'i had no choice', 'you don\'t understand', 'circumstances'],
+            'Passive voice': ['mistakes were made', 'it happened', 'things got out of hand'],
+            'Future pressure': ['can we move on', 'let\'s put this behind', 'are we done']
+        };
+
+        function analyze() {
+            const apology = document.getElementById('apology').value.trim();
+            if (!apology) return;
+
+            const lower = apology.toLowerCase();
+            const results = {};
+            const flags = [];
+
+            // Check components
+            Object.entries(COMPONENTS).forEach(([name, markers]) => {
+                results[name] = markers.some(m => lower.includes(m));
+            });
+
+            // Check red flags
+            Object.entries(RED_FLAGS).forEach(([name, markers]) => {
+                if (markers.some(m => lower.includes(m))) {
+                    flags.push(name);
+                }
+            });
+
+            // Calculate score
+            const componentCount = Object.values(results).filter(v => v).length;
+            const flagCount = flags.length;
+
+            let icon, label, desc, labelClass;
+            if (componentCount >= 4 && flagCount === 0) {
+                icon = '✅';
+                label = 'APPEARS GENUINE';
+                desc = 'Contains key components of a real apology';
+                labelClass = 'genuine';
+            } else if (componentCount >= 2 && flagCount <= 1) {
+                icon = '⚠️';
+                label = 'PARTIAL APOLOGY';
+                desc = 'Some genuine elements but missing key components';
+                labelClass = 'partial';
+            } else {
+                icon = '❌';
+                label = 'NON-APOLOGY';
+                desc = 'Missing genuine accountability or contains manipulation';
+                labelClass = 'non';
+            }
+
+            // Generate guidance
+            const guidance = generateGuidance(results, flags, componentCount);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            document.getElementById('componentsList').innerHTML = Object.entries(results).map(([name, present]) => `
+                <div class="component">
+                    <span class="component-name">${name}</span>
+                    <span class="component-status ${present ? 'present' : 'absent'}">
+                        ${present ? '✓ Present' : '✗ Missing'}
+                    </span>
+                </div>
+            `).join('');
+
+            if (flags.length > 0) {
+                document.getElementById('flagsList').innerHTML = flags.map(f =>
+                    `<div class="flag">⚠️ ${f}</div>`
+                ).join('');
+            } else {
+                document.getElementById('flagsList').innerHTML =
+                    '<div class="no-flags">✓ No manipulation flags detected</div>';
+            }
+
+            document.getElementById('guidanceList').innerHTML = guidance.map(g =>
+                `<div class="guidance-item">• ${g}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateGuidance(results, flags, score) {
+            const guidance = [];
+
+            if (score >= 4 && flags.length === 0) {
+                guidance.push('This appears to be a genuine attempt at accountability');
+                guidance.push('Watch for follow-through on any commitments made');
+            } else {
+                if (!results['Takes responsibility']) {
+                    guidance.push('A real apology requires taking responsibility, not just saying "sorry"');
+                }
+                if (!results['Commits to change']) {
+                    guidance.push('Ask: "What will you do differently?"');
+                }
+                if (flags.includes('Blame shifting') || flags.includes('Deflection')) {
+                    guidance.push('This is redirecting blame to you - not a real apology');
+                }
+                if (flags.includes('Conditional apology')) {
+                    guidance.push('"IF I hurt you" is not taking responsibility - they\'re questioning your experience');
+                }
+                if (flags.includes('Future pressure')) {
+                    guidance.push('Rushing past the apology is a red flag - healing takes time');
+                }
+            }
+
+            guidance.push('Actions over time matter more than words');
+
+            return guidance.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

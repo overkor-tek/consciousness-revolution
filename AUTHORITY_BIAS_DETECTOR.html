@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authority Bias Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.moderate { color: #f1c40f; }
+        .verdict-label.high { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .appeals {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .appeals h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .appeal {
+            padding: 12px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .appeal-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 4px;
+        }
+
+        .appeal-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-appeals {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Authority Bias Detector</h1>
+            <p>Identify when status is substituting for evidence</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the claim or argument that uses authority to persuade..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Authority Bias</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="appeals">
+                <h3>Authority Appeals Found</h3>
+                <div id="appealsList"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Critical Questions to Ask</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Remember</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const AUTHORITY_APPEALS = {
+            'Title Appeal': {
+                markers: ['doctor', 'professor', 'expert', 'specialist', 'phd', 'md'],
+                desc: 'Using credentials as proof instead of evidence'
+            },
+            'Experience Appeal': {
+                markers: ['years of experience', 'i\'ve been doing this', 'in my career', 'longtime'],
+                desc: 'Time in field doesn\'t guarantee correctness'
+            },
+            'Celebrity Appeal': {
+                markers: ['celebrity', 'famous', 'well-known', 'star', 'influencer'],
+                desc: 'Fame doesn\'t equal expertise in all areas'
+            },
+            'Institutional Appeal': {
+                markers: ['harvard', 'government', 'official', 'organization', 'institution', 'agency'],
+                desc: 'Institutional backing isn\'t automatic proof'
+            },
+            'Everyone Says': {
+                markers: ['everyone knows', 'it\'s well known', 'experts agree', 'science says', 'studies show'],
+                desc: 'Vague appeals to unspecified consensus'
+            },
+            'Trust Me': {
+                markers: ['trust me', 'believe me', 'take my word', 'i know what i\'m talking about'],
+                desc: 'Demanding trust without providing evidence'
+            },
+            'Published Appeal': {
+                markers: ['published', 'peer reviewed', 'journal', 'book', 'best seller'],
+                desc: 'Publication doesn\'t equal infallibility'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            Object.entries(AUTHORITY_APPEALS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc });
+                }
+            });
+
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'NO CLEAR AUTHORITY BIAS';
+                desc = 'Argument may rely on evidence instead';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'SOME AUTHORITY APPEALS';
+                desc = 'Verify claims with actual evidence';
+                labelClass = 'moderate';
+            } else {
+                icon = '👔';
+                label = 'HEAVY AUTHORITY RELIANCE';
+                desc = 'Status substituting for substance';
+                labelClass = 'high';
+            }
+
+            const questions = generateQuestions(found);
+            const truths = generateTruths(found);
+
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('appealsList').innerHTML = found.map(a => `
+                    <div class="appeal">
+                        <div class="appeal-name">${a.name}</div>
+                        <div class="appeal-desc">${a.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('appealsList').innerHTML =
+                    '<div class="no-appeals">✓ No obvious authority appeals</div>';
+            }
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question-item">${q}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(found) {
+            const questions = [
+                'Is this authority actually an expert in THIS specific area?',
+                'What evidence supports the claim beyond credentials?',
+                'Do other qualified experts disagree?'
+            ];
+
+            if (found.some(a => a.name === 'Everyone Says')) {
+                questions.push('WHO specifically? Can you name sources?');
+            }
+            if (found.some(a => a.name === 'Published Appeal')) {
+                questions.push('Has this been replicated? What\'s the quality of the journal?');
+            }
+
+            questions.push('Would this claim be believable without the authority?');
+
+            return questions.slice(0, 5);
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'Experts can be wrong, biased, or outside their field',
+                'Authority should support evidence, not replace it',
+                'Credentials don\'t exempt claims from scrutiny'
+            ];
+
+            if (found.length > 2) {
+                truths.push('Heavy reliance on authority often masks weak arguments');
+            }
+
+            truths.push('You\'re allowed to ask for evidence, not just credentials');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

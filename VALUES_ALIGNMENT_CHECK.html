@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Values Alignment Check | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .value-group {
+            margin-bottom: 16px;
+        }
+
+        .value-label {
+            font-size: 12px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 12px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alignment-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alignment-score {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .alignment-score.high { color: #2ecc71; }
+        .alignment-score.medium { color: #f1c40f; }
+        .alignment-score.low { color: #e74c3c; }
+
+        .alignment-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .alignment-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .breakdown {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .breakdown h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .value-bar {
+            margin-bottom: 12px;
+        }
+
+        .value-name {
+            font-size: 12px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bar-container {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .insights h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .insight {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .questions {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .questions h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .question-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Values Alignment Check</h1>
+            <p>Check if your actions align with your values</p>
+        </div>
+
+        <div class="input-section">
+            <h3>Rate How Well You're Living Each Value (1-10)</h3>
+
+            <div class="value-group">
+                <label class="value-label">Honesty</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="honesty" min="1" max="10" value="5">
+                    <span class="slider-value" id="honestyVal">5</span>
+                </div>
+            </div>
+
+            <div class="value-group">
+                <label class="value-label">Integrity (doing what you said)</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="integrity" min="1" max="10" value="5">
+                    <span class="slider-value" id="integrityVal">5</span>
+                </div>
+            </div>
+
+            <div class="value-group">
+                <label class="value-label">Health & Self-Care</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="health" min="1" max="10" value="5">
+                    <span class="slider-value" id="healthVal">5</span>
+                </div>
+            </div>
+
+            <div class="value-group">
+                <label class="value-label">Relationships & Connection</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="relationships" min="1" max="10" value="5">
+                    <span class="slider-value" id="relationshipsVal">5</span>
+                </div>
+            </div>
+
+            <div class="value-group">
+                <label class="value-label">Growth & Learning</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="growth" min="1" max="10" value="5">
+                    <span class="slider-value" id="growthVal">5</span>
+                </div>
+            </div>
+
+            <div class="value-group">
+                <label class="value-label">Purpose & Contribution</label>
+                <div class="slider-row">
+                    <input type="range" class="slider" id="purpose" min="1" max="10" value="5">
+                    <span class="slider-value" id="purposeVal">5</span>
+                </div>
+            </div>
+
+            <button class="check-btn" onclick="check()">Check Alignment</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="alignment-card">
+                <div class="alignment-score" id="alignmentScore">-</div>
+                <div class="alignment-label" id="alignmentLabel">-</div>
+                <div class="alignment-desc" id="alignmentDesc">-</div>
+            </div>
+
+            <div class="breakdown">
+                <h3>Value Breakdown</h3>
+                <div id="breakdownList"></div>
+            </div>
+
+            <div class="insights">
+                <h3>Insights</h3>
+                <div id="insightsList"></div>
+            </div>
+
+            <div class="questions">
+                <h4>Questions to Ask</h4>
+                <div id="questionsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const values = ['honesty', 'integrity', 'health', 'relationships', 'growth', 'purpose'];
+
+        // Update slider values
+        values.forEach(v => {
+            const slider = document.getElementById(v);
+            const display = document.getElementById(v + 'Val');
+            slider.addEventListener('input', () => {
+                display.textContent = slider.value;
+            });
+        });
+
+        function check() {
+            const scores = {};
+            let total = 0;
+
+            values.forEach(v => {
+                scores[v] = parseInt(document.getElementById(v).value);
+                total += scores[v];
+            });
+
+            const average = Math.round(total / values.length * 10);
+
+            // Determine label
+            let label, desc, scoreClass;
+            if (average >= 75) {
+                label = 'HIGHLY ALIGNED';
+                desc = 'Your actions strongly reflect your values';
+                scoreClass = 'high';
+            } else if (average >= 50) {
+                label = 'MODERATELY ALIGNED';
+                desc = 'Some gaps between values and actions';
+                scoreClass = 'medium';
+            } else {
+                label = 'MISALIGNED';
+                desc = 'Significant gaps to address';
+                scoreClass = 'low';
+            }
+
+            // Find lowest values
+            const sorted = values.map(v => ({ name: v, score: scores[v] }))
+                .sort((a, b) => a.score - b.score);
+
+            // Generate insights
+            const insights = generateInsights(sorted, scores);
+
+            // Generate questions
+            const questions = generateQuestions(sorted);
+
+            // Render results
+            const scoreEl = document.getElementById('alignmentScore');
+            scoreEl.textContent = average + '%';
+            scoreEl.className = 'alignment-score ' + scoreClass;
+            document.getElementById('alignmentLabel').textContent = label;
+            document.getElementById('alignmentDesc').textContent = desc;
+
+            // Render breakdown
+            const colors = {
+                honesty: '#667eea',
+                integrity: '#764ba2',
+                health: '#2ecc71',
+                relationships: '#e74c3c',
+                growth: '#f1c40f',
+                purpose: '#3498db'
+            };
+
+            document.getElementById('breakdownList').innerHTML = values.map(v => {
+                const score = scores[v] * 10;
+                return `
+                    <div class="value-bar">
+                        <div class="value-name">
+                            <span>${v.charAt(0).toUpperCase() + v.slice(1)}</span>
+                            <span>${scores[v]}/10</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: ${score}%; background: ${colors[v]}"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('insightsList').innerHTML = insights.map(i =>
+                `<div class="insight">${i}</div>`
+            ).join('');
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question-item">• ${q}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateInsights(sorted, scores) {
+            const insights = [];
+            const lowest = sorted[0];
+            const highest = sorted[sorted.length - 1];
+
+            insights.push(`Strongest: ${highest.name} (${highest.score}/10) - this is working for you`);
+            insights.push(`Needs attention: ${lowest.name} (${lowest.score}/10) - biggest growth opportunity`);
+
+            if (scores.integrity < 5) {
+                insights.push('Low integrity score suggests commitments aren\'t being kept');
+            }
+            if (scores.health < 5) {
+                insights.push('Health foundation affects all other values');
+            }
+            if (scores.purpose < 5) {
+                insights.push('Lack of purpose can drain energy from other areas');
+            }
+
+            return insights.slice(0, 4);
+        }
+
+        function generateQuestions(sorted) {
+            const questions = [];
+            const lowest = sorted[0];
+
+            const valueQuestions = {
+                honesty: 'What truth are you avoiding telling yourself or others?',
+                integrity: 'What commitment did you make that you\'re not keeping?',
+                health: 'What one health habit would have the biggest impact?',
+                relationships: 'Which relationship needs your attention right now?',
+                growth: 'What skill would most benefit your life to develop?',
+                purpose: 'What gives you energy that you\'re not making time for?'
+            };
+
+            questions.push(valueQuestions[lowest.name]);
+            questions.push('What\'s one small action you can take today?');
+            questions.push('What\'s blocking you from higher alignment?');
+            questions.push('Is any external expectation overriding your values?');
+
+            return questions.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Attack Shield | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .shield-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .shield-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .shield-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .shield-label.clear { color: #2ecc71; }
+        .shield-label.mild { color: #f1c40f; }
+        .shield-label.attack { color: #e74c3c; }
+
+        .shield-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .attacks {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .attacks h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .attack {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .attack-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .attack-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-attacks {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .deflections {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .deflections h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .deflection {
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .reframe {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reframe h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .reframe-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Personal Attack Shield</h1>
+            <p>Identify and deflect ad hominem attacks</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the message that might contain personal attacks..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze for Attacks</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="shield-card">
+                <div class="shield-icon" id="shieldIcon">-</div>
+                <div class="shield-label" id="shieldLabel">-</div>
+                <div class="shield-desc" id="shieldDesc">-</div>
+            </div>
+
+            <div class="attacks">
+                <h3>Attack Types Detected</h3>
+                <div id="attacksList"></div>
+            </div>
+
+            <div class="deflections">
+                <h3>How to Deflect</h3>
+                <div id="deflectionsList"></div>
+            </div>
+
+            <div class="reframe">
+                <h4>Reframe the Attack</h4>
+                <div id="reframeList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const ATTACK_TYPES = {
+            'Character Attack': {
+                markers: ['you\'re just', 'you always', 'you never', 'typical', 'people like you'],
+                desc: 'Attacking character instead of argument',
+                deflection: '"Let\'s focus on the specific issue rather than generalizations about me"'
+            },
+            'Intelligence Attack': {
+                markers: ['stupid', 'idiot', 'don\'t understand', 'don\'t get it', 'too dumb', 'naive'],
+                desc: 'Dismissing by questioning intelligence',
+                deflection: '"If my point is wrong, explain why - attacks on my intelligence don\'t address it"'
+            },
+            'Motive Attack': {
+                markers: ['you just want', 'your agenda', 'real reason', 'obviously trying to', 'only saying'],
+                desc: 'Attacking assumed hidden motives',
+                deflection: '"Rather than guess my motives, respond to what I actually said"'
+            },
+            'Experience Dismissal': {
+                markers: ['you don\'t know', 'you\'ve never', 'you haven\'t', 'you can\'t understand', 'no experience'],
+                desc: 'Invalidating based on assumed lack of experience',
+                deflection: '"My experience isn\'t the point - address the argument itself"'
+            },
+            'Emotional Dismissal': {
+                markers: ['calm down', 'being emotional', 'overreacting', 'too sensitive', 'triggered'],
+                desc: 'Dismissing by labeling emotional',
+                deflection: '"Tone-policing doesn\'t invalidate my point. Address the substance"'
+            },
+            'Group Association': {
+                markers: ['you people', 'your kind', 'those like you', 'all the same', 'just like'],
+                desc: 'Attacking by group association',
+                deflection: '"I\'m speaking for myself. Respond to my specific point"'
+            },
+            'Credibility Attack': {
+                markers: ['hypocrite', 'liar', 'can\'t trust', 'dishonest', 'not credible'],
+                desc: 'Attacking credibility to dismiss argument',
+                deflection: '"Even if that were true, it wouldn\'t make my point wrong. Address the argument"'
+            },
+            'Sarcasm/Mockery': {
+                markers: ['oh sure', 'right', 'of course you would', 'how cute', 'adorable'],
+                desc: 'Using mockery instead of counter-argument',
+                deflection: '"Sarcasm isn\'t an argument. Do you have a substantive response?"'
+            }
+        };
+
+        function analyze() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check each attack type
+            Object.entries(ATTACK_TYPES).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        deflection: data.deflection
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '🛡️';
+                label = 'NO ATTACKS DETECTED';
+                desc = 'No obvious personal attacks found';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'MILD ATTACK DETECTED';
+                desc = `${found.length} attack pattern(s) - redirect to substance`;
+                labelClass = 'mild';
+            } else {
+                icon = '🚨';
+                label = 'HEAVY ATTACK MODE';
+                desc = `${found.length} attack patterns - not engaging in good faith`;
+                labelClass = 'attack';
+            }
+
+            // Get deflections
+            const deflections = found.map(f => f.deflection);
+            if (deflections.length === 0) {
+                deflections.push('"Your point is interesting - can you elaborate on the specific reasoning?"');
+            }
+
+            // Generate reframes
+            const reframes = generateReframes(found);
+
+            // Render results
+            document.getElementById('shieldIcon').textContent = icon;
+            const labelEl = document.getElementById('shieldLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'shield-label ' + labelClass;
+            document.getElementById('shieldDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('attacksList').innerHTML = found.map(a => `
+                    <div class="attack">
+                        <div class="attack-name">${a.name}</div>
+                        <div class="attack-desc">${a.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('attacksList').innerHTML =
+                    '<div class="no-attacks">✓ No personal attacks detected</div>';
+            }
+
+            document.getElementById('deflectionsList').innerHTML = deflections.slice(0, 4).map(d =>
+                `<div class="deflection">${d}</div>`
+            ).join('');
+
+            document.getElementById('reframeList').innerHTML = reframes.map(r =>
+                `<div class="reframe-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateReframes(found) {
+            const reframes = [
+                'Personal attacks are admissions that they can\'t defeat your argument',
+                'Each attack is evidence they\'ve abandoned logic',
+                'You don\'t need to defend your character - stay on topic'
+            ];
+
+            if (found.length >= 2) {
+                reframes.push('This person isn\'t engaging in good faith - consider disengaging');
+            }
+
+            reframes.push('Your value doesn\'t depend on their opinion');
+            reframes.push('Redirect every attack back to the substantive issue');
+
+            return reframes.slice(0, 5);
+        }
+    </script>
+</body>
+</html>

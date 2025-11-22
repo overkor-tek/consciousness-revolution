@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Bombing Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-level {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-level.low { color: #2ecc71; }
+        .verdict-level.medium { color: #f1c40f; }
+        .verdict-level.high { color: #e74c3c; }
+
+        .verdict-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .warning {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .warning h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .warning-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .guidance {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .guidance h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .guide-item {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .guide-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .reality {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reality h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .reality-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Love Bombing Detector</h1>
+            <p>Distinguish genuine affection from manipulation</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check signs that apply (early relationship stage):</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Analyze Behavior</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-level" id="verdictLevel">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="warning">
+                <h3>Warning Signs Present</h3>
+                <div id="warningList"></div>
+            </div>
+
+            <div class="guidance">
+                <h3>What to Do</h3>
+                <div id="guidanceList"></div>
+            </div>
+
+            <div class="reality">
+                <h4>Reality Check</h4>
+                <div id="realityList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const LOVE_BOMB_SIGNS = [
+            { text: 'Excessive compliments and flattery very early', weight: 2 },
+            { text: 'Says "I love you" or "soulmate" within days/weeks', weight: 3 },
+            { text: 'Constant texting/calling - upset if you don\'t respond fast', weight: 2 },
+            { text: 'Expensive gifts or grand gestures immediately', weight: 2 },
+            { text: 'Wants to be exclusive very quickly', weight: 2 },
+            { text: 'Says you\'re "different" from everyone else', weight: 1 },
+            { text: 'Future planning (moving in, marriage) very early', weight: 3 },
+            { text: 'Gets upset when you spend time with others', weight: 3 },
+            { text: 'Tries to meet all your needs so you "need" them', weight: 2 },
+            { text: 'Seems too good to be true', weight: 2 },
+            { text: 'Your friends/family express concern', weight: 2 },
+            { text: 'Dismisses or downplays your boundaries', weight: 3 }
+        ];
+
+        let selected = new Set();
+
+        // Render checks
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = LOVE_BOMB_SIGNS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            // Calculate score
+            let score = 0;
+            const warnings = [];
+            selected.forEach(i => {
+                score += LOVE_BOMB_SIGNS[i].weight;
+                warnings.push(LOVE_BOMB_SIGNS[i].text);
+            });
+
+            const maxScore = LOVE_BOMB_SIGNS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Determine level
+            let level, label, desc, levelClass;
+            if (percentage <= 20) {
+                level = percentage + '%';
+                label = 'LOW CONCERN';
+                desc = 'Few warning signs - but stay aware';
+                levelClass = 'low';
+            } else if (percentage <= 50) {
+                level = percentage + '%';
+                label = 'MODERATE CONCERN';
+                desc = 'Multiple warning signs present';
+                levelClass = 'medium';
+            } else {
+                level = percentage + '%';
+                label = 'HIGH ALERT';
+                desc = 'Many signs of love bombing';
+                levelClass = 'high';
+            }
+
+            // Generate guidance
+            const guidance = generateGuidance(percentage);
+
+            // Generate reality checks
+            const reality = generateReality(percentage);
+
+            // Render results
+            const levelEl = document.getElementById('verdictLevel');
+            levelEl.textContent = level;
+            levelEl.className = 'verdict-level ' + levelClass;
+            document.getElementById('verdictLabel').textContent = label;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (warnings.length > 0) {
+                document.getElementById('warningList').innerHTML = warnings.slice(0, 5).map(w =>
+                    `<div class="warning-item">⚠️ ${w}</div>`
+                ).join('');
+            } else {
+                document.getElementById('warningList').innerHTML =
+                    '<div class="warning-item" style="background: rgba(46, 204, 113, 0.1);">✓ No warning signs selected</div>';
+            }
+
+            document.getElementById('guidanceList').innerHTML = guidance.map(g =>
+                `<div class="guide-item">${g}</div>`
+            ).join('');
+
+            document.getElementById('realityList').innerHTML = reality.map(r =>
+                `<div class="reality-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateGuidance(percentage) {
+            const guidance = [];
+
+            if (percentage > 50) {
+                guidance.push('SLOW DOWN - resist the urgency they\'re creating');
+                guidance.push('Talk to trusted friends/family about their concerns');
+                guidance.push('Watch what happens when you set a boundary');
+            } else if (percentage > 20) {
+                guidance.push('Take things at YOUR pace, not theirs');
+                guidance.push('Notice if intensity decreases when you set limits');
+            }
+
+            guidance.push('Healthy relationships build gradually over time');
+            guidance.push('Pay attention to actions when they don\'t get what they want');
+            guidance.push('Trust is earned through consistent behavior, not grand gestures');
+
+            return guidance.slice(0, 5);
+        }
+
+        function generateReality(percentage) {
+            const reality = [
+                'Real love is patient - it doesn\'t rush',
+                'Genuine affection respects your boundaries'
+            ];
+
+            if (percentage > 50) {
+                reality.push('Love bombing often precedes control and abuse');
+                reality.push('The "perfect" phase is designed to hook you');
+            }
+
+            reality.push('Healthy partners don\'t need to overwhelm you');
+            reality.push('Time reveals character - don\'t skip that');
+
+            return reality.slice(0, 4);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

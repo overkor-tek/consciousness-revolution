@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Bind Decoder | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .decode-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.trap { color: #f1c40f; }
+        .verdict-label.bind { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .bind-type {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .bind-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .bind-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-bind {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .escape {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .escape h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .escape-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .truth {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Double Bind Decoder</h1>
+            <p>Identify no-win situations and find the exit</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Describe the situation where you feel trapped or damned if you do, damned if you don't..."></textarea>
+            <button class="decode-btn" onclick="decode()">Decode the Bind</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="analysis">
+                <h3>Double Bind Patterns</h3>
+                <div id="analysisList"></div>
+            </div>
+
+            <div class="escape">
+                <h3>How to Escape the Bind</h3>
+                <div id="escapeList"></div>
+            </div>
+
+            <div class="truth">
+                <h4>Reality Check</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const DOUBLE_BINDS = {
+            'Contradictory Demands': {
+                markers: ['but also', 'but then', 'either way', 'no matter what', 'can\'t win'],
+                desc: 'Impossible to satisfy conflicting requirements',
+                escape: 'Name the contradiction directly: "You\'re asking for X and not-X simultaneously"'
+            },
+            'Damned Either Way': {
+                markers: ['if i do', 'if i don\'t', 'damned if', 'wrong either way', 'both choices'],
+                desc: 'All options lead to punishment',
+                escape: 'Choose based on YOUR values, not their reaction'
+            },
+            'Moving Goalposts': {
+                markers: ['still not', 'not good enough', 'should have', 'could have done more', 'never enough'],
+                desc: 'Standards change to ensure you always fail',
+                escape: 'Stop chasing approval that won\'t come - define your own success'
+            },
+            'Emotional Trap': {
+                markers: ['if you loved', 'if you cared', 'real friend would', 'good person would'],
+                desc: 'Using emotions to force impossible choice',
+                escape: 'Loving someone doesn\'t mean abandoning your boundaries'
+            },
+            'Loyalty Test': {
+                markers: ['prove', 'show me', 'prove your', 'how can i trust', 'demonstrate'],
+                desc: 'Endless proof demanded that\'s never enough',
+                escape: 'Healthy relationships don\'t require constant proof'
+            },
+            'False Binary': {
+                markers: ['either', 'or else', 'only option', 'choice is', 'have to choose'],
+                desc: 'Presenting only two options when more exist',
+                escape: 'Look for the third, fourth, fifth option they\'re hiding'
+            }
+        };
+
+        function decode() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check patterns
+            Object.entries(DOUBLE_BINDS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        escape: data.escape
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'NO DOUBLE BIND DETECTED';
+                desc = 'Situation appears to have viable options';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POTENTIAL TRAP';
+                desc = `${found.length} bind pattern(s) - examine options carefully`;
+                labelClass = 'trap';
+            } else {
+                icon = '🔴';
+                label = 'DOUBLE BIND DETECTED';
+                desc = 'Designed to trap you - look for the exit';
+                labelClass = 'bind';
+            }
+
+            // Get escape strategies
+            const escapes = found.map(f => f.escape);
+            if (escapes.length === 0) {
+                escapes.push('Consider all your options without pressure');
+            }
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('analysisList').innerHTML = found.map(b => `
+                    <div class="bind-type">
+                        <div class="bind-name">${b.name}</div>
+                        <div class="bind-desc">${b.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('analysisList').innerHTML =
+                    '<div class="no-bind">✓ No double bind patterns detected</div>';
+            }
+
+            document.getElementById('escapeList').innerHTML = escapes.slice(0, 4).map(e =>
+                `<div class="escape-item">${e}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'You always have the option to not play',
+                'The only winning move may be to step back',
+                'You don\'t have to accept their framing'
+            ];
+
+            if (found.length > 0) {
+                truths.push('Double binds are designed to control - not communicate');
+            }
+
+            truths.push('Create your own option outside their false choices');
+            truths.push('Silence and delay are valid responses');
+
+            return truths.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

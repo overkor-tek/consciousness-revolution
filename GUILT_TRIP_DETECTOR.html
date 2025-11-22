@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilt Trip Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.mild { color: #f1c40f; }
+        .verdict-label.strong { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .responses {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .responses h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .response {
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .truth-check {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .truth-check h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .truth-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Guilt Trip Detector</h1>
+            <p>Identify guilt manipulation in messages</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste the message to analyze for guilt manipulation..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Guilt Trips</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Guilt Tactics Detected</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="responses">
+                <h3>How to Respond</h3>
+                <div id="responsesList"></div>
+            </div>
+
+            <div class="truth-check">
+                <h4>Reality Check</h4>
+                <div id="truthList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const GUILT_TACTICS = {
+            'After Everything I\'ve Done': {
+                markers: ['after everything', 'all i\'ve done', 'i sacrificed', 'i gave up'],
+                desc: 'Using past favors to create obligation',
+                response: '"I appreciate what you\'ve done, but that doesn\'t obligate me to this specific thing"'
+            },
+            'Comparison Shame': {
+                markers: ['everyone else', 'other people would', 'any good', 'real friend would'],
+                desc: 'Comparing you unfavorably to create shame',
+                response: '"I make decisions based on what\'s right for me, not comparisons"'
+            },
+            'Disappointment Play': {
+                markers: ['so disappointed', 'let me down', 'thought you were different', 'expected better'],
+                desc: 'Expressing disappointment to manipulate',
+                response: '"Your disappointment is about your expectations, not my choices"'
+            },
+            'Hurt Display': {
+                markers: ['you hurt me', 'how could you', 'can\'t believe you', 'really hurt'],
+                desc: 'Magnifying hurt to create guilt',
+                response: '"I\'m sorry you\'re hurt, but I\'m not responsible for your feelings about my boundaries"'
+            },
+            'Suffering Emphasis': {
+                markers: ['i\'m suffering', 'in pain', 'struggling', 'hard time', 'going through'],
+                desc: 'Emphasizing suffering to obligate help',
+                response: '"I care about your wellbeing, but I can\'t always be the solution"'
+            },
+            'Abandonment Frame': {
+                markers: ['abandon', 'leave me', 'walk away', 'give up on', 'not there for me'],
+                desc: 'Framing boundaries as abandonment',
+                response: '"Setting boundaries isn\'t abandonment - it\'s healthy"'
+            },
+            'Martyrdom': {
+                markers: ['i guess i\'ll', 'don\'t worry about me', 'i\'ll manage somehow', 'if you don\'t care'],
+                desc: 'Playing the martyr to induce guilt',
+                response: '"I hear you\'ll manage - I trust you"'
+            },
+            'Silent Treatment Preview': {
+                markers: ['won\'t bother you', 'leave you alone', 'stop asking', 'keep to myself'],
+                desc: 'Threatening withdrawal to manipulate',
+                response: '"That\'s your choice. I\'m still here if you want to talk respectfully"'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check each tactic
+            Object.entries(GUILT_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        response: data.response
+                    });
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'NO GUILT TRIPS DETECTED';
+                desc = 'No obvious guilt manipulation patterns found';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'MILD GUILT MANIPULATION';
+                desc = `${found.length} guilt tactic(s) detected`;
+                labelClass = 'mild';
+            } else {
+                icon = '🚨';
+                label = 'STRONG GUILT MANIPULATION';
+                desc = `${found.length} guilt tactics - heavy manipulation`;
+                labelClass = 'strong';
+            }
+
+            // Generate responses
+            const responses = found.map(f => f.response);
+            if (responses.length === 0) {
+                responses.push('"Respond authentically based on your actual feelings"');
+            }
+
+            // Generate truths
+            const truths = generateTruths(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No guilt manipulation patterns detected</div>';
+            }
+
+            document.getElementById('responsesList').innerHTML = responses.slice(0, 4).map(r =>
+                `<div class="response">${r}</div>`
+            ).join('');
+
+            document.getElementById('truthList').innerHTML = truths.map(t =>
+                `<div class="truth-item">• ${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateTruths(found) {
+            const truths = [
+                'You are not responsible for other people\'s emotions',
+                'Saying "no" is not betrayal - it\'s self-respect',
+                'Guilt is a feeling, not a fact'
+            ];
+
+            if (found.some(f => f.name === 'After Everything I\'ve Done')) {
+                truths.push('Past kindness doesn\'t create permanent debt');
+            }
+            if (found.some(f => f.name === 'Abandonment Frame')) {
+                truths.push('Boundaries protect relationships, not destroy them');
+            }
+            if (found.some(f => f.name === 'Martyrdom')) {
+                truths.push('Adults are responsible for their own wellbeing');
+            }
+
+            truths.push('Healthy relationships don\'t require guilt');
+
+            return truths.slice(0, 5);
+        }
+    </script>
+</body>
+</html>

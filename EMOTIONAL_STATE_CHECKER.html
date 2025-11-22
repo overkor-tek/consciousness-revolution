@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional State Check | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .emotion-btn {
+            padding: 12px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .emotion-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .emotion-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .emotion-btn:active {
+            transform: scale(0.95);
+        }
+
+        .intensity-section {
+            margin-bottom: 20px;
+        }
+
+        .intensity-label {
+            font-size: 12px;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        .intensity-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .intensity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .state-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .state-icon { font-size: 48px; margin-bottom: 12px; }
+
+        .state-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .state-name.neutral { color: #2ecc71; }
+        .state-name.reactive { color: #f1c40f; }
+        .state-name.compromised { color: #e74c3c; }
+
+        .state-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .decision-fitness {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .decision-fitness h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .fitness-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .fitness-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .fitness-fill.high { background: #2ecc71; }
+        .fitness-fill.medium { background: #f1c40f; }
+        .fitness-fill.low { background: #e74c3c; }
+
+        .fitness-label {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .guidance {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .guidance h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .guidance-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .guidance-item:last-child { border-bottom: none; }
+
+        .wait-period {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .wait-label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .wait-time {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .emotion-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Emotional State Check</h1>
+            <p>Assess your current state before making decisions</p>
+        </div>
+
+        <div class="check-section">
+            <h3>How are you feeling right now?</h3>
+            <div class="emotion-grid" id="emotions">
+                <button class="emotion-btn" data-emotion="calm">😌 Calm</button>
+                <button class="emotion-btn" data-emotion="happy">😊 Happy</button>
+                <button class="emotion-btn" data-emotion="focused">🎯 Focused</button>
+                <button class="emotion-btn" data-emotion="anxious">😰 Anxious</button>
+                <button class="emotion-btn" data-emotion="angry">😠 Angry</button>
+                <button class="emotion-btn" data-emotion="sad">😢 Sad</button>
+                <button class="emotion-btn" data-emotion="excited">🤩 Excited</button>
+                <button class="emotion-btn" data-emotion="frustrated">😤 Frustrated</button>
+                <button class="emotion-btn" data-emotion="tired">😴 Tired</button>
+            </div>
+
+            <div class="intensity-section">
+                <div class="intensity-label">Intensity Level: <span id="intensityValue">5</span>/10</div>
+                <input type="range" class="intensity-slider" id="intensity" min="1" max="10" value="5">
+            </div>
+
+            <button class="check-btn" onclick="checkState()">Check Decision Fitness</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="state-card">
+                <div class="state-icon" id="stateIcon">-</div>
+                <div class="state-name" id="stateName">-</div>
+                <div class="state-desc" id="stateDesc">-</div>
+            </div>
+
+            <div class="decision-fitness">
+                <h3>Decision-Making Fitness</h3>
+                <div class="fitness-meter">
+                    <div class="fitness-fill" id="fitnessFill"></div>
+                </div>
+                <div class="fitness-label" id="fitnessLabel">-</div>
+            </div>
+
+            <div class="guidance">
+                <h3>Guidance</h3>
+                <div id="guidanceList"></div>
+            </div>
+
+            <div class="wait-period">
+                <div class="wait-label">Recommended Wait Before Major Decisions</div>
+                <div class="wait-time" id="waitTime">-</div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let selectedEmotion = null;
+
+        // Emotion selection
+        document.querySelectorAll('.emotion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedEmotion = btn.dataset.emotion;
+            });
+        });
+
+        // Intensity slider
+        document.getElementById('intensity').addEventListener('input', (e) => {
+            document.getElementById('intensityValue').textContent = e.target.value;
+        });
+
+        const EMOTION_DATA = {
+            calm: { category: 'neutral', fitness: 90 },
+            happy: { category: 'neutral', fitness: 85 },
+            focused: { category: 'neutral', fitness: 95 },
+            anxious: { category: 'reactive', fitness: 40 },
+            angry: { category: 'compromised', fitness: 20 },
+            sad: { category: 'reactive', fitness: 45 },
+            excited: { category: 'reactive', fitness: 50 },
+            frustrated: { category: 'reactive', fitness: 35 },
+            tired: { category: 'compromised', fitness: 30 }
+        };
+
+        function checkState() {
+            if (!selectedEmotion) {
+                alert('Please select how you\'re feeling');
+                return;
+            }
+
+            const intensity = parseInt(document.getElementById('intensity').value);
+            const emotionData = EMOTION_DATA[selectedEmotion];
+
+            // Calculate fitness (base - intensity penalty)
+            let fitness = emotionData.fitness;
+            if (emotionData.category !== 'neutral') {
+                fitness -= (intensity - 5) * 5; // High intensity reduces fitness
+            }
+            fitness = Math.max(0, Math.min(100, fitness));
+
+            // Determine state
+            let icon, name, desc, stateClass;
+            if (fitness >= 70) {
+                icon = '✅';
+                name = 'NEUTRAL STATE';
+                desc = 'Good condition for decision-making';
+                stateClass = 'neutral';
+            } else if (fitness >= 40) {
+                icon = '⚠️';
+                name = 'REACTIVE STATE';
+                desc = 'Emotional influence on judgment - proceed carefully';
+                stateClass = 'reactive';
+            } else {
+                icon = '🛑';
+                name = 'COMPROMISED STATE';
+                desc = 'High emotional influence - delay important decisions';
+                stateClass = 'compromised';
+            }
+
+            // Generate guidance
+            const guidance = generateGuidance(selectedEmotion, intensity, fitness);
+
+            // Calculate wait time
+            const waitTime = calculateWaitTime(fitness);
+
+            // Render results
+            document.getElementById('stateIcon').textContent = icon;
+            const nameEl = document.getElementById('stateName');
+            nameEl.textContent = name;
+            nameEl.className = 'state-name ' + stateClass;
+            document.getElementById('stateDesc').textContent = desc;
+
+            const fill = document.getElementById('fitnessFill');
+            fill.style.width = fitness + '%';
+            fill.className = 'fitness-fill ' +
+                (fitness >= 70 ? 'high' : fitness >= 40 ? 'medium' : 'low');
+
+            document.getElementById('fitnessLabel').textContent =
+                `${fitness}% - ${fitness >= 70 ? 'Good to proceed' : fitness >= 40 ? 'Caution advised' : 'Wait recommended'}`;
+
+            document.getElementById('guidanceList').innerHTML = guidance.map(g =>
+                `<div class="guidance-item">• ${g}</div>`
+            ).join('');
+
+            document.getElementById('waitTime').textContent = waitTime;
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateGuidance(emotion, intensity, fitness) {
+            const guidance = [];
+
+            if (emotion === 'angry') {
+                guidance.push('Anger narrows focus and increases risk-taking. Allow time to cool down.');
+                guidance.push('Ask: "Will I feel the same about this tomorrow?"');
+            } else if (emotion === 'anxious') {
+                guidance.push('Anxiety often overestimates threats. What\'s the actual evidence?');
+                guidance.push('Ground yourself: 5 things you see, 4 you hear, 3 you touch.');
+            } else if (emotion === 'excited') {
+                guidance.push('Excitement can cause overlooking risks. Play devil\'s advocate.');
+                guidance.push('Sleep on it - if it\'s good now, it\'ll be good tomorrow.');
+            } else if (emotion === 'sad') {
+                guidance.push('Sadness can lead to risk-averse or impulsive choices. Seek balance.');
+                guidance.push('Talk to someone you trust before deciding.');
+            } else if (emotion === 'frustrated') {
+                guidance.push('Frustration seeks quick resolution. But fast isn\'t always best.');
+                guidance.push('What\'s the real problem vs. the surface irritation?');
+            } else if (emotion === 'tired') {
+                guidance.push('Fatigue impairs judgment like alcohol. Rest before deciding.');
+                guidance.push('If you must act, start with the simplest option.');
+            } else {
+                guidance.push('Good emotional state for decision-making.');
+                guidance.push('Use this clarity to evaluate important matters.');
+            }
+
+            if (intensity >= 7) {
+                guidance.push('High intensity - double the recommended wait time.');
+            }
+
+            if (fitness < 50) {
+                guidance.push('Avoid irreversible decisions in this state.');
+            }
+
+            return guidance.slice(0, 4);
+        }
+
+        function calculateWaitTime(fitness) {
+            if (fitness >= 80) return 'Ready Now';
+            if (fitness >= 60) return '30 Minutes';
+            if (fitness >= 40) return '2-4 Hours';
+            if (fitness >= 20) return '24 Hours';
+            return '48+ Hours';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Blackmail Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.clear { color: #2ecc71; }
+        .verdict-label.caution { color: #f1c40f; }
+        .verdict-label.blackmail { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .fog {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .fog h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .fog-item {
+            padding: 10px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .defense {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .defense h4 {
+            font-size: 12px;
+            color: #2ecc71;
+            margin-bottom: 8px;
+        }
+
+        .defense-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Emotional Blackmail Detector</h1>
+            <p>Identify FOG: Fear, Obligation, Guilt manipulation</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste what they said when trying to get you to do something..."></textarea>
+            <button class="detect-btn" onclick="detect()">Detect Emotional Blackmail</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="tactics">
+                <h3>Blackmail Tactics</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="fog">
+                <h3>FOG They're Creating</h3>
+                <div id="fogList"></div>
+            </div>
+
+            <div class="defense">
+                <h4>How to Respond</h4>
+                <div id="defenseList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const BLACKMAIL_TACTICS = {
+            'Threats': {
+                markers: ['if you don\'t', 'i\'ll leave', 'you\'ll lose', 'i\'ll tell', 'you\'ll regret', 'i\'ll hurt'],
+                desc: 'Direct or implied threats of negative consequences',
+                fog: 'Fear'
+            },
+            'Self-Harm Threats': {
+                markers: ['hurt myself', 'kill myself', 'end it', 'not worth living', 'can\'t go on'],
+                desc: 'Threatening self-harm to control you - call 988 if serious',
+                fog: 'Fear'
+            },
+            'Duty Appeals': {
+                markers: ['you owe me', 'after all i\'ve done', 'family should', 'you\'re supposed to', 'that\'s what partners do'],
+                desc: 'Appealing to obligation to override your choice',
+                fog: 'Obligation'
+            },
+            'Shame Induction': {
+                markers: ['selfish', 'ungrateful', 'cruel', 'heartless', 'bad person', 'ashamed'],
+                desc: 'Making you feel defective for having boundaries',
+                fog: 'Guilt'
+            },
+            'Historical Debt': {
+                markers: ['remember when', 'i always', 'i never', 'i gave up', 'sacrificed'],
+                desc: 'Citing past actions to create current debt',
+                fog: 'Obligation'
+            },
+            'Victim Playing': {
+                markers: ['you\'re hurting me', 'how could you', 'can\'t believe you', 'so cruel to me'],
+                desc: 'Positioning themselves as victim of your boundaries',
+                fog: 'Guilt'
+            },
+            'Silent Treatment': {
+                markers: ['won\'t talk', 'ignoring', 'dead to me', 'you\'ll see'],
+                desc: 'Withdrawing love/attention as punishment',
+                fog: 'Fear'
+            },
+            'Love Withdrawal': {
+                markers: ['don\'t love me', 'if you loved me', 'proves you don\'t care', 'real love would'],
+                desc: 'Making love conditional on compliance',
+                fog: 'Fear'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+            const fogTypes = new Set();
+
+            // Check tactics
+            Object.entries(BLACKMAIL_TACTICS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    found.push({ name, desc: data.desc, fog: data.fog });
+                    fogTypes.add(data.fog);
+                }
+            });
+
+            // Calculate severity
+            let icon, label, desc, labelClass;
+            if (found.length === 0) {
+                icon = '✅';
+                label = 'UNCLEAR';
+                desc = 'No obvious blackmail patterns';
+                labelClass = 'clear';
+            } else if (found.length <= 2) {
+                icon = '⚠️';
+                label = 'POSSIBLE BLACKMAIL';
+                desc = 'Some manipulation tactics present';
+                labelClass = 'caution';
+            } else {
+                icon = '🚨';
+                label = 'EMOTIONAL BLACKMAIL';
+                desc = 'Multiple tactics to control through FOG';
+                labelClass = 'blackmail';
+            }
+
+            // Generate FOG explanation
+            const fogExplain = generateFOG(fogTypes);
+
+            // Generate defense
+            const defense = generateDefense(found);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No clear blackmail patterns</div>';
+            }
+
+            document.getElementById('fogList').innerHTML = fogExplain.map(f =>
+                `<div class="fog-item">${f}</div>`
+            ).join('');
+
+            document.getElementById('defenseList').innerHTML = defense.map(d =>
+                `<div class="defense-item">• ${d}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateFOG(fogTypes) {
+            const explain = [];
+
+            if (fogTypes.has('Fear')) {
+                explain.push('😨 FEAR: They\'re making you afraid of consequences');
+            }
+            if (fogTypes.has('Obligation')) {
+                explain.push('⛓️ OBLIGATION: They\'re making you feel you "have to"');
+            }
+            if (fogTypes.has('Guilt')) {
+                explain.push('😔 GUILT: They\'re making you feel like a bad person');
+            }
+
+            if (explain.length === 0) {
+                explain.push('No clear FOG patterns detected');
+            }
+
+            return explain;
+        }
+
+        function generateDefense(found) {
+            const defense = [];
+
+            if (found.some(t => t.name === 'Self-Harm Threats')) {
+                defense.push('If threats seem serious, call 988 (Suicide Prevention)');
+                defense.push('Their mental health is not your responsibility to manage alone');
+            }
+
+            defense.push('Your "no" is a complete sentence');
+            defense.push('Say: "I can see you\'re upset, but I can\'t do that"');
+            defense.push('You can care about someone AND have boundaries');
+
+            if (found.length > 2) {
+                defense.push('This is abuse - consider professional support');
+            }
+
+            defense.push('Their emotions are not your emergency');
+
+            return defense.slice(0, 5);
+        }
+    </script>
+</body>
+</html>

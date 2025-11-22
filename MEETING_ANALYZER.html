@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Analyzer | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .meeting-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            resize: none;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .meeting-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dynamics-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dynamics-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .dynamics-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .dynamics-label.productive { color: #2ecc71; }
+        .dynamics-label.mixed { color: #f1c40f; }
+        .dynamics-label.problematic { color: #e74c3c; }
+
+        .dynamics-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pattern.power {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .pattern.info {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .pattern.positive {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .pattern-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .pattern.power .pattern-name { color: #e74c3c; }
+        .pattern.info .pattern-name { color: #f1c40f; }
+        .pattern.positive .pattern-name { color: #2ecc71; }
+
+        .pattern-desc {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .strategies {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .strategies h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strategy {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .strategy::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .awareness {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .awareness h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .awareness-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Meeting Analyzer</h1>
+            <p>Detect power dynamics and patterns in meetings</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="meeting-input" id="meeting" placeholder="Describe the meeting dynamics, key phrases used, who spoke most, decisions made..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Meeting</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="dynamics-card">
+                <div class="dynamics-icon" id="dynamicsIcon">-</div>
+                <div class="dynamics-label" id="dynamicsLabel">-</div>
+                <div class="dynamics-desc" id="dynamicsDesc">-</div>
+            </div>
+
+            <div class="patterns">
+                <h3>Patterns Detected</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="strategies">
+                <h3>Response Strategies</h3>
+                <div id="strategiesList"></div>
+            </div>
+
+            <div class="awareness">
+                <h4>Meeting Awareness</h4>
+                <div id="awarenessList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const MEETING_PATTERNS = {
+            power: {
+                'Dominance Display': {
+                    markers: ['interrupted', 'cut off', 'talked over', 'dismissed', 'ignored'],
+                    desc: 'Power assertion through conversation control'
+                },
+                'Credit Claiming': {
+                    markers: ['my idea', 'i suggested', 'i proposed', 'took credit', 'claimed'],
+                    desc: 'Taking ownership of others\' contributions'
+                },
+                'Information Hoarding': {
+                    markers: ['need to know', 'not ready', 'private', 'confidential', 'later'],
+                    desc: 'Controlling information as power leverage'
+                },
+                'Scapegoating': {
+                    markers: ['fault', 'blame', 'responsible for the problem', 'caused', 'failed'],
+                    desc: 'Deflecting accountability onto others'
+                },
+                'Gatekeeping': {
+                    markers: ['i\'ll decide', 'let me handle', 'i\'ll approve', 'run it by me'],
+                    desc: 'Controlling access and decision authority'
+                }
+            },
+            info: {
+                'Scope Creep': {
+                    markers: ['also', 'while we\'re at it', 'add', 'one more thing', 'can we also'],
+                    desc: 'Expanding commitments beyond original scope'
+                },
+                'Vague Commitments': {
+                    markers: ['we\'ll try', 'hopefully', 'if possible', 'should be able', 'soon'],
+                    desc: 'Non-specific promises that avoid accountability'
+                },
+                'Pre-Decision': {
+                    markers: ['already decided', 'leadership wants', 'direction is', 'going to'],
+                    desc: 'Presenting decisions as if still open for input'
+                },
+                'Ambush Topics': {
+                    markers: ['surprise', 'didn\'t expect', 'not on agenda', 'new topic', 'by the way'],
+                    desc: 'Introducing items without preparation time'
+                }
+            },
+            positive: {
+                'Inclusive Language': {
+                    markers: ['we', 'team', 'together', 'collaborate', 'input from everyone'],
+                    desc: 'Language that includes all participants'
+                },
+                'Clear Ownership': {
+                    markers: ['i will', 'i\'m responsible', 'i\'ll follow up', 'action item'],
+                    desc: 'Specific commitments with accountability'
+                },
+                'Active Listening': {
+                    markers: ['i hear you', 'good point', 'building on that', 'to clarify'],
+                    desc: 'Acknowledging and building on others\' input'
+                }
+            }
+        };
+
+        function analyze() {
+            const meeting = document.getElementById('meeting').value.trim();
+            if (!meeting) return;
+
+            const lower = meeting.toLowerCase();
+            const found = { power: [], info: [], positive: [] };
+
+            // Check patterns
+            Object.entries(MEETING_PATTERNS).forEach(([type, patterns]) => {
+                Object.entries(patterns).forEach(([name, data]) => {
+                    if (data.markers.some(m => lower.includes(m))) {
+                        found[type].push({ name, desc: data.desc });
+                    }
+                });
+            });
+
+            // Calculate dynamics
+            const powerCount = found.power.length;
+            const infoCount = found.info.length;
+            const positiveCount = found.positive.length;
+
+            let icon, label, desc, labelClass;
+            if (powerCount >= 2 || (powerCount >= 1 && infoCount >= 2)) {
+                icon = '⚠️';
+                label = 'PROBLEMATIC DYNAMICS';
+                desc = 'Power plays and manipulation patterns detected';
+                labelClass = 'problematic';
+            } else if (powerCount >= 1 || infoCount >= 2) {
+                icon = '⚡';
+                label = 'MIXED DYNAMICS';
+                desc = 'Some concerning patterns present';
+                labelClass = 'mixed';
+            } else {
+                icon = '✅';
+                label = 'PRODUCTIVE DYNAMICS';
+                desc = positiveCount > 0 ? 'Positive patterns detected' : 'No major concerns';
+                labelClass = 'productive';
+            }
+
+            // Generate strategies
+            const strategies = generateStrategies(found);
+
+            // Generate awareness
+            const awareness = generateAwareness(found);
+
+            // Render results
+            document.getElementById('dynamicsIcon').textContent = icon;
+            const labelEl = document.getElementById('dynamicsLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'dynamics-label ' + labelClass;
+            document.getElementById('dynamicsDesc').textContent = desc;
+
+            // Combine patterns for display
+            const allPatterns = [
+                ...found.power.map(p => ({ ...p, type: 'power' })),
+                ...found.info.map(p => ({ ...p, type: 'info' })),
+                ...found.positive.map(p => ({ ...p, type: 'positive' }))
+            ];
+
+            if (allPatterns.length > 0) {
+                document.getElementById('patternsList').innerHTML = allPatterns.map(p => `
+                    <div class="pattern ${p.type}">
+                        <div class="pattern-name">${p.name}</div>
+                        <div class="pattern-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="pattern positive"><div class="pattern-name">No Specific Patterns</div><div class="pattern-desc">No clear power or manipulation patterns detected</div></div>';
+            }
+
+            document.getElementById('strategiesList').innerHTML = strategies.map(s =>
+                `<div class="strategy">${s}</div>`
+            ).join('');
+
+            document.getElementById('awarenessList').innerHTML = awareness.map(a =>
+                `<div class="awareness-item">• ${a}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateStrategies(found) {
+            const strategies = [];
+
+            if (found.power.some(p => p.name === 'Dominance Display')) {
+                strategies.push('Calmly reclaim the floor: "I\'d like to finish my point"');
+            }
+            if (found.power.some(p => p.name === 'Credit Claiming')) {
+                strategies.push('Document contributions in writing before meetings');
+            }
+            if (found.info.some(p => p.name === 'Scope Creep')) {
+                strategies.push('Redirect: "Let\'s add that to next meeting\'s agenda"');
+            }
+            if (found.info.some(p => p.name === 'Vague Commitments')) {
+                strategies.push('Pin down specifics: "What date can we expect that?"');
+            }
+            if (found.info.some(p => p.name === 'Pre-Decision')) {
+                strategies.push('Ask: "What input are you looking for from us?"');
+            }
+            if (found.power.some(p => p.name === 'Gatekeeping')) {
+                strategies.push('Request clear criteria and timelines for decisions');
+            }
+
+            if (strategies.length === 0) {
+                strategies.push('Continue current productive dynamics');
+            }
+
+            strategies.push('Send meeting summary email to document agreements');
+
+            return strategies.slice(0, 5);
+        }
+
+        function generateAwareness(found) {
+            const awareness = [
+                'Track who speaks most vs. who has best ideas',
+                'Notice whose ideas get implemented',
+                'Watch for pattern of blame vs. solutions'
+            ];
+
+            if (found.power.length > 0) {
+                awareness.push('Document specific examples of concerning behavior');
+            }
+
+            awareness.push('Your silence can be interpreted as agreement');
+
+            return awareness.slice(0, 4);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Fatigue Check | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .check-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .check-item.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-item.selected .check-box {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .check-item.selected .check-box::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+        }
+
+        .check-text {
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fatigue-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .fatigue-level {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .fatigue-level.low { color: #2ecc71; }
+        .fatigue-level.medium { color: #f1c40f; }
+        .fatigue-level.high { color: #e74c3c; }
+
+        .fatigue-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .fatigue-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .recommendation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .recommendation h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .rec-item {
+            font-size: 12px;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .strategies {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .strategies h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strategy {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .strategy::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .warning h4 {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-bottom: 8px;
+        }
+
+        .warning-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Decision Fatigue Check</h1>
+            <p>Assess if you should make important decisions right now</p>
+        </div>
+
+        <div class="check-section">
+            <h3>Check all that apply to you right now:</h3>
+            <div id="checksList"></div>
+            <button class="analyze-btn" onclick="analyze()">Check Fatigue Level</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="fatigue-card">
+                <div class="fatigue-level" id="fatigueLevel">-</div>
+                <div class="fatigue-label" id="fatigueLabel">-</div>
+                <div class="fatigue-desc" id="fatigueDesc">-</div>
+            </div>
+
+            <div class="recommendation">
+                <h3>Recommendation</h3>
+                <div id="recList"></div>
+            </div>
+
+            <div class="strategies">
+                <h3>Strategies to Reduce Fatigue</h3>
+                <div id="strategiesList"></div>
+            </div>
+
+            <div class="warning">
+                <h4>Decision Making Warning</h4>
+                <div id="warningList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const FATIGUE_INDICATORS = [
+            { text: 'Made many decisions already today', weight: 2 },
+            { text: 'Feeling mentally exhausted', weight: 3 },
+            { text: 'Haven\'t eaten in several hours', weight: 2 },
+            { text: 'Slept poorly last night', weight: 2 },
+            { text: 'Currently stressed about something', weight: 2 },
+            { text: 'Feeling rushed or pressured', weight: 2 },
+            { text: 'Had difficult conversations today', weight: 1 },
+            { text: 'Experiencing strong emotions', weight: 2 },
+            { text: 'End of a long day/week', weight: 1 },
+            { text: 'Just want to be done with this', weight: 3 }
+        ];
+
+        let selected = new Set();
+
+        // Render checks
+        function renderChecks() {
+            const list = document.getElementById('checksList');
+            list.innerHTML = FATIGUE_INDICATORS.map((item, i) => `
+                <div class="check-item" data-index="${i}" onclick="toggleCheck(${i})">
+                    <div class="check-box"></div>
+                    <span class="check-text">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCheck(index) {
+            const item = document.querySelector(`[data-index="${index}"]`);
+            if (selected.has(index)) {
+                selected.delete(index);
+                item.classList.remove('selected');
+            } else {
+                selected.add(index);
+                item.classList.add('selected');
+            }
+        }
+
+        function analyze() {
+            // Calculate score
+            let score = 0;
+            selected.forEach(i => {
+                score += FATIGUE_INDICATORS[i].weight;
+            });
+
+            const maxScore = FATIGUE_INDICATORS.reduce((sum, i) => sum + i.weight, 0);
+            const percentage = Math.round((score / maxScore) * 100);
+
+            // Determine level
+            let level, label, desc, levelClass;
+            if (percentage <= 25) {
+                level = percentage + '%';
+                label = 'LOW FATIGUE';
+                desc = 'Good conditions for decision making';
+                levelClass = 'low';
+            } else if (percentage <= 55) {
+                level = percentage + '%';
+                label = 'MODERATE FATIGUE';
+                desc = 'Consider delaying non-urgent decisions';
+                levelClass = 'medium';
+            } else {
+                level = percentage + '%';
+                label = 'HIGH FATIGUE';
+                desc = 'Poor conditions for important decisions';
+                levelClass = 'high';
+            }
+
+            // Generate recommendations
+            const recs = generateRecs(percentage, selected);
+
+            // Generate strategies
+            const strategies = generateStrategies(selected);
+
+            // Generate warnings
+            const warnings = generateWarnings(percentage);
+
+            // Render results
+            const levelEl = document.getElementById('fatigueLevel');
+            levelEl.textContent = level;
+            levelEl.className = 'fatigue-level ' + levelClass;
+            document.getElementById('fatigueLabel').textContent = label;
+            document.getElementById('fatigueDesc').textContent = desc;
+
+            document.getElementById('recList').innerHTML = recs.map(r =>
+                `<div class="rec-item">${r}</div>`
+            ).join('');
+
+            document.getElementById('strategiesList').innerHTML = strategies.map(s =>
+                `<div class="strategy">${s}</div>`
+            ).join('');
+
+            document.getElementById('warningList').innerHTML = warnings.map(w =>
+                `<div class="warning-item">• ${w}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateRecs(percentage, selected) {
+            const recs = [];
+
+            if (percentage > 55) {
+                recs.push('DELAY: Postpone any major decisions until tomorrow');
+                recs.push('If urgent: Set a 24-hour timer before committing');
+            } else if (percentage > 25) {
+                recs.push('CAUTION: Proceed with important decisions carefully');
+                recs.push('Use decision frameworks rather than intuition');
+            } else {
+                recs.push('PROCEED: Conditions favorable for decision making');
+            }
+
+            if (selected.has(2)) { // hunger
+                recs.push('EAT: Have a meal before deciding');
+            }
+            if (selected.has(3)) { // sleep
+                recs.push('REST: Sleep on it if possible');
+            }
+
+            return recs.slice(0, 3);
+        }
+
+        function generateStrategies(selected) {
+            const strategies = [
+                'Batch similar decisions together',
+                'Create decision rules for recurring choices',
+                'Reduce trivial daily decisions (meal prep, capsule wardrobe)'
+            ];
+
+            if (selected.has(0)) {
+                strategies.push('Front-load important decisions early in the day');
+            }
+            if (selected.has(7)) {
+                strategies.push('Process emotions first with journaling or talking');
+            }
+
+            strategies.push('Take breaks between major decisions');
+
+            return strategies.slice(0, 5);
+        }
+
+        function generateWarnings(percentage) {
+            const warnings = [
+                'Fatigued brains default to easiest option, not best option',
+                'You\'re more susceptible to pressure tactics when tired'
+            ];
+
+            if (percentage > 55) {
+                warnings.push('HIGH RISK: Likely to make choices you\'ll regret');
+                warnings.push('Say "I\'ll sleep on it" to anyone asking for a decision');
+            } else {
+                warnings.push('Awareness of fatigue improves decision quality');
+            }
+
+            return warnings.slice(0, 3);
+        }
+
+        renderChecks();
+    </script>
+</body>
+</html>

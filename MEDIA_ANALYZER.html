@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Analyzer | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .type-select {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .type-btn:hover, .type-btn.active {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 12px; }
+
+        .verdict-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-text.balanced { color: #2ecc71; }
+        .verdict-text.biased { color: #f1c40f; }
+        .verdict-text.manipulative { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .analysis-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-section h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .factor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .factor:last-child { border-bottom: none; }
+
+        .factor-name { font-size: 13px; }
+
+        .factor-score {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .factor-score.good { color: #2ecc71; }
+        .factor-score.warn { color: #f1c40f; }
+        .factor-score.bad { color: #e74c3c; }
+
+        .issues-list {
+            margin-top: 12px;
+        }
+
+        .issue {
+            font-size: 12px;
+            padding: 8px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tips {
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .tips h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .tip-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 480px) {
+            .type-select { flex-wrap: wrap; }
+            .type-btn { flex: 1 1 45%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Media Analyzer</h1>
+            <p>Analyze news headlines and social media for bias and manipulation</p>
+        </div>
+
+        <div class="input-section">
+            <div class="type-select">
+                <button class="type-btn active" data-type="headline">Headline</button>
+                <button class="type-btn" data-type="social">Social Post</button>
+                <button class="type-btn" data-type="ad">Advertisement</button>
+                <button class="type-btn" data-type="article">Article</button>
+            </div>
+            <textarea class="text-input" id="input" placeholder="Paste headline, post, or content here..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Media</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-text" id="verdictText">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="analysis-section">
+                <h3>Bias Indicators</h3>
+                <div id="factors"></div>
+            </div>
+
+            <div class="analysis-section">
+                <h3>Issues Found</h3>
+                <div class="issues-list" id="issues"></div>
+            </div>
+
+            <div class="tips">
+                <h4>Media Literacy Tips</h4>
+                <div id="tipsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        let mediaType = 'headline';
+
+        // Type selection
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                mediaType = btn.dataset.type;
+            });
+        });
+
+        const BIAS_MARKERS = {
+            emotional: ["shocking", "outrageous", "disgusting", "amazing", "terrifying", "unbelievable", "horrifying", "incredible"],
+            clickbait: ["you won't believe", "what happened next", "number", "revealed", "secret", "shocking truth"],
+            political: ["liberal", "conservative", "left", "right", "radical", "extremist", "socialist", "fascist"],
+            sensational: ["breaking", "exclusive", "urgent", "just in", "developing", "alert"],
+            absolutist: ["always", "never", "everyone", "no one", "all", "none", "every"]
+        };
+
+        function analyze() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const scores = {};
+            const issues = [];
+
+            // Check each bias category
+            Object.keys(BIAS_MARKERS).forEach(category => {
+                const found = BIAS_MARKERS[category].filter(m => lower.includes(m));
+                scores[category] = found.length;
+                if (found.length > 0) {
+                    issues.push(`${category.charAt(0).toUpperCase() + category.slice(1)} language: "${found.join('", "')}"`)
+                }
+            });
+
+            // Calculate overall score
+            const totalIssues = Object.values(scores).reduce((a, b) => a + b, 0);
+
+            // Determine verdict
+            let verdict, icon, desc, verdictClass;
+            if (totalIssues === 0) {
+                verdict = "APPEARS BALANCED";
+                icon = "✅";
+                desc = "No major bias indicators detected";
+                verdictClass = "balanced";
+            } else if (totalIssues <= 2) {
+                verdict = "SLIGHT BIAS";
+                icon = "⚠️";
+                desc = "Some bias indicators present - read critically";
+                verdictClass = "biased";
+            } else {
+                verdict = "HIGH MANIPULATION";
+                icon = "❌";
+                desc = "Multiple bias and manipulation tactics detected";
+                verdictClass = "manipulative";
+            }
+
+            // Update UI
+            document.getElementById('verdictIcon').textContent = icon;
+            const verdictEl = document.getElementById('verdictText');
+            verdictEl.textContent = verdict;
+            verdictEl.className = 'verdict-text ' + verdictClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            // Factors
+            const factorNames = {
+                emotional: "Emotional Language",
+                clickbait: "Clickbait Tactics",
+                political: "Political Bias",
+                sensational: "Sensationalism",
+                absolutist: "Absolutist Claims"
+            };
+
+            document.getElementById('factors').innerHTML = Object.keys(scores).map(key => {
+                const score = scores[key];
+                let status, statusClass;
+                if (score === 0) { status = "Clean"; statusClass = "good"; }
+                else if (score === 1) { status = "Minor"; statusClass = "warn"; }
+                else { status = "Present"; statusClass = "bad"; }
+
+                return `
+                    <div class="factor">
+                        <span class="factor-name">${factorNames[key]}</span>
+                        <span class="factor-score ${statusClass}">${status}</span>
+                    </div>
+                `;
+            }).join('');
+
+            // Issues
+            document.getElementById('issues').innerHTML = issues.length > 0
+                ? issues.map(i => `<div class="issue">⚠️ ${i}</div>`).join('')
+                : '<div style="opacity: 0.5; font-size: 12px;">No specific issues found</div>';
+
+            // Tips
+            let tips = [];
+            if (mediaType === 'headline') {
+                tips = [
+                    "• Read beyond the headline - articles often contain nuance",
+                    "• Check multiple sources for the same story",
+                    "• Look for the original source of claims"
+                ];
+            } else if (mediaType === 'social') {
+                tips = [
+                    "• Check the account's history and credibility",
+                    "• Be wary of viral content without sources",
+                    "• Emotional reactions are often the goal"
+                ];
+            } else if (mediaType === 'ad') {
+                tips = [
+                    "• Advertisers pay to influence you",
+                    "• Claims should be verifiable",
+                    "• Consider what they're not telling you"
+                ];
+            } else {
+                tips = [
+                    "• Check the publication's reputation",
+                    "• Look for cited sources and data",
+                    "• Consider the author's perspective"
+                ];
+            }
+
+            document.getElementById('tipsList').innerHTML = tips.map(t =>
+                `<div class="tip-item">${t}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+    </script>
+</body>
+</html>

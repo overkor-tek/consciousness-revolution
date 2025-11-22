@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Pitch Detector | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .detect-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .detect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pitch-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pitch-level { font-size: 48px; margin-bottom: 8px; }
+
+        .pitch-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .pitch-label.low { color: #2ecc71; }
+        .pitch-label.medium { color: #f1c40f; }
+        .pitch-label.high { color: #e74c3c; }
+
+        .pitch-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .tactics-found {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tactics-found h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tactic {
+            padding: 12px;
+            background: rgba(241, 196, 15, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #f1c40f;
+        }
+
+        .tactic-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-bottom: 4px;
+        }
+
+        .tactic-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-tactics {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #2ecc71;
+        }
+
+        .questions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .questions h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .question {
+            font-size: 12px;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .question::before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .reality-check {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reality-check h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .check-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sales Pitch Detector</h1>
+            <p>Identify sales tactics in pitches and presentations</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste sales pitch, email, or presentation to analyze..."></textarea>
+            <button class="detect-btn" onclick="detect()">Analyze Pitch</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="pitch-card">
+                <div class="pitch-level" id="pitchLevel">-</div>
+                <div class="pitch-label" id="pitchLabel">-</div>
+                <div class="pitch-desc" id="pitchDesc">-</div>
+            </div>
+
+            <div class="tactics-found">
+                <h3>Sales Tactics Detected</h3>
+                <div id="tacticsList"></div>
+            </div>
+
+            <div class="questions">
+                <h3>Questions to Ask Yourself</h3>
+                <div id="questionsList"></div>
+            </div>
+
+            <div class="reality-check">
+                <h4>Reality Check</h4>
+                <div id="realityList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const SALES_TACTICS = {
+            'Price Anchoring': {
+                markers: ['was $', 'normally $', 'value of', 'worth', 'originally', 'regular price'],
+                desc: 'Sets high reference point to make current price seem like a deal'
+            },
+            'Artificial Scarcity': {
+                markers: ['only', 'left', 'limited', 'exclusive', 'select few', 'running out'],
+                desc: 'Creates urgency through perceived limited availability'
+            },
+            'Social Proof': {
+                markers: ['thousands', 'best-selling', 'popular', 'everyone', 'customers love', 'reviews'],
+                desc: 'Uses others\' behavior to influence your decision'
+            },
+            'Future Pacing': {
+                markers: ['imagine', 'picture yourself', 'think about how', 'in 30 days', 'you\'ll be'],
+                desc: 'Gets you to emotionally invest in an imagined future'
+            },
+            'Loss Aversion': {
+                markers: ['miss out', 'lose', 'regret', 'don\'t wait', 'slip away', 'gone'],
+                desc: 'Emphasizes what you\'ll lose rather than gain'
+            },
+            'Authority Claim': {
+                markers: ['expert', 'proven', 'certified', 'endorsed', 'recommended by', 'award'],
+                desc: 'Uses credentials to bypass your evaluation'
+            },
+            'Reciprocity Hook': {
+                markers: ['free', 'bonus', 'gift', 'at no cost', 'complimentary', 'included'],
+                desc: 'Gives something to create obligation'
+            },
+            'Urgency Creation': {
+                markers: ['today only', 'expires', 'deadline', 'last chance', 'ending soon', 'hours left'],
+                desc: 'Forces quick decision with artificial time pressure'
+            },
+            'Pain Amplification': {
+                markers: ['struggling', 'frustrated', 'tired of', 'sick of', 'fed up', 'problem'],
+                desc: 'Exaggerates problems to increase desire for solution'
+            },
+            'Guarantee Reversal': {
+                markers: ['risk-free', 'money-back', 'no risk', 'guaranteed', 'nothing to lose'],
+                desc: 'Reduces perceived risk to remove objections'
+            }
+        };
+
+        function detect() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const found = [];
+
+            // Check each tactic
+            Object.entries(SALES_TACTICS).forEach(([name, data]) => {
+                const matches = data.markers.filter(m => lower.includes(m));
+                if (matches.length > 0) {
+                    found.push({
+                        name,
+                        desc: data.desc,
+                        matches
+                    });
+                }
+            });
+
+            // Calculate pitch intensity
+            let level, label, desc, emoji;
+            if (found.length <= 1) {
+                level = 'low';
+                label = 'LOW PRESSURE';
+                desc = 'Minimal sales tactics - straightforward pitch';
+                emoji = '✅';
+            } else if (found.length <= 4) {
+                level = 'medium';
+                label = 'STANDARD SALES';
+                desc = `${found.length} tactics detected - typical marketing approach`;
+                emoji = '⚠️';
+            } else {
+                level = 'high';
+                label = 'HIGH PRESSURE';
+                desc = `${found.length} tactics - aggressive sales approach`;
+                emoji = '🚨';
+            }
+
+            // Generate questions
+            const questions = generateQuestions(found);
+
+            // Generate reality checks
+            const reality = generateReality(found);
+
+            // Render results
+            document.getElementById('pitchLevel').textContent = emoji;
+            const labelEl = document.getElementById('pitchLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'pitch-label ' + level;
+            document.getElementById('pitchDesc').textContent = desc;
+
+            if (found.length > 0) {
+                document.getElementById('tacticsList').innerHTML = found.map(t => `
+                    <div class="tactic">
+                        <div class="tactic-name">${t.name}</div>
+                        <div class="tactic-desc">${t.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('tacticsList').innerHTML =
+                    '<div class="no-tactics">✓ No major sales tactics detected</div>';
+            }
+
+            document.getElementById('questionsList').innerHTML = questions.map(q =>
+                `<div class="question">${q}</div>`
+            ).join('');
+
+            document.getElementById('realityList').innerHTML = reality.map(r =>
+                `<div class="check-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateQuestions(found) {
+            const questions = [
+                'Did I need this before I saw this pitch?',
+                'Would I buy this at full price without a deadline?',
+                'What\'s the actual cost including hidden fees?'
+            ];
+
+            if (found.some(t => t.name === 'Future Pacing')) {
+                questions.push('Are the promised results realistic and provable?');
+            }
+            if (found.some(t => t.name === 'Social Proof')) {
+                questions.push('Can I verify those customer claims?');
+            }
+            if (found.some(t => t.name === 'Authority Claim')) {
+                questions.push('Is that "expert" actually qualified in this area?');
+            }
+
+            return questions.slice(0, 5);
+        }
+
+        function generateReality(found) {
+            const reality = [];
+
+            if (found.some(t => t.name === 'Artificial Scarcity')) {
+                reality.push('Real scarcity doesn\'t need to be announced');
+            }
+            if (found.some(t => t.name === 'Urgency Creation')) {
+                reality.push('Good deals are still good tomorrow');
+            }
+            if (found.some(t => t.name === 'Price Anchoring')) {
+                reality.push('The "original" price may never have been charged');
+            }
+
+            reality.push('Sleep on any purchase over $100');
+            reality.push('If you need to be convinced, you probably don\'t need it');
+            reality.push('Walk away - if you still want it in 24 hours, reconsider');
+
+            return reality.slice(0, 5);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulation Immunity Tracker | Consciousness Revolution</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p { opacity: 0.6; }
+
+        .score-display {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #667eea 0deg,
+                #667eea calc(var(--score) * 3.6deg),
+                rgba(255,255,255,0.1) calc(var(--score) * 3.6deg)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-inner {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #0a0a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .level-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .level-description {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .training-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .training-section h3 {
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .scenario {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .scenario-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .scenario-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .scenario-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .truth-btn {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 2px solid #2ecc71;
+        }
+
+        .deceit-btn {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+
+        .scenario-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .feedback {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            display: block;
+        }
+
+        .feedback.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            display: block;
+        }
+
+        .history-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .history-section h3 { margin-bottom: 16px; }
+
+        .history-chart {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 4px 4px 0 0;
+            min-height: 4px;
+            transition: height 0.3s;
+        }
+
+        .history-list {
+            margin-top: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .history-item:last-child { border-bottom: none; }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+            .scenario-btns { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Manipulation Immunity Tracker</h1>
+            <p>Train your consciousness. Track your progress. Become immune.</p>
+        </div>
+
+        <div class="score-display">
+            <div class="score-circle" id="scoreCircle" style="--score: 0">
+                <div class="score-inner">
+                    <div class="score-value" id="scoreValue">0</div>
+                    <div class="score-label">IMMUNITY</div>
+                </div>
+            </div>
+            <div class="level-name" id="levelName">Unconscious</div>
+            <div class="level-description" id="levelDesc">Begin training to build immunity</div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="totalTests">0</div>
+                <div class="metric-label">Total Tests</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="accuracy">0%</div>
+                <div class="metric-label">Accuracy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="streak">0</div>
+                <div class="metric-label">Current Streak</div>
+            </div>
+        </div>
+
+        <div class="training-section">
+            <h3>Training Scenario</h3>
+            <div class="scenario">
+                <div class="scenario-text" id="scenarioText">Loading scenario...</div>
+                <div class="scenario-btns">
+                    <button class="scenario-btn truth-btn" onclick="answer('truth')">TRUTH</button>
+                    <button class="scenario-btn deceit-btn" onclick="answer('deceit')">DECEIT</button>
+                </div>
+                <div class="feedback" id="feedback"></div>
+            </div>
+            <button class="action-btn primary" onclick="nextScenario()">Next Scenario</button>
+        </div>
+
+        <div class="history-section">
+            <h3>Progress History</h3>
+            <div class="history-chart" id="historyChart"></div>
+            <div class="history-list" id="historyList"></div>
+            <div class="actions">
+                <button class="action-btn" onclick="resetProgress()">Reset Progress</button>
+                <button class="action-btn" onclick="exportData()">Export Data</button>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • Consciousness Revolution • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const SCENARIOS = [
+            { text: "This investment opportunity is guaranteed to triple your money in just 30 days!", answer: "deceit", explain: "Guaranteed returns + unrealistic timeline = classic deceit pattern" },
+            { text: "Based on our research over 5 years, this approach has shown consistent results in 78% of cases.", answer: "truth", explain: "Specific data, timeframe, and honest percentage indicates truth" },
+            { text: "Everyone is switching to this new platform. You don't want to be left behind!", answer: "deceit", explain: "False consensus + FOMO = manipulation tactics" },
+            { text: "I believe this could work for you, but let me explain both the benefits and potential risks.", answer: "truth", explain: "Balanced perspective with acknowledged limitations" },
+            { text: "Act now! This exclusive offer expires in the next 10 minutes!", answer: "deceit", explain: "False urgency + artificial scarcity = pressure tactics" },
+            { text: "In my experience working with similar cases, here's what I've observed...", answer: "truth", explain: "Personal experience with observable evidence" },
+            { text: "Trust me, I know what's best for you. Just sign here.", answer: "deceit", explain: "Trust appeal + bypassing your judgment = manipulation" },
+            { text: "Here's the data from three independent studies. You can verify these sources.", answer: "truth", explain: "Multiple sources + verification offered = transparent" },
+            { text: "This is a limited edition - only 5 left! Everyone wants one!", answer: "deceit", explain: "Artificial scarcity + false demand = pressure selling" },
+            { text: "This solution has worked well, but it may not be right for everyone.", answer: "truth", explain: "Honest limitations acknowledged" },
+            { text: "You'd be stupid not to take this deal. It's the opportunity of a lifetime!", answer: "deceit", explain: "Insulting intelligence + superlatives = manipulation" },
+            { text: "Let me show you the long-term data and you can decide if it fits your goals.", answer: "truth", explain: "Long-term focus + your decision = respectful approach" },
+            { text: "My friend made $50,000 last month doing this. You can too!", answer: "deceit", explain: "Unverifiable anecdote + implied guarantee = deceptive" },
+            { text: "The research is mixed on this. Here are arguments on both sides.", answer: "truth", explain: "Acknowledging complexity shows honesty" },
+            { text: "Don't tell anyone about this secret method. It only works if few people know.", answer: "deceit", explain: "False secrecy + exclusivity claim = manipulation" },
+            { text: "I'm not sure this will work for your situation. Let me think about alternatives.", answer: "truth", explain: "Admitting uncertainty shows honesty" }
+        ];
+
+        let state = {
+            score: 0,
+            total: 0,
+            correct: 0,
+            streak: 0,
+            history: [],
+            currentScenario: null
+        };
+
+        // Load state
+        function loadState() {
+            const saved = localStorage.getItem('immunity_tracker');
+            if (saved) {
+                state = JSON.parse(saved);
+            }
+            updateUI();
+            nextScenario();
+        }
+
+        // Save state
+        function saveState() {
+            localStorage.setItem('immunity_tracker', JSON.stringify(state));
+        }
+
+        // Calculate immunity score
+        function calculateScore() {
+            if (state.total === 0) return 0;
+            const accuracy = state.correct / state.total;
+            const streakBonus = Math.min(state.streak * 2, 20);
+            return Math.min(100, Math.round(accuracy * 80 + streakBonus));
+        }
+
+        // Get level info
+        function getLevel(score) {
+            if (score >= 90) return { name: "Immune", desc: "Manipulation has no power over you" };
+            if (score >= 75) return { name: "Elevated", desc: "Strong resistance to manipulation" };
+            if (score >= 60) return { name: "Conscious", desc: "Good awareness of patterns" };
+            if (score >= 40) return { name: "Awakening", desc: "Building pattern recognition" };
+            if (score >= 20) return { name: "Aware", desc: "Starting to see patterns" };
+            return { name: "Unconscious", desc: "Begin training to build immunity" };
+        }
+
+        // Update UI
+        function updateUI() {
+            const score = calculateScore();
+            const level = getLevel(score);
+
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scoreCircle').style.setProperty('--score', score);
+            document.getElementById('levelName').textContent = level.name;
+            document.getElementById('levelDesc').textContent = level.desc;
+
+            document.getElementById('totalTests').textContent = state.total;
+            document.getElementById('accuracy').textContent = state.total > 0
+                ? Math.round((state.correct / state.total) * 100) + '%'
+                : '0%';
+            document.getElementById('streak').textContent = state.streak;
+
+            // Update chart
+            const chart = document.getElementById('historyChart');
+            const last20 = state.history.slice(-20);
+            chart.innerHTML = last20.map((h, i) =>
+                `<div class="chart-bar" style="height: ${h.score}%"></div>`
+            ).join('');
+
+            // Update history list
+            const list = document.getElementById('historyList');
+            const recent = state.history.slice(-10).reverse();
+            list.innerHTML = recent.map(h =>
+                `<div class="history-item">
+                    <span>${new Date(h.date).toLocaleDateString()}</span>
+                    <span>${h.correct ? '✅' : '❌'} ${h.score}%</span>
+                </div>`
+            ).join('');
+        }
+
+        // Next scenario
+        function nextScenario() {
+            const available = SCENARIOS.filter(s => s !== state.currentScenario);
+            state.currentScenario = available[Math.floor(Math.random() * available.length)];
+            document.getElementById('scenarioText').textContent = `"${state.currentScenario.text}"`;
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        // Answer
+        function answer(choice) {
+            if (!state.currentScenario) return;
+
+            const correct = choice === state.currentScenario.answer;
+            state.total++;
+
+            if (correct) {
+                state.correct++;
+                state.streak++;
+            } else {
+                state.streak = 0;
+            }
+
+            // Add to history
+            state.history.push({
+                date: Date.now(),
+                correct,
+                score: calculateScore()
+            });
+
+            // Show feedback
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+            feedback.textContent = (correct ? '✅ Correct! ' : '❌ Wrong. ') + state.currentScenario.explain;
+
+            saveState();
+            updateUI();
+        }
+
+        // Reset progress
+        function resetProgress() {
+            if (confirm('Reset all progress? This cannot be undone.')) {
+                state = {
+                    score: 0,
+                    total: 0,
+                    correct: 0,
+                    streak: 0,
+                    history: [],
+                    currentScenario: null
+                };
+                saveState();
+                updateUI();
+                nextScenario();
+            }
+        }
+
+        // Export data
+        function exportData() {
+            const data = JSON.stringify(state, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'immunity_tracker_data.json';
+            a.click();
+        }
+
+        // Initialize
+        loadState();
+    </script>
+</body>
+</html>

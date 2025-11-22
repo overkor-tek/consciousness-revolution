@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Trainer</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 14px; }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.3);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat { text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #4ECDC4; }
+        .stat-label { font-size: 11px; opacity: 0.6; }
+
+        .game-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .scenario {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+
+        .choices {
+            display: grid;
+            gap: 12px;
+        }
+
+        .choice {
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .choice:hover {
+            border-color: #4ECDC4;
+            transform: translateX(5px);
+        }
+
+        .choice.correct {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.2);
+        }
+
+        .choice.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .choice.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show { display: block; }
+        .feedback.correct { background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; }
+        .feedback.wrong { background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; }
+
+        .feedback h4 { margin-bottom: 8px; }
+        .feedback p { font-size: 14px; opacity: 0.9; }
+
+        .next-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .next-btn.show { display: block; }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .level-up {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .level-up.show { display: block; animation: popup 0.3s ease; }
+
+        @keyframes popup {
+            from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .level-up h2 { font-size: 32px; margin-bottom: 16px; }
+        .level-up p { opacity: 0.8; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Consciousness Trainer</h1>
+            <p>Train your pattern recognition • Elevate your consciousness</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="level">1</div>
+                <div class="stat-label">Level</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">Score</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="streak">0</div>
+                <div class="stat-label">Streak</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="consciousness">50%</div>
+                <div class="stat-label">Consciousness</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%"></div>
+        </div>
+
+        <div class="game-card">
+            <div class="scenario" id="scenario">Loading...</div>
+            <div class="choices" id="choices"></div>
+            <div class="feedback" id="feedback">
+                <h4 id="feedback-title"></h4>
+                <p id="feedback-text"></p>
+            </div>
+            <button class="next-btn" id="next-btn" onclick="nextScenario()">Next Scenario →</button>
+        </div>
+    </div>
+
+    <div class="level-up" id="level-up">
+        <h2>🎉 Level Up!</h2>
+        <p id="level-up-text">Your consciousness is elevating!</p>
+        <button class="next-btn show" onclick="closeLevelUp()">Continue Training</button>
+    </div>
+
+    <script>
+        const scenarios = [
+            {
+                text: '"This investment is GUARANTEED to double your money in 30 days with ZERO risk!"',
+                choices: [
+                    { text: "Sounds great! I'll invest everything.", correct: false },
+                    { text: "Ask for evidence of past performance and verify independently.", correct: true },
+                    { text: "It's guaranteed so it must be safe.", correct: false },
+                    { text: "Recognize the deceit markers and decline.", correct: true }
+                ],
+                explanation: "Red flags: 'guaranteed', 'zero risk', specific returns promise. Real investments carry risk. This is classic manipulation."
+            },
+            {
+                text: '"I agree with you completely, but I think your approach is fundamentally flawed and we should do it my way."',
+                choices: [
+                    { text: "They agreed with me, so they must be on my side.", correct: false },
+                    { text: "Recognize the 15-degree turn: false agreement followed by complete dismissal.", correct: true },
+                    { text: "Their way is probably better since they're being diplomatic.", correct: false },
+                    { text: "Ask them to clarify what they actually agree with.", correct: true }
+                ],
+                explanation: "15-degree turn detected: 'I agree, but...' followed by complete contradiction. This is the Agreement Negation pattern."
+            },
+            {
+                text: '"Based on our research over 5 years and data from 1000+ participants, we believe this approach shows promise for long-term results."',
+                choices: [
+                    { text: "Too much information, probably hiding something.", correct: false },
+                    { text: "Recognize Truth Algorithm markers: evidence, research, long-term, 'we believe' (honest uncertainty).", correct: true },
+                    { text: "5 years isn't long enough to trust.", correct: false },
+                    { text: "Request access to the research to verify claims.", correct: true }
+                ],
+                explanation: "Truth Algorithm markers: cites evidence, research, uses 'we believe' (honest uncertainty), mentions long-term. Worth investigating further."
+            },
+            {
+                text: '"Everyone in your industry is using this software. You're going to be left behind if you don't act now!"',
+                choices: [
+                    { text: "Don't want to be left behind - better sign up.", correct: false },
+                    { text: "Recognize social proof manipulation + false urgency.", correct: true },
+                    { text: "If everyone uses it, it must be good.", correct: false },
+                    { text: "Ask for specific examples and take time to evaluate.", correct: true }
+                ],
+                explanation: "Double manipulation: Social Proof ('everyone uses it') + False Urgency ('act now'). Real value doesn't need pressure tactics."
+            },
+            {
+                text: '"I understand you're feeling frustrated, and that must be hard for you. Maybe you should consider that your expectations were unrealistic."',
+                choices: [
+                    { text: "They understand me, so I should listen to their advice.", correct: false },
+                    { text: "Detect emotional manipulation: empathy followed by blame-shift.", correct: true },
+                    { text: "My expectations probably were unrealistic.", correct: false },
+                    { text: "Separate the empathy from the criticism and evaluate each independently.", correct: true }
+                ],
+                explanation: "15-degree turn: Show Empathy → Exploit Vulnerability. The empathy is weaponized to make you accept blame."
+            },
+            {
+                text: '"Our premium membership costs $500, but you can access basic features for free."',
+                choices: [
+                    { text: "Free is always a trap.", correct: false },
+                    { text: "Recognize honest pricing with free tier - Truth Algorithm pattern.", correct: true },
+                    { text: "They're trying to upsell me.", correct: false },
+                    { text: "Evaluate the free tier first to assess value.", correct: true }
+                ],
+                explanation: "Transparent pricing with free option is Truth Algorithm. They're letting you evaluate before committing - honest business model."
+            },
+            {
+                text: '"Trust me, I've been in this business for 20 years. I know what I'm talking about."',
+                choices: [
+                    { text: "20 years experience means they're trustworthy.", correct: false },
+                    { text: "Detect 'trust me' marker - request evidence instead of appeals to authority.", correct: true },
+                    { text: "They wouldn't lie after 20 years in business.", correct: false },
+                    { text: "Ask for specific examples and verifiable outcomes.", correct: true }
+                ],
+                explanation: "'Trust me' is a deceit marker. Experience doesn't equal honesty. Request evidence regardless of claimed expertise."
+            },
+            {
+                text: '"The data indicates that while initial results are promising, we need more testing to confirm long-term efficacy. Here's our methodology."',
+                choices: [
+                    { text: "Too uncertain - I need guarantees.", correct: false },
+                    { text: "Recognize Truth Algorithm: honest about limitations, shares methodology.", correct: true },
+                    { text: "If they're not sure, why should I trust them?", correct: false },
+                    { text: "Review the methodology and appreciate the transparency.", correct: true }
+                ],
+                explanation: "High Truth alignment: admits uncertainty, shares methodology, uses 'indicates' not 'proves'. This is scientific honesty."
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let level = 1;
+        let consciousness = 50;
+        let answered = false;
+
+        function loadScenario() {
+            answered = false;
+            const scenario = scenarios[currentIndex];
+
+            document.getElementById('scenario').textContent = scenario.text;
+
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+
+            scenario.choices.forEach((choice, i) => {
+                const div = document.createElement('div');
+                div.className = 'choice';
+                div.textContent = choice.text;
+                div.onclick = () => selectChoice(i);
+                choicesDiv.appendChild(div);
+            });
+
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('next-btn').className = 'next-btn';
+
+            // Update progress
+            const progress = (currentIndex / scenarios.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function selectChoice(index) {
+            if (answered) return;
+            answered = true;
+
+            const scenario = scenarios[currentIndex];
+            const choice = scenario.choices[index];
+            const choices = document.querySelectorAll('.choice');
+
+            choices.forEach((el, i) => {
+                el.classList.add('disabled');
+                if (scenario.choices[i].correct) {
+                    el.classList.add('correct');
+                } else if (i === index) {
+                    el.classList.add('wrong');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            const title = document.getElementById('feedback-title');
+            const text = document.getElementById('feedback-text');
+
+            if (choice.correct) {
+                feedback.className = 'feedback show correct';
+                title.textContent = '✅ Correct!';
+                score += 10 * (1 + streak * 0.1);
+                streak++;
+                consciousness = Math.min(100, consciousness + 2);
+            } else {
+                feedback.className = 'feedback show wrong';
+                title.textContent = '❌ Not quite';
+                streak = 0;
+                consciousness = Math.max(0, consciousness - 1);
+            }
+
+            text.textContent = scenario.explanation;
+
+            // Update stats
+            document.getElementById('score').textContent = Math.round(score);
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('consciousness').textContent = consciousness + '%';
+
+            // Check level up
+            const newLevel = Math.floor(score / 100) + 1;
+            if (newLevel > level) {
+                level = newLevel;
+                document.getElementById('level').textContent = level;
+                showLevelUp();
+            }
+
+            document.getElementById('next-btn').className = 'next-btn show';
+        }
+
+        function nextScenario() {
+            currentIndex = (currentIndex + 1) % scenarios.length;
+            loadScenario();
+        }
+
+        function showLevelUp() {
+            const names = ['Unconscious', 'Awakening', 'Aware', 'Conscious', 'Elevated'];
+            const levelName = names[Math.min(level - 1, names.length - 1)];
+            document.getElementById('level-up-text').textContent = `You've reached ${levelName} level!`;
+            document.getElementById('level-up').classList.add('show');
+        }
+
+        function closeLevelUp() {
+            document.getElementById('level-up').classList.remove('show');
+        }
+
+        // Start
+        loadScenario();
+    </script>
+</body>
+</html>

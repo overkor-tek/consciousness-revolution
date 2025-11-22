@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criticism vs Feedback | Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { opacity: 0.6; font-size: 13px; }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+            height: 100px;
+            margin-bottom: 16px;
+        }
+
+        .text-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verdict-icon { font-size: 48px; margin-bottom: 8px; }
+
+        .verdict-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .verdict-label.feedback { color: #2ecc71; }
+        .verdict-label.mixed { color: #f1c40f; }
+        .verdict-label.criticism { color: #e74c3c; }
+
+        .verdict-desc {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .comparison-card h4 {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .comparison-card.feedback h4 { color: #2ecc71; }
+        .comparison-card.criticism h4 { color: #e74c3c; }
+
+        .trait {
+            font-size: 11px;
+            padding: 6px 0;
+            opacity: 0.8;
+        }
+
+        .found-patterns {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .found-patterns h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .pattern-item {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .pattern-item.good {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .pattern-item.bad {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .response {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .response h4 {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .response-item {
+            font-size: 12px;
+            padding: 4px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Criticism vs Feedback</h1>
+            <p>Distinguish constructive input from destructive attacks</p>
+        </div>
+
+        <div class="input-section">
+            <textarea class="text-input" id="input" placeholder="Paste what someone said about you or your work..."></textarea>
+            <button class="analyze-btn" onclick="analyze()">Analyze Intent</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="verdict-card">
+                <div class="verdict-icon" id="verdictIcon">-</div>
+                <div class="verdict-label" id="verdictLabel">-</div>
+                <div class="verdict-desc" id="verdictDesc">-</div>
+            </div>
+
+            <div class="comparison">
+                <div class="comparison-card feedback">
+                    <h4>✓ Constructive Feedback</h4>
+                    <div class="trait">• Specific and actionable</div>
+                    <div class="trait">• Focuses on behavior</div>
+                    <div class="trait">• Offers alternatives</div>
+                    <div class="trait">• Intent to help</div>
+                </div>
+                <div class="comparison-card criticism">
+                    <h4>✗ Destructive Criticism</h4>
+                    <div class="trait">• Vague and general</div>
+                    <div class="trait">• Attacks character</div>
+                    <div class="trait">• No solutions</div>
+                    <div class="trait">• Intent to hurt</div>
+                </div>
+            </div>
+
+            <div class="found-patterns">
+                <h3>Patterns Found</h3>
+                <div id="patternsList"></div>
+            </div>
+
+            <div class="response">
+                <h4>How to Respond</h4>
+                <div id="responseList"></div>
+            </div>
+        </div>
+
+        <footer>
+            Pattern Theory • <a href="consciousness-tools.html" style="color: #667eea;">More Tools</a>
+        </footer>
+    </div>
+
+    <script>
+        const FEEDBACK_MARKERS = {
+            'Specific Behavior': {
+                markers: ['when you', 'the specific', 'for example', 'in this case', 'that particular'],
+                type: 'good',
+                desc: 'Targets specific actions, not your character'
+            },
+            'Offers Solution': {
+                markers: ['try', 'consider', 'instead', 'next time', 'you could', 'what if'],
+                type: 'good',
+                desc: 'Provides actionable alternatives'
+            },
+            'Owns Perspective': {
+                markers: ['i feel', 'i think', 'i noticed', 'from my view', 'in my opinion'],
+                type: 'good',
+                desc: 'Takes ownership of their perspective'
+            }
+        };
+
+        const CRITICISM_MARKERS = {
+            'Character Attack': {
+                markers: ['you always', 'you never', 'you\'re so', 'you\'re just', 'you\'re such'],
+                type: 'bad',
+                desc: 'Attacks who you are, not what you did'
+            },
+            'Absolutes': {
+                markers: ['always', 'never', 'everyone', 'nobody', 'worst', 'terrible'],
+                type: 'bad',
+                desc: 'Uses extreme language without nuance'
+            },
+            'No Solutions': {
+                markers: ['don\'t', 'can\'t', 'won\'t', 'shouldn\'t', 'stop'],
+                type: 'bad',
+                desc: 'Only tells you what NOT to do'
+            },
+            'Public Shaming': {
+                markers: ['everyone knows', 'people say', 'everyone thinks', 'they all'],
+                type: 'bad',
+                desc: 'Brings in others to amplify criticism'
+            },
+            'Contempt': {
+                markers: ['pathetic', 'stupid', 'ridiculous', 'joke', 'useless', 'worthless'],
+                type: 'bad',
+                desc: 'Shows contempt rather than care'
+            }
+        };
+
+        function analyze() {
+            const text = document.getElementById('input').value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            const goodPatterns = [];
+            const badPatterns = [];
+
+            // Check feedback markers
+            Object.entries(FEEDBACK_MARKERS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    goodPatterns.push({ name, desc: data.desc, type: 'good' });
+                }
+            });
+
+            // Check criticism markers
+            Object.entries(CRITICISM_MARKERS).forEach(([name, data]) => {
+                if (data.markers.some(m => lower.includes(m))) {
+                    badPatterns.push({ name, desc: data.desc, type: 'bad' });
+                }
+            });
+
+            // Calculate verdict
+            let icon, label, desc, labelClass;
+            const goodCount = goodPatterns.length;
+            const badCount = badPatterns.length;
+
+            if (badCount === 0 && goodCount > 0) {
+                icon = '✅';
+                label = 'CONSTRUCTIVE FEEDBACK';
+                desc = 'This appears to be helpful input';
+                labelClass = 'feedback';
+            } else if (badCount > goodCount) {
+                icon = '⚠️';
+                label = 'DESTRUCTIVE CRITICISM';
+                desc = 'More about attacking than helping';
+                labelClass = 'criticism';
+            } else if (badCount > 0 && goodCount > 0) {
+                icon = '⚖️';
+                label = 'MIXED INPUT';
+                desc = 'Contains both helpful and harmful elements';
+                labelClass = 'mixed';
+            } else {
+                icon = '❓';
+                label = 'UNCLEAR';
+                desc = 'Not enough patterns to determine';
+                labelClass = 'mixed';
+            }
+
+            // Generate response
+            const responses = generateResponses(goodCount, badCount);
+
+            // Render results
+            document.getElementById('verdictIcon').textContent = icon;
+            const labelEl = document.getElementById('verdictLabel');
+            labelEl.textContent = label;
+            labelEl.className = 'verdict-label ' + labelClass;
+            document.getElementById('verdictDesc').textContent = desc;
+
+            const allPatterns = [...goodPatterns, ...badPatterns];
+            if (allPatterns.length > 0) {
+                document.getElementById('patternsList').innerHTML = allPatterns.map(p =>
+                    `<div class="pattern-item ${p.type}">${p.type === 'good' ? '✓' : '⚠️'} ${p.name}: ${p.desc}</div>`
+                ).join('');
+            } else {
+                document.getElementById('patternsList').innerHTML =
+                    '<div class="pattern-item good">No clear patterns detected</div>';
+            }
+
+            document.getElementById('responseList').innerHTML = responses.map(r =>
+                `<div class="response-item">• ${r}</div>`
+            ).join('');
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function generateResponses(goodCount, badCount) {
+            const responses = [];
+
+            if (badCount > goodCount) {
+                responses.push('You don\'t have to accept unconstructive criticism');
+                responses.push('Ask: "Can you give me a specific example?"');
+                responses.push('Say: "I\'m open to feedback that includes solutions"');
+            } else if (goodCount > 0) {
+                responses.push('Consider the feedback objectively');
+                responses.push('Ask clarifying questions if needed');
+                responses.push('Thank them for specific, actionable input');
+            }
+
+            responses.push('Separate your worth from your work');
+            responses.push('You get to decide what feedback to incorporate');
+
+            return responses.slice(0, 4);
+        }
+    </script>
+</body>
+</html>
