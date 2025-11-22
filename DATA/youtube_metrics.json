@@ -1,0 +1,33 @@
+{
+  "metrics_log": [
+    {
+      "date": "2025-11-22",
+      "timestamp": "2025-11-22T17:30:00Z",
+      "entry_type": "status_update",
+      "video_posted": {
+        "date": "2025-11-21",
+        "hours_since_post": 14,
+        "views": 6
+      },
+      "live_stream": {
+        "active": true,
+        "duration_minutes": 5,
+        "push_notifications": "none",
+        "audience_reached": 0
+      },
+      "connectivity": {
+        "phone_signal_bars": 4,
+        "status": "good"
+      },
+      "observations": "YouTube not pushing live stream to audience despite good connectivity. Video posted Nov 21 has only 6 views after 14 hours."
+    }
+  ],
+  "summary": {
+    "total_entries": 1,
+    "last_updated": "2025-11-22T17:30:00Z",
+    "concerns": [
+      "Low initial views on video content",
+      "Live stream not being distributed by YouTube algorithm"
+    ]
+  }
+}
