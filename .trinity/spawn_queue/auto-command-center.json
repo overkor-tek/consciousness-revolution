@@ -1,0 +1,8 @@
+{
+  "id": "auto-command-center",
+  "type": "automation_build",
+  "description": "\nBUILD: Triple Trinity Visual Command Center\n\nSingle dashboard showing all 3 PCs:\n\n1. HTML dashboard that displays:\n   - All PC heartbeats (online/offline)\n   - Current tasks on each PC\n   - Message queue\n   - Spawn queue status\n   - Recent outputs\n\n2. Auto-refresh from git-synced JSON files\n\n3. Mobile-friendly for phone monitoring\n\nOutput:\n- COMMAND_CENTER.html\n- COMMAND_CENTER_DATA.py (generates JSON for dashboard)\n",
+  "priority": "normal",
+  "created_at": "2025-11-23T01:58:02.262303Z",
+  "status": "pending"
+}

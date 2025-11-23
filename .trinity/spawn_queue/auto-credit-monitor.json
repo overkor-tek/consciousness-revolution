@@ -1,0 +1,8 @@
+{
+  "id": "auto-credit-monitor",
+  "type": "automation_build",
+  "description": "\nBUILD: Credit Exhaustion Monitor & Handoff\n\nDetect when credits running low and trigger handoff:\n\n1. Monitor patterns that indicate credit exhaustion:\n   - Rate limit errors\n   - Slower responses\n   - Usage API if available\n\n2. Automatic handoff protocol:\n   - Save current state\n   - Signal next PC\n   - Queue remaining work\n\n3. Dashboard showing credit status across all PCs\n\nOutput:\n- CREDIT_MONITOR.py\n- HANDOFF_PROTOCOL.md\n- CREDIT_DASHBOARD.html\n",
+  "priority": "normal",
+  "created_at": "2025-11-23T01:58:02.261679Z",
+  "status": "pending"
+}

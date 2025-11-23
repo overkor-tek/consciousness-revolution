@@ -1,0 +1,8 @@
+{
+  "id": "auto-ollama-bridge",
+  "type": "automation_build",
+  "description": "\nBUILD: Ollama Offline Task Processor\n\nWhen internet goes down, Ollama should keep working:\n\n1. Python script that:\n   - Monitors .trinity/offline_queue/ for tasks\n   - Processes with local Ollama model\n   - Saves outputs to .trinity/offline_outputs/\n   - Queues for git sync when online\n\n2. Task format spec for offline processing\n\n3. Auto-detect online/offline status\n\nOutput:\n- OLLAMA_OFFLINE_BRIDGE.py\n- OFFLINE_TASK_SPEC.md\n",
+  "priority": "high",
+  "created_at": "2025-11-23T01:58:02.259974Z",
+  "status": "pending"
+}

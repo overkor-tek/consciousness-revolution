@@ -1,0 +1,8 @@
+{
+  "id": "auto-wake-system",
+  "type": "automation_build",
+  "description": "\nBUILD: Cross-Computer Auto-Wake System\n\nMake computers wake each other automatically:\n\n1. Enhanced daemon that can:\n   - Detect wake signals in git\n   - Actually open Claude Code (not just notify)\n   - Use Windows Task Scheduler for reliability\n\n2. Wake methods:\n   - Git signal file\n   - Tailscale direct ping\n   - Windows scheduled task trigger\n\n3. Test protocol for PC1\u2192PC2\u2192PC3 chain\n\nOutput:\n- AUTO_WAKE_DAEMON.py\n- WAKE_TEST_PROTOCOL.md\n- Windows .bat scripts for each method\n",
+  "priority": "high",
+  "created_at": "2025-11-23T01:58:02.261010Z",
+  "status": "pending"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "auto-desktop-bridge",
+  "type": "automation_build",
+  "description": "\nBUILD: Desktop Claude File-Watcher Bridge\n\nDesktop Claude is sandboxed - can't access filesystem directly.\nBuild a bridge system:\n\n1. Python file-watcher script that monitors:\n   - .claude/trinity_messages/outbox/ for new files\n   - Relays content to .trinity/messages/\n\n2. HTML interface (bridge.html) that Desktop can open:\n   - Shows inbox messages\n   - Has textarea to write outbox messages\n   - Copy-paste friendly for sandboxed environment\n\n3. Instructions for Desktop Claude to use the bridge\n\nOutput:\n- DESKTOP_BRIDGE_WATCHER.py\n- DESKTOP_BRIDGE_UI.html\n- DESKTOP_BRIDGE_INSTRUCTIONS.md\n",
+  "priority": "high",
+  "created_at": "2025-11-23T01:58:02.258857Z",
+  "status": "pending"
+}
