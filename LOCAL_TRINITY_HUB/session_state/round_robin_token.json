@@ -1,0 +1,38 @@
+{
+  "token": {
+    "current_holder": null,
+    "epoch": 0,
+    "timestamp": "2025-11-23T00:00:00Z",
+    "last_holder": null,
+    "next_in_sequence": "C1_Mechanic"
+  },
+  "sequence": [
+    "C1_Mechanic",
+    "C2_Architect",
+    "C3_Oracle"
+  ],
+  "config": {
+    "timeout_ms": 30000,
+    "skip_offline": true,
+    "auto_advance": true
+  },
+  "instance_status": {
+    "C1_Mechanic": {
+      "online": true,
+      "last_seen": null,
+      "computer": "dwrekscpu"
+    },
+    "C2_Architect": {
+      "online": true,
+      "last_seen": "2025-11-23T00:00:00Z",
+      "computer": "desktop-msmcfh2"
+    },
+    "C3_Oracle": {
+      "online": false,
+      "last_seen": null,
+      "computer": "desktop-s72lrro"
+    }
+  },
+  "message_queue": [],
+  "history": []
+}
