@@ -76,8 +76,41 @@
       "created_at": "2025-11-23T20:01:31.946553Z",
       "updated_at": "2025-11-23T20:01:31.946553Z",
       "completed_at": null
+    },
+    {
+      "id": 8,
+      "title": "Session 1: auto-credit-monitor",
+      "description": "COMPLETED: Credit exhaustion monitoring system",
+      "priority": "normal",
+      "column": "done",
+      "assigned_to": "C1_T2",
+      "created_at": "2025-11-23T20:02:00.888089Z",
+      "updated_at": "2025-11-23T20:02:00.888089Z",
+      "completed_at": null
+    },
+    {
+      "id": 9,
+      "title": "Session 1: auto-mcp-git-sync",
+      "description": "COMPLETED: MCP knowledge graph sync",
+      "priority": "normal",
+      "column": "done",
+      "assigned_to": "C1_T2",
+      "created_at": "2025-11-23T20:02:00.997127Z",
+      "updated_at": "2025-11-23T20:02:00.997127Z",
+      "completed_at": null
+    },
+    {
+      "id": 10,
+      "title": "Generate capability manifest for PC2",
+      "description": "COMPLETED: Scanned and generated PC2 manifest",
+      "priority": "normal",
+      "column": "done",
+      "assigned_to": "C1_T2",
+      "created_at": "2025-11-23T20:02:01.100892Z",
+      "updated_at": "2025-11-23T20:02:01.100892Z",
+      "completed_at": null
     }
   ],
-  "next_id": 8,
-  "last_updated": "2025-11-23T20:01:31.946553Z"
+  "next_id": 11,
+  "last_updated": "2025-11-23T20:02:01.100892Z"
 }
