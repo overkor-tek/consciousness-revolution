@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Credit Monitor Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .header .last-update {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .pc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .pc-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pc-card.healthy {
+            border-left: 5px solid #28a745;
+        }
+
+        .pc-card.warning {
+            border-left: 5px solid #ffc107;
+        }
+
+        .pc-card.critical {
+            border-left: 5px solid #fd7e14;
+        }
+
+        .pc-card.exhausted {
+            border-left: 5px solid #dc3545;
+        }
+
+        .pc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .pc-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .status-badge.healthy {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-badge.warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-badge.critical {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .status-badge.exhausted {
+            background: #dc3545;
+            color: white;
+        }
+
+        .metrics {
+            display: grid;
+            gap: 15px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .metric-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .metric-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .metric-bar-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .metric-bar-fill.healthy {
+            background: #28a745;
+        }
+
+        .metric-bar-fill.warning {
+            background: #ffc107;
+        }
+
+        .metric-bar-fill.critical {
+            background: #fd7e14;
+        }
+
+        .metric-bar-fill.exhausted {
+            background: #dc3545;
+        }
+
+        .next-pc {
+            margin-top: 15px;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .handoff-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .handoff-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .handoff-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .handoff-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .handoff-item-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .handoff-item-value {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .rotation-flow {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .legend {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .legend h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        .legend-text {
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: #dc3545;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .refresh-info {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .pc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .handoff-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Trinity Credit Monitor Dashboard</h1>
+            <div class="subtitle">Real-Time API Credit Status Across All Computers</div>
+            <div class="last-update">
+                <strong>Last Update:</strong> <span id="last-update">Loading...</span>
+            </div>
+        </div>
+
+        <div id="error-container"></div>
+        <div id="loading" class="loading">Loading credit status...</div>
+        <div id="main-content" style="display: none;">
+            <div class="legend">
+                <h3>Status Legend</h3>
+                <div class="legend-grid">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #28a745;"></div>
+                        <div class="legend-text">HEALTHY - Normal Operation</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffc107;"></div>
+                        <div class="legend-text">WARNING - 70% Threshold</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #fd7e14;"></div>
+                        <div class="legend-text">CRITICAL - 85% Threshold</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #dc3545;"></div>
+                        <div class="legend-text">EXHAUSTED - Handoff Triggered</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pc-grid" id="pc-grid"></div>
+
+            <div class="handoff-section">
+                <h2>🔄 Handoff System</h2>
+                <div class="handoff-info">
+                    <div class="handoff-item">
+                        <div class="handoff-item-label">Active Handoffs</div>
+                        <div class="handoff-item-value" id="active-handoffs">0</div>
+                    </div>
+                    <div class="handoff-item">
+                        <div class="handoff-item-label">Total Handoffs (24h)</div>
+                        <div class="handoff-item-value" id="total-handoffs">0</div>
+                    </div>
+                    <div class="handoff-item">
+                        <div class="handoff-item-label">Success Rate</div>
+                        <div class="handoff-item-value" id="success-rate">100%</div>
+                    </div>
+                    <div class="handoff-item">
+                        <div class="handoff-item-label">Last Handoff</div>
+                        <div class="handoff-item-value" id="last-handoff">None</div>
+                    </div>
+                </div>
+                <div class="rotation-flow">
+                    PC1 (dwrekscpu) → PC2 (DESKTOP-MSMCFH2) → PC3 (DESKTOP-S72LRRO) → PC1 (Loop)
+                </div>
+            </div>
+        </div>
+
+        <div class="refresh-info pulse">
+            Auto-refreshing every 10 seconds...
+        </div>
+    </div>
+
+    <script>
+        const DASHBOARD_DATA_PATH = '../.trinity/dashboards/credit_status.json';
+        const REFRESH_INTERVAL = 10000; // 10 seconds
+
+        function getStatusClass(status) {
+            return (status || 'healthy').toLowerCase();
+        }
+
+        function getErrorRatePercentage(errorRate) {
+            return Math.round(errorRate * 100);
+        }
+
+        function getErrorRateClass(errorRate) {
+            if (errorRate >= 0.30) return 'exhausted';
+            if (errorRate >= 0.20) return 'critical';
+            if (errorRate >= 0.10) return 'warning';
+            return 'healthy';
+        }
+
+        function getRateLimitClass(count) {
+            if (count >= 3) return 'exhausted';
+            if (count >= 2) return 'critical';
+            if (count >= 1) return 'warning';
+            return 'healthy';
+        }
+
+        function getResponseTimeClass(avgTime) {
+            if (avgTime >= 10) return 'exhausted';
+            if (avgTime >= 7) return 'critical';
+            if (avgTime >= 5) return 'warning';
+            return 'healthy';
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Never';
+            try {
+                const date = new Date(timestamp);
+                return date.toLocaleString();
+            } catch (e) {
+                return timestamp;
+            }
+        }
+
+        function createPCCard(pcId, pcData) {
+            const status = getStatusClass(pcData.status);
+            const errorRatePct = getErrorRatePercentage(pcData.error_rate || 0);
+            const avgResponseTime = (pcData.avg_response_time || 0).toFixed(2);
+
+            return `
+                <div class="pc-card ${status}">
+                    <div class="pc-header">
+                        <div class="pc-name">${pcId}</div>
+                        <div class="status-badge ${status}">${pcData.status || 'HEALTHY'}</div>
+                    </div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-label">Rate Limit Errors</div>
+                            <div class="metric-value">${pcData.rate_limit_count || 0} / 3</div>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill ${getRateLimitClass(pcData.rate_limit_count || 0)}"
+                                 style="width: ${Math.min((pcData.rate_limit_count || 0) / 3 * 100, 100)}%"></div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">Error Rate</div>
+                            <div class="metric-value">${errorRatePct}%</div>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill ${getErrorRateClass(pcData.error_rate || 0)}"
+                                 style="width: ${Math.min(errorRatePct / 30 * 100, 100)}%"></div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">Avg Response Time</div>
+                            <div class="metric-value">${avgResponseTime}s</div>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill ${getResponseTimeClass(avgResponseTime)}"
+                                 style="width: ${Math.min(avgResponseTime / 10 * 100, 100)}%"></div>
+                        </div>
+                    </div>
+                    <div class="next-pc">
+                        ⏭️ Next in Rotation: ${pcData.next_pc || 'Unknown'}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function loadDashboardData() {
+            try {
+                // Try to load from the relative path first
+                let response = await fetch('../../.trinity/dashboards/credit_status.json');
+
+                // If that fails, try the file:// protocol
+                if (!response.ok) {
+                    const filePath = 'file:///C:/Users/darri/100X_DEPLOYMENT/.trinity/dashboards/credit_status.json';
+                    response = await fetch(filePath);
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                throw error;
+            }
+        }
+
+        function updateDashboard(data) {
+            // Update last update time
+            document.getElementById('last-update').textContent = formatTimestamp(data.last_update);
+
+            // Create PC cards
+            const pcGrid = document.getElementById('pc-grid');
+            pcGrid.innerHTML = '';
+
+            if (data.pcs) {
+                const pcOrder = ['PC1', 'PC2', 'PC3'];
+                pcOrder.forEach(pcId => {
+                    if (data.pcs[pcId]) {
+                        pcGrid.innerHTML += createPCCard(pcId, data.pcs[pcId]);
+                    }
+                });
+            }
+
+            // Update handoff stats (placeholder values for now)
+            document.getElementById('active-handoffs').textContent = '0';
+            document.getElementById('total-handoffs').textContent = '0';
+            document.getElementById('success-rate').textContent = '100%';
+            document.getElementById('last-handoff').textContent = 'None';
+
+            // Show main content, hide loading
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = `
+                <div class="error-message">
+                    ⚠️ ${message}<br>
+                    <small>Dashboard will retry in 10 seconds...</small>
+                </div>
+            `;
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        async function refresh() {
+            try {
+                const data = await loadDashboardData();
+                updateDashboard(data);
+                // Clear any previous errors
+                document.getElementById('error-container').innerHTML = '';
+            } catch (error) {
+                console.error('Refresh failed:', error);
+                showError(`Failed to load credit status data: ${error.message}`);
+            }
+        }
+
+        // Initial load
+        refresh();
+
+        // Set up auto-refresh
+        setInterval(refresh, REFRESH_INTERVAL);
+
+        // Refresh when window gains focus
+        window.addEventListener('focus', refresh);
+    </script>
+</body>
+</html>
