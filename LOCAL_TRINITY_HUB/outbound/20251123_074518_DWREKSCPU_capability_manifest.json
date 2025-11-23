@@ -1,0 +1,117 @@
+{
+  "manifest_version": "1.0",
+  "generated": "2025-11-23T07:45:18.873511",
+  "computer": "DWREKSCPU",
+  "domains": {
+    "infrastructure": {
+      "software": [
+        "Application Verifier",
+        "ASUS",
+        "Bonjour",
+        "CapCut",
+        "Common Files",
+        "DigiDNA",
+        "dotnet",
+        "Everything",
+        "Git",
+        "Google",
+        "Internet Explorer",
+        "iPod",
+        "Microsoft Office",
+        "Microsoft Office 15",
+        "ModifiableWindowsApps",
+        "Mozilla Firefox",
+        "nodejs",
+        "NVIDIA Corporation",
+        "Tailscale",
+        "Tesseract-OCR",
+        "Uninstall Information",
+        "Windows Defender",
+        "Windows Mail",
+        "Windows Media Player",
+        "Windows NT",
+        "Windows Photo Viewer",
+        "Windows Sidebar",
+        "WindowsApps",
+        "WindowsPowerShell"
+      ],
+      "network": {
+        "tailscale": true,
+        "syncthing": true,
+        "anydesk": false
+      },
+      "api_keys": [
+        "ANTHROPIC_API_KEY",
+        "GITHUB_TOKEN",
+        "OPENAI_API_KEY"
+      ]
+    },
+    "pattern": {
+      "mcp_tools": [
+        "mcp__trinity__trinity_status",
+        "mcp__trinity__trinity_send_message",
+        "mcp__trinity__trinity_broadcast",
+        "mcp__trinity__trinity_assign_task",
+        "mcp__trinity__trinity_claim_task",
+        "mcp__trinity__trinity_submit_output",
+        "mcp__trinity__trinity_merge_outputs"
+      ],
+      "slash_commands": [
+        "/autonomous",
+        "/blueprint-protocol",
+        "/blueprint",
+        "/godmode",
+        "/manifest",
+        "/scaffold",
+        "/tdd",
+        "/trinity",
+        "/trinity_auto",
+        "/verify"
+      ]
+    },
+    "business": {
+      "has_stripe": false
+    },
+    "consciousness": {
+      "protocols": [
+        "protocol:BOOT_DOWN_PROTOCOL",
+        "protocol:BOOT_FIRST",
+        "protocol:BOOT_UP_PROTOCOL",
+        "protocol:C1_IS_GITHUB_GATEKEEPER",
+        "protocol:FILE_NAMING_SYSTEM",
+        "protocol:GIT_BRANCH_CLEANUP",
+        "protocol:HUB_PROTOCOL",
+        "protocol:UNIVERSAL_CLEANUP_PROTOCOL"
+      ],
+      "boot_system": true
+    },
+    "social": {
+      "communication_routes": [
+        "git",
+        "syncthing",
+        "local_hub"
+      ],
+      "hub_active": true
+    },
+    "creative": {
+      "custom_modules": [
+        "hub:AUTO_CONSOLIDATE_DAEMON",
+        "hub:boot_down_consolidator",
+        "hub:CAPABILITY_MANIFEST",
+        "hub:consolidate",
+        "hub:MAINTENANCE_DAEMON"
+      ]
+    },
+    "financial": {
+      "stripe_configured": false
+    }
+  },
+  "summary": {
+    "total_software": 29,
+    "total_commands": 10,
+    "total_mcp_tools": 7,
+    "total_modules": 13,
+    "api_keys_configured": 3,
+    "communication_routes": 3
+  }
+}
