@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Claude Bridge</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .panel {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        .panel h2 {
+            margin-top: 0;
+            color: #00d4ff;
+            font-size: 1.2em;
+        }
+        .inbox-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #0d0d15;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+        }
+        .message {
+            background: #16213e;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #00ff88;
+        }
+        .message-time {
+            font-size: 0.8em;
+            color: #888;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: #0d0d15;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+            resize: vertical;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+        .btn {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn:hover {
+            background: #00cc6a;
+        }
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background: #444;
+        }
+        .instructions {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #ff6b6b;
+        }
+        .instructions ol {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: #16213e;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .status.online { border: 2px solid #00ff88; }
+        .status.offline { border: 2px solid #ff6b6b; }
+        code {
+            background: #0d0d15;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌉 Desktop Claude Bridge</h1>
+
+        <div class="status online">
+            Bridge Interface Active - Copy/Paste to Communicate
+        </div>
+
+        <div class="grid">
+            <!-- Inbox Panel -->
+            <div class="panel">
+                <h2>📥 INBOX (Messages for You)</h2>
+                <div class="inbox-messages" id="inbox">
+                    <div class="message">
+                        <div class="message-time">Waiting for messages...</div>
+                        Check <code>inbox/</code> folder for new messages.
+                        Copy content here to read.
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="clearInbox()">Clear Display</button>
+            </div>
+
+            <!-- Outbox Panel -->
+            <div class="panel">
+                <h2>📤 OUTBOX (Send to Trinity)</h2>
+                <textarea id="outbox" placeholder="Type your message here...
+
+Example:
+---
+TO: C1T1
+SUBJECT: Task Update
+
+Completed the analysis. Found 3 key patterns...
+---"></textarea>
+                <button class="btn" onclick="copyForSave()">📋 Copy to Save as File</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📖 How to Use This Bridge</h3>
+            <ol>
+                <li><strong>Receive messages:</strong> Check <code>.claude/trinity_messages/inbox/</code> for new files. Copy content and paste into Inbox panel above.</li>
+                <li><strong>Send messages:</strong> Type in Outbox, click "Copy to Save", then save as <code>.claude/trinity_messages/outbox/message.txt</code></li>
+                <li><strong>Bridge watcher:</strong> Run <code>python DESKTOP_BRIDGE_WATCHER.py</code> to auto-relay your outbox messages to Trinity</li>
+                <li><strong>File naming:</strong> Use descriptive names like <code>task_update.txt</code> or <code>question_for_c1.md</code></li>
+            </ol>
+        </div>
+
+        <div class="instructions">
+            <h3>🔧 Quick Commands for Desktop Claude</h3>
+            <p>When Desktop Claude needs to communicate, have it:</p>
+            <ol>
+                <li>Write message to <code>outbox/</code> folder</li>
+                <li>Bridge watcher relays to <code>.trinity/desktop_relay/</code></li>
+                <li>Git syncs automatically</li>
+                <li>Other instances see the message</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function clearInbox() {
+            document.getElementById('inbox').innerHTML = '<div class="message"><div class="message-time">Cleared</div>Paste new messages here.</div>';
+        }
+
+        function copyForSave() {
+            const text = document.getElementById('outbox').value;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied! Now save as a file in:\\n.claude/trinity_messages/outbox/your_message.txt');
+            });
+        }
+
+        // Allow paste into inbox
+        document.getElementById('inbox').addEventListener('paste', function(e) {
+            e.preventDefault();
+            const text = e.clipboardData.getData('text');
+            const time = new Date().toLocaleTimeString();
+            this.innerHTML = `<div class="message"><div class="message-time">${time}</div>${text}</div>` + this.innerHTML;
+        });
+    </script>
+</body>
+</html>
