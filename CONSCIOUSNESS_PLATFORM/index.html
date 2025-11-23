@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Platform - Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #e94560, #f39c12, #00b894, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .tool-card.bridge { border-color: rgba(233,69,96,0.5); }
+        .tool-card.bridge:hover { box-shadow: 0 20px 40px rgba(233,69,96,0.3); }
+        .tool-card.detector { border-color: rgba(255,107,107,0.5); }
+        .tool-card.detector:hover { box-shadow: 0 20px 40px rgba(255,107,107,0.3); }
+        .tool-card.timeline { border-color: rgba(108,92,231,0.5); }
+        .tool-card.timeline:hover { box-shadow: 0 20px 40px rgba(108,92,231,0.3); }
+        .tool-card.domains { border-color: rgba(0,184,148,0.5); }
+        .tool-card.domains:hover { box-shadow: 0 20px 40px rgba(0,184,148,0.3); }
+        .tool-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .tool-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .bridge .tool-name { color: #e94560; }
+        .detector .tool-name { color: #ff6b6b; }
+        .timeline .tool-name { color: #a29bfe; }
+        .domains .tool-name { color: #00b894; }
+        .tool-desc {
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+        .status-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+        }
+        .status-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .api-status {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .api-status.online {
+            background: rgba(0,184,148,0.2);
+            color: #00b894;
+        }
+        .api-status.offline {
+            background: rgba(231,76,60,0.2);
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consciousness Platform</h1>
+        <p class="subtitle">Pattern Theory Tools for Consciousness Evolution</p>
+
+        <div class="tools-grid">
+            <a href="consciousness_bridge.html" class="tool-card bridge">
+                <div class="tool-icon">🌉</div>
+                <div class="tool-name">Consciousness Bridge</div>
+                <div class="tool-desc">3-minute assessment to discover your consciousness level across seven domains. Get personalized insights and growth recommendations.</div>
+            </a>
+
+            <a href="manipulation_detector.html" class="tool-card detector">
+                <div class="tool-icon">🛡️</div>
+                <div class="tool-name">Manipulation Detector</div>
+                <div class="tool-desc">Analyze any text for manipulation techniques. Get M-Score, severity rating, detected techniques, and counter-strategies.</div>
+            </a>
+
+            <a href="timeline_projector.html" class="tool-card timeline">
+                <div class="tool-icon">🔮</div>
+                <div class="tool-name">Timeline Projector</div>
+                <div class="tool-desc">Project possible futures based on your current situation. See Force, Pivot, and Transcend pathways with probabilities.</div>
+            </a>
+
+            <a href="seven_domains.html" class="tool-card domains">
+                <div class="tool-icon">⚖️</div>
+                <div class="tool-name">Seven Domains Analyzer</div>
+                <div class="tool-desc">Analyze your balance across Physical, Financial, Mental, Emotional, Social, Creative, and Integration domains.</div>
+            </a>
+        </div>
+
+        <div class="status-section">
+            <div class="status-title">API Status</div>
+            <span class="api-status" id="apiStatus">Checking...</span>
+        </div>
+    </div>
+
+    <script>
+        async function checkAPI() {
+            try {
+                const response = await fetch('http://localhost:5002/health');
+                const data = await response.json();
+                if (data.status === 'healthy') {
+                    document.getElementById('apiStatus').textContent = 'Online - All Systems Operational';
+                    document.getElementById('apiStatus').className = 'api-status online';
+                }
+            } catch (error) {
+                document.getElementById('apiStatus').textContent = 'Offline - Start Platform API';
+                document.getElementById('apiStatus').className = 'api-status offline';
+            }
+        }
+        checkAPI();
+    </script>
+</body>
+</html>

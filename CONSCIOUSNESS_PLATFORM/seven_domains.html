@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seven Domains Analyzer - Pattern Theory</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a2a1a 0%, #1a3a2a 50%, #1a4a3a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        .input-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            padding: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: rgba(0,184,148,0.5);
+        }
+        button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: #fff;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,184,148,0.4);
+        }
+        .results { display: none; }
+        .balance-display {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .balance-score {
+            font-size: 4em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .domain-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .domain-name {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .domain-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .domain-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .domain-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .domain-card.strongest {
+            border: 2px solid #00b894;
+            box-shadow: 0 0 20px rgba(0,184,148,0.3);
+        }
+        .domain-card.weakest {
+            border: 2px solid #e17055;
+        }
+        .insights-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #00cec9;
+        }
+        .strength-weakness {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .sw-card {
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .sw-card.strength {
+            background: rgba(0,184,148,0.1);
+            border: 1px solid rgba(0,184,148,0.3);
+        }
+        .sw-card.weakness {
+            background: rgba(225,112,85,0.1);
+            border: 1px solid rgba(225,112,85,0.3);
+        }
+        .opportunity {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #00b894;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #00b894;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Seven Domains Analyzer</h1>
+        <p class="subtitle">Pattern Theory - Analyze balance across all seven life domains</p>
+
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Describe your current life situation, goals, or a specific area you want to analyze...&#10;&#10;The Seven Domains: Physical, Financial, Mental, Emotional, Social, Creative, Integration"></textarea>
+            <button onclick="analyze()">Analyze Domains</button>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <div>Analyzing seven domains...</div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="balance-display">
+                <div>Overall Balance Score</div>
+                <div class="balance-score" id="balanceScore">0</div>
+                <div style="opacity: 0.7;">/ 100</div>
+            </div>
+
+            <div class="domains-grid" id="domainsGrid">
+                <!-- Domain cards will be inserted here -->
+            </div>
+
+            <div class="strength-weakness">
+                <div class="sw-card strength">
+                    <div class="insight-title">Strongest Domain</div>
+                    <div id="strongest">-</div>
+                </div>
+                <div class="sw-card weakness">
+                    <div class="insight-title">Growth Opportunity</div>
+                    <div id="weakest">-</div>
+                </div>
+            </div>
+
+            <div class="insights-section">
+                <div class="insight-title">Integration Opportunities</div>
+                <div id="opportunities">
+                    <!-- Opportunities will be inserted here -->
+                </div>
+            </div>
+
+            <button onclick="reset()" style="background: rgba(255,255,255,0.1);">Analyze Another Situation</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5002';
+
+        async function analyze() {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) {
+                alert('Please describe your situation');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/domains`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                showResults(data.result);
+            } catch (error) {
+                alert('Error analyzing domains: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('results').style.display = 'block';
+
+            // Animate balance score
+            let score = 0;
+            const target = Math.round(result.balance_score);
+            const interval = setInterval(() => {
+                score += Math.ceil(target / 30);
+                if (score >= target) {
+                    score = target;
+                    clearInterval(interval);
+                }
+                document.getElementById('balanceScore').textContent = score;
+            }, 20);
+
+            // Render domain cards
+            const grid = document.getElementById('domainsGrid');
+            grid.innerHTML = '';
+
+            for (const [domain, value] of Object.entries(result.domain_scores)) {
+                const isStrongest = domain === result.strongest;
+                const isWeakest = domain === result.weakest;
+
+                const card = document.createElement('div');
+                card.className = `domain-card ${isStrongest ? 'strongest' : ''} ${isWeakest ? 'weakest' : ''}`;
+                card.innerHTML = `
+                    <div class="domain-name">${domain}</div>
+                    <div class="domain-bar">
+                        <div class="domain-fill" style="width: ${value}%"></div>
+                    </div>
+                    <div class="domain-value">${Math.round(value)}%</div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Show strongest/weakest
+            document.getElementById('strongest').textContent = result.strongest || '-';
+            document.getElementById('weakest').textContent = result.weakest || '-';
+
+            // Show integration opportunities
+            const opps = document.getElementById('opportunities');
+            if (result.integration_opportunities && result.integration_opportunities.length > 0) {
+                opps.innerHTML = result.integration_opportunities
+                    .map(o => `<div class="opportunity">${o}</div>`)
+                    .join('');
+            } else {
+                opps.innerHTML = '<div style="opacity: 0.7;">Your domains are well balanced!</div>';
+            }
+        }
+
+        function reset() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('inputText').value = '';
+        }
+    </script>
+</body>
+</html>

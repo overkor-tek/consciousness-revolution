@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Bridge - 3 Minute Revelation</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #f39c12);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .question-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .domain-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(233,69,96,0.2);
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(233,69,96,0.5);
+        }
+        .option.selected {
+            background: rgba(233,69,96,0.2);
+            border-color: #e94560;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #e94560, #f39c12);
+            color: #fff;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            display: none;
+        }
+        .result-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e94560, #f39c12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .score-value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .score-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        .level-name {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .percentile {
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .domain-score {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .domain-name {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        .domain-value {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .insights {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .insight-section {
+            margin-bottom: 15px;
+        }
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #f39c12;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consciousness Bridge</h1>
+        <p class="subtitle">3-Minute Revelation - Discover Your Consciousness Level</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%"></div>
+        </div>
+
+        <div id="assessment">
+            <div class="question-card" id="questionCard">
+                <div class="domain-badge" id="domainBadge">Loading...</div>
+                <div class="question-text" id="questionText">Loading questions...</div>
+                <div class="options" id="options"></div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-secondary" id="prevBtn" onclick="prevQuestion()" disabled>Previous</button>
+                <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-card">
+                <div class="score-circle">
+                    <div class="score-value" id="scoreValue">0</div>
+                    <div class="score-label">/ 1000</div>
+                </div>
+                <div class="level-name" id="levelName">Loading...</div>
+                <div class="percentile" id="percentile">Top 0%</div>
+            </div>
+
+            <div class="result-card">
+                <h3 style="margin-bottom: 15px;">Domain Scores</h3>
+                <div class="domains-grid" id="domainsGrid"></div>
+            </div>
+
+            <div class="result-card insights">
+                <div class="insight-section">
+                    <div class="insight-title">Strengths</div>
+                    <div id="strengths"></div>
+                </div>
+                <div class="insight-section">
+                    <div class="insight-title">Growth Areas</div>
+                    <div id="growthAreas"></div>
+                </div>
+                <div class="insight-section">
+                    <div class="insight-title">Recommended Path</div>
+                    <div id="recommendedPath"></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="restart()" style="width: 100%;">Take Assessment Again</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5002';
+        let questions = [];
+        let currentQuestion = 0;
+        let answers = {};
+
+        // Load questions on page load
+        async function loadQuestions() {
+            try {
+                const response = await fetch(`${API_URL}/api/bridge/questions`);
+                const data = await response.json();
+                questions = data.questions;
+                showQuestion(0);
+            } catch (error) {
+                document.getElementById('questionText').textContent = 'Error loading questions. Make sure the API is running.';
+            }
+        }
+
+        function showQuestion(index) {
+            if (index < 0 || index >= questions.length) return;
+
+            const q = questions[index];
+            document.getElementById('domainBadge').textContent = q.domain;
+            document.getElementById('questionText').textContent = q.text;
+
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option' + (answers[q.id] === i ? ' selected' : '');
+                div.textContent = opt.text;
+                div.onclick = () => selectOption(q.id, i);
+                optionsDiv.appendChild(div);
+            });
+
+            // Update progress
+            document.getElementById('progress').style.width = `${((index + 1) / questions.length) * 100}%`;
+
+            // Update buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').textContent = index === questions.length - 1 ? 'Submit' : 'Next';
+            document.getElementById('nextBtn').disabled = answers[q.id] === undefined;
+
+            currentQuestion = index;
+        }
+
+        function selectOption(questionId, optionIndex) {
+            answers[questionId] = optionIndex;
+            showQuestion(currentQuestion);
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        async function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                // Submit assessment
+                await submitAssessment();
+            }
+        }
+
+        async function submitAssessment() {
+            try {
+                const response = await fetch(`${API_URL}/api/bridge/assess`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers })
+                });
+
+                const data = await response.json();
+                showResults(data.result);
+            } catch (error) {
+                alert('Error submitting assessment');
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('assessment').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+
+            // Animate score
+            let score = 0;
+            const target = Math.round(result.consciousness_level);
+            const interval = setInterval(() => {
+                score += Math.ceil(target / 50);
+                if (score >= target) {
+                    score = target;
+                    clearInterval(interval);
+                }
+                document.getElementById('scoreValue').textContent = score;
+            }, 20);
+
+            document.getElementById('levelName').textContent = result.level_name;
+            document.getElementById('percentile').textContent = `Top ${100 - result.percentile}%`;
+
+            // Domain scores
+            const grid = document.getElementById('domainsGrid');
+            grid.innerHTML = '';
+            for (const [domain, score] of Object.entries(result.domain_scores)) {
+                grid.innerHTML += `
+                    <div class="domain-score">
+                        <div class="domain-name">${domain}</div>
+                        <div class="domain-value">${Math.round(score)}%</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('strengths').textContent = result.strengths.join(', ');
+            document.getElementById('growthAreas').textContent = result.growth_areas.join(', ');
+            document.getElementById('recommendedPath').textContent = result.recommended_path;
+        }
+
+        function restart() {
+            answers = {};
+            currentQuestion = 0;
+            document.getElementById('assessment').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            showQuestion(0);
+        }
+
+        // Initialize
+        loadQuestions();
+    </script>
+</body>
+</html>
