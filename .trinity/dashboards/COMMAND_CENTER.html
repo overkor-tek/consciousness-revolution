@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            background: linear-gradient(45deg, #00ff88, #00ffff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            opacity: 0.8;
+            font-size: 1.2em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+
+        .pc-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .pc-status.offline {
+            border-left-color: #666;
+            opacity: 0.6;
+        }
+
+        .pc-status.error {
+            border-left-color: #ff6b6b;
+        }
+
+        .pc-info {
+            flex: 1;
+        }
+
+        .pc-info h3 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .pc-info .detail {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin: 3px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .status-badge.active {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .status-badge.offline {
+            background: #666;
+            color: #fff;
+        }
+
+        .status-badge.error {
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-primary {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .message-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .stat-box .label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .todo-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .todo-item.completed {
+            opacity: 0.6;
+            border-left-color: #666;
+        }
+
+        .refresh-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 136, 0.9);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.6;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="refresh-indicator" id="refresh-indicator">Refreshing...</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🌌 Trinity Command Center</h1>
+            <div class="subtitle">Network-Wide Control & Monitoring</div>
+            <div class="subtitle" id="last-update">Loading...</div>
+        </div>
+
+        <div class="grid">
+            <!-- Network Status -->
+            <div class="card">
+                <h2>🖥️ Network Status</h2>
+                <div id="network-status" class="loading">Loading network status...</div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2>⚡ Quick Actions</h2>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="wakePC('PC1')">Wake PC1</button>
+                    <button class="btn btn-primary" onclick="wakePC('PC2')">Wake PC2</button>
+                    <button class="btn btn-primary" onclick="wakePC('PC3')">Wake PC3</button>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-secondary" onclick="runSpawnQueue()">Run Spawn Queue</button>
+                    <button class="btn btn-secondary" onclick="triggerConsolidate()">Consolidate</button>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-danger" onclick="shutdownAll()">Shutdown All</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Statistics -->
+            <div class="card">
+                <h2>📊 Statistics</h2>
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-box">
+                        <div class="value" id="stat-pcs-online">-</div>
+                        <div class="label">PCs Online</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value" id="stat-todos-pending">-</div>
+                        <div class="label">Todos Pending</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value" id="stat-todos-done">-</div>
+                        <div class="label">Todos Done</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send Message -->
+            <div class="card">
+                <h2>📨 Send Message</h2>
+                <div class="message-form">
+                    <div class="form-group">
+                        <label>To:</label>
+                        <select id="msg-to">
+                            <option value="ALL">All PCs</option>
+                            <option value="PC1">PC1</option>
+                            <option value="PC2">PC2</option>
+                            <option value="PC3">PC3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject:</label>
+                        <input type="text" id="msg-subject" placeholder="Message subject">
+                    </div>
+                    <div class="form-group">
+                        <label>Message:</label>
+                        <textarea id="msg-body" placeholder="Message body"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="sendMessage()">Send Message</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📋 Todo Board</h2>
+            <div id="todo-board" class="loading">Loading todos...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5004';
+
+        // Auto-refresh
+        setInterval(() => {
+            refreshAll();
+        }, 10000);
+
+        // Initial load
+        refreshAll();
+
+        async function refreshAll() {
+            showRefreshIndicator();
+            await Promise.all([
+                loadNetworkStatus(),
+                loadTodos(),
+                updateStats()
+            ]);
+            hideRefreshIndicator();
+            updateLastUpdateTime();
+        }
+
+        function showRefreshIndicator() {
+            document.getElementById('refresh-indicator').style.display = 'block';
+        }
+
+        function hideRefreshIndicator() {
+            document.getElementById('refresh-indicator').style.display = 'none';
+        }
+
+        function updateLastUpdateTime() {
+            const now = new Date().toLocaleString();
+            document.getElementById('last-update').textContent = `Last Updated: ${now}`;
+        }
+
+        async function loadNetworkStatus() {
+            try {
+                const response = await fetch(`${API_URL}/api/network/status`);
+                const data = await response.json();
+
+                const html = Object.entries(data.pcs).map(([pcId, pcData]) => `
+                    <div class="pc-status ${pcData.status === 'active' ? '' : pcData.status}">
+                        <div class="pc-info">
+                            <h3>${pcId} - ${pcData.name}</h3>
+                            <div class="detail">IP: ${pcData.ip}</div>
+                            <div class="detail">Task: ${pcData.current_task || 'No task'}</div>
+                            <div class="detail">Last Seen: ${pcData.last_seen || 'Never'}</div>
+                        </div>
+                        <div>
+                            <span class="status-badge ${pcData.status}">${pcData.status.toUpperCase()}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('network-status').innerHTML = html;
+
+                // Update online count
+                const onlineCount = Object.values(data.pcs).filter(pc => pc.status === 'active').length;
+                document.getElementById('stat-pcs-online').textContent = `${onlineCount}/3`;
+
+            } catch (error) {
+                document.getElementById('network-status').innerHTML = `<div style="color: #ff6b6b;">Error loading network status: ${error.message}</div>`;
+            }
+        }
+
+        async function loadTodos() {
+            try {
+                const response = await fetch(`${API_URL}/api/todos`);
+                const data = await response.json();
+
+                const pending = data.todos.filter(t => t.column !== 'done');
+                const done = data.todos.filter(t => t.column === 'done');
+
+                const html = `
+                    <h3>Pending (${pending.length})</h3>
+                    ${pending.map(todo => `
+                        <div class="todo-item">
+                            <strong>#${todo.id}: ${todo.title}</strong>
+                            ${todo.assigned_to ? `<div style="opacity: 0.8; font-size: 0.9em;">Assigned: ${todo.assigned_to}</div>` : ''}
+                        </div>
+                    `).join('') || '<div style="opacity: 0.6;">No pending todos</div>'}
+
+                    <h3 style="margin-top: 20px;">Completed (${done.length})</h3>
+                    ${done.slice(0, 5).map(todo => `
+                        <div class="todo-item completed">
+                            <strong>#${todo.id}: ${todo.title}</strong>
+                        </div>
+                    `).join('') || '<div style="opacity: 0.6;">No completed todos</div>'}
+                `;
+
+                document.getElementById('todo-board').innerHTML = html;
+
+                // Update todo stats
+                document.getElementById('stat-todos-pending').textContent = pending.length;
+                document.getElementById('stat-todos-done').textContent = done.length;
+
+            } catch (error) {
+                document.getElementById('todo-board').innerHTML = `<div style="color: #ff6b6b;">Error loading todos: ${error.message}</div>`;
+            }
+        }
+
+        async function updateStats() {
+            // Stats are updated in other functions
+        }
+
+        async function wakePC(pc) {
+            try {
+                const response = await fetch(`${API_URL}/api/wake`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({pc})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`✅ Wake signal sent to ${pc}`);
+                    refreshAll();
+                } else {
+                    alert(`❌ Failed to wake ${pc}: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function runSpawnQueue() {
+            if (!confirm('Run spawn queue processing?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/spawn-queue/run`, {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ Spawn queue processing triggered');
+                } else {
+                    alert(`❌ Failed: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function triggerConsolidate() {
+            if (!confirm('Trigger full Trinity consolidation?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/consolidate`, {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ Consolidation triggered');
+                } else {
+                    alert(`❌ Failed: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function shutdownAll() {
+            if (!confirm('⚠️ Shutdown all PCs? This will gracefully stop all autonomous operations.')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/shutdown`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({pc: 'ALL'})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ Shutdown signals sent to all PCs');
+                } else {
+                    alert(`❌ Failed: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+
+        async function sendMessage() {
+            const to = document.getElementById('msg-to').value;
+            const subject = document.getElementById('msg-subject').value;
+            const body = document.getElementById('msg-body').value;
+
+            if (!subject || !body) {
+                alert('Please fill in subject and message');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/message`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({pc: to, subject, body})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`✅ Message sent to ${to}`);
+                    document.getElementById('msg-subject').value = '';
+                    document.getElementById('msg-body').value = '';
+                } else {
+                    alert(`❌ Failed: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
