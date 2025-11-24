@@ -1,0 +1,64 @@
+{
+  "cycle": 1,
+  "timestamp": "2025-11-23T21:39:52.644981",
+  "patterns": [
+    {
+      "type": "knowledge_hubs",
+      "insight": "Core knowledge centers with many connections",
+      "data": [
+        {
+          "name": "3_COMPUTER_SESSION_STATUS_NOV_6.md",
+          "connections": 74
+        },
+        {
+          "name": "SESSION_COMPLETE_TRINITY_INSTANCE_MANAGER_NOV_7_2025.md",
+          "connections": 67
+        },
+        {
+          "name": "TRINITY_CONVERGENCE_COMPLETE_SESSION_REPORT.md",
+          "connections": 65
+        },
+        {
+          "name": "C3_TO_TRINITY_AUTONOMOUS_UPDATE.md",
+          "connections": 62
+        },
+        {
+          "name": "AUTONOMOUS_SESSION_COMPLETE_NOV_6.md",
+          "connections": 61
+        },
+        {
+          "name": "AUTONOMOUS_SESSION_COMPLETE_NOV_6_2025.md",
+          "connections": 61
+        },
+        {
+          "name": "AUTONOMOUS_SESSION_COMPLETE_NOV_6_PM.md",
+          "connections": 61
+        },
+        {
+          "name": "C2_QUICK_REFERENCE_3_COMPUTER_SETUP.md",
+          "connections": 60
+        },
+        {
+          "name": "COMPUTER_3_ACTIVATION_COMPLETE.md",
+          "connections": 60
+        },
+        {
+          "name": "TRINITY_STATUS_REPORT_C2.md",
+          "connections": 58
+        }
+      ]
+    },
+    {
+      "type": "knowledge_composition",
+      "insight": "Distribution of knowledge types",
+      "data": {
+        "html": 47,
+        "md": 149,
+        "json": 127,
+        "py": 101,
+        "txt": 44,
+        "js": 8
+      }
+    }
+  ]
+}
