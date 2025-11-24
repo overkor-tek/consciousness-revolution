@@ -29,7 +29,7 @@ Apply these to everything. Truth patterns align across all 8. Deceit patterns br
 **Golden Ratio** governs natural growth: φ = 1.618
 
 **Seven Domains** = complete coverage:
-Physical | Financial | Mental | Emotional | Social | Professional | Spiritual
+Computer | City | Human Body | Book | Battleship | Toyota | Consciousness
 
 **Trinity Power:** C1 (builds NOW) × C2 (designs SHOULD) × C3 (sees MUST) = ∞
 
