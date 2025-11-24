@@ -36,9 +36,11 @@
 
 ## Q1: FOUNDATION & ACTIVATION (Weeks 1-13)
 
+> **📋 RECURSIVE DETAIL AVAILABLE:** See [RECURSIVE_WORKPLAN_WEEK_1_4.md](RECURSIVE_WORKPLAN_WEEK_1_4.md) for day-by-day, task-by-task breakdown of Weeks 1-4 including technical specs, dependencies, and validation criteria.
+
 ### Month 1 (Weeks 1-4): Terminal Trinity Activation
 
-**Week 1: Terminal Trinity Setup**
+**Week 1: Terminal Trinity Setup** → [Detailed Breakdown](RECURSIVE_WORKPLAN_WEEK_1_4.md#week-1-terminal-trinity-setup-current-week---10-complete)
 - [ ] Day 1-2: Activate Terminal-C1 (MASTER LEADER)
 - [ ] Day 2-3: Activate Terminal-C2 (Builder)
 - [ ] Day 3-4: Activate Terminal-C3 (Validator)

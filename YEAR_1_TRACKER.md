@@ -15,7 +15,9 @@
 | Q3 | 27-39 | Production & Optimization | 0% | ⏳ PLANNED |
 | Q4 | 40-52 | Advanced Features & Scale | 0% | ⏳ PLANNED |
 
-**Overall Year Progress:** █░░░░░░░░░ 0% (Week 1 of 52)
+**Overall Year Progress:** █░░░░░░░░░ 2% (Week 1 of 52 - 10% complete)
+
+**Recursive Detail:** Weeks 1-4 have [granular day-by-day breakdowns](RECURSIVE_WORKPLAN_WEEK_1_4.md) with 150+ actionable tasks
 
 ---
 
@@ -23,9 +25,9 @@
 
 ### Q1: FOUNDATION & ACTIVATION (Weeks 1-13)
 
-| Week | Month | Focus Area | Key Deliverables | Priority | Status | % Done |
-|------|-------|------------|------------------|----------|--------|--------|
-| 1 | 1 | Terminal Trinity Setup | Terminal C1,C2,C3 activated | 🔴 CRITICAL | 🔄 CURRENT | 10% |
+| Week | Month | Focus Area | Key Deliverables | Priority | Status | % Done | Sub-Tasks |
+|------|-------|------------|------------------|----------|--------|--------|-----------|
+| 1 | 1 | Terminal Trinity Setup | Terminal C1,C2,C3 activated | 🔴 CRITICAL | 🔄 CURRENT | 10% | [42 tasks](RECURSIVE_WORKPLAN_WEEK_1_4.md#week-1-terminal-trinity-setup-current-week---10-complete) |
 | 2 | 1 | First Dual Trinity Ops | Master consolidation working | 🔴 CRITICAL | ⏳ NEXT | 0% |
 | 3 | 1 | Cloud-C2 & Full Cloud | Cloud Trinity 100%, Comp2 sync | 🔴 CRITICAL | ⏳ PLANNED | 0% |
 | 4 | 1 | Consolidation & Docs | Month 1 retrospective, runbooks | 🟡 HIGH | ⏳ PLANNED | 0% |
