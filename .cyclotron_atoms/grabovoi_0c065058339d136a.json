@@ -1,0 +1,21 @@
+{
+  "id": "0c065058339d136a",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.624604",
+  "data": {
+    "code": "71427321893",
+    "category": "Financial",
+    "subcategory": "Business Expansion",
+    "purpose": "Scale business operations",
+    "instructions": "Daily visualization practice",
+    "frequency_type": "Scale",
+    "searchable_text": "Scale business operations Financial Business Expansion",
+    "code_length": 11,
+    "digit_sum": 47
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "8688d07ab178adf7",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.623616",
+  "data": {
+    "code": "218 494517601",
+    "category": "Financial",
+    "subcategory": "Job Acquisition",
+    "purpose": "Get hired quickly",
+    "instructions": "Repeat aloud or write on paper",
+    "frequency_type": "Opportunity",
+    "searchable_text": "Get hired quickly Financial Job Acquisition",
+    "code_length": 12,
+    "digit_sum": 48
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

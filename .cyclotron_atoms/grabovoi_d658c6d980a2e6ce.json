@@ -1,0 +1,21 @@
+{
+  "id": "d658c6d980a2e6ce",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.626335",
+  "data": {
+    "code": "5343168",
+    "category": "Health",
+    "subcategory": "Weight Loss",
+    "purpose": "Support weight reduction goals",
+    "instructions": "Visualize desired body while focusing",
+    "frequency_type": "Transformation",
+    "searchable_text": "Support weight reduction goals Health Weight Loss",
+    "code_length": 7,
+    "digit_sum": 30
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

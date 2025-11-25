@@ -1,0 +1,21 @@
+{
+  "id": "8b2b48651359353f",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.628020",
+  "data": {
+    "code": "25 36 933",
+    "category": "Mental",
+    "subcategory": "Anxiety",
+    "purpose": "Reduce anxiety and stress",
+    "instructions": "Breathe deeply while reciting",
+    "frequency_type": "Calm",
+    "searchable_text": "Reduce anxiety and stress Mental Anxiety",
+    "code_length": 7,
+    "digit_sum": 31
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

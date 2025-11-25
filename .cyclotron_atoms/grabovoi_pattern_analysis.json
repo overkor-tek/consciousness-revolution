@@ -1,0 +1,69 @@
+{
+  "total_codes": 30,
+  "categories": {
+    "Financial": 8,
+    "Relationships": 4,
+    "Health": 8,
+    "Mental": 5,
+    "Protection": 2,
+    "Spiritual": 1,
+    "Business": 1,
+    "Beauty": 1
+  },
+  "code_length_distribution": {
+    "7": 15,
+    "12": 3,
+    "11": 2,
+    "6": 4,
+    "13": 1,
+    "8": 1,
+    "9": 2,
+    "10": 1,
+    "5": 1
+  },
+  "frequency_types": {
+    "Abundance": 1,
+    "Stability": 2,
+    "Flow": 1,
+    "Opportunity": 1,
+    "Growth": 2,
+    "Expansion": 1,
+    "Attraction": 2,
+    "Scale": 1,
+    "Universal Love": 1,
+    "Self-Care": 1,
+    "Commitment": 1,
+    "Vitality": 1,
+    "Wellness": 1,
+    "Energy": 1,
+    "Transformation": 1,
+    "Metabolism": 1,
+    "Clarity": 2,
+    "Balance": 1,
+    "Uplift": 1,
+    "Calm": 1,
+    "Rest": 1,
+    "Defense": 1,
+    "Fortune": 1,
+    "Harmony": 1,
+    "Unity": 1,
+    "Youth": 1
+  },
+  "common_digits": {
+    "0": 15,
+    "1": 48,
+    "2": 25,
+    "3": 26,
+    "4": 21,
+    "5": 18,
+    "6": 11,
+    "7": 18,
+    "8": 39,
+    "9": 20
+  },
+  "digit_sum_stats": {
+    "min": 6,
+    "max": 73,
+    "average": 34.46666666666667
+  }
+}

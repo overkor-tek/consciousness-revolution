@@ -1,0 +1,21 @@
+{
+  "id": "466cf7acbdfa5500",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.625919",
+  "data": {
+    "code": "1814321",
+    "category": "Health",
+    "subcategory": "General Health Alt",
+    "purpose": "Restore and maintain health",
+    "instructions": "Regular practice in meditation",
+    "frequency_type": "Wellness",
+    "searchable_text": "Restore and maintain health Health General Health Alt",
+    "code_length": 7,
+    "digit_sum": 20
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "3ab56bb1de5f3384",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.628972",
+  "data": {
+    "code": "9148919",
+    "category": "Protection",
+    "subcategory": "General Protection",
+    "purpose": "Shield from negative energy",
+    "instructions": "Regular visualization practice",
+    "frequency_type": "Defense",
+    "searchable_text": "Shield from negative energy Protection General Protection",
+    "code_length": 7,
+    "digit_sum": 41
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

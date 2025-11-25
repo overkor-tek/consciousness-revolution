@@ -1,0 +1,21 @@
+{
+  "id": "0a3c536ee4125431",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.628542",
+  "data": {
+    "code": "45 88 623",
+    "category": "Mental",
+    "subcategory": "Focus",
+    "purpose": "Enhance concentration",
+    "instructions": "Use before important tasks",
+    "frequency_type": "Clarity",
+    "searchable_text": "Enhance concentration Mental Focus",
+    "code_length": 7,
+    "digit_sum": 36
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

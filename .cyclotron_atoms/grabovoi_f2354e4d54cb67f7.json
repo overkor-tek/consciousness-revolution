@@ -1,0 +1,21 @@
+{
+  "id": "f2354e4d54cb67f7",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.629324",
+  "data": {
+    "code": "1001105010",
+    "category": "Spiritual",
+    "subcategory": "Peace",
+    "purpose": "Cultivate inner peace",
+    "instructions": "Meditate on number sequence",
+    "frequency_type": "Harmony",
+    "searchable_text": "Cultivate inner peace Spiritual Peace",
+    "code_length": 10,
+    "digit_sum": 9
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

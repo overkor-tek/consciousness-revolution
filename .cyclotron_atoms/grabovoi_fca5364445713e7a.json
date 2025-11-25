@@ -1,0 +1,21 @@
+{
+  "id": "fca5364445713e7a",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.627292",
+  "data": {
+    "code": "86 86 694",
+    "category": "Health",
+    "subcategory": "Thyroid",
+    "purpose": "Balance thyroid function",
+    "instructions": "Daily recitation",
+    "frequency_type": "Balance",
+    "searchable_text": "Balance thyroid function Health Thyroid",
+    "code_length": 7,
+    "digit_sum": 47
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "c2b3d398df403f3b",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.627757",
+  "data": {
+    "code": "29 63 586",
+    "category": "Mental",
+    "subcategory": "Depression",
+    "purpose": "Alleviate depressive symptoms",
+    "instructions": "Daily practice with positive affirmations",
+    "frequency_type": "Uplift",
+    "searchable_text": "Alleviate depressive symptoms Mental Depression",
+    "code_length": 7,
+    "digit_sum": 39
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

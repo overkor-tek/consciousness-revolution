@@ -1,0 +1,21 @@
+{
+  "id": "097f3283c1597a3e",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.627048",
+  "data": {
+    "code": "29 37 853",
+    "category": "Health",
+    "subcategory": "Vision",
+    "purpose": "Improve eyesight",
+    "instructions": "Focus on number during eye exercises",
+    "frequency_type": "Clarity",
+    "searchable_text": "Improve eyesight Health Vision",
+    "code_length": 7,
+    "digit_sum": 37
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

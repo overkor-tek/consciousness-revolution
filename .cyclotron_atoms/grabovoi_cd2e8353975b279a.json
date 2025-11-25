@@ -1,0 +1,21 @@
+{
+  "id": "cd2e8353975b279a",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.626165",
+  "data": {
+    "code": "918714",
+    "category": "Health",
+    "subcategory": "Bioenergy",
+    "purpose": "Restore energy functions",
+    "instructions": "Concentrate on number sequence",
+    "frequency_type": "Energy",
+    "searchable_text": "Restore energy functions Health Bioenergy",
+    "code_length": 6,
+    "digit_sum": 30
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}

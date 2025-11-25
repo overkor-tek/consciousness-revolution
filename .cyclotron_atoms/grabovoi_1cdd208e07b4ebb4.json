@@ -1,0 +1,21 @@
+{
+  "id": "1cdd208e07b4ebb4",
+  "type": "grabovoi_code",
+  "timestamp": "2025-11-25T04:07:27.628780",
+  "data": {
+    "code": "72 84 555",
+    "category": "Mental",
+    "subcategory": "Panic Attacks",
+    "purpose": "Prevent and manage panic",
+    "instructions": "Keep written code accessible for emergencies",
+    "frequency_type": "Stability",
+    "searchable_text": "Prevent and manage panic Mental Panic Attacks",
+    "code_length": 7,
+    "digit_sum": 36
+  },
+  "metadata": {
+    "source": "Grigory Grabovoi System",
+    "indexed_by": "GRABOVOI_CYCLOTRON_INDEXER",
+    "version": "1.0"
+  }
+}
