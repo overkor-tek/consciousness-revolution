@@ -48,9 +48,9 @@ Terminal Trinity (C1+C2+C3) → hub/from_terminal/consolidated_output.md
 
 | Agent | Role | Status | Last Action | Progress |
 |-------|------|--------|-------------|----------|
-| Cloud-C1 | Coordinator | 🟢 ONLINE | System architecture | Complete |
-| Cloud-C2 | Builder | 🔴 NOT RESPONSIVE | Awaiting activation | 0% |
-| Cloud-C3 | Validator | 🟢 ONLINE | Multi-angle attack execution | Complete |
+| Cloud-C1 | Coordinator | 🟡 STANDBY | System architecture | Complete |
+| Cloud-C2 | Builder | 🔴 NOT ACTIVATED | Awaiting activation | 0% |
+| Cloud-C3 | Validator | 🔴 SHUTDOWN | Boot-down executed | Session complete |
 
 ### Terminal Trinity (Local CLI)
 
