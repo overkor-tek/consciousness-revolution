@@ -675,5 +675,493 @@
       "You don't have to accept misplaced blame",
       "Your reaction to harm doesn't cause the harm"
     ]
+  },
+  "news_bias": {
+    "name": "News Bias Detector",
+    "description": "Identify bias and manipulation in news articles",
+    "category": "media_literacy",
+    "patterns": {
+      "Loaded Language": {
+        "markers": ["slammed", "blasted", "destroyed", "crushed", "shocking", "outrageous", "horrific"],
+        "description": "Emotionally charged words to influence reader reaction",
+        "response": "Notice the emotional language - what are the actual facts?"
+      },
+      "One-Sided Sources": {
+        "markers": ["critics say", "supporters claim", "experts say", "sources say", "insiders report"],
+        "description": "Vague attribution without naming specific sources",
+        "response": "Who exactly are these sources? Why aren't they named?"
+      },
+      "Sensationalism": {
+        "markers": ["breaking", "bombshell", "explosive", "unprecedented", "stunning", "jaw-dropping"],
+        "description": "Exaggerated language to grab attention",
+        "response": "Is this actually unprecedented, or just attention-seeking language?"
+      },
+      "Omission Signals": {
+        "markers": ["some say", "many believe", "growing concern", "raising questions"],
+        "description": "Vague claims without evidence or specifics",
+        "response": "Who specifically says this? What's the actual evidence?"
+      },
+      "Attack Framing": {
+        "markers": ["attacks", "slams", "rips", "fires back", "hits out", "lashes out"],
+        "description": "Combat language frames everything as conflict",
+        "response": "Is this actually a conflict, or just disagreement being dramatized?"
+      },
+      "Fear Appeals": {
+        "markers": ["threat", "dangerous", "alarming", "warning", "crisis", "emergency"],
+        "description": "Fear-based language to drive emotional response",
+        "response": "What's the actual risk level without the fear language?"
+      },
+      "Headline Bait": {
+        "markers": ["you won't believe", "what happened next", "the truth about", "exposed", "revealed"],
+        "description": "Clickbait patterns designed to manipulate clicks",
+        "response": "Clickbait signals - check if headline matches content"
+      },
+      "Political Framing": {
+        "markers": ["left-wing", "right-wing", "liberal", "conservative", "radical", "extremist"],
+        "description": "Political labels that may oversimplify positions",
+        "response": "Labels oversimplify - what are the actual positions?"
+      }
+    },
+    "severity_levels": [
+      {"max": 20, "icon": "✅", "label": "LOW BIAS", "desc": "Relatively neutral language detected", "class": "low"},
+      {"max": 50, "icon": "⚠️", "label": "MODERATE BIAS", "desc": "Some biased language patterns present", "class": "medium"},
+      {"max": 999, "icon": "🚨", "label": "HIGH BIAS", "desc": "Multiple bias indicators detected", "class": "high"}
+    ],
+    "media_literacy_tips": [
+      "Read multiple sources on the same topic",
+      "Check the original sources cited",
+      "Separate facts from opinions",
+      "Notice your emotional reaction - that's often the goal",
+      "Ask: 'What am I not being told?'",
+      "Check if headline matches article content",
+      "Who benefits from this narrative?",
+      "What perspectives are missing?"
+    ]
+  },
+  "turn": {
+    "name": "15° Turn Detector",
+    "description": "Find where the real message is hidden after the pivot",
+    "category": "communication_analysis",
+    "patterns": {
+      "But": {
+        "markers": ["but"],
+        "description": "Negates everything before it - the real message comes after",
+        "response": "Notice the 'but' - everything before it was performative"
+      },
+      "However": {
+        "markers": ["however"],
+        "description": "Diplomatic disagreement following false agreement",
+        "response": "The 'however' reveals their true position"
+      },
+      "Although": {
+        "markers": ["although"],
+        "description": "Qualified rejection disguised as acknowledgment",
+        "response": "The 'although' shows they're actually disagreeing"
+      },
+      "Actually": {
+        "markers": ["actually"],
+        "description": "Correction incoming - previous statement being revised",
+        "response": "The 'actually' signals the real point is coming"
+      },
+      "Honestly": {
+        "markers": ["honestly", "to be honest"],
+        "description": "Implies previous statements were incomplete or misleading",
+        "response": "If they need to say 'honestly', what was the rest?"
+      },
+      "That Said": {
+        "markers": ["that said", "having said that"],
+        "description": "Exception or contradiction about to follow",
+        "response": "The exception they're about to make is their real position"
+      },
+      "Nevertheless": {
+        "markers": ["nevertheless", "nonetheless"],
+        "description": "Dismissing or overriding the previous point",
+        "response": "They're now overriding what they just acknowledged"
+      },
+      "Yet": {
+        "markers": ["yet"],
+        "description": "Negation of the setup statement",
+        "response": "The 'yet' reveals they don't actually agree with the setup"
+      },
+      "Still": {
+        "markers": ["still"],
+        "description": "Pushing back despite acknowledgment",
+        "response": "Despite their acknowledgment, they're still disagreeing"
+      },
+      "Except": {
+        "markers": ["except", "except that"],
+        "description": "Creating exception to apparent agreement",
+        "response": "The exception is what they really mean"
+      }
+    },
+    "turn_examples": [
+      {"text": "I love your idea, but I don't think it will work", "real_message": "It won't work (compliment was performative)"},
+      {"text": "You're smart, however this approach is wrong", "real_message": "Your approach is wrong (compliment was setup)"},
+      {"text": "I hear you, although I disagree", "real_message": "I disagree (hearing you was performative)"}
+    ]
+  },
+  "pressure": {
+    "name": "Pressure Detector",
+    "description": "Identify pressure tactics in messages and sales pitches",
+    "category": "sales_resistance",
+    "patterns": {
+      "Time Pressure": {
+        "markers": ["act now", "limited time", "expires", "deadline", "today only", "last chance", "ending soon", "hurry"],
+        "description": "Artificial urgency to bypass rational decision-making",
+        "response": "Genuine opportunities rarely have artificial deadlines. I'll decide on my timeline."
+      },
+      "Scarcity": {
+        "markers": ["only", "left", "remaining", "running out", "limited", "few spots", "almost gone", "while supplies"],
+        "description": "Manufacturing scarcity to create panic buying",
+        "response": "If it's truly scarce, I can find it elsewhere or do without it."
+      },
+      "Social Proof Pressure": {
+        "markers": ["everyone", "thousands", "don't miss out", "fomo", "trending", "sold out", "waitlist"],
+        "description": "Using others' behavior to pressure your decision",
+        "response": "What others do is irrelevant to my specific situation."
+      },
+      "Authority Pressure": {
+        "markers": ["experts recommend", "doctors say", "according to studies", "professional advice"],
+        "description": "Invoking authority to bypass critical thinking",
+        "response": "Show me the evidence, not just the credentials."
+      },
+      "Fear Appeal": {
+        "markers": ["risk", "dangerous", "warning", "before it's too late", "protect yourself", "threat", "avoid"],
+        "description": "Creating fear to bypass rational evaluation",
+        "response": "What's the actual evidence of risk without the fear language?"
+      },
+      "Guilt/Obligation": {
+        "markers": ["after all", "least you can do", "owe it to", "disappointed", "let down", "deserve"],
+        "description": "Creating false obligation to manipulate decision",
+        "response": "I don't owe anyone a decision. Guilt is a manipulation tool."
+      },
+      "Reciprocity Pressure": {
+        "markers": ["free gift", "we gave you", "in return", "now it's your turn", "favor"],
+        "description": "Creating obligation through 'free' offerings",
+        "response": "A gift with strings attached isn't a gift."
+      },
+      "Commitment Escalation": {
+        "markers": ["you agreed", "you said", "you already", "consistent with", "follow through"],
+        "description": "Leveraging small commitments to demand larger ones",
+        "response": "I can change my mind based on new information."
+      }
+    },
+    "pressure_wisdom": [
+      "If they need to pressure you, the value isn't self-evident.",
+      "A good deal tomorrow is better than a bad deal today.",
+      "Truth doesn't need urgency. It remains true tomorrow.",
+      "Sleep on any major decision. Pressure tactics lose power with time."
+    ]
+  },
+  "authority_bias": {
+    "name": "Authority Bias Detector",
+    "description": "Detect when credentials replace actual evidence",
+    "category": "critical_thinking",
+    "patterns": {
+      "Title Appeal": {
+        "markers": ["doctor", "professor", "expert", "specialist", "phd", "md"],
+        "description": "Using credentials as proof instead of evidence",
+        "response": "Credentials are background, not proof. Show me the evidence."
+      },
+      "Experience Appeal": {
+        "markers": ["years of experience", "i've been doing this", "in my career", "longtime"],
+        "description": "Time in field presented as proof of correctness",
+        "response": "Experience doesn't guarantee you're right about this specific claim."
+      },
+      "Celebrity Appeal": {
+        "markers": ["celebrity", "famous", "well-known", "star", "influencer"],
+        "description": "Fame treated as expertise in unrelated areas",
+        "response": "Fame doesn't equal expertise in all areas."
+      },
+      "Institutional Appeal": {
+        "markers": ["harvard", "government", "official", "organization", "institution", "agency"],
+        "description": "Institutional backing presented as automatic proof",
+        "response": "Institutions can be wrong. What's the actual evidence?"
+      },
+      "Everyone Says": {
+        "markers": ["everyone knows", "it's well known", "experts agree", "science says", "studies show"],
+        "description": "Vague appeals to unspecified consensus",
+        "response": "Who specifically? Can you name sources and show their evidence?"
+      },
+      "Trust Me": {
+        "markers": ["trust me", "believe me", "take my word", "i know what i'm talking about"],
+        "description": "Demanding trust without providing evidence",
+        "response": "Trust is earned through evidence, not demanded through appeals."
+      },
+      "Published Appeal": {
+        "markers": ["published", "peer reviewed", "journal", "book", "best seller"],
+        "description": "Publication status treated as infallibility",
+        "response": "Publication is a step, not proof. Has this been replicated?"
+      }
+    },
+    "critical_questions": [
+      "Is this authority actually an expert in THIS specific area?",
+      "What evidence supports the claim beyond credentials?",
+      "Do other qualified experts disagree?",
+      "Would this claim be believable without the authority?",
+      "What's the quality and replication of cited research?"
+    ],
+    "authority_truths": [
+      "Experts can be wrong, biased, or outside their field",
+      "Authority should support evidence, not replace it",
+      "Credentials don't exempt claims from scrutiny",
+      "You're allowed to ask for evidence, not just credentials"
+    ]
+  },
+  "sunk_cost": {
+    "name": "Sunk Cost Fallacy Detector",
+    "description": "Identify when past investment traps future decisions",
+    "category": "decision_making",
+    "patterns": {
+      "Time Investment": {
+        "markers": ["already invested so much time", "after all this time", "all these years", "so much time"],
+        "description": "Continuing because of time already spent",
+        "response": "Past time is gone regardless of my next choice."
+      },
+      "Money Investment": {
+        "markers": ["spent so much money", "after all i've paid", "invested so much", "all that money"],
+        "description": "Continuing because of money already spent",
+        "response": "Spending more won't recover what's already gone."
+      },
+      "Come Too Far": {
+        "markers": ["come this far", "gotten this far", "see it through", "finish what i started"],
+        "description": "Feeling obligated to continue because of progress made",
+        "response": "How far I've come doesn't determine if continuing makes sense."
+      },
+      "Wasted Effort": {
+        "markers": ["effort will be wasted", "all for nothing", "waste everything", "thrown away"],
+        "description": "Fear that stopping makes past effort meaningless",
+        "response": "Stopping bad situations honors my effort more than continuing to lose."
+      },
+      "Endured So Much": {
+        "markers": ["put up with", "endured", "been through", "suffered through"],
+        "description": "Past suffering as reason to continue suffering",
+        "response": "Past pain doesn't obligate me to future pain."
+      },
+      "Too Deep": {
+        "markers": ["in too deep", "can't back out", "committed now", "no turning back"],
+        "description": "Feeling trapped by past decisions",
+        "response": "I can change direction at any time based on current information."
+      },
+      "Just A Little More": {
+        "markers": ["just a little more", "one more try", "almost there", "so close"],
+        "description": "Escalating commitment based on previous investment",
+        "response": "Each new investment should be evaluated independently."
+      },
+      "Stupid To Quit": {
+        "markers": ["stupid to quit", "foolish to stop", "would be crazy", "would be dumb"],
+        "description": "Self-judgment for considering stopping",
+        "response": "It's wise to stop bad situations, not stupid."
+      }
+    },
+    "reframes": [
+      "Past time/money is gone regardless of your next choice",
+      "The best time to leave was earlier; second best is now",
+      "Continuing to lose doesn't honor past investment",
+      "What would you advise a friend in this situation?",
+      "Evaluate this decision as if you just started today"
+    ]
+  },
+  "influence": {
+    "name": "Influence Tactics Detector",
+    "description": "Identify psychological influence and persuasion tactics",
+    "category": "persuasion_awareness",
+    "patterns": {
+      "Scarcity": {
+        "markers": ["limited", "only", "few left", "running out", "last chance", "exclusive"],
+        "description": "Creating artificial scarcity to trigger fear of missing out",
+        "response": "Will this really be unavailable, or is this a sales tactic?"
+      },
+      "Urgency": {
+        "markers": ["act now", "today only", "expires", "don't wait", "immediately", "hurry"],
+        "description": "Pressuring immediate action to bypass careful thinking",
+        "response": "Real opportunities don't disappear overnight. I'll sleep on it."
+      },
+      "Social Proof": {
+        "markers": ["everyone", "thousands", "bestselling", "most popular", "join", "people are"],
+        "description": "Using crowd behavior to imply you should follow",
+        "response": "Others' choices don't determine what's right for me."
+      },
+      "Authority": {
+        "markers": ["expert", "doctor", "studies show", "research", "proven", "certified"],
+        "description": "Leveraging authority figures to increase trust",
+        "response": "I'll verify credentials and check if the authority is relevant."
+      },
+      "Reciprocity": {
+        "markers": ["free", "gift", "bonus", "complimentary", "no cost", "on us"],
+        "description": "Giving something to create obligation to give back",
+        "response": "A gift with strings attached isn't really free."
+      },
+      "Liking": {
+        "markers": ["friend", "like you", "people like us", "we", "together", "community"],
+        "description": "Building rapport to increase compliance",
+        "response": "I'll separate how I feel about the person from the offer itself."
+      },
+      "Fear Appeal": {
+        "markers": ["risk", "danger", "before it's too late", "don't miss", "lose", "fail"],
+        "description": "Using fear to motivate action",
+        "response": "Fear-based decisions are rarely good decisions."
+      },
+      "Anchoring": {
+        "markers": ["was $", "normally", "compare", "value", "save", "discount"],
+        "description": "Setting high reference point to make offer seem better",
+        "response": "I'll judge value independently, not compared to inflated prices."
+      },
+      "Commitment": {
+        "markers": ["you agreed", "you said", "consistent", "promise", "committed"],
+        "description": "Using past commitments to push for more",
+        "response": "I can change my mind when I have new information."
+      },
+      "Future Pacing": {
+        "markers": ["imagine", "picture yourself", "what if", "when you", "you'll be"],
+        "description": "Having you imagine positive outcomes to create desire",
+        "response": "Imagination isn't evidence. Show me real case studies."
+      }
+    },
+    "defenses": [
+      "Recognize the tactic being used",
+      "Ask: What would I decide without this influence?",
+      "Sleep on any decision involving multiple tactics",
+      "The more tactics present, the weaker the actual value"
+    ]
+  },
+  "sales_pitch": {
+    "name": "Sales Pitch Detector",
+    "description": "Detect manipulation tactics in sales and marketing",
+    "category": "sales_resistance",
+    "patterns": {
+      "Price Anchoring": {
+        "markers": ["was $", "normally $", "value of", "worth", "originally", "regular price"],
+        "description": "Sets high reference point to make current price seem like a deal",
+        "response": "Judge value independently, ignore the 'original' price."
+      },
+      "Artificial Scarcity": {
+        "markers": ["only", "left", "limited", "exclusive", "select few", "running out"],
+        "description": "Creates urgency through perceived limited availability",
+        "response": "Scarcity is often manufactured. If it's valuable, it will be available."
+      },
+      "Social Proof Manipulation": {
+        "markers": ["thousands", "best-selling", "popular", "everyone", "customers love", "reviews"],
+        "description": "Uses others' behavior to influence your decision",
+        "response": "Testimonials can be cherry-picked or fabricated."
+      },
+      "Future Pacing": {
+        "markers": ["imagine", "picture yourself", "think about how", "in 30 days", "you'll be"],
+        "description": "Gets you to emotionally invest in an imagined future",
+        "response": "Fantasy isn't reality. Show me actual results."
+      },
+      "Loss Aversion": {
+        "markers": ["miss out", "lose", "regret", "don't wait", "slip away", "gone"],
+        "description": "Emphasizes what you'll lose rather than gain",
+        "response": "Fear of loss shouldn't drive my decisions."
+      },
+      "Authority Claim": {
+        "markers": ["expert", "proven", "certified", "endorsed", "recommended by", "award"],
+        "description": "Uses credentials to bypass your evaluation",
+        "response": "Verify any authority claims independently."
+      },
+      "Reciprocity Hook": {
+        "markers": ["free", "bonus", "gift", "at no cost", "complimentary", "included"],
+        "description": "Gives something to create obligation",
+        "response": "Free items don't obligate me to buy."
+      },
+      "Urgency Creation": {
+        "markers": ["today only", "expires", "deadline", "last chance", "ending soon", "hours left"],
+        "description": "Forces quick decision with artificial time pressure",
+        "response": "Artificial deadlines are manipulation. I'll decide on my timeline."
+      },
+      "Pain Amplification": {
+        "markers": ["struggling", "frustrated", "tired of", "sick of", "fed up", "problem"],
+        "description": "Exaggerates problems to increase desire for solution",
+        "response": "Is my problem really as bad as they're making it sound?"
+      },
+      "Risk Reversal": {
+        "markers": ["risk-free", "money-back", "no risk", "guaranteed", "nothing to lose"],
+        "description": "Reduces perceived risk to remove objections",
+        "response": "Even 'risk-free' has time and attention costs."
+      }
+    },
+    "sales_wisdom": [
+      "The more tactics used, the weaker the actual value",
+      "High-pressure sales protect the seller, not you",
+      "If it's a good deal today, it will be a good deal tomorrow",
+      "You can always say 'I'll think about it'"
+    ]
+  },
+  "quick_truth": {
+    "name": "Quick Truth Detector",
+    "description": "Distinguish truth from deceit through language patterns",
+    "category": "truth_detection",
+    "patterns": {
+      "Deceit Markers": {
+        "markers": ["trust me", "believe me", "guaranteed", "act now", "limited time", "don't miss", "exclusive", "secret", "free", "easy", "quick", "everyone knows", "obviously", "clearly", "just", "only", "you should", "you must", "you need to", "no brainer"],
+        "description": "Language patterns common in deceptive communication",
+        "response": "Demands for trust and urgency are red flags."
+      },
+      "Truth Markers": {
+        "markers": ["because", "therefore", "evidence", "data", "research", "in my experience", "i think", "i believe", "it seems", "from my perspective", "let me explain", "here's why", "the reason", "consider", "may not", "limitation", "long-term", "foundation", "permanent"],
+        "description": "Language patterns common in truthful communication",
+        "response": "Explanations, qualifiers, and evidence suggest honest communication."
+      }
+    },
+    "truth_principles": [
+      "Truth explains reasons, deceit demands compliance",
+      "Truth acknowledges limitations, deceit claims perfection",
+      "Truth invites scrutiny, deceit creates urgency",
+      "Truth builds over time, deceit requires immediate action"
+    ]
+  },
+  "toxic_positivity": {
+    "name": "Toxic Positivity Detector",
+    "description": "Identify when positivity invalidates genuine emotions",
+    "category": "emotional_validation",
+    "patterns": {
+      "Feeling Dismissal": {
+        "markers": ["don't feel that way", "don't be sad", "stop being", "cheer up", "smile"],
+        "description": "Invalidates your right to feel what you feel",
+        "response": "All feelings are valid and deserve acknowledgment."
+      },
+      "Silver Lining Force": {
+        "markers": ["at least", "could be worse", "be grateful", "look on the bright side", "think positive"],
+        "description": "Forces optimism when validation is needed",
+        "response": "I can be grateful and still feel pain about this."
+      },
+      "Spiritual Bypass": {
+        "markers": ["everything happens for a reason", "meant to be", "god's plan", "universe wants", "karma"],
+        "description": "Uses spirituality to avoid processing pain",
+        "response": "Spiritual beliefs don't make pain less real."
+      },
+      "Comparison Minimizing": {
+        "markers": ["others have it worse", "people are dying", "first world problem", "be thankful"],
+        "description": "Invalidates pain by comparing to others",
+        "response": "Others' suffering doesn't make mine less valid."
+      },
+      "Solution Jumping": {
+        "markers": ["just", "simply", "all you need to do", "easy fix", "just think about"],
+        "description": "Skips validation and jumps to fixing",
+        "response": "I need validation before solutions."
+      },
+      "Time Pressure": {
+        "markers": ["get over it", "move on", "let it go", "it's time to", "you should be"],
+        "description": "Puts timeline on your healing",
+        "response": "Healing happens at my pace, not others' timeline."
+      },
+      "Happiness Demand": {
+        "markers": ["choose happiness", "happiness is a choice", "decide to be happy", "want to be happy"],
+        "description": "Makes emotions seem like simple choices",
+        "response": "Emotions are responses, not choices."
+      },
+      "Toxic Optimism": {
+        "markers": ["good vibes only", "no negativity", "stay positive", "negative energy", "bad energy"],
+        "description": "Treats normal emotions as contagious negativity",
+        "response": "All emotions are part of being human."
+      }
+    },
+    "healthy_alternatives": [
+      "Instead of 'think positive', try 'I hear you, that sounds really hard'",
+      "Instead of 'at least...', try 'I'm sorry you're going through this'",
+      "Instead of 'get over it', try 'Take the time you need'",
+      "Validation first, solutions later (if requested)"
+    ]
   }
 }
