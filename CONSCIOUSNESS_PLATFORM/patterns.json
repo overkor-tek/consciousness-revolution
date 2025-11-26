@@ -235,5 +235,173 @@
       "Hoovering intensifies when they lose control",
       "Maintain your boundaries - you left for good reasons"
     ]
+  },
+  "emotional_blackmail": {
+    "name": "Emotional Blackmail Detector",
+    "description": "Identify FOG: Fear, Obligation, Guilt manipulation",
+    "category": "manipulation",
+    "patterns": {
+      "Threats": {
+        "markers": ["if you don't", "i'll leave", "you'll lose", "i'll tell", "you'll regret", "i'll hurt"],
+        "description": "Direct or implied threats of negative consequences",
+        "response": "Threats are not acceptable - this is emotional abuse",
+        "fog": "Fear"
+      },
+      "Self-Harm Threats": {
+        "markers": ["hurt myself", "kill myself", "end it", "not worth living", "can't go on"],
+        "description": "Threatening self-harm to control you - call 988 if serious",
+        "response": "If serious, call 988. Their mental health is not your responsibility to manage alone",
+        "fog": "Fear"
+      },
+      "Duty Appeals": {
+        "markers": ["you owe me", "after all i've done", "family should", "you're supposed to", "that's what partners do"],
+        "description": "Appealing to obligation to override your choice",
+        "response": "I decide my own obligations based on what's right for me",
+        "fog": "Obligation"
+      },
+      "Shame Induction": {
+        "markers": ["selfish", "ungrateful", "cruel", "heartless", "bad person", "ashamed"],
+        "description": "Making you feel defective for having boundaries",
+        "response": "Having boundaries doesn't make me a bad person",
+        "fog": "Guilt"
+      },
+      "Historical Debt": {
+        "markers": ["remember when", "i always", "i never", "i gave up", "sacrificed"],
+        "description": "Citing past actions to create current debt",
+        "response": "Past kindness doesn't create unlimited future obligations",
+        "fog": "Obligation"
+      },
+      "Victim Playing": {
+        "markers": ["you're hurting me", "how could you", "can't believe you", "so cruel to me"],
+        "description": "Positioning themselves as victim of your boundaries",
+        "response": "I can see you're upset, but my boundary stands",
+        "fog": "Guilt"
+      },
+      "Silent Treatment": {
+        "markers": ["won't talk", "ignoring", "dead to me", "you'll see"],
+        "description": "Withdrawing love/attention as punishment",
+        "response": "I'm here when you want to communicate respectfully",
+        "fog": "Fear"
+      },
+      "Love Withdrawal": {
+        "markers": ["don't love me", "if you loved me", "proves you don't care", "real love would"],
+        "description": "Making love conditional on compliance",
+        "response": "Real love doesn't require me to violate my boundaries",
+        "fog": "Fear"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "UNCLEAR", "desc": "No obvious blackmail patterns", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "POSSIBLE BLACKMAIL", "desc": "Some manipulation tactics present", "class": "caution"},
+      {"max": 999, "icon": "🚨", "label": "EMOTIONAL BLACKMAIL", "desc": "Multiple tactics to control through FOG", "class": "blackmail"}
+    ],
+    "reality_checks": [
+      "Your 'no' is a complete sentence",
+      "You can care about someone AND have boundaries",
+      "Their emotions are not your emergency",
+      "This is abuse - consider professional support if severe"
+    ]
+  },
+  "triangulation": {
+    "name": "Triangulation Detector",
+    "description": "Identify when a third party is used to manipulate",
+    "category": "manipulation",
+    "patterns": {
+      "Comparison to Ex": {
+        "markers": ["my ex", "ex would", "ex never", "ex always", "previous", "last partner"],
+        "description": "Using past relationships to create competition/insecurity",
+        "response": "I'm not interested in comparisons - let's discuss us"
+      },
+      "Third Party Agreement": {
+        "markers": ["everyone agrees", "they all think", "everyone says", "my friends say", "people think"],
+        "description": "Claiming others agree to strengthen their position",
+        "response": "I'd like to hear their opinion directly"
+      },
+      "Secret Information": {
+        "markers": ["told me about you", "said that you", "heard that you", "they mentioned"],
+        "description": "Bringing in outside 'information' about you",
+        "response": "I'll talk to them directly if there's an issue"
+      },
+      "Jealousy Induction": {
+        "markers": ["interested in me", "flirting with", "attracted to", "paying attention", "complimenting"],
+        "description": "Mentioning others' interest to provoke jealousy",
+        "response": "I trust you - this information doesn't change that"
+      },
+      "Flying Monkeys": {
+        "markers": ["told them", "they agree", "on my side", "support me", "believe me"],
+        "description": "Recruiting others to their cause against you",
+        "response": "I'll get the full story directly from the source"
+      },
+      "Comparison Shame": {
+        "markers": ["unlike you", "better than you", "would never", "not like you", "at least they"],
+        "description": "Using others to make you feel inadequate",
+        "response": "I don't need to prove myself against anyone"
+      },
+      "Messenger Manipulation": {
+        "markers": ["tell them", "let them know", "pass this on", "make sure they know"],
+        "description": "Using you as messenger to another person",
+        "response": "You can communicate with them directly"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "UNCLEAR", "desc": "No obvious triangulation patterns", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "POSSIBLE TRIANGULATION", "desc": "Some indicators present", "class": "possible"},
+      {"max": 999, "icon": "🔺", "label": "TRIANGULATION DETECTED", "desc": "Multiple tactics to involve third parties", "class": "likely"}
+    ],
+    "reality_checks": [
+      "Healthy communication is direct, not through third parties",
+      "If they wanted to resolve it, they'd talk to YOU",
+      "You don't need to prove yourself against anyone",
+      "Triangulation creates chaos - that's the goal"
+    ]
+  },
+  "projection": {
+    "name": "Projection Detector",
+    "description": "Identify when someone accuses you of their behavior",
+    "category": "manipulation",
+    "patterns": {
+      "Accusation of Their Behavior": {
+        "markers": ["you always", "you never", "you're the one who", "you do the same"],
+        "description": "Accusing you of exactly what they do",
+        "response": "Let's look at the facts - who actually does this?"
+      },
+      "Sudden Character Attack": {
+        "markers": ["you're so", "you're such a", "you're being", "you're just"],
+        "description": "Labels that come from nowhere and describe them",
+        "response": "Where is this coming from? This doesn't match my actions"
+      },
+      "Preemptive Defense": {
+        "markers": ["i'm not", "don't call me", "i would never", "unlike you"],
+        "description": "Defending against accusations you didn't make",
+        "response": "I didn't accuse you of that - why bring it up?"
+      },
+      "DARVO Pattern": {
+        "markers": ["i'm the victim", "you're attacking me", "you're the abusive one", "i'm being abused"],
+        "description": "Deny, Attack, Reverse Victim and Offender",
+        "response": "Let's stay on the original topic - what actually happened"
+      },
+      "Excessive Suspicion": {
+        "markers": ["you're lying", "you're cheating", "you're hiding", "you're plotting", "you're manipulating"],
+        "description": "Extreme suspicion often reveals their own behavior",
+        "response": "This level of suspicion says more about you than me"
+      },
+      "Jealousy Accusation": {
+        "markers": ["you're jealous", "you're envious", "you can't stand that", "you're threatened"],
+        "description": "Accusing you of jealousy they actually feel",
+        "response": "I'm not jealous - I'm responding to your behavior"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "UNCLEAR", "desc": "No obvious projection patterns detected", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "POSSIBLE PROJECTION", "desc": "Some indicators present - examine further", "class": "possible"},
+      {"max": 999, "icon": "🪞", "label": "LIKELY PROJECTION", "desc": "Strong signs they're describing themselves", "class": "likely"}
+    ],
+    "reality_checks": [
+      "You don't have to defend against false accusations",
+      "Redirect: 'Let's stay on the original topic'",
+      "Their perception of you says more about them",
+      "Projection is a defense mechanism - they can't face their own behavior",
+      "Document incidents - patterns become clear over time"
+    ]
   }
 }

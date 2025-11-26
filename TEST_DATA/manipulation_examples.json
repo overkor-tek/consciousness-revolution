@@ -73,5 +73,75 @@
       "should_detect": ["Good Times Nostalgia"],
       "severity": "mild"
     }
+  ],
+  "emotional_blackmail_examples": [
+    {
+      "text": "If you don't do this, I'll leave. You'll lose everything.",
+      "should_detect": ["Threats"],
+      "severity": "danger",
+      "fog": "Fear"
+    },
+    {
+      "text": "You owe me. After all I've done for you, family should stick together.",
+      "should_detect": ["Duty Appeals", "Historical Debt"],
+      "severity": "caution",
+      "fog": "Obligation"
+    },
+    {
+      "text": "You're so selfish and ungrateful. You're hurting me so much.",
+      "should_detect": ["Shame Induction", "Victim Playing"],
+      "severity": "danger",
+      "fog": "Guilt"
+    },
+    {
+      "text": "If you loved me, you would do this. This proves you don't care.",
+      "should_detect": ["Love Withdrawal"],
+      "severity": "caution",
+      "fog": "Fear"
+    }
+  ],
+  "triangulation_examples": [
+    {
+      "text": "My ex would never treat me this way. They always respected my needs.",
+      "should_detect": ["Comparison to Ex"],
+      "severity": "possible"
+    },
+    {
+      "text": "Everyone agrees with me. They all think you're being unreasonable. My friends say the same thing.",
+      "should_detect": ["Third Party Agreement", "Flying Monkeys"],
+      "severity": "likely"
+    },
+    {
+      "text": "Someone told me about you. They said that you were talking behind my back.",
+      "should_detect": ["Secret Information"],
+      "severity": "possible"
+    },
+    {
+      "text": "Unlike you, at least they would never do something like that. They're better than you.",
+      "should_detect": ["Comparison Shame"],
+      "severity": "likely"
+    }
+  ],
+  "projection_examples": [
+    {
+      "text": "You always lie to me! You're the one who can't be trusted!",
+      "should_detect": ["Accusation of Their Behavior", "Excessive Suspicion"],
+      "severity": "possible"
+    },
+    {
+      "text": "You're so manipulative. You're just trying to control me!",
+      "should_detect": ["Accusation of Their Behavior", "Excessive Suspicion"],
+      "severity": "likely"
+    },
+    {
+      "text": "I'm the victim here! You're attacking me! You're the abusive one!",
+      "should_detect": ["DARVO Pattern"],
+      "severity": "likely"
+    },
+    {
+      "text": "You're just jealous. You're so envious that you can't stand seeing me happy.",
+      "should_detect": ["Jealousy Accusation"],
+      "severity": "possible"
+    }
   ]
 }
