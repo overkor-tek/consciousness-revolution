@@ -1,0 +1,77 @@
+{
+  "gaslighting_examples": [
+    {
+      "text": "That never happened, you're imagining things again.",
+      "should_detect": ["Reality Denial", "Perception Invalidation"],
+      "severity": "warn"
+    },
+    {
+      "text": "You're too sensitive, you always overreact to everything.",
+      "should_detect": ["Perception Invalidation", "Emotion Dismissal"],
+      "severity": "warn"
+    },
+    {
+      "text": "That's not what I said. You're twisting my words and making a big deal out of nothing.",
+      "should_detect": ["Rewriting History", "Emotion Dismissal"],
+      "severity": "danger"
+    }
+  ],
+  "guilt_trip_examples": [
+    {
+      "text": "After all I've done for you, this is how you treat me?",
+      "should_detect": ["After Everything I've Done"],
+      "severity": "mild"
+    },
+    {
+      "text": "Everyone else would help their friend. Any good person would.",
+      "should_detect": ["Comparison Shame"],
+      "severity": "mild"
+    },
+    {
+      "text": "I'm so disappointed in you. I thought you were different. I'm really hurt.",
+      "should_detect": ["Disappointment Play", "Hurt Display"],
+      "severity": "danger"
+    }
+  ],
+  "love_bombing_examples": [
+    {
+      "text": "You're my soulmate, I've never felt this way before. We're perfect for each other!",
+      "should_detect": ["Intensity Spike"],
+      "severity": "warn"
+    },
+    {
+      "text": "I can't wait to move in together and get married. Imagine our future, growing old together.",
+      "should_detect": ["Future Faking"],
+      "severity": "danger"
+    }
+  ],
+  "future_faking_examples": [
+    {
+      "text": "Once you quit your job, we'll travel the world together. It'll be perfect!",
+      "should_detect": ["Conditional Promises", "Perfect Life Painting"],
+      "severity": "danger"
+    },
+    {
+      "text": "Someday we'll have that dream house and amazing life.",
+      "should_detect": ["Grand Future Plans", "Perfect Life Painting"],
+      "severity": "warn"
+    }
+  ],
+  "hoovering_examples": [
+    {
+      "text": "I've been thinking about you constantly. I miss you so much. I can't stop dreaming about you.",
+      "should_detect": ["Sudden Reappearance"],
+      "severity": "warn"
+    },
+    {
+      "text": "I've changed, I'm different now. I've been in therapy and realized what I did wrong.",
+      "should_detect": ["Changed Person Claim"],
+      "severity": "danger"
+    },
+    {
+      "text": "Remember the good times we had? How happy we were together?",
+      "should_detect": ["Good Times Nostalgia"],
+      "severity": "mild"
+    }
+  ]
+}

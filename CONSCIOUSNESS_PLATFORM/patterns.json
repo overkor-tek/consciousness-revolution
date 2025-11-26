@@ -96,5 +96,144 @@
       "Notice if intensity drops after you commit",
       "Real love allows you to maintain independence"
     ]
+  },
+  "guilt_trip": {
+    "name": "Guilt Trip Detector",
+    "description": "Detect emotional manipulation via guilt",
+    "category": "manipulation",
+    "patterns": {
+      "After Everything I've Done": {
+        "markers": ["after everything", "all i've done", "i sacrificed", "i gave up"],
+        "description": "Using past favors to create obligation",
+        "response": "I appreciate what you've done, but that doesn't obligate me to this specific thing"
+      },
+      "Comparison Shame": {
+        "markers": ["everyone else", "other people would", "any good", "real friend would"],
+        "description": "Comparing you unfavorably to create shame",
+        "response": "I make decisions based on what's right for me, not comparisons"
+      },
+      "Disappointment Play": {
+        "markers": ["so disappointed", "let me down", "thought you were different", "expected better"],
+        "description": "Expressing disappointment to manipulate",
+        "response": "Your disappointment is about your expectations, not my choices"
+      },
+      "Hurt Display": {
+        "markers": ["you hurt me", "how could you", "can't believe you", "really hurt"],
+        "description": "Magnifying hurt to create guilt",
+        "response": "I'm sorry you're hurt, but I'm not responsible for your feelings about my boundaries"
+      },
+      "Suffering Emphasis": {
+        "markers": ["i'm suffering", "in pain", "struggling", "hard time", "going through"],
+        "description": "Emphasizing suffering to obligate help",
+        "response": "I care about your wellbeing, but I can't always be the solution"
+      },
+      "Abandonment Frame": {
+        "markers": ["abandon", "leave me", "walk away", "give up on", "not there for me"],
+        "description": "Framing boundaries as abandonment",
+        "response": "Setting boundaries isn't abandonment - it's healthy"
+      },
+      "Martyrdom": {
+        "markers": ["i guess i'll", "don't worry about me", "i'll manage somehow", "if you don't care"],
+        "description": "Playing the martyr to induce guilt",
+        "response": "I hear you'll manage - I trust you"
+      },
+      "Silent Treatment Preview": {
+        "markers": ["won't bother you", "leave you alone", "stop asking", "keep to myself"],
+        "description": "Threatening withdrawal to manipulate",
+        "response": "That's your choice. I'm still here if you want to talk respectfully"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "NO GUILT TRIPS DETECTED", "desc": "No obvious guilt manipulation patterns found", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "MILD GUILT MANIPULATION", "desc": "guilt tactic(s) detected", "class": "mild"},
+      {"max": 999, "icon": "🚨", "label": "STRONG GUILT MANIPULATION", "desc": "tactics - heavy manipulation attempt", "class": "danger"}
+    ],
+    "reality_checks": [
+      "You are not responsible for others' feelings about your boundaries",
+      "Past favors don't create unlimited future obligations",
+      "Healthy relationships respect 'no'",
+      "Guilt is a signal to check if YOU did something wrong, not automatic compliance"
+    ]
+  },
+  "future_faking": {
+    "name": "Future Faking Detector",
+    "description": "Detect false promises about the future",
+    "category": "manipulation",
+    "patterns": {
+      "Grand Future Plans": {
+        "markers": ["when we", "we'll", "someday we", "our future", "imagine when"],
+        "description": "Creating elaborate future scenarios too early",
+        "response": "Let's focus on the present and build trust gradually"
+      },
+      "Timeline Pushing": {
+        "markers": ["move in together", "get married", "have kids", "grow old together"],
+        "description": "Rushing major life commitments",
+        "response": "These are important decisions that need time and real foundation"
+      },
+      "Perfect Life Painting": {
+        "markers": ["perfect", "dream", "everything we want", "amazing life", "incredible"],
+        "description": "Painting unrealistic perfect future",
+        "response": "Real relationships have challenges - this sounds too idealized"
+      },
+      "Conditional Promises": {
+        "markers": ["once you", "after you", "if you just", "when you finally"],
+        "description": "Making promises contingent on your compliance",
+        "response": "I need to see consistent actions now, not conditional future promises"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "REALISTIC DISCUSSION", "desc": "Future talk seems grounded and gradual", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "FUTURE FAKING SIGNS", "desc": "pattern(s) - may be moving too fast", "class": "warn"},
+      {"max": 999, "icon": "🚨", "label": "STRONG FUTURE FAKING", "desc": "patterns - manipulation red flag", "class": "danger"}
+    ],
+    "reality_checks": [
+      "Actions in the present matter more than promises about the future",
+      "Healthy relationships build gradually, not through grand future visions",
+      "If they're perfect in fantasy but problematic now, believe the now",
+      "Future faking is a control tactic to keep you invested"
+    ]
+  },
+  "hoovering": {
+    "name": "Hoovering Detector",
+    "description": "Detect attempts to suck you back into toxic relationship",
+    "category": "manipulation",
+    "patterns": {
+      "Sudden Reappearance": {
+        "markers": ["been thinking about you", "miss you", "can't stop thinking", "dream about"],
+        "description": "Reappearing out of nowhere with emotional hooks",
+        "response": "Actions over time matter more than sudden emotional appeals"
+      },
+      "Crisis Hook": {
+        "markers": ["need you", "emergency", "only you can", "nobody else", "desperate"],
+        "description": "Creating crisis to pull you back in",
+        "response": "If it's a real crisis, there are other resources available"
+      },
+      "Changed Person Claim": {
+        "markers": ["i've changed", "different now", "worked on myself", "therapy", "realized"],
+        "description": "Claiming major transformation suspiciously fast",
+        "response": "Real change takes time and shows in consistent actions, not words"
+      },
+      "Good Times Nostalgia": {
+        "markers": ["remember when", "the good times", "how happy we were", "what we had"],
+        "description": "Romanticizing past to erase bad memories",
+        "response": "Selective memory - the bad times were real too"
+      },
+      "Breadcrumbs": {
+        "markers": ["just checking in", "thought of you", "saw this and", "random but"],
+        "description": "Small contacts to maintain connection",
+        "response": "These aren't real connection attempts, they're hooks"
+      }
+    },
+    "severity_levels": [
+      {"max": 0, "icon": "✅", "label": "GENUINE CONTACT", "desc": "Contact seems authentic and respectful", "class": "clear"},
+      {"max": 2, "icon": "⚠️", "label": "HOOVERING ATTEMPT", "desc": "pattern(s) - proceed with caution", "class": "warn"},
+      {"max": 999, "icon": "🚨", "label": "STRONG HOOVERING", "desc": "patterns - manipulation to pull you back", "class": "danger"}
+    ],
+    "reality_checks": [
+      "People rarely change without significant time and effort",
+      "If they were toxic before, a few weeks won't fix that",
+      "Hoovering intensifies when they lose control",
+      "Maintain your boundaries - you left for good reasons"
+    ]
   }
 }
