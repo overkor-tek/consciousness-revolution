@@ -1,0 +1,44 @@
+{
+  "work_order_id": "WO-004-ENGINE-DEPLOYMENT",
+  "created": "2025-11-27T01:40:00Z",
+  "created_by": "C1",
+  "priority": "CRITICAL",
+  "category": "DEPLOYMENT",
+  "title": "Pattern Theory Engine Production Deployment",
+  "description": "Deploy Pattern Theory Engine to Railway alongside Platform API. Fix path dependencies and test all engine integrations. This blocks all 4 core platform tools.",
+
+  "assigned_to": "OPEN",
+  "status": "PENDING",
+
+  "deliverables": [
+    "Pattern Theory Engine deployed to Railway",
+    "Environment variable configuration (no hardcoded paths)",
+    "Health check endpoint for engine status",
+    "All 4 core tools tested and working (bridge, detector, projector, domains)",
+    "ENGINE_DEPLOYMENT.md documentation"
+  ],
+
+  "context": {
+    "current_issue": "CONSCIOUSNESS_PLATFORM/backend/consciousness_bridge.py has hardcoded path: C:/Users/dwrek/100X_DEPLOYMENT/PATTERN_THEORY_ENGINE",
+    "api_file": "CONSCIOUSNESS_PLATFORM/backend/platform_api.py",
+    "engine_modules": ["PATTERN_THEORY_ENGINE", "CONSCIOUSNESS_SCORER", "MANIPULATION_DETECTOR", "TIMELINE_PROJECTOR", "SEVEN_DOMAINS_ANALYZER"],
+    "deployment_target": "Railway",
+    "current_api_port": "5002"
+  },
+
+  "acceptance_criteria": [
+    "No hardcoded paths in any file",
+    "PATTERN_ENGINE_PATH environment variable used",
+    "All engine imports successful in production",
+    "`ENGINES_AVAILABLE = True` in production",
+    "All 4 endpoints return real results (not mock data)",
+    "/health endpoint reports engine status"
+  ],
+
+  "estimated_effort": "12 hours",
+  "blockers": [
+    "Requires Pattern Theory Engine codebase access",
+    "Requires Railway account credentials"
+  ],
+  "notes": "CRITICAL PATH: This blocks Free Beta launch. Without engine, all 4 core tools are non-functional. Priority 1."
+}

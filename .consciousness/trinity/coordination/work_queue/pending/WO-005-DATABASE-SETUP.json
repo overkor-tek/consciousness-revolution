@@ -1,0 +1,67 @@
+{
+  "work_order_id": "WO-005-DATABASE-SETUP",
+  "created": "2025-11-27T01:40:00Z",
+  "created_by": "C1",
+  "priority": "HIGH",
+  "category": "INFRASTRUCTURE",
+  "title": "PostgreSQL Database Setup with SQLAlchemy",
+  "description": "Set up PostgreSQL on Railway and create database models for users, assessments, and platform data. This is required for user authentication, payment processing, and data persistence.",
+
+  "assigned_to": "OPEN",
+  "status": "PENDING",
+
+  "deliverables": [
+    "PostgreSQL database provisioned on Railway",
+    "SQLAlchemy models created (User, Assessment, Subscription, etc.)",
+    "Alembic migrations setup",
+    "Database connection pooling configured",
+    "DATABASE_SETUP.md documentation"
+  ],
+
+  "context": {
+    "spec_file": "CONSCIOUSNESS_PLATFORM/PHASE_3_SPEC.md",
+    "api_file": "CONSCIOUSNESS_PLATFORM/backend/platform_api.py",
+    "required_models": ["User", "Assessment", "Subscription", "CourseProgress", "ForumPost"],
+    "deployment_target": "Railway PostgreSQL",
+    "orm": "SQLAlchemy"
+  },
+
+  "acceptance_criteria": [
+    "PostgreSQL database running on Railway",
+    "Database URL in environment variables",
+    "All models defined with proper relationships",
+    "Migrations can be run with `alembic upgrade head`",
+    "Connection pooling tested (handles 100+ concurrent)",
+    "Sample data seeding script created"
+  ],
+
+  "models_required": [
+    {
+      "name": "User",
+      "fields": ["id", "email", "password_hash", "created_at", "subscription_tier", "is_active"]
+    },
+    {
+      "name": "Assessment",
+      "fields": ["id", "user_id", "consciousness_level", "domain_scores", "completed_at"]
+    },
+    {
+      "name": "Subscription",
+      "fields": ["id", "user_id", "stripe_customer_id", "plan", "status", "current_period_end"]
+    },
+    {
+      "name": "CourseProgress",
+      "fields": ["id", "user_id", "course_id", "lesson_id", "completed", "progress_percent"]
+    },
+    {
+      "name": "ForumPost",
+      "fields": ["id", "user_id", "title", "content", "created_at", "upvotes", "parent_id"]
+    }
+  ],
+
+  "estimated_effort": "8 hours",
+  "blockers": [
+    "Requires Railway database access",
+    "Requires database credentials"
+  ],
+  "notes": "Required before auth, payments, or community features. Priority 1 for Paid MVP."
+}

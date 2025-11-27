@@ -1,0 +1,119 @@
+{
+  "work_order_id": "WO-007-STRIPE-PAYMENTS",
+  "created": "2025-11-27T01:40:00Z",
+  "created_by": "C1",
+  "priority": "HIGH",
+  "category": "MONETIZATION",
+  "title": "Stripe Payment Integration & Subscriptions",
+  "description": "Implement Stripe payment processing for subscription management. Enables platform monetization with tiered access (Free, Pro, Enterprise).",
+
+  "assigned_to": "OPEN",
+  "status": "PENDING",
+
+  "deliverables": [
+    "Stripe checkout session creation",
+    "Stripe webhook handler for payment events",
+    "Subscription tier definitions",
+    "Customer portal integration",
+    "Payment status middleware",
+    "Frontend subscription UI",
+    "STRIPE_INTEGRATION.md documentation"
+  ],
+
+  "context": {
+    "spec_file": "CONSCIOUSNESS_PLATFORM/PHASE_3_SPEC.md (Task 11)",
+    "api_file": "CONSCIOUSNESS_PLATFORM/backend/platform_api.py",
+    "netlify_config": "netlify.toml (webhook routes already configured)",
+    "dependencies": "WO-006 (Authentication) must be complete first",
+    "required_library": "stripe"
+  },
+
+  "subscription_tiers": [
+    {
+      "tier": "free",
+      "price": "$0/month",
+      "features": ["Consciousness Bridge", "3 detections/month", "Basic analysis"]
+    },
+    {
+      "tier": "pro",
+      "price": "$19/month",
+      "features": ["Unlimited detections", "Timeline projections", "Pattern Theory Academy", "Priority support"]
+    },
+    {
+      "tier": "enterprise",
+      "price": "$99/month",
+      "features": ["All Pro features", "API access", "Custom training", "White-label option"]
+    }
+  ],
+
+  "endpoints_to_implement": [
+    {
+      "endpoint": "POST /api/payment/create-checkout",
+      "description": "Create Stripe checkout session",
+      "request": {"tier": "pro|enterprise"},
+      "response": {"checkout_url": "string", "session_id": "string"}
+    },
+    {
+      "endpoint": "POST /api/payment/webhook",
+      "description": "Handle Stripe webhook events",
+      "events": ["checkout.session.completed", "customer.subscription.updated", "customer.subscription.deleted"]
+    },
+    {
+      "endpoint": "POST /api/payment/create-portal-session",
+      "description": "Create customer portal session",
+      "response": {"portal_url": "string"}
+    },
+    {
+      "endpoint": "GET /api/payment/subscription",
+      "description": "Get current user's subscription status",
+      "response": {"tier": "string", "status": "active|canceled", "expires_at": "date"}
+    }
+  ],
+
+  "webhook_events_to_handle": [
+    {
+      "event": "checkout.session.completed",
+      "action": "Create subscription record, activate user tier"
+    },
+    {
+      "event": "customer.subscription.updated",
+      "action": "Update subscription tier/status"
+    },
+    {
+      "event": "customer.subscription.deleted",
+      "action": "Downgrade user to free tier"
+    },
+    {
+      "event": "invoice.payment_failed",
+      "action": "Send payment failure email, mark subscription at risk"
+    }
+  ],
+
+  "acceptance_criteria": [
+    "Users can upgrade from free to pro tier",
+    "Stripe checkout session redirects correctly",
+    "Webhook signature verification implemented",
+    "Subscription status updates in database",
+    "Customer portal allows plan changes",
+    "Failed payments handled gracefully",
+    "Subscription expiry enforced in middleware",
+    "Frontend displays current tier and features"
+  ],
+
+  "security_requirements": [
+    "Stripe webhook signature verification mandatory",
+    "Never store full credit card numbers",
+    "Stripe API keys in environment variables",
+    "HTTPS required for all payment endpoints",
+    "Idempotency keys for payment operations"
+  ],
+
+  "estimated_effort": "16 hours",
+  "blockers": [
+    "Requires WO-006 (Authentication) complete",
+    "Requires Stripe account setup",
+    "Requires Stripe API keys (test + production)",
+    "Requires webhook endpoint publicly accessible"
+  ],
+  "notes": "MONETIZATION BLOCKER: Cannot charge users without this. Required for Paid MVP launch."
+}

@@ -1,0 +1,93 @@
+{
+  "work_order_id": "WO-006-USER-AUTHENTICATION",
+  "created": "2025-11-27T01:40:00Z",
+  "created_by": "C1",
+  "priority": "HIGH",
+  "category": "FEATURE",
+  "title": "User Authentication System (JWT + OAuth)",
+  "description": "Implement complete user authentication with JWT tokens and OAuth 2.0 (Google/GitHub). Required for paid subscriptions, course progress tracking, and community features.",
+
+  "assigned_to": "OPEN",
+  "status": "PENDING",
+
+  "deliverables": [
+    "User signup/login endpoints",
+    "JWT token generation and validation",
+    "Password hashing (bcrypt)",
+    "OAuth 2.0 integration (Google + GitHub)",
+    "Protected route middleware",
+    "Frontend login/signup UI",
+    "AUTH_SYSTEM.md documentation"
+  ],
+
+  "context": {
+    "spec_file": "CONSCIOUSNESS_PLATFORM/PHASE_3_SPEC.md (Task 10)",
+    "api_file": "CONSCIOUSNESS_PLATFORM/backend/platform_api.py",
+    "auth_method": "JWT + OAuth 2.0",
+    "dependencies": "WO-005 (Database) must be complete first",
+    "required_libraries": ["PyJWT", "bcrypt", "authlib"]
+  },
+
+  "endpoints_to_implement": [
+    {
+      "endpoint": "POST /api/auth/signup",
+      "description": "Create new user account",
+      "request": {"email": "string", "password": "string"},
+      "response": {"user_id": "int", "token": "string"}
+    },
+    {
+      "endpoint": "POST /api/auth/login",
+      "description": "Login existing user",
+      "request": {"email": "string", "password": "string"},
+      "response": {"token": "string", "user": "object"}
+    },
+    {
+      "endpoint": "POST /api/auth/refresh",
+      "description": "Refresh expired token",
+      "request": {"refresh_token": "string"},
+      "response": {"token": "string"}
+    },
+    {
+      "endpoint": "GET /api/auth/oauth/google",
+      "description": "Initiate Google OAuth flow"
+    },
+    {
+      "endpoint": "GET /api/auth/oauth/github",
+      "description": "Initiate GitHub OAuth flow"
+    },
+    {
+      "endpoint": "GET /api/auth/me",
+      "description": "Get current user info (requires auth)",
+      "headers": {"Authorization": "Bearer <token>"}
+    }
+  ],
+
+  "acceptance_criteria": [
+    "Users can sign up with email + password",
+    "Passwords are bcrypt hashed (never stored plaintext)",
+    "JWT tokens issued on successful login",
+    "Tokens expire after 24 hours",
+    "Refresh tokens allow token renewal",
+    "Google OAuth fully functional",
+    "GitHub OAuth fully functional",
+    "Protected endpoints reject invalid tokens",
+    "Frontend login UI integrated"
+  ],
+
+  "security_requirements": [
+    "Passwords min 8 characters",
+    "Rate limiting on auth endpoints",
+    "HTTPS only in production",
+    "Secure JWT secret in environment variables",
+    "Token expiration enforced",
+    "No user enumeration vulnerabilities"
+  ],
+
+  "estimated_effort": "20 hours",
+  "blockers": [
+    "Requires WO-005 (Database) complete",
+    "Requires Google OAuth credentials",
+    "Requires GitHub OAuth app creation"
+  ],
+  "notes": "Critical for Paid MVP. Enables subscriptions, course progress, and personalized experience."
+}
