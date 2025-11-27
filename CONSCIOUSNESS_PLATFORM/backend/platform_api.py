@@ -44,12 +44,16 @@ from consciousness_bridge import ConsciousnessBridge
 # Import auth routes
 from auth_routes import auth_bp, init_oauth
 
+# Import payment routes
+from stripe_payments import payments_bp
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'change-this-secret-key-in-production')
 CORS(app)
 
-# Register auth blueprint
+# Register blueprints
 app.register_blueprint(auth_bp)
+app.register_blueprint(payments_bp)
 
 # Initialize OAuth
 init_oauth(app)
@@ -320,6 +324,12 @@ if __name__ == "__main__":
     print("  GET  /api/auth/oauth/github - GitHub OAuth")
     print("  POST /api/auth/change-password - Change password")
     print("  DEL  /api/auth/delete-account - Delete account")
+    print("\nPayments & Subscriptions:")
+    print("  GET  /api/payment/tiers - Get subscription tier info")
+    print("  POST /api/payment/create-checkout - Create Stripe checkout (requires token)")
+    print("  POST /api/payment/webhook - Stripe webhook handler")
+    print("  POST /api/payment/create-portal-session - Customer portal (requires token)")
+    print("  GET  /api/payment/subscription - Get subscription status (requires token)")
     print("\nConsciousness Tools:")
     print("  GET  /api/bridge/questions - Get assessment questions")
     print("  POST /api/bridge/assess - Run consciousness assessment")
