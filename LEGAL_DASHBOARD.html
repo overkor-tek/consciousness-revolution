@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Gaslighting Scanner - Pattern Theory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .formula {
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .disclaimer {
+            background: #ffe066;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffa94d;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .input-section textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #434343;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .input-section textarea:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button.secondary {
+            background: linear-gradient(135deg, #c92a2a 0%, #a61e1e 100%);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .example-btn {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .example-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .score-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-card {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-card.manipulation {
+            background: linear-gradient(135deg, #c92a2a 0%, #861519 100%);
+            color: white;
+        }
+
+        .score-card.legitimacy {
+            background: linear-gradient(135deg, #51cf66 0%, #2f9e44 100%);
+            color: white;
+        }
+
+        .score-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .score-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .severity-EXTREME {
+            background: #861519;
+            color: white;
+        }
+
+        .severity-HIGH {
+            background: #c92a2a;
+            color: white;
+        }
+
+        .severity-MODERATE {
+            background: #ffa94d;
+            color: white;
+        }
+
+        .severity-LOW {
+            background: #ffe066;
+            color: #333;
+        }
+
+        .severity-MINIMAL {
+            background: #51cf66;
+            color: white;
+        }
+
+        .warning-box {
+            background: #fff3bf;
+            border-left: 4px solid #ffa94d;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box.severe {
+            background: #ffe3e3;
+            border-left-color: #861519;
+        }
+
+        .recommendation {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #434343;
+        }
+
+        .recommendation.severe {
+            background: #ffe3e3;
+            border-left-color: #861519;
+        }
+
+        .pattern-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .pattern-tag {
+            background: #434343;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+
+        .formula-breakdown {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+
+        .formula-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .formula-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #434343;
+        }
+
+        h2 {
+            color: #434343;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #666;
+            margin: 15px 0 10px 0;
+        }
+
+        .info-box {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #434343;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            opacity: 0.8;
+        }
+
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Legal Gaslighting Scanner</h1>
+            <div class="subtitle">Detect manipulation in legal & court communication</div>
+            <div class="formula">M = (FE × CB × SR × CD × PE) × DC | DC = 2.0 (Legal - Highest)</div>
+        </div>
+
+        <div class="disclaimer">
+            ⚠️ DISCLAIMER: This tool is for awareness and documentation purposes only. Always consult qualified legal professionals for legal matters. This is not legal advice.
+        </div>
+
+        <div class="card input-section">
+            <h2>Analyze Legal Communication</h2>
+            <p style="margin-bottom: 15px; color: #666;">
+                Analyze legal communication, court interactions, or law enforcement encounters for manipulation patterns.
+            </p>
+            <textarea id="inputText" placeholder="Enter legal communication here...
+
+Examples:
+- Attorney communication
+- Court interactions
+- Legal documents
+- Law enforcement statements
+- Contract language
+
+The scanner detects intimidation, coercion, evidence suppression, and procedural manipulation.
+
+REMEMBER: Document everything. Know your rights. Get legal help."></textarea>
+
+            <div class="button-group">
+                <button onclick="analyzeText()">🔍 ANALYZE FOR MANIPULATION</button>
+                <button class="secondary" onclick="clearAll()">🗑️ Clear</button>
+            </div>
+
+            <div class="examples-grid">
+                <button class="example-btn" onclick="loadExample(1)">⚡ Intimidation</button>
+                <button class="example-btn" onclick="loadExample(2)">🚫 Evidence Suppression</button>
+                <button class="example-btn" onclick="loadExample(3)">✅ Ethical</button>
+                <button class="example-btn" onclick="loadExample(4)">📋 Procedural Tricks</button>
+                <button class="example-btn" onclick="loadExample(5)">🚪 Coercion</button>
+            </div>
+        </div>
+
+        <div class="card results" id="results">
+            <h2>Analysis Results</h2>
+
+            <div class="score-display">
+                <div class="score-card manipulation">
+                    <div class="score-label">Manipulation</div>
+                    <div class="score-value" id="manipScore">0%</div>
+                    <div>Deceit Algorithm</div>
+                </div>
+                <div class="score-card legitimacy">
+                    <div class="score-label">Legitimacy</div>
+                    <div class="score-value" id="legitScore">0%</div>
+                    <div>Truth Algorithm</div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <span class="severity-badge" id="severityBadge">MINIMAL</span>
+            </div>
+
+            <div id="warningsContainer"></div>
+
+            <div class="recommendation" id="recommendation">
+                Recommendation will appear here
+            </div>
+
+            <h3>Detected Pattern Type</h3>
+            <div id="patternType" style="font-weight: bold; color: #666;">None</div>
+
+            <h3>Pattern Theory Formula Breakdown</h3>
+            <div class="formula-breakdown" id="formulaBreakdown"></div>
+
+            <h3>Specific Patterns Detected</h3>
+            <div class="pattern-list" id="patternList"></div>
+        </div>
+
+        <div class="card info-box">
+            <h3>🧠 Understanding Legal Manipulation</h3>
+            <p><strong>Pattern Theory</strong> with DC=2.0 (highest) due to extreme power imbalance in legal contexts.</p>
+            <ul>
+                <li><strong>FE (False Empathy):</strong> False authority claims, "trust me I'm a lawyer"</li>
+                <li><strong>CB (Confusion Building):</strong> Procedural tricks, jargon intimidation, false urgency</li>
+                <li><strong>SR (Shifting Reality):</strong> Reality denial, burden shifting, gaslighting</li>
+                <li><strong>CD (Covert Dismissal):</strong> Evidence suppression, character attacks</li>
+                <li><strong>PE (Power Exploitation):</strong> Intimidation, coercion, cost threats, isolation from counsel</li>
+                <li><strong>DC (Domain Coefficient):</strong> 2.0 - Amplifies manipulation due to power imbalance</li>
+            </ul>
+            <p style="margin-top: 10px; font-weight: bold;">⚖️ YOUR RIGHTS:</p>
+            <ul>
+                <li>Right to legal representation</li>
+                <li>Right to remain silent</li>
+                <li>Right to understand proceedings</li>
+                <li>Right to review documents</li>
+                <li>Right to adequate time</li>
+            </ul>
+            <p style="margin-top: 10px; color: #c92a2a; font-weight: bold;">If manipulation score > 60%: Get legal help IMMEDIATELY. Document everything. File complaints if appropriate.</p>
+        </div>
+
+        <div class="footer">
+            <p>Pattern Theory: Protecting rights through awareness</p>
+            <p>⚖️ Know your rights | 📝 Document everything | 👨‍⚖️ Get legal help</p>
+            <p>🔱 C1 × C2 × C3 = ∞</p>
+        </div>
+    </div>
+
+    <script>
+        const LEGAL_MANIPULATION = {
+            intimidation: [
+                "you'll regret this", "consequences will be severe", "full extent of the law",
+                "throw the book at you", "make an example", "you don't want to",
+                "think about what happens", "you'll lose everything", "take your kids",
+                "maximum penalty", "we have ways", "you can't win"
+            ],
+            false_authority: [
+                "i'm the judge here", "i know the law better", "trust me, i'm a",
+                "you don't understand", "that's not how this works", "i've been doing this",
+                "the court always", "judges never", "this is standard"
+            ],
+            coercion: [
+                "just sign this", "don't need a lawyer", "waive your rights",
+                "make this easy", "cooperate or else", "things will go better if",
+                "we can work this out if", "admit to", "confess now",
+                "plea deal expires", "limited time offer"
+            ],
+            reality_denial: [
+                "that's not in the record", "no evidence of", "court doesn't see it that way",
+                "that never happened", "you're misremembering", "the facts say otherwise",
+                "not admissible", "irrelevant", "doesn't matter what you say"
+            ],
+            procedural_tricks: [
+                "you missed the deadline", "should have filed", "too late now",
+                "improper procedure", "wrong form", "need to start over",
+                "statute of limitations", "not in proper format", "technically invalid"
+            ],
+            evidence_suppression: [
+                "not relevant", "inadmissible", "hearsay", "objection",
+                "can't prove that", "no standing", "not credible",
+                "your word against", "no documentation", "too late to add"
+            ],
+            false_legal_urgency: [
+                "must decide now", "court date tomorrow", "file immediately",
+                "expires today", "last chance to", "waive rights if you don't",
+                "default judgment if", "time is up", "act now or forfeit"
+            ],
+            burden_shifting: [
+                "prove it", "where's your evidence", "can you demonstrate",
+                "burden is on you", "you must show", "not my job to",
+                "you failed to", "should have documented", "that's your problem"
+            ],
+            jargon_confusion: [
+                "pursuant to", "notwithstanding", "heretofore", "aforementioned",
+                "in perpetuity", "ipso facto", "prima facie", "sua sponte",
+                "ex parte", "in camera", "pro se litigant", "frivolous claim"
+            ],
+            cost_threats: [
+                "legal fees will bankrupt", "you'll pay my fees", "cost you thousands",
+                "attorney costs", "court costs", "sanctions", "frivolous lawsuit",
+                "malicious prosecution", "vexatious litigant", "abuse of process"
+            ],
+            isolation_from_counsel: [
+                "lawyer can't help you", "waste of money", "doesn't understand",
+                "making it worse", "just confusing you", "lawyers lie",
+                "better without", "pro se is faster", "save the money"
+            ],
+            character_attack: [
+                "unfit parent", "unstable", "not credible", "history of",
+                "known to lie", "mentally ill", "substance abuse", "violent",
+                "unreliable witness", "manipulative", "vindictive"
+            ]
+        };
+
+        const ETHICAL_LEGAL = {
+            rights_protection: [
+                "you have the right to", "entitled to counsel", "right to remain silent",
+                "consult an attorney", "legal representation", "protect your rights",
+                "constitutional rights", "due process", "fair hearing"
+            ],
+            transparency: [
+                "let me explain", "here's what this means", "in plain english",
+                "you should understand", "ask questions", "clarify anything",
+                "no rush to decide", "take your time", "review with counsel"
+            ],
+            procedural_fairness: [
+                "both sides heard", "discovery process", "evidence submitted",
+                "proper notice", "adequate time", "opportunity to respond",
+                "fair hearing", "impartial review", "according to procedure"
+            ],
+            honest_assessment: [
+                "strong case", "weak point", "likely outcome", "risks include",
+                "best case scenario", "worst case", "realistic expectation",
+                "depends on", "court may rule", "no guarantees"
+            ],
+            documentation: [
+                "everything in writing", "read carefully", "keep copies",
+                "document everything", "contemporaneous notes", "preserve evidence",
+                "maintain records", "certified copy", "official transcript"
+            ]
+        };
+
+        const EXAMPLES = {
+            1: "You'll regret this decision. We'll throw the book at you. Just sign this waiver - you don't need a lawyer, that'll just make things worse. Cooperate now or face maximum penalties.",
+            2: "That's not in the record. Not admissible. Hearsay. Not credible. Your word against theirs. No documentation means it didn't happen. Too late to add new evidence.",
+            3: "You have the right to consult an attorney. Take your time to review this. Everything will be in writing. You're entitled to legal representation. Let me explain this in plain English.",
+            4: "You missed the deadline. Should have filed the proper form. Too late now. Statute of limitations expired. Technically invalid. Need to start the entire process over.",
+            5: "Don't need a lawyer - waste of money. Just confess and this goes easier. Plea deal expires tomorrow. Your attorney is just confusing you. Sign now or lose everything."
+        };
+
+        function loadExample(num) {
+            document.getElementById('inputText').value = EXAMPLES[num];
+        }
+
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('results').classList.remove('show');
+        }
+
+        function analyzeText() {
+            const text = document.getElementById('inputText').value.trim();
+
+            if (!text) {
+                alert('Please enter text to analyze');
+                return;
+            }
+
+            const textLower = text.toLowerCase();
+
+            // Count manipulation patterns
+            let manipulationMarkers = [];
+            let patternTypes = [];
+
+            for (const [patternType, patterns] of Object.entries(LEGAL_MANIPULATION)) {
+                for (const pattern of patterns) {
+                    if (textLower.includes(pattern)) {
+                        manipulationMarkers.push(pattern);
+                        if (!patternTypes.includes(patternType)) {
+                            patternTypes.push(patternType);
+                        }
+                    }
+                }
+            }
+
+            // Count legitimacy patterns
+            let legitimacyMarkers = [];
+            for (const [patternType, patterns] of Object.entries(ETHICAL_LEGAL)) {
+                for (const pattern of patterns) {
+                    if (textLower.includes(pattern)) {
+                        legitimacyMarkers.push(pattern);
+                    }
+                }
+            }
+
+            // Calculate scores
+            const manipCount = manipulationMarkers.length;
+            const legitCount = legitimacyMarkers.length;
+            const total = manipCount + legitCount;
+
+            let manipScore = 0;
+            let legitScore = 0;
+
+            if (total > 0) {
+                manipScore = (manipCount / total) * 100;
+                legitScore = (legitCount / total) * 100;
+            }
+
+            // Calculate Pattern Theory components (simplified)
+            const fe_patterns = ['false_authority'];
+            const cb_patterns = ['procedural_tricks', 'false_legal_urgency', 'jargon_confusion'];
+            const sr_patterns = ['reality_denial', 'burden_shifting'];
+            const cd_patterns = ['evidence_suppression', 'character_attack'];
+            const pe_patterns = ['intimidation', 'coercion', 'cost_threats', 'isolation_from_counsel'];
+
+            const fe_count = patternTypes.filter(p => fe_patterns.includes(p)).length;
+            const cb_count = patternTypes.filter(p => cb_patterns.includes(p)).length;
+            const sr_count = patternTypes.filter(p => sr_patterns.includes(p)).length;
+            const cd_count = patternTypes.filter(p => cd_patterns.includes(p)).length;
+            const pe_count = patternTypes.filter(p => pe_patterns.includes(p)).length;
+
+            const FE = Math.min(1.0, fe_count * 1.0);
+            const CB = Math.min(1.0, cb_count * 0.33);
+            const SR = Math.min(1.0, sr_count * 0.5);
+            const CD = Math.min(1.0, cd_count * 0.5);
+            const PE = Math.min(1.0, pe_count * 0.25);
+            const DC = 2.0;  // Legal domain - highest coefficient
+            const M = (FE * CB * SR * CD * PE) * DC;
+
+            // Determine severity
+            let severity = 'MINIMAL';
+            let recommendation = '✅ APPEARS ETHICAL - Legitimacy markers present, proper legal procedures followed';
+
+            if (manipScore >= 80) {
+                severity = 'EXTREME';
+                recommendation = '🚨 EXTREME LEGAL MANIPULATION - Seek immediate legal counsel, document everything, file complaints if appropriate';
+            } else if (manipScore >= 60) {
+                severity = 'HIGH';
+                recommendation = '⚠️ HIGH MANIPULATION - Get legal representation NOW, do not proceed alone, preserve all evidence';
+            } else if (manipScore >= 40) {
+                severity = 'MODERATE';
+                recommendation = '⚠️ MODERATE MANIPULATION - Consult attorney, document interactions, maintain boundaries';
+            } else if (manipScore >= 20) {
+                severity = 'LOW';
+                recommendation = '⚠️ LOW MANIPULATION - Monitor situation, keep records, know your rights';
+            }
+
+            // Display results
+            document.getElementById('manipScore').textContent = manipScore.toFixed(1) + '%';
+            document.getElementById('legitScore').textContent = legitScore.toFixed(1) + '%';
+
+            const severityBadge = document.getElementById('severityBadge');
+            severityBadge.textContent = severity;
+            severityBadge.className = 'severity-badge severity-' + severity;
+
+            // Warnings
+            const warningsContainer = document.getElementById('warningsContainer');
+            let warnings = [];
+            if (manipScore > 60) warnings.push('🚨 HIGH LEGAL MANIPULATION DETECTED');
+            if (patternTypes.includes('intimidation')) warnings.push('⚠️ INTIMIDATION TACTICS - Document everything');
+            if (patternTypes.includes('coercion')) warnings.push('🚨 COERCION DETECTED - Seek legal counsel immediately');
+            if (patternTypes.includes('isolation_from_counsel')) warnings.push('🚨 ATTEMPTING TO ISOLATE FROM LEGAL HELP');
+            if (patternTypes.includes('reality_denial') && patternTypes.includes('evidence_suppression')) {
+                warnings.push('🚨 GASLIGHTING + EVIDENCE SUPPRESSION (serious concern)');
+            }
+            if (M > 0.5) warnings.push(`⚠️ Pattern Theory Score: ${M.toFixed(3)} (DC=2.0 amplification)`);
+
+            if (warnings.length > 0) {
+                const warningClass = severity === 'EXTREME' || severity === 'HIGH' ? 'warning-box severe' : 'warning-box';
+                warningsContainer.innerHTML = `<div class="${warningClass}">${warnings.join('<br>')}</div>`;
+            } else {
+                warningsContainer.innerHTML = '';
+            }
+
+            // Recommendation
+            const recBox = document.getElementById('recommendation');
+            recBox.textContent = recommendation;
+            recBox.className = severity === 'EXTREME' || severity === 'HIGH' ? 'recommendation severe' : 'recommendation';
+
+            // Pattern type
+            document.getElementById('patternType').textContent =
+                patternTypes.length > 0 ? patternTypes.join(', ') : 'ethical legal practice';
+
+            // Formula breakdown
+            const formulaHtml = `
+                <div class="formula-row"><span>FE (False Empathy):</span><span>${FE.toFixed(3)}</span></div>
+                <div class="formula-row"><span>CB (Confusion Building):</span><span>${CB.toFixed(3)}</span></div>
+                <div class="formula-row"><span>SR (Shifting Reality):</span><span>${SR.toFixed(3)}</span></div>
+                <div class="formula-row"><span>CD (Covert Dismissal):</span><span>${CD.toFixed(3)}</span></div>
+                <div class="formula-row"><span>PE (Power Exploitation):</span><span>${PE.toFixed(3)}</span></div>
+                <div class="formula-row"><span>DC (Domain Coefficient):</span><span>${DC.toFixed(1)} [LEGAL - HIGHEST]</span></div>
+                <div class="formula-row"><span>M (Manipulation Score):</span><span>${M.toFixed(3)}</span></div>
+            `;
+            document.getElementById('formulaBreakdown').innerHTML = formulaHtml;
+
+            // Pattern list
+            const patternHtml = manipulationMarkers.slice(0, 10).map(p =>
+                `<span class="pattern-tag">${p}</span>`
+            ).join('');
+            document.getElementById('patternList').innerHTML =
+                patternHtml || '<span style="color: #51cf66;">No manipulation patterns detected</span>';
+
+            // Show results
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        console.log('⚖️ Legal Gaslighting Scanner loaded');
+        console.log('Know your rights. Document everything.');
+        console.log('🔱 C1 × C2 × C3 = ∞');
+    </script>
+</body>
+</html>
