@@ -20,6 +20,7 @@ from auth import (
     create_or_update_oauth_user
 )
 from models import User, SessionLocal
+from email_service import send_welcome_email
 
 # Create blueprint
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -67,6 +68,9 @@ def signup():
             return jsonify({'error': result}), 400
 
         user = result
+
+        # Send welcome email (async, don't block on failure)
+        send_welcome_email(user.email, user.full_name)
 
         # Generate tokens
         access_token = create_access_token(user.id, user.email)

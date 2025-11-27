@@ -13,6 +13,11 @@ from flask import Blueprint, request, jsonify
 from datetime import datetime
 from auth import token_required, get_current_user
 from models import User, Subscription, SessionLocal
+from email_service import (
+    send_subscription_confirmation_email,
+    send_payment_failed_email,
+    send_subscription_canceled_email
+)
 
 # Initialize Stripe
 stripe.api_key = os.environ.get("STRIPE_API_KEY")
@@ -280,6 +285,16 @@ def handle_checkout_completed(session):
 
         db.commit()
 
+        # Send confirmation email
+        if user:
+            tier_amounts = {'pro': 19, 'enterprise': 99}
+            send_subscription_confirmation_email(
+                user.email,
+                user.full_name,
+                tier,
+                tier_amounts.get(tier, 0)
+            )
+
         print(f"Subscription activated: user_id={user_id}, tier={tier}")
 
     except Exception as e:
@@ -357,6 +372,10 @@ def handle_subscription_deleted(subscription):
 
         db.commit()
 
+        # Send cancellation email
+        if user:
+            send_subscription_canceled_email(user.email, user.full_name)
+
         print(f"Subscription canceled: {subscription_id}")
 
     except Exception as e:
@@ -384,11 +403,17 @@ def handle_payment_failed(invoice):
 
         # Mark as past_due
         sub_record.status = 'past_due'
+
+        # Get user for email
+        user = db.query(User).filter(User.id == sub_record.user_id).first()
+
         db.commit()
 
-        print(f"Payment failed for subscription: {subscription_id}")
+        # Send payment failure email
+        if user:
+            send_payment_failed_email(user.email, user.full_name)
 
-        # TODO: Send email notification to user
+        print(f"Payment failed for subscription: {subscription_id}")
 
     except Exception as e:
         db.rollback()
