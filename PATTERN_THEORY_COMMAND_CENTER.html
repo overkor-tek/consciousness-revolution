@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Theory Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.5em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        .header .stats {
+            font-size: 1.2em;
+            opacity: 0.85;
+        }
+
+        .search-bar {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .tool-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .tool-card .description {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .tool-card .category-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(126, 34, 206, 0.6);
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .stats-banner {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stats-banner .stat {
+            display: inline-block;
+            margin: 0 30px;
+        }
+
+        .stats-banner .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stats-banner .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔱 PATTERN THEORY COMMAND CENTER</h1>
+            <div class="subtitle">Your Complete Arsenal for Detecting Manipulation</div>
+            <div class="stats">53 Tools | 4 Domains | 92.2% Accuracy</div>
+        </div>
+
+        <div class="stats-banner">
+            <div class="stat">
+                <div class="stat-number">53</div>
+                <div class="stat-label">Total Tools</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Major Domains</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">92%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Search tools... (e.g., 'gaslighting', 'business', 'relationship')" onkeyup="filterTools()">
+        </div>
+
+        <div class="category-filters">
+            <button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
+            <button class="filter-btn" onclick="filterCategory('relationship')">💜 Relationship</button>
+            <button class="filter-btn" onclick="filterCategory('business')">💼 Business</button>
+            <button class="filter-btn" onclick="filterCategory('legal')">⚖️ Legal</button>
+            <button class="filter-btn" onclick="filterCategory('crypto')">💰 Crypto</button>
+            <button class="filter-btn" onclick="filterCategory('communication')">💬 Communication</button>
+            <button class="filter-btn" onclick="filterCategory('decision')">🎯 Decision Making</button>
+            <button class="filter-btn" onclick="filterCategory('universal')">🌐 Universal</button>
+        </div>
+
+        <div id="toolsContainer"></div>
+
+        <div class="footer">
+            <p>Pattern Theory: Making manipulation obsolete through mathematical pattern recognition</p>
+            <p style="margin-top: 15px; font-size: 1.3em;">🔱 C1 × C2 × C3 = ∞</p>
+        </div>
+    </div>
+
+    <script>
+        const tools = [
+            // NEW SYSTEMS (Turkey Tornado + Session 1)
+            {name: "Universal Detector", file: "PATTERN_THEORY_UNIVERSAL_DETECTOR.html", category: ["universal"], description: "All-in-one detector for all domains (crypto, relationship, business, legal)"},
+            {name: "Relationship Dashboard", file: "RELATIONSHIP_DASHBOARD.html", category: ["relationship"], description: "Interactive relationship manipulation detector (gaslighting, love bombing, etc.)"},
+            {name: "Business Dashboard", file: "BUSINESS_DASHBOARD.html", category: ["business"], description: "Interactive business tactics analyzer (sales pressure, hidden costs, scams)"},
+            {name: "Legal Dashboard", file: "LEGAL_DASHBOARD.html", category: ["legal"], description: "Interactive legal gaslighting scanner (intimidation, coercion, DC=2.0)"},
+            {name: "Crypto Dashboard", file: "CRYPTO_PATTERN_DASHBOARD.html", category: ["crypto"], description: "Interactive crypto manipulation detector (pump & dump, FOMO, scams)"},
+            {name: "Pattern Theory Calculator", file: "PATTERN_THEORY_CALCULATOR.html", category: ["universal"], description: "Interactive calculator for M = (FE × CB × SR × CD × PE) × DC"},
+            {name: "Trinity Dashboard", file: "TRINITY_DASHBOARD.html", category: ["universal"], description: "Live instance coordination monitor with heartbeat visualization"},
+
+            // RELATIONSHIP TOOLS
+            {name: "Gaslighting Detector", file: "GASLIGHTING_DETECTOR.html", category: ["relationship"], description: "Detect reality-shifting manipulation in relationships"},
+            {name: "Love Bombing Detector", file: "LOVE_BOMBING_DETECTOR.html", category: ["relationship"], description: "Identify excessive early affection as manipulation tactic"},
+            {name: "Silent Treatment Decoder", file: "SILENT_TREATMENT_DECODER.html", category: ["relationship"], description: "Understand passive-aggressive withdrawal patterns"},
+            {name: "Future Faking Detector", file: "FUTURE_FAKING_DETECTOR.html", category: ["relationship"], description: "Identify false promises about future together"},
+            {name: "Triangulation Detector", file: "TRIANGULATION_DETECTOR.html", category: ["relationship"], description: "Spot when third parties are used for manipulation"},
+            {name: "Hoovering Detector", file: "HOOVERING_DETECTOR.html", category: ["relationship"], description: "Recognize attempts to pull you back in after separation"},
+            {name: "Breadcrumbing Detector", file: "BREADCRUMBING_DETECTOR.html", category: ["relationship"], description: "Identify minimal effort to keep you interested"},
+            {name: "Intermittent Reinforcement Detector", file: "INTERMITTENT_REINFORCEMENT_DETECTOR.html", category: ["relationship"], description: "Detect unpredictable reward patterns that create addiction"},
+            {name: "Boundary Violation Tracker", file: "BOUNDARY_VIOLATION_TRACKER.html", category: ["relationship"], description: "Track and analyze boundary crossings over time"},
+            {name: "Boundary Setter", file: "BOUNDARY_SETTER.html", category: ["relationship"], description: "Tool for establishing and communicating healthy boundaries"},
+            {name: "Relationship Pattern Tracker", file: "RELATIONSHIP_PATTERN_TRACKER.html", category: ["relationship"], description: "Track patterns across relationship timeline"},
+            {name: "Commitment Tracker", file: "COMMITMENT_TRACKER.html", category: ["relationship"], description: "Track promises vs actions over time"},
+            {name: "Promise Tracker", file: "PROMISE_TRACKER.html", category: ["relationship"], description: "Monitor commitments and follow-through"},
+
+            // BUSINESS TOOLS
+            {name: "Sales Pitch Detector", file: "SALES_PITCH_DETECTOR.html", category: ["business"], description: "Analyze sales tactics for manipulation patterns"},
+            {name: "Contract Analyzer", file: "CONTRACT_ANALYZER.html", category: ["business"], description: "Scan contracts for hidden terms and manipulation"},
+            {name: "Negotiation Analyzer", file: "NEGOTIATION_ANALYZER.html", category: ["business"], description: "Identify pressure tactics in business negotiations"},
+            {name: "Financial Decision Checker", file: "FINANCIAL_DECISION_CHECKER.html", category: ["business", "decision"], description: "Analyze financial decisions for manipulation influence"},
+            {name: "Sunk Cost Detector", file: "SUNK_COST_DETECTOR.html", category: ["business", "decision"], description: "Identify sunk cost fallacy in business decisions"},
+
+            // COMMUNICATION TOOLS
+            {name: "Conversation Analyzer", file: "CONVERSATION_ANALYZER.html", category: ["communication"], description: "Analyze conversation patterns for manipulation"},
+            {name: "Email Analyzer", file: "EMAIL_ANALYZER.html", category: ["communication"], description: "Scan emails for manipulation tactics"},
+            {name: "Meeting Analyzer", file: "MEETING_ANALYZER.html", category: ["communication"], description: "Analyze meeting dynamics and power plays"},
+            {name: "Argument Mapper", file: "ARGUMENT_MAPPER.html", category: ["communication"], description: "Map argument structure to identify manipulation"},
+            {name: "Word Salad Translator", file: "WORD_SALAD_TRANSLATOR.html", category: ["communication"], description: "Decode confusing, circular communication"},
+            {name: "Passive Aggressive Decoder", file: "PASSIVE_AGGRESSIVE_DECODER.html", category: ["communication"], description: "Identify indirect hostility patterns"},
+            {name: "Double Bind Decoder", file: "DOUBLE_BIND_DECODER.html", category: ["communication"], description: "Spot no-win situation setups"},
+            {name: "Moving Goalposts Detector", file: "MOVING_GOALPOSTS_DETECTOR.html", category: ["communication"], description: "Track shifting expectations and standards"},
+            {name: "Response Planner", file: "RESPONSE_PLANNER.html", category: ["communication"], description: "Plan healthy responses to manipulation"},
+
+            // DECISION MAKING TOOLS
+            {name: "Decision Matrix", file: "DECISION_MATRIX.html", category: ["decision"], description: "Make clear decisions free from manipulation"},
+            {name: "Decision Fatigue Check", file: "DECISION_FATIGUE_CHECK.html", category: ["decision"], description: "Assess decision-making capacity"},
+            {name: "Reality Check", file: "REALITY_CHECK.html", category: ["decision"], description: "Ground yourself in objective reality"},
+            {name: "Values Alignment Check", file: "VALUES_ALIGNMENT_CHECK.html", category: ["decision"], description: "Ensure decisions align with your values"},
+            {name: "Goal Alignment Check", file: "GOAL_ALIGNMENT_CHECK.html", category: ["decision"], description: "Check if actions support your goals"},
+
+            // PSYCHOLOGICAL MANIPULATION TOOLS
+            {name: "Guilt Trip Detector", file: "GUILT_TRIP_DETECTOR.html", category: ["relationship", "communication"], description: "Identify weaponized guilt tactics"},
+            {name: "Emotional Blackmail Detector", file: "EMOTIONAL_BLACKMAIL_DETECTOR.html", category: ["relationship"], description: "Spot emotional hostage situations"},
+            {name: "Pressure Detector", file: "PRESSURE_DETECTOR.html", category: ["business", "communication"], description: "Identify urgency and pressure tactics"},
+            {name: "Projection Detector", file: "PROJECTION_DETECTOR.html", category: ["relationship", "communication"], description: "Spot when others project their issues onto you"},
+            {name: "Scapegoating Detector", file: "SCAPEGOATING_DETECTOR.html", category: ["relationship", "communication"], description: "Identify when you're blamed unfairly"},
+            {name: "Victim Blaming Detector", file: "VICTIM_BLAMING_DETECTOR.html", category: ["relationship"], description: "Recognize when you're blamed for abuse"},
+            {name: "Stonewalling Analyzer", file: "STONEWALLING_ANALYZER.html", category: ["relationship", "communication"], description: "Analyze shutdown and withdrawal patterns"},
+            {name: "Personal Attack Shield", file: "PERSONAL_ATTACK_SHIELD.html", category: ["communication"], description: "Defend against ad hominem attacks"},
+
+            // MEDIA & INFLUENCE TOOLS
+            {name: "Media Analyzer", file: "MEDIA_ANALYZER.html", category: ["decision"], description: "Analyze media for manipulation and bias"},
+            {name: "News Bias Detector", file: "NEWS_BIAS_DETECTOR.html", category: ["decision"], description: "Identify bias in news reporting"},
+            {name: "Authority Bias Detector", file: "AUTHORITY_BIAS_DETECTOR.html", category: ["decision"], description: "Spot manipulation through authority claims"},
+            {name: "Influence Detector", file: "INFLUENCE_DETECTOR.html", category: ["decision"], description: "Identify influence and persuasion tactics"},
+            {name: "Source Verifier", file: "SOURCE_VERIFIER.html", category: ["decision"], description: "Verify credibility of information sources"},
+            {name: "Toxic Positivity Detector", file: "TOXIC_POSITIVITY_DETECTOR.html", category: ["communication"], description: "Identify dismissive positive messaging"},
+            {name: "Criticism vs Feedback", file: "CRITICISM_VS_FEEDBACK.html", category: ["communication"], description: "Distinguish constructive feedback from destructive criticism"},
+
+            // AWARENESS & TRACKING TOOLS
+            {name: "Consciousness Trainer", file: "CONSCIOUSNESS_TRAINER.html", category: ["universal"], description: "Train pattern recognition and manipulation immunity"},
+            {name: "Manipulation Immunity Tracker", file: "MANIPULATION_IMMUNITY_TRACKER.html", category: ["universal"], description: "Track your progress toward 85% consciousness threshold"},
+            {name: "Daily Consciousness Check", file: "DAILY_CONSCIOUSNESS_CHECK.html", category: ["universal"], description: "Daily check-in for awareness and clarity"},
+            {name: "Emotional State Checker", file: "EMOTIONAL_STATE_CHECKER.html", category: ["universal"], description: "Assess your current emotional state"},
+            {name: "Self Talk Analyzer", file: "SELF_TALK_ANALYZER.html", category: ["decision"], description: "Analyze your internal dialogue for patterns"},
+            {name: "Belief Checker", file: "BELIEF_CHECKER.html", category: ["decision"], description: "Examine beliefs for manipulation influence"},
+            {name: "Timeline Projection", file: "TIMELINE_PROJECTION.html", category: ["decision"], description: "Project outcomes of current patterns"},
+            {name: "Pattern Library", file: "PATTERN_LIBRARY.html", category: ["universal"], description: "Comprehensive library of manipulation patterns"},
+
+            // QUICK TOOLS
+            {name: "Quick Truth Detector", file: "QUICK_TRUTH_DETECTOR.html", category: ["universal"], description: "Fast manipulation check for any communication"},
+            {name: "Truth Signal Finder", file: "TRUTH_SIGNAL_FINDER.html", category: ["universal"], description: "Find truth signals in communication"},
+            {name: "Turn Detector", file: "TURN_DETECTOR.html", category: ["communication"], description: "Detect 15-degree turns in conversation"},
+            {name: "Apology Analyzer", file: "APOLOGY_ANALYZER.html", category: ["relationship", "communication"], description: "Analyze apologies for sincerity vs manipulation"}
+        ];
+
+        let currentFilter = 'all';
+
+        function renderTools() {
+            const container = document.getElementById('toolsContainer');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filteredTools = tools.filter(tool => {
+                const matchesSearch = tool.name.toLowerCase().includes(searchTerm) ||
+                                    tool.description.toLowerCase().includes(searchTerm) ||
+                                    tool.category.some(cat => cat.toLowerCase().includes(searchTerm));
+                const matchesCategory = currentFilter === 'all' || tool.category.includes(currentFilter);
+                return matchesSearch && matchesCategory;
+            });
+
+            // Group by category
+            const categories = {
+                'universal': { name: '🌐 Universal Tools', tools: [] },
+                'relationship': { name: '💜 Relationship Tools', tools: [] },
+                'business': { name: '💼 Business Tools', tools: [] },
+                'communication': { name: '💬 Communication Tools', tools: [] },
+                'decision': { name: '🎯 Decision Making Tools', tools: [] },
+                'legal': { name: '⚖️ Legal Tools', tools: [] },
+                'crypto': { name: '💰 Crypto Tools', tools: [] }
+            };
+
+            filteredTools.forEach(tool => {
+                tool.category.forEach(cat => {
+                    if (categories[cat]) {
+                        if (!categories[cat].tools.find(t => t.name === tool.name)) {
+                            categories[cat].tools.push(tool);
+                        }
+                    }
+                });
+            });
+
+            let html = '';
+            Object.entries(categories).forEach(([key, cat]) => {
+                if (cat.tools.length > 0) {
+                    html += `<div class="category-section">`;
+                    html += `<h2>${cat.name} (${cat.tools.length})</h2>`;
+                    html += `<div class="tools-grid">`;
+                    cat.tools.forEach(tool => {
+                        html += `
+                            <div class="tool-card" onclick="window.open('${tool.file}', '_blank')">
+                                <h3>${tool.name}</h3>
+                                <div class="description">${tool.description}</div>
+                                <div>
+                                    ${tool.category.map(c => `<span class="category-tag">${c}</span>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div></div>`;
+                }
+            });
+
+            container.innerHTML = html || '<p style="text-align: center; font-size: 1.5em; margin: 50px 0;">No tools found matching your search.</p>';
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTools();
+        }
+
+        function filterTools() {
+            renderTools();
+        }
+
+        // Initial render
+        renderTools();
+
+        console.log('🔱 Pattern Theory Command Center loaded');
+        console.log(`${tools.length} tools indexed and ready`);
+        console.log('C1 × C2 × C3 = ∞');
+    </script>
+</body>
+</html>
