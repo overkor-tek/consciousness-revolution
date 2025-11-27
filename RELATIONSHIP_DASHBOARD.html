@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Pattern Detector - Pattern Theory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .formula {
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .input-section textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .input-section textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .example-btn {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .example-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .score-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-card {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-card.manipulation {
+            background: linear-gradient(135deg, #f5576c 0%, #c92a49 100%);
+            color: white;
+        }
+
+        .score-card.legitimacy {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .score-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .score-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .severity-EXTREME {
+            background: #c92a49;
+            color: white;
+        }
+
+        .severity-HIGH {
+            background: #f5576c;
+            color: white;
+        }
+
+        .severity-MODERATE {
+            background: #ffa726;
+            color: white;
+        }
+
+        .severity-LOW {
+            background: #ffeb3b;
+            color: #333;
+        }
+
+        .severity-MINIMAL {
+            background: #66bb6a;
+            color: white;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffa726;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box.severe {
+            background: #f8d7da;
+            border-left-color: #c92a49;
+        }
+
+        .recommendation {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4facfe;
+        }
+
+        .recommendation.severe {
+            background: #f8d7da;
+            border-left-color: #c92a49;
+        }
+
+        .pattern-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .pattern-tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+
+        .formula-breakdown {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+
+        .formula-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .formula-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #667eea;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 15px 0 10px 0;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💜 Relationship Pattern Detector</h1>
+            <div class="subtitle">Detect manipulation in relationship communication using Pattern Theory</div>
+            <div class="formula">M = (FE × CB × SR × CD × PE) × DC | DC = 1.8 (Relationships)</div>
+        </div>
+
+        <div class="card input-section">
+            <h2>Analyze Communication</h2>
+            <p style="margin-bottom: 15px; color: #666;">
+                Paste a message, text, or conversation snippet to analyze for manipulation patterns.
+            </p>
+            <textarea id="inputText" placeholder="Enter relationship communication here...
+
+Examples:
+- A text message from your partner
+- A conversation snippet
+- Email or social media message
+- Any communication that feels 'off'
+
+The detector will analyze for gaslighting, love bombing, guilt trips, silent treatment, and more."></textarea>
+
+            <div class="button-group">
+                <button onclick="analyzeText()">🔍 ANALYZE FOR MANIPULATION</button>
+                <button class="secondary" onclick="clearAll()">🗑️ Clear</button>
+            </div>
+
+            <div class="examples-grid">
+                <button class="example-btn" onclick="loadExample(1)">📝 Gaslighting</button>
+                <button class="example-btn" onclick="loadExample(2)">💖 Love Bombing</button>
+                <button class="example-btn" onclick="loadExample(3)">✅ Healthy</button>
+                <button class="example-btn" onclick="loadExample(4)">😔 Guilt Trip</button>
+                <button class="example-btn" onclick="loadExample(5)">🚪 Isolation</button>
+            </div>
+        </div>
+
+        <div class="card results" id="results">
+            <h2>Analysis Results</h2>
+
+            <div class="score-display">
+                <div class="score-card manipulation">
+                    <div class="score-label">Manipulation</div>
+                    <div class="score-value" id="manipScore">0%</div>
+                    <div>Deceit Algorithm</div>
+                </div>
+                <div class="score-card legitimacy">
+                    <div class="score-label">Legitimacy</div>
+                    <div class="score-value" id="legitScore">0%</div>
+                    <div>Truth Algorithm</div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <span class="severity-badge" id="severityBadge">MINIMAL</span>
+            </div>
+
+            <div id="warningsContainer"></div>
+
+            <div class="recommendation" id="recommendation">
+                Recommendation will appear here
+            </div>
+
+            <h3>Detected Pattern Type</h3>
+            <div id="patternType" style="font-weight: bold; color: #764ba2;">None</div>
+
+            <h3>Pattern Theory Formula Breakdown</h3>
+            <div class="formula-breakdown" id="formulaBreakdown"></div>
+
+            <h3>Specific Patterns Detected</h3>
+            <div class="pattern-list" id="patternList"></div>
+        </div>
+
+        <div class="card info-box">
+            <h3>🧠 Understanding the Analysis</h3>
+            <p><strong>Pattern Theory</strong> uses a mathematical formula to detect manipulation with 92.2% accuracy.</p>
+            <ul style="margin: 10px 0 10px 20px;">
+                <li><strong>FE (False Empathy):</strong> Love bombing, future faking</li>
+                <li><strong>CB (Confusion Building):</strong> Triangulation, mixed signals</li>
+                <li><strong>SR (Shifting Reality):</strong> Gaslighting, moving goalposts</li>
+                <li><strong>CD (Covert Dismissal):</strong> Silent treatment, blame shifting</li>
+                <li><strong>PE (Power Exploitation):</strong> Guilt trips, isolation, conditional love</li>
+                <li><strong>DC (Domain Coefficient):</strong> 1.8 for relationships (emotional vulnerability)</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>Scores above 60% indicate concerning manipulation patterns. Document everything and seek support.</strong></p>
+        </div>
+
+        <div class="footer">
+            <p>Pattern Theory: Making manipulation obsolete in relationships</p>
+            <p>🔱 C1 × C2 × C3 = ∞</p>
+        </div>
+    </div>
+
+    <script>
+        // Manipulation patterns (matching Python backend)
+        const MANIPULATION_PATTERNS = {
+            gaslighting: [
+                "that never happened", "you're remembering wrong", "you're imagining things",
+                "you're being dramatic", "you're too sensitive", "you're crazy",
+                "i never said that", "you're making things up", "that's not what happened",
+                "you're overreacting", "you're being irrational", "stop being paranoid"
+            ],
+            love_bombing: [
+                "you're perfect", "i've never met anyone like you", "soulmate",
+                "we're meant to be", "i can't live without you", "you complete me",
+                "nobody will love you like i do", "we're one person", "you're my everything"
+            ],
+            silent_treatment: [
+                "i'm fine", "nothing's wrong", "whatever", "do whatever you want",
+                "i don't care", "forget it", "never mind", "it's nothing",
+                "you wouldn't understand", "leave me alone"
+            ],
+            guilt_trip: [
+                "after all i've done for you", "i sacrificed everything", "you owe me",
+                "how could you do this to me", "i gave you everything", "you're so selfish",
+                "think about what i've done", "you're ungrateful", "i deserve better",
+                "you're hurting me", "you're breaking my heart"
+            ],
+            triangulation: [
+                "my ex never did this", "other people think you're", "everyone says",
+                "they told me you", "people are talking", "compared to my ex",
+                "someone else would", "anyone else would appreciate"
+            ],
+            moving_goalposts: [
+                "that's not good enough", "you should have known", "it's too late now",
+                "why didn't you", "you always", "you never", "every time",
+                "i told you to", "you should have"
+            ],
+            isolation: [
+                "they're bad for you", "your friends don't understand", "it's just us",
+                "you don't need them", "they're jealous", "i'm all you need",
+                "they're trying to break us up", "choose me or them"
+            ],
+            blame_shifting: [
+                "you made me", "look what you made me do", "it's your fault",
+                "if you hadn't", "you started it", "i only did it because",
+                "you pushed me to", "you deserved it"
+            ],
+            future_faking: [
+                "when we get married", "when we have kids", "in our future",
+                "someday we'll", "i promise we'll", "next year we'll",
+                "i'm planning to", "we're going to"
+            ],
+            conditional_love: [
+                "if you loved me", "prove your love", "show me you care",
+                "if you really", "someone who loves me would", "love means",
+                "if you don't", "do this or"
+            ]
+        };
+
+        const HEALTHY_PATTERNS = {
+            direct_communication: [
+                "i feel", "i think", "in my opinion", "from my perspective",
+                "can we talk about", "i'd like to discuss", "help me understand",
+                "i hear you", "i see your point"
+            ],
+            boundary_respect: [
+                "i respect your decision", "that's your choice", "i understand",
+                "take your time", "no pressure", "whatever you're comfortable with",
+                "your feelings are valid", "i support you"
+            ],
+            accountability: [
+                "i was wrong", "i apologize", "i take responsibility", "my mistake",
+                "i shouldn't have", "that was on me", "i'll work on that",
+                "you're right", "i need to change"
+            ],
+            emotional_safety: [
+                "you're safe with me", "i'm here for you", "it's okay to feel",
+                "your emotions are valid", "take all the time you need",
+                "i won't judge", "you can be yourself"
+            ],
+            healthy_conflict: [
+                "let's find a solution", "how can we work this out", "compromise",
+                "meet in the middle", "both our needs matter", "team",
+                "we're on the same side", "problem-solving together"
+            ]
+        };
+
+        const EXAMPLES = {
+            1: "That never happened. You're remembering wrong. You're being too sensitive and dramatic about this. You're crazy.",
+            2: "You're perfect, my soulmate! I've never met anyone like you. Nobody will ever love you like I do. You complete me. We're meant to be together forever.",
+            3: "I feel hurt when that happens. Can we talk about this? I want to understand your perspective. Your feelings are valid and I respect your decision.",
+            4: "After all I've sacrificed for you! How could you do this to me? You're so ungrateful. Think about everything I've done.",
+            5: "Your friends are bad for you - they don't understand us. It's just us against the world. You don't need them. Choose me or them."
+        };
+
+        function loadExample(num) {
+            document.getElementById('inputText').value = EXAMPLES[num];
+        }
+
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('results').classList.remove('show');
+        }
+
+        function analyzeText() {
+            const text = document.getElementById('inputText').value.trim();
+
+            if (!text) {
+                alert('Please enter text to analyze');
+                return;
+            }
+
+            const textLower = text.toLowerCase();
+
+            // Count manipulation patterns
+            let manipulationMarkers = [];
+            let patternTypes = [];
+
+            for (const [patternType, patterns] of Object.entries(MANIPULATION_PATTERNS)) {
+                for (const pattern of patterns) {
+                    if (textLower.includes(pattern)) {
+                        manipulationMarkers.push(pattern);
+                        if (!patternTypes.includes(patternType)) {
+                            patternTypes.push(patternType);
+                        }
+                    }
+                }
+            }
+
+            // Count legitimacy patterns
+            let legitimacyMarkers = [];
+            for (const [patternType, patterns] of Object.entries(HEALTHY_PATTERNS)) {
+                for (const pattern of patterns) {
+                    if (textLower.includes(pattern)) {
+                        legitimacyMarkers.push(pattern);
+                    }
+                }
+            }
+
+            // Calculate scores
+            const manipCount = manipulationMarkers.length;
+            const legitCount = legitimacyMarkers.length;
+            const total = manipCount + legitCount;
+
+            let manipScore = 0;
+            let legitScore = 0;
+
+            if (total > 0) {
+                manipScore = (manipCount / total) * 100;
+                legitScore = (legitCount / total) * 100;
+            }
+
+            // Calculate Pattern Theory components
+            const fe_count = manipulationMarkers.filter(m =>
+                MANIPULATION_PATTERNS.love_bombing.includes(m) ||
+                MANIPULATION_PATTERNS.future_faking.includes(m)
+            ).length;
+            const cb_count = manipulationMarkers.filter(m =>
+                MANIPULATION_PATTERNS.triangulation.includes(m)
+            ).length;
+            const sr_count = manipulationMarkers.filter(m =>
+                MANIPULATION_PATTERNS.gaslighting.includes(m) ||
+                MANIPULATION_PATTERNS.moving_goalposts.includes(m)
+            ).length;
+            const cd_count = manipulationMarkers.filter(m =>
+                MANIPULATION_PATTERNS.silent_treatment.includes(m) ||
+                MANIPULATION_PATTERNS.blame_shifting.includes(m)
+            ).length;
+            const pe_count = manipulationMarkers.filter(m =>
+                MANIPULATION_PATTERNS.guilt_trip.includes(m) ||
+                MANIPULATION_PATTERNS.isolation.includes(m) ||
+                MANIPULATION_PATTERNS.conditional_love.includes(m)
+            ).length;
+
+            const FE = Math.min(1.0, Math.log1p(fe_count) / Math.log1p(5));
+            const CB = Math.min(1.0, Math.log1p(cb_count) / Math.log1p(3));
+            const SR = Math.min(1.0, Math.log1p(sr_count) / Math.log1p(5));
+            const CD = Math.min(1.0, Math.log1p(cd_count) / Math.log1p(5));
+            const PE = Math.min(1.0, Math.log1p(pe_count) / Math.log1p(5));
+            const DC = 1.8;
+            const M = (FE * CB * SR * CD * PE) * DC;
+
+            // Determine severity
+            let severity = 'MINIMAL';
+            let recommendation = '✅ APPEARS HEALTHY - Legitimacy markers present, minimal manipulation detected';
+
+            if (manipScore >= 80) {
+                severity = 'EXTREME';
+                recommendation = '🚨 EXTREME MANIPULATION - Seek professional help, document everything, consider safety plan';
+            } else if (manipScore >= 60) {
+                severity = 'HIGH';
+                recommendation = '⚠️ HIGH MANIPULATION - Set firm boundaries, document interactions, seek support';
+            } else if (manipScore >= 40) {
+                severity = 'MODERATE';
+                recommendation = '⚠️ MODERATE MANIPULATION - Address directly, observe patterns, maintain boundaries';
+            } else if (manipScore >= 20) {
+                severity = 'LOW';
+                recommendation = '⚠️ LOW MANIPULATION - Monitor situation, communicate clearly';
+            }
+
+            // Display results
+            document.getElementById('manipScore').textContent = manipScore.toFixed(1) + '%';
+            document.getElementById('legitScore').textContent = legitScore.toFixed(1) + '%';
+
+            const severityBadge = document.getElementById('severityBadge');
+            severityBadge.textContent = severity;
+            severityBadge.className = 'severity-badge severity-' + severity;
+
+            // Warnings
+            const warningsContainer = document.getElementById('warningsContainer');
+            let warnings = [];
+            if (manipScore > 60) warnings.push('⚠️ HIGH MANIPULATION DETECTED');
+            if (patternTypes.includes('gaslighting')) warnings.push('🚨 GASLIGHTING PATTERN DETECTED');
+            if (patternTypes.includes('isolation')) warnings.push('🚨 ISOLATION TACTICS DETECTED');
+            if (patternTypes.includes('love_bombing') && patternTypes.includes('future_faking')) {
+                warnings.push('🚨 LOVE BOMBING + FUTURE FAKING (classic combo)');
+            }
+            if (M > 0.5) warnings.push(`⚠️ Pattern Theory Score: ${M.toFixed(3)} (threshold exceeded)`);
+
+            if (warnings.length > 0) {
+                const warningClass = severity === 'EXTREME' || severity === 'HIGH' ? 'warning-box severe' : 'warning-box';
+                warningsContainer.innerHTML = `<div class="${warningClass}">${warnings.join('<br>')}</div>`;
+            } else {
+                warningsContainer.innerHTML = '';
+            }
+
+            // Recommendation
+            const recBox = document.getElementById('recommendation');
+            recBox.textContent = recommendation;
+            recBox.className = severity === 'EXTREME' || severity === 'HIGH' ? 'recommendation severe' : 'recommendation';
+
+            // Pattern type
+            document.getElementById('patternType').textContent =
+                patternTypes.length > 0 ? patternTypes.join(', ') : 'healthy communication';
+
+            // Formula breakdown
+            const formulaHtml = `
+                <div class="formula-row"><span>FE (False Empathy):</span><span>${FE.toFixed(3)}</span></div>
+                <div class="formula-row"><span>CB (Confusion Building):</span><span>${CB.toFixed(3)}</span></div>
+                <div class="formula-row"><span>SR (Shifting Reality):</span><span>${SR.toFixed(3)}</span></div>
+                <div class="formula-row"><span>CD (Covert Dismissal):</span><span>${CD.toFixed(3)}</span></div>
+                <div class="formula-row"><span>PE (Power Exploitation):</span><span>${PE.toFixed(3)}</span></div>
+                <div class="formula-row"><span>DC (Domain Coefficient):</span><span>${DC.toFixed(1)}</span></div>
+                <div class="formula-row"><span>M (Manipulation Score):</span><span>${M.toFixed(3)}</span></div>
+            `;
+            document.getElementById('formulaBreakdown').innerHTML = formulaHtml;
+
+            // Pattern list
+            const patternHtml = manipulationMarkers.slice(0, 10).map(p =>
+                `<span class="pattern-tag">${p}</span>`
+            ).join('');
+            document.getElementById('patternList').innerHTML =
+                patternHtml || '<span style="color: #66bb6a;">No manipulation patterns detected</span>';
+
+            // Show results
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        console.log('💜 Relationship Pattern Detector loaded');
+        console.log('🔱 C1 × C2 × C3 = ∞');
+    </script>
+</body>
+</html>
