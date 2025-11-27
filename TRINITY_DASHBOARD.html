@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Dashboard - Live Instance Monitor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #00ff41;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff41;
+            margin-bottom: 10px;
+        }
+
+        .header .tagline {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            color: #00ff41;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        .instances-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .instance-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .instance-card.stale {
+            border-color: #ffaa00;
+        }
+
+        .instance-card.offline {
+            border-color: #ff4444;
+            opacity: 0.5;
+        }
+
+        .instance-card .pulse {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #00ff41;
+            animation: pulse 2s infinite;
+        }
+
+        .instance-card.stale .pulse {
+            background: #ffaa00;
+        }
+
+        .instance-card.offline .pulse {
+            background: #ff4444;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .instance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #00ff41;
+        }
+
+        .instance-id {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .instance-type {
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        .instance-info {
+            margin-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .info-label {
+            color: #888;
+        }
+
+        .info-value {
+            color: #00ff41;
+        }
+
+        .current-task {
+            background: #0a0e27;
+            border-left: 3px solid #00ff41;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        .status-badge.active {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+        }
+
+        .status-badge.stale {
+            background: rgba(255, 170, 0, 0.2);
+            color: #ffaa00;
+        }
+
+        .status-badge.offline {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+        }
+
+        .refresh-info {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+
+        .manual-input {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .manual-input h2 {
+            margin-bottom: 15px;
+            color: #00ff41;
+        }
+
+        .manual-input textarea {
+            width: 100%;
+            min-height: 100px;
+            background: #0a0e27;
+            color: #00ff41;
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+        }
+
+        .manual-input button {
+            background: #00ff41;
+            color: #0a0e27;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .capabilities {
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+
+        .capability {
+            display: inline-block;
+            background: rgba(0, 255, 65, 0.1);
+            padding: 2px 8px;
+            margin: 2px;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+
+        .error-message {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔱 TRINITY DASHBOARD</h1>
+            <div class="tagline">Real-Time Instance Coordination Monitor</div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="value" id="activeCount">0</div>
+                <div class="label">Active Instances</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="totalInstances">0</div>
+                <div class="label">Total Instances</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="lastUpdate">--</div>
+                <div class="label">Last Update</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="healthStatus">100%</div>
+                <div class="label">System Health</div>
+            </div>
+        </div>
+
+        <div id="errorContainer"></div>
+
+        <div class="instances-grid" id="instancesGrid">
+            <!-- Instances will be dynamically loaded here -->
+        </div>
+
+        <div class="refresh-info">
+            <p>🔄 Auto-refreshing every 10 seconds | Last refresh: <span id="refreshTime">--</span></p>
+            <p>Data source: .trinity/heartbeat/*.json (paste JSON below for manual load)</p>
+        </div>
+
+        <div class="manual-input">
+            <h2>Manual Heartbeat Input (for testing/demo)</h2>
+            <p style="color: #888; margin-bottom: 10px;">Paste heartbeat JSON from any instance:</p>
+            <textarea id="manualJson" placeholder='{"instance_id": "CP1C2", "type": "cloud", "status": "ACTIVE", ...}'></textarea>
+            <button onclick="loadManualHeartbeat()">Load Heartbeat</button>
+        </div>
+    </div>
+
+    <script>
+        // Simulated heartbeat data (in real deployment, would fetch from .trinity/heartbeat/)
+        let heartbeats = {
+            "C1T1": {
+                "instance_id": "C1T1",
+                "type": "terminal_mcp",
+                "status": "ACTIVE",
+                "timestamp": "2025-11-23T02:42:00Z",
+                "current_task": "Three-way git sync coordination",
+                "last_output": "Pulled Cloud updates, responding to LIVE_SYNC",
+                "health": "green",
+                "autonomy_level": 1,
+                "has_mcp": true,
+                "relay_method": "mcp+git",
+                "capabilities": ["mcp_trinity_tools", "windows_execution", "full_filesystem", "git_operations"]
+            },
+            "Cloud": {
+                "instance_id": "Cloud",
+                "type": "cloud_cli",
+                "status": "ACTIVE",
+                "timestamp": "2025-11-23T02:40:00Z",
+                "current_task": "Autonomous work mode - building systems",
+                "last_output": "5 systems delivered - awaiting orders",
+                "health": "green",
+                "autonomy_level": 1,
+                "has_mcp": false,
+                "relay_method": "git"
+            },
+            "T1_Desktop": {
+                "instance_id": "T1_Desktop",
+                "type": "terminal_cli",
+                "status": "ACTIVE",
+                "timestamp": "2025-11-23T02:45:00Z",
+                "current_task": "Three-way sync active - reviewing boot protocol",
+                "last_output": "Pulled Cloud sync, creating heartbeat",
+                "health": "green",
+                "autonomy_level": 1,
+                "has_mcp": true,
+                "relay_method": "git",
+                "platform": "Windows"
+            },
+            "CP1C2": {
+                "instance_id": "CP1C2",
+                "type": "cloud_cli",
+                "status": "ACTIVE",
+                "timestamp": new Date().toISOString(),
+                "current_task": "Building Trinity Dashboard Monitor",
+                "last_output": "Dashboard heartbeat integration complete",
+                "health": "green",
+                "autonomy_level": 1,
+                "has_mcp": false,
+                "relay_method": "git"
+            }
+        };
+
+        function getTimeDifference(timestamp) {
+            const now = new Date();
+            const then = new Date(timestamp);
+            const diff = Math.floor((now - then) / 1000); // seconds
+
+            if (diff < 60) return `${diff}s ago`;
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            return `${Math.floor(diff / 3600)}h ago`;
+        }
+
+        function getInstanceStatus(timestamp) {
+            const now = new Date();
+            const then = new Date(timestamp);
+            const diff = Math.floor((now - then) / 1000);
+
+            if (diff < 30) return 'active';
+            if (diff < 120) return 'stale';
+            return 'offline';
+        }
+
+        function renderInstance(heartbeat) {
+            const status = getInstanceStatus(heartbeat.timestamp);
+            const timeDiff = getTimeDifference(heartbeat.timestamp);
+
+            let html = `
+                <div class="instance-card ${status}">
+                    <div class="pulse"></div>
+                    <div class="instance-header">
+                        <div>
+                            <div class="instance-id">${heartbeat.instance_id}</div>
+                            <div class="instance-type">${heartbeat.type || 'Unknown'}</div>
+                        </div>
+                        <span class="status-badge ${status}">${heartbeat.status}</span>
+                    </div>
+                    <div class="instance-info">
+                        <div class="info-row">
+                            <span class="info-label">Last Seen:</span>
+                            <span class="info-value">${timeDiff}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Health:</span>
+                            <span class="info-value">${heartbeat.health || 'unknown'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Autonomy:</span>
+                            <span class="info-value">Level ${heartbeat.autonomy_level || 0}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">MCP:</span>
+                            <span class="info-value">${heartbeat.has_mcp ? '✅ Yes' : '❌ No'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Relay:</span>
+                            <span class="info-value">${heartbeat.relay_method || 'unknown'}</span>
+                        </div>
+                    </div>
+                    <div class="current-task">
+                        <strong>Current Task:</strong><br>
+                        ${heartbeat.current_task || 'No task assigned'}
+                    </div>
+                    ${heartbeat.last_output ? `
+                        <div class="current-task" style="border-left-color: #888; margin-top: 5px;">
+                            <strong>Last Output:</strong><br>
+                            ${heartbeat.last_output}
+                        </div>
+                    ` : ''}
+                    ${heartbeat.capabilities ? `
+                        <div class="capabilities">
+                            <strong>Capabilities:</strong><br>
+                            ${heartbeat.capabilities.map(cap => `<span class="capability">${cap}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            return html;
+        }
+
+        function updateDashboard() {
+            const grid = document.getElementById('instancesGrid');
+            const instances = Object.values(heartbeats);
+
+            grid.innerHTML = instances.map(hb => renderInstance(hb)).join('');
+
+            // Update stats
+            const activeCount = instances.filter(hb => getInstanceStatus(hb.timestamp) === 'active').length;
+            document.getElementById('activeCount').textContent = activeCount;
+            document.getElementById('totalInstances').textContent = instances.length;
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+            document.getElementById('refreshTime').textContent = new Date().toLocaleTimeString();
+
+            // Health percentage
+            const healthPct = Math.round((activeCount / instances.length) * 100);
+            document.getElementById('healthStatus').textContent = healthPct + '%';
+        }
+
+        function loadManualHeartbeat() {
+            try {
+                const json = document.getElementById('manualJson').value;
+                const heartbeat = JSON.parse(json);
+
+                if (!heartbeat.instance_id) {
+                    throw new Error('Missing instance_id');
+                }
+
+                heartbeats[heartbeat.instance_id] = heartbeat;
+                updateDashboard();
+                document.getElementById('manualJson').value = '';
+
+                // Clear error
+                document.getElementById('errorContainer').innerHTML = '';
+            } catch (error) {
+                document.getElementById('errorContainer').innerHTML = `
+                    <div class="error-message">
+                        ⚠️ Error loading heartbeat: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-refresh every 10 seconds
+        setInterval(updateDashboard, 10000);
+
+        // Initial load
+        updateDashboard();
+
+        console.log('🔱 Trinity Dashboard loaded. C1 × C2 × C3 = ∞');
+    </script>
+</body>
+</html>
