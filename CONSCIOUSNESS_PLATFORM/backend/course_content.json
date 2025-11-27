@@ -368,7 +368,7 @@
       "title": "Seven Domains Mastery",
       "description": "Deep dive into each domain with advanced pattern recognition techniques and practical applications",
       "difficulty": "intermediate",
-      "duration_hours": 15,
+      "duration_hours": 8,
       "tier_required": "pro",
       "order": 2,
       "lessons": [
@@ -435,6 +435,504 @@
                 ],
                 "correct": 1,
                 "explanation": "Most people have 5-7 primary cognitive loops that consume 80% of their mental cycles."
+              }
+            ]
+          }
+        },
+        {
+          "id": "relational-domain-deep-dive",
+          "title": "Relational Domain: Mastering Interpersonal Dynamics",
+          "order": 2,
+          "duration_minutes": 70,
+          "content": {
+            "overview": "The Relational domain governs all one-to-one interactions. Mastery here means seeing relationship patterns as they unfold in real-time and consciously choosing responses instead of running automatic scripts.",
+            "key_concepts": [
+              "Every relationship is a pattern dance between two pattern systems",
+              "Communication patterns reveal underlying relational structures",
+              "Conflict is pattern collision - understanding this allows resolution",
+              "Boundaries are where conscious choice replaces automatic response"
+            ],
+            "sections": [
+              {
+                "title": "The Relational Pattern Dance",
+                "content": "**Core Insight**: Relationships are not static. They are dynamic pattern systems where each person's patterns trigger predictable responses in the other.\n\n**The Dance Metaphor**: In ballroom dancing, if one partner steps forward, the other must step back. If both step forward, collision. If both step back, disconnection. The same is true in relationships - your patterns interact with theirs in predictable sequences.\n\n**Common Relational Dances**:\n\n**1. Pursuer-Distancer**\n• Person A seeks connection, moves closer\n• Person B feels smothered, pulls away\n• A feels rejected, pursues harder\n• B feels more pressure, distances more\n• Escalating cycle until rupture or pattern interruption\n\n**2. Over-Functioner/Under-Functioner**\n• Person A takes excessive responsibility\n• Person B becomes less responsible\n• A feels resentful, works harder to compensate\n• B becomes more dependent, less capable\n• A burns out, B never develops capacity\n\n**3. Blame-Shame Spiral**\n• Person A expresses blame/criticism\n• Person B responds with shame/defensiveness\n• A feels unheard, escalates blame\n• B feels attacked, escalates defensiveness\n• Neither party is actually addressing the issue\n\n**Pattern Interruption**: The person who sees the pattern first can interrupt it. This doesn't require the other person to change - it requires YOU to break your part of the automatic response."
+              },
+              {
+                "title": "Real-Time Pattern Recognition in Conversation",
+                "content": "**The Skill**: Developing the ability to track relational patterns WHILE participating in the conversation.\n\n**Three Levels of Awareness**:\n\n**Level 1: Retrospective** - 'I always end up in this same argument' (awareness after the fact)\n\n**Level 2: Mid-Pattern** - 'We're doing it again right now' (awareness during, but too late to shift)\n\n**Level 3: Pre-Pattern** - 'I can feel this pattern starting, I'm choosing a different response' (awareness before the pattern fully activates)\n\n**Training Exercise - The Split Screen**:\nPractice holding two tracks simultaneously during conversation:\n• **Track 1**: Content (what's being said)\n• **Track 2**: Pattern (how it's being said, what's happening beneath the words)\n\n**Example**:\n• Content: 'You never help with the dishes'\n• Pattern: Criticism → defensiveness cycle activating\n\n**Intervention Points**:\n1. **Before responding**, pause 3 seconds\n2. **Name the pattern** (to yourself): 'This is the blame cycle'\n3. **Choose conscious response** that breaks the pattern:\n   - OLD: 'I did the dishes yesterday!' (defensiveness)\n   - NEW: 'You're right, I can do better. How can we make this work for both of us?' (pattern break)\n\n**Advanced**: Eventually you can name the pattern OUT LOUD with the other person - 'I notice we're falling into our usual pattern where I criticize and you defend. Can we try something different?'"
+              },
+              {
+                "title": "Attachment Patterns and Relationship Templates",
+                "content": "**Core Concept**: Your early relationship experiences create templates that you unconsciously replay in adult relationships.\n\n**The Three Primary Attachment Patterns**:\n\n**Secure Attachment** (~50% of people)\n• Comfortable with intimacy and independence\n• Can express needs directly\n• Conflict is seen as solvable, not threatening\n• Pattern: Approach → Engage → Resolve → Repair\n\n**Anxious Attachment** (~20% of people)\n• Craves closeness, fears abandonment\n• Hyper-vigilant to signs of rejection\n• Becomes clingy under stress\n• Pattern: Fear abandonment → Pursue harder → Create distance through intensity\n\n**Avoidant Attachment** (~25% of people)\n• Values independence, uncomfortable with too much closeness\n• Suppresses emotional needs\n• Withdraws under stress\n• Pattern: Feel smothered → Create distance → Miss connection → Briefly reengage → Repeat\n\n**Anxious-Avoidant Trap**: The most common dysfunctional pairing:\n• Anxious person is attracted to avoidant's initial attention\n• Avoidant is attracted to anxious person's warmth\n• As relationship deepens:\n  - Anxious wants more closeness (triggering)\n  - Avoidant wants more space (triggering)\n• Creates perfect conditions for the pursuer-distancer dance\n\n**Working With Your Pattern**:\n1. **Identify your attachment pattern** (observe your behavior across multiple relationships)\n2. **Recognize your triggers** (what makes your pattern activate?)\n3. **Create space between trigger and response** (3-second gap before reacting)\n4. **Practice the opposite move** (Anxious: practice soothing yourself; Avoidant: practice staying present under emotional intensity)"
+              }
+            ],
+            "practical_exercise": "For the next week, practice split-screen awareness in ONE relationship. Track: (1) what patterns you notice repeating, (2) moments you caught the pattern mid-stream, (3) any attempts you made to respond differently. Write brief notes after each interaction."
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What is the 'Pursuer-Distancer' dynamic?",
+                "options": [
+                  "One person leads, the other follows",
+                  "One seeks connection (triggering withdrawal), the other distances (triggering more pursuit)",
+                  "One person is dominant, the other is submissive",
+                  "One person talks more than the other"
+                ],
+                "correct": 1,
+                "explanation": "The Pursuer-Distancer dynamic is a common relational pattern where one person's pursuit triggers the other's withdrawal, which triggers more pursuit, creating an escalating cycle."
+              },
+              {
+                "id": "q2",
+                "question": "What are the three levels of relational pattern awareness?",
+                "options": [
+                  "Past, present, future",
+                  "Retrospective (after), Mid-Pattern (during), Pre-Pattern (before)",
+                  "Low, medium, high",
+                  "Self, other, relationship"
+                ],
+                "correct": 1,
+                "explanation": "The three levels are: Retrospective (awareness after the fact), Mid-Pattern (awareness during but too late to shift), and Pre-Pattern (awareness before the pattern fully activates, enabling conscious choice)."
+              },
+              {
+                "id": "q3",
+                "question": "Which attachment style is characterized by craving closeness while fearing abandonment?",
+                "options": [
+                  "Secure",
+                  "Anxious",
+                  "Avoidant",
+                  "Independent"
+                ],
+                "correct": 1,
+                "explanation": "Anxious attachment is characterized by craving closeness while simultaneously fearing abandonment, leading to hyper-vigilance for signs of rejection."
+              },
+              {
+                "id": "q4",
+                "question": "How can you interrupt a relational pattern you're caught in?",
+                "options": [
+                  "Force the other person to change",
+                  "Avoid the relationship entirely",
+                  "Break YOUR part of the automatic response pattern",
+                  "Pretend the pattern doesn't exist"
+                ],
+                "correct": 2,
+                "explanation": "You can interrupt a relational pattern by breaking YOUR part of the automatic response - this doesn't require the other person to change first."
+              }
+            ]
+          }
+        },
+        {
+          "id": "organizational-domain-deep-dive",
+          "title": "Organizational Domain: Decoding Group Dynamics",
+          "order": 3,
+          "duration_minutes": 65,
+          "content": {
+            "overview": "Organizations are systems with predictable patterns. Learning to read these invisible structures gives you the ability to navigate groups effectively and avoid common organizational traps.",
+            "key_concepts": [
+              "Organizations have formal structures (org charts) and shadow structures (actual power flows)",
+              "Group decisions often happen before meetings (meeting theater)",
+              "Culture is 'how we do things here' - the unwritten rules that govern behavior",
+              "Innovation and resistance to change follow predictable cycles"
+            ],
+            "sections": [
+              {
+                "title": "Shadow Structures vs. Formal Structures",
+                "content": "**The Organizational Illusion**: The org chart shows who reports to whom. The shadow structure shows who actually influences what.\n\n**Formal Structure** (what's documented):\n• Official hierarchy\n• Job titles and responsibilities\n• Reporting relationships\n• Decision-making authority (on paper)\n\n**Shadow Structure** (how things actually work):\n• Informal power networks\n• Historical relationships (who worked with whom)\n• Subject matter experts (who people actually ask)\n• Cultural gatekeepers (who determines 'how we do things')\n\n**Reading the Shadow Structure**:\n\n**1. Watch Information Flow**\n• Who gets cc'd on emails?\n• Who gets consulted before decisions?\n• Who gets informed after decisions?\n• Who is left out entirely?\n\nThis reveals actual influence hierarchy.\n\n**2. Observe Meeting Dynamics**\n• Who speaks first? (often sets the frame)\n• Who speaks last? (often the actual decider)\n• Whose ideas get explored vs. dismissed?\n• Who can interrupt whom without consequence?\n\n**3. Track Decision Patterns**\n• Where are decisions actually made? (1-on-1 conversations, hallway chats, golf courses, executive dinners)\n• When formal meetings happen, has the decision already been made?\n• Who can reverse decisions made by others?\n\n**Example Pattern - 'Meeting Theater'**:\n• Real decision made by 2-3 key people in private conversation\n• Meeting scheduled to 'discuss options'\n• Discussion happens, alternatives presented\n• Group arrives at the predetermined conclusion\n• Everyone feels heard, decision has legitimacy\n• Efficient for decisions, dangerous if you mistake theater for real input"
+              },
+              {
+                "title": "Organizational Culture Patterns",
+                "content": "**Culture = The Pattern System of 'How We Do Things Here'**\n\n**The Culture Iceberg**:\n\n**Visible (10%)**:\n• Office layout and design\n• Dress code\n• Meeting structures\n• Published values\n\n**Invisible (90%)**:\n• What actually gets rewarded vs. punished\n• Unwritten rules about communication\n• Taboo topics (what can't be discussed)\n• Definition of 'good work'\n• Patterns of inclusion/exclusion\n\n**Four Cultural Archetypes**:\n\n**1. Hierarchy Culture** (Control & Stability)\n• Clear chain of command\n• Decisions flow top-down\n• Risk-averse\n• Values: Efficiency, predictability, control\n• Pattern: 'Wait for direction from above'\n• Thrives: Stable environments, regulated industries\n• Fails: Rapid change, innovation required\n\n**2. Adhocracy Culture** (Innovation & Agility)\n• Fluid teams, project-based\n• Encourages experimentation\n• Accepts failure as learning\n• Values: Innovation, risk-taking, creativity\n• Pattern: 'Try it and see'\n• Thrives: Fast-changing markets, creative work\n• Fails: Need for operational consistency\n\n**3. Clan Culture** (Collaboration & Belonging)\n• Family-like atmosphere\n• Consensus decision-making\n• High emotional investment\n• Values: Loyalty, belonging, harmony\n• Pattern: 'Let's discuss until we all agree'\n• Thrives: Small teams, mission-driven work\n• Fails: Rapid scaling, tough decisions needed\n\n**4. Market Culture** (Competition & Achievement)\n• Focus on results and metrics\n• Internal competition\n• Aggressive goal pursuit\n• Values: Winning, achievement, dominance\n• Pattern: 'What gets measured gets done'\n• Thrives: Competitive markets, growth phases\n• Fails: Burnout, unethical shortcuts\n\n**Navigating Culture**:\n• Learn the actual rewards system (not stated values, but what behaviors get promoted)\n• Identify taboos (what topics create awkward silence)\n• Master the communication style (direct vs. indirect, formal vs. casual)\n• Recognize when you're swimming against cultural current (higher effort, lower success)"
+              },
+              {
+                "title": "Innovation Resistance Cycles",
+                "content": "**The Pattern**: Organizations simultaneously claim to want innovation while actively resisting change.\n\n**The Standard Innovation Resistance Cycle**:\n\n**Phase 1: Enthusiasm**\n• New idea proposed\n• Initial excitement\n• Resources allocated\n• 'This will change everything!'\n\n**Phase 2: Reality Check**\n• Implementation harder than expected\n• Existing systems resist integration\n• People's actual workload increases\n• 'This is more complicated than we thought'\n\n**Phase 3: Immune Response**\n• Organization's antibodies activate\n• 'That's not how we do things here'\n• Budget cuts to the innovation\n• Key supporters leave or get reassigned\n• 'We tried that before, it didn't work'\n\n**Phase 4: Normalization**\n• Innovation either:\n  A) Absorbed and diluted to fit existing patterns\n  B) Quietly killed\n  C) Succeeds if champion has enough power to force adoption\n\n**Why This Happens**:\n• Organizations optimize for stability (efficiency requires predictability)\n• Innovation requires temporary chaos\n• People's status/power tied to existing systems\n• Change threatens existing skill sets\n\n**How to Navigate**:\n1. **Recognize which phase you're in** (don't mistake Phase 1 enthusiasm for actual commitment)\n2. **Plan for Phase 3 resistance** (it's not personal, it's pattern)\n3. **Build coalition before announcement** (shadow structure support matters more than formal approval)\n4. **Start small, prove value** (lower immune response for small changes)\n5. **Frame as evolution, not revolution** ('Building on our strengths' beats 'Everything was wrong before')"
+              }
+            ],
+            "practical_exercise": "Map the shadow structure of one organization you're part of. Answer: (1) Who has informal influence beyond their title? (2) Where do real decisions get made? (3) What are 3 unwritten rules about 'how we do things'? (4) What's one topic that's taboo to discuss openly?"
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What is the difference between formal and shadow structures in organizations?",
+                "options": [
+                  "Formal is good, shadow is bad",
+                  "Formal is documented hierarchy, shadow is actual power and influence flows",
+                  "There is no difference",
+                  "Shadow structures only exist in corrupt organizations"
+                ],
+                "correct": 1,
+                "explanation": "Formal structures are documented (org charts, job titles) while shadow structures are the actual patterns of power, influence, and decision-making that emerge naturally in organizations."
+              },
+              {
+                "id": "q2",
+                "question": "What is 'Meeting Theater'?",
+                "options": [
+                  "When meetings are dramatic",
+                  "When the real decision was already made and the meeting is for legitimacy",
+                  "When people act during meetings",
+                  "When meetings are held in auditoriums"
+                ],
+                "correct": 1,
+                "explanation": "Meeting Theater occurs when the real decision has already been made in private, and the meeting serves to create legitimacy and the appearance of input, not actual decision-making."
+              },
+              {
+                "id": "q3",
+                "question": "Which organizational culture values innovation and experimentation over stability?",
+                "options": [
+                  "Hierarchy Culture",
+                  "Adhocracy Culture",
+                  "Clan Culture",
+                  "Market Culture"
+                ],
+                "correct": 1,
+                "explanation": "Adhocracy Culture values innovation, agility, experimentation, and accepts failure as learning - prioritizing adaptation over stability."
+              },
+              {
+                "id": "q4",
+                "question": "Why do organizations resist innovation even when they claim to want it?",
+                "options": [
+                  "People are lazy",
+                  "Organizations are optimized for stability; innovation creates temporary chaos and threatens existing systems",
+                  "Innovation is always bad",
+                  "Leadership doesn't really care"
+                ],
+                "correct": 1,
+                "explanation": "Organizations naturally resist innovation because they're optimized for stability and efficiency. Innovation requires temporary chaos and threatens existing power structures, skills, and systems."
+              }
+            ]
+          }
+        },
+        {
+          "id": "societal-domain-deep-dive",
+          "title": "Societal Domain: Understanding Cultural Patterns",
+          "order": 4,
+          "duration_minutes": 75,
+          "content": {
+            "overview": "The Societal domain encompasses the collective beliefs, narratives, and behavioral patterns that shape entire cultures. Mastery here means distinguishing between universal truths and cultural conditioning.",
+            "key_concepts": [
+              "Culture is the operating system most people never question",
+              "Narratives shape what societies consider possible or impossible",
+              "Moral panics follow predictable cycles across generations",
+              "What's considered 'common sense' is often culturally specific conditioning"
+            ],
+            "sections": [
+              {
+                "title": "The Invisible Operating System",
+                "content": "**Core Insight**: Culture is to society what water is to fish - completely immersive, rarely noticed, constantly shaping behavior.\n\n**Cultural Programming Layers**:\n\n**Layer 1: Language Structures Thought**\n• Different languages literally structure reality differently\n• English: 'I am angry' (anger as state of being)\n• Spanish: 'Tengo rabia' (I have anger - anger as temporary possession)\n• This shapes how cultures relate to emotions\n\n**Layer 2: Unexamined Assumptions**\nThings your culture treats as 'obvious' that are actually culturally specific:\n• **Time**: Linear progress vs. cyclical renewal\n• **Self**: Individual identity vs. collective identity\n• **Success**: Personal achievement vs. group harmony\n• **Reality**: Material world primary vs. spiritual world primary\n\n**Layer 3: Value Hierarchies**\nWhat gets prioritized without conscious choice:\n• Western: Individual freedom > Group conformity\n• Eastern: Social harmony > Individual expression\n• Neither is 'right' - both are cultural patterns\n\n**Testing for Cultural Conditioning**:\nQuestion: 'What feels wrong to question?'\nWhatever makes you emotionally defensive without logical reason is likely cultural programming, not universal truth.\n\n**Example - Individualism vs. Collectivism**:\n\n**Individualist Pattern** (US, Western Europe):\n• 'Be yourself'\n• 'Follow your dreams'\n• Personal happiness prioritized\n• Retirement homes for elderly are normal\n• Pattern Result: High personal freedom, low social cohesion\n\n**Collectivist Pattern** (East Asia, Middle East):\n• 'Honor your family'\n• 'Fulfill your duty'\n• Group harmony prioritized\n• Multi-generational homes are normal\n• Pattern Result: High social cohesion, constrained individual expression\n\n**Advanced Recognition**: Neither pattern is 'better' - each solves different problems and creates different dysfunctions."
+              },
+              {
+                "title": "Narrative Structures and Possibility Spaces",
+                "content": "**Core Concept**: The dominant stories a society tells determine what its members believe is possible or impossible.\n\n**How Narratives Control Behavior**:\n\nNarratives don't explicitly forbid actions - they make certain actions literally unthinkable.\n\n**Historical Example - Women's Suffrage**:\n• Before 1900: 'Women voting' was not just illegal - it was considered absurd, against nature\n• The narrative: Women lack rational capacity for political decisions\n• Reality: No biological basis, pure cultural narrative\n• Pattern Shift: Narrative challenged → appears 'radical' → normalized → becomes 'obvious truth'\n\n**Current Narratives Operating in Western Culture**:\n\n**Narrative 1: Progress Is Linear**\n• Story: Society gets better over time\n• What it enables: Investment in future, technological development\n• What it conceals: Cyclical patterns, collapse precedents\n• Alternative narrative: Cycles of rise and decline\n\n**Narrative 2: Markets Are Efficient**\n• Story: Price discovery reveals true value\n• What it enables: Economic coordination at scale\n• What it conceals: Market manipulation, information asymmetry\n• Alternative narrative: Markets are power games with pricing theater\n\n**Narrative 3: Meritocracy**\n• Story: Hard work and talent determine success\n• What it enables: Motivation, social mobility belief\n• What it conceals: Structural advantages, network effects, inheritance\n• Alternative narrative: Success is primarily access to opportunity\n\n**Narrative 4: Romantic Love**\n• Story: Find 'the one', live happily ever after\n• What it enables: Pair bonding, nuclear family formation\n• What it conceals: Love as skill, relationship as practice\n• Alternative narrative: Love is commitment and conscious practice\n\n**Detecting Dominant Narratives**:\n1. **What can't be questioned without social cost?** (Reveals sacred narratives)\n2. **What 'makes no sense' to people in your culture?** (Reveals boundaries of possibility space)\n3. **What do movies/TV repeatedly reinforce?** (Reveals narrative repetition for conditioning)\n4. **What was unthinkable 50 years ago that's normal now?** (Reveals narrative shift patterns)"
+              },
+              {
+                "title": "Moral Panic Cycles",
+                "content": "**The Pattern**: Societies periodically experience waves of collective fear about specific threats - following a predictable pattern.\n\n**The Moral Panic Cycle** (typically 5-10 years):\n\n**Phase 1: Emergence**\n• New behavior/technology/group emerges\n• Initially ignored or niche\n• Example: Comic books (1940s), Rock music (1950s), Video games (1990s), Social media (2010s)\n\n**Phase 2: Media Amplification**\n• Isolated incidents highlighted\n• 'Experts' emerge warning of dangers\n• 'Won't somebody think of the children!'\n• Anecdotal evidence treated as epidemic\n\n**Phase 3: Moral Entrepreneurship**\n• Politicians, activists seize the issue\n• Legislative action proposed\n• Public concern peaks\n• Demands for 'something must be done'\n\n**Phase 4: Regulation**\n• Laws passed\n• Age restrictions, content warnings, bans\n• Social acceptability rules formalized\n• Original concern often already fading\n\n**Phase 5: Normalization**\n• New behavior integrates into culture\n• Restrictions remain but concern disappears\n• Next generation finds panic absurd\n• New target for panic emerges\n\n**Historical Examples**:\n\n**1950s: Comic Books Will Corrupt Youth**\n• Fear: Comic books cause juvenile delinquency\n• Response: Comics Code Authority, censorship\n• Result: Comics became safer than church sermons\n• Reality: Moral panic, not actual threat\n\n**1980s: Satanic Ritual Abuse Panic**\n• Fear: Secret satanic cults abusing children\n• Response: Thousands of investigations, imprisonments\n• Result: Zero evidence of coordinated satanic conspiracy\n• Reality: Mass hysteria, false memories, leading questions\n\n**2010s: Social Media Destroying a Generation**\n• Fear: Phones/social media causing teen mental health crisis\n• Response: Age limits, screen time tracking, app restrictions\n• Reality: ??? (Too soon to tell - we're in Phase 3-4 currently)\n\n**Recognizing When You're in One**:\n• Apocalyptic language ('destroying a generation')\n• Anecdotal evidence treated as proof\n• Nuanced discussion becomes difficult\n• Questioning the panic gets you labeled as defending the danger"
+              }
+            ],
+            "practical_exercise": "Identify one cultural assumption you hold that you've never questioned. Ask: 'Is this universally true, or is this how my culture taught me to see the world?' Research how another culture approaches this same domain. Write your findings."
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What is the relationship between culture and conscious awareness?",
+                "options": [
+                  "Culture has no effect on consciousness",
+                  "Culture is like water to fish - immersive, rarely noticed, constantly shaping behavior",
+                  "Culture only affects uneducated people",
+                  "Consciousness transcends all cultural influence"
+                ],
+                "correct": 1,
+                "explanation": "Culture is to society what water is to fish - completely immersive and rarely noticed, yet constantly shaping perception and behavior. Most people never question their cultural operating system."
+              },
+              {
+                "id": "q2",
+                "question": "How do dominant narratives control behavior?",
+                "options": [
+                  "Through explicit laws and punishment",
+                  "By making certain actions literally unthinkable, not just illegal",
+                  "They don't actually control behavior",
+                  "Through mind control technology"
+                ],
+                "correct": 1,
+                "explanation": "Dominant narratives control behavior by making certain actions or ideas literally unthinkable - they constrain the possibility space before explicit rules are even needed."
+              },
+              {
+                "id": "q3",
+                "question": "What is a 'moral panic'?",
+                "options": [
+                  "When people panic about morality",
+                  "A predictable cycle where society experiences collective fear about a specific threat, following a pattern of emergence → amplification → regulation → normalization",
+                  "A mental health disorder",
+                  "When religious people get upset"
+                ],
+                "correct": 1,
+                "explanation": "A moral panic is a societal pattern where collective fear about a specific threat (new technology, behavior, or group) follows a predictable cycle: emergence → media amplification → moral entrepreneurship → regulation → normalization."
+              },
+              {
+                "id": "q4",
+                "question": "How can you detect if something is cultural conditioning vs. universal truth?",
+                "options": [
+                  "Universal truths feel more important",
+                  "Cultural conditioning is always wrong",
+                  "Ask 'what feels wrong to question?' and 'how do other cultures approach this?' - emotional defensiveness without logic suggests cultural programming",
+                  "You can't distinguish them"
+                ],
+                "correct": 2,
+                "explanation": "Cultural conditioning often reveals itself through emotional defensiveness when questioned, and by examining how different cultures approach the same domain differently. Universal truths hold across cultures; cultural conditioning varies."
+              }
+            ]
+          }
+        },
+        {
+          "id": "technological-domain-deep-dive",
+          "title": "Technological Domain: Decoding Digital Behavior Patterns",
+          "order": 5,
+          "duration_minutes": 65,
+          "content": {
+            "overview": "Technology is never neutral - every tool embeds the values and incentives of its designers. Mastery in this domain means seeing through the interface to understand the behavior patterns technology is designed to create.",
+            "key_concepts": [
+              "Technology shapes behavior through design, not just functionality",
+              "Every platform has a business model that creates user incentives",
+              "Attention is the new oil - platforms compete to capture and monetize it",
+              "Digital behavior patterns often bypass conscious choice"
+            ],
+            "sections": [
+              {
+                "title": "Design Intent vs. Stated Purpose",
+                "content": "**Core Principle**: What a technology is FOR (stated) and what it's DESIGNED to do (actual) are often different.\n\n**The Pattern**: Every successful technology solves a problem for its USER and a problem for its CREATOR. Understanding both reveals the full design intent.\n\n**Example - Social Media Platforms**:\n\n**Stated Purpose**: 'Connect with friends and family'\n\n**Actual Design Intent**: Maximize time on platform to sell attention to advertisers\n\n**Design Elements That Reveal True Intent**:\n• Infinite scroll (removes natural stopping points)\n• Notification systems (pull you back repeatedly)\n• 'People you may know' (expand network = expand content = expand time)\n• Algorithmic timeline (shows engagement-driving content, not chronological)\n• Like/heart counts (social validation creates checking behavior)\n\n**The Tell**: If the stated purpose was primary, you'd see:\n• Time limits built in\n• 'You're all caught up' endpoints\n• Chronological feeds (not algorithmic)\n• No interruption notifications\n\n**Example - Free-to-Play Games**:\n\n**Stated Purpose**: 'Fun entertainment'\n\n**Actual Design Intent**: Extract maximum revenue through behavioral conditioning\n\n**Design Elements**:\n• Daily login bonuses (habit formation)\n• Energy systems (scarcity creates value)\n• Pay-to-skip-wait timers (manufactured frustration → purchase relief)\n• Loot boxes (gambling mechanics)\n• Power creep (your investment becomes obsolete)\n\n**Pattern Recognition Exercise**: For any technology, ask:\n1. What does the user want? (Stated purpose)\n2. What does the creator want? (Business model)\n3. Whose interest does the design serve when they conflict?\n4. What behaviors does the design reward vs. punish?"
+              },
+              {
+                "title": "Attention Capture Systems",
+                "content": "**The Economics of Attention**:\n\nIn the digital economy, attention is the scarce resource. Platforms compete to:\n1. Capture attention (get you to start)\n2. Retain attention (keep you engaged)\n3. Monetize attention (sell access to advertisers)\n\n**The Attention Capture Toolbox**:\n\n**1. Variable Reward Schedules** (Strongest behavioral conditioning)\n• Pattern: Uncertain reward timing creates compulsive checking\n• Example: Slot machines, social media refreshes, email checking\n• Why it works: Dopamine spikes on ANTICIPATION, not reward itself\n• Design: Pull to refresh, notification badges, 'new' indicators\n\n**2. Social Validation Loops**\n• Pattern: Human need for social approval weaponized\n• Example: Likes, hearts, retweets, view counts\n• Why it works: Social status directly tied to evolutionary survival\n• Design: Public metrics, leaderboards, follower counts\n\n**3. Fear of Missing Out (FOMO)**\n• Pattern: Anxiety about being left out drives checking\n• Example: Stories that disappear, live events, group chats\n• Why it works: Evolutionary cost of social exclusion\n• Design: Ephemeral content, 'X people are here now', unread indicators\n\n**4. Infinite Content Streams**\n• Pattern: Remove natural stopping cues\n• Example: Infinite scroll, autoplay next episode\n• Why it works: Humans are bad at self-interruption\n• Design: Seamless content delivery, no endpoints\n\n**5. Manufactured Urgency**\n• Pattern: Create artificial time pressure\n• Example: 'Limited time offer', 'Only 2 left', flash sales\n• Why it works: Scarcity triggers immediate action\n• Design: Countdown timers, stock counters, exclusive access\n\n**Defending Your Attention**:\n1. **Recognize the pattern** ('This is variable reward conditioning')\n2. **Remove the trigger** (Turn off notifications, delete apps)\n3. **Add friction** (Use website blockers, time limits)\n4. **Conscious endpoints** ('I'll check 3 times today at scheduled times')\n5. **Alternative rewards** (Replace scroll with walk, read, create)"
+              },
+              {
+                "title": "Platform Lock-In and Network Effects",
+                "content": "**The Pattern**: Platforms become more valuable as more people use them, creating natural monopolies.\n\n**Network Effects** - The value equation:\n• Value to user = (Number of other users)²\n• This creates winner-take-all dynamics\n\n**How Platform Lock-In Works**:\n\n**Phase 1: Attract Users (Subsidize Growth)**\n• Free product or below-cost pricing\n• Amazing user experience\n• Rapid feature development\n• Goal: Reach critical mass\n\n**Phase 2: Build Moat (Create Switching Costs)**\n• Proprietary formats (your data doesn't export well)\n• Social graph capture (all your friends are here)\n• Workflow integration (other tools connect to this)\n• Sunk cost (time invested, content created)\n\n**Phase 3: Extract Value (Monetize Locked-In Users)**\n• Introduce ads\n• Charge for features that were free\n• Reduce experience quality\n• Users stay despite degradation (too costly to leave)\n\n**Phase 4: Decline (But Slowly)**\n• Better alternative emerges\n• Younger generation adopts new platform\n• Original platform becomes \"for old people\"\n• Slow death over 5-10 years\n\n**Historical Examples**:\n• MySpace → Facebook → ?\n• AIM → Skype → Slack → Discord → ?\n• Craigslist → eBay → Amazon Marketplace → ?\n\n**Recognizing When You're Locked In**:\n1. Platform quality decreases but you don't leave\n2. You complain about it but keep using it\n3. Trying a competitor feels too difficult\n4. Your content/contacts are trapped\n\n**Breaking Lock-In**:\n1. **Export your data** regularly (when possible)\n2. **Use open standards** (RSS, email, etc.)\n3. **Maintain presence across platforms** (don't go all-in on one)\n4. **Recognize sunk cost fallacy** (past investment shouldn't determine future choice)"
+              }
+            ],
+            "practical_exercise": "Choose one app you use daily. Analyze: (1) What's the stated purpose? (2) What's the business model? (3) What behavior patterns does the design encourage? (4) Whose interests (yours or the company's) does the design prioritize when they conflict? Write your findings."
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What's the difference between a technology's stated purpose and its design intent?",
+                "options": [
+                  "There is no difference",
+                  "Stated purpose is what it claims to do for users; design intent is what it's actually optimized to achieve for creators",
+                  "Design intent is always malicious",
+                  "Stated purpose is always a lie"
+                ],
+                "correct": 1,
+                "explanation": "Stated purpose is what the technology claims to do for users, while design intent is what it's actually optimized to achieve for its creators. Understanding both reveals the full pattern."
+              },
+              {
+                "id": "q2",
+                "question": "What behavioral conditioning technique is most powerful for creating compulsive checking behavior?",
+                "options": [
+                  "Constant rewards",
+                  "Variable reward schedules (uncertain reward timing)",
+                  "No rewards",
+                  "Punishment"
+                ],
+                "correct": 1,
+                "explanation": "Variable reward schedules (uncertain reward timing) create the strongest behavioral conditioning because dopamine spikes on ANTICIPATION, not the reward itself - this is why slot machines and social media refreshes are so addictive."
+              },
+              {
+                "id": "q3",
+                "question": "What are network effects?",
+                "options": [
+                  "When your internet is fast",
+                  "When a platform becomes more valuable as more people use it, creating natural monopolies",
+                  "When computers are connected",
+                  "When people network for jobs"
+                ],
+                "correct": 1,
+                "explanation": "Network effects mean a platform becomes more valuable as more people use it (value = users²), creating winner-take-all dynamics and natural monopolies."
+              },
+              {
+                "id": "q4",
+                "question": "What is the pattern of platform lock-in?",
+                "options": [
+                  "Platforms lock their doors at night",
+                  "Attract users with great experience → Build switching costs → Extract value from locked-in users → Decline",
+                  "Just charge money from the start",
+                  "Force people to stay"
+                ],
+                "correct": 1,
+                "explanation": "Platform lock-in follows a predictable pattern: Attract users (subsidize growth) → Build moat (create switching costs) → Extract value (monetize) → Decline (but slowly)."
+              }
+            ]
+          }
+        },
+        {
+          "id": "environmental-domain-deep-dive",
+          "title": "Environmental Domain: How Space Programs Behavior",
+          "order": 6,
+          "duration_minutes": 60,
+          "content": {
+            "overview": "Your physical environment is constantly programming your behavior - usually without your conscious awareness. Mastery here means intentionally designing spaces that support your desired patterns instead of fighting against environmental defaults.",
+            "key_concepts": [
+              "Environment is the invisible hand shaping behavior",
+              "Architecture is frozen intention - spaces encode values",
+              "Proximity determines possibility (what's near happens more)",
+              "Sensory environment affects cognition before conscious thought"
+            ],
+            "sections": [
+              {
+                "title": "Environmental Autopilot",
+                "content": "**Core Insight**: Humans are highly responsive to environmental cues. Change the environment, change the behavior automatically.\n\n**The Supermarket Example**:\nEvery element is intentional environmental programming:\n• **Fresh produce at entrance** (healthy association primes spending)\n• **Milk at the back** (forces walking past everything)\n• **Checkout candy** (decision fatigue makes impulse purchases easier)\n• **Wide aisles** (slower walking = more looking)\n• **Music tempo** (slower music = slower walking = more purchasing)\n• **Smell of bakery** (hunger trigger increases purchases)\n\n**The Office Example**:\nHow environment shapes work behavior:\n• **Open office layout** → More interruptions, less deep work, higher collaboration, lower focus\n• **Private offices** → More focus, less collaboration, clearer hierarchy\n• **Hot desking** → Lower ownership, higher flexibility, reduced personalization\n• **Breakroom location** → Proximity creates informal network formation\n\n**Your Home Example**:\nHow your space programs your patterns:\n• **TV position** → If it's what you see when you enter, you'll watch more\n• **Kitchen layout** → Healthy food visible and accessible = healthier eating\n• **Phone location** → Next to bed = morning scroll; in another room = morning routine\n• **Exercise equipment** → Visible and accessible = more use; closet = never used\n\n**The Pattern**: Your environment votes on your behavior every moment. You can override it with willpower, but that's exhausting. Better: Design environment to make desired behavior the path of least resistance."
+              },
+              {
+                "title": "Sensory Environment and Cognitive State",
+                "content": "**The Science**: Your cognitive state is heavily influenced by sensory input - before conscious thought.\n\n**Light Patterns**:\n• **Bright blue-tinted light** (morning sun, screens)\n  - Suppresses melatonin\n  - Increases alertness\n  - Better for focused work\n  - Terrible before sleep\n\n• **Dim warm light** (evening sun, candles, incandescent bulbs)\n  - Allows melatonin production\n  - Induces relaxation\n  - Better for sleep preparation\n  - Worse for detailed work\n\n• **Flicker** (fluorescent lights, LED screens)\n  - Increases cognitive load (even when imperceptible)\n  - Raises stress hormones\n  - Reduces focus over time\n\n**Sound Patterns**:\n• **White noise** (constant, unchanging)\n  - Masks distracting sounds\n  - Improves focus for many\n  - Can increase stress for some\n\n• **Nature sounds** (rain, ocean, forest)\n  - Reduces stress markers\n  - Improves creativity\n  - Lower cognitive load than music with lyrics\n\n• **Silence** (actual quiet)\n  - Deepest focus state possible\n  - Hardest to achieve in modern environment\n  - Brain processes differently (default mode network activation)\n\n**Temperature Patterns**:\n• **Cool (65-68°F)** → Better for physical activity, alertness\n• **Neutral (68-72°F)** → Optimal for cognitive work\n• **Warm (72-76°F)** → Increased relaxation, reduced focus\n• **Sleep (60-67°F)** → Optimal for deep sleep\n\n**Scent Patterns**:\n• **Citrus** → Alertness, energy\n• **Lavender** → Relaxation, stress reduction\n• **Peppermint** → Focus, mental clarity\n• **Fresh air** → Improved cognition (CO2 levels above 1000ppm reduce decision-making quality)\n\n**Application**: Match sensory environment to desired cognitive state:\n• Morning work: Bright light, cool temp, minimal sound or white noise\n• Creative thinking: Natural light, warm temp, nature sounds\n• Sleep preparation: Dim warm light, cool temp, silence or gentle sounds"
+              },
+              {
+                "title": "Proximity Patterns and Behavior Probability",
+                "content": "**The Law of Proximity**: What's physically near is dramatically more likely to happen than what's far.\n\n**The Proximity Effect**:\n• **10 feet away** → 10x more likely to interact\n• **Same floor** → 5x more likely\n• **Different floor** → Baseline interaction\n\n**This applies to EVERYTHING**:\n\n**Food**:\n• Fruit on counter → Eaten 3x more than fruit in drawer\n• Junk food in pantry → Eaten 5x more than junk food in basement\n• Water bottle on desk → Drunk 4x more than water in kitchen\n\n**Exercise**:\n• Gym equipment in living room → Used 10x more than in garage\n• Running shoes by door → Used 3x more than in closet\n• Yoga mat rolled out → Used 5x more than stored\n\n**Work**:\n• Document open on screen → 10x more likely to work on it\n• Notebook on desk → 5x more likely to journal\n• Book on nightstand → 8x more likely to read\n\n**Social**:\n• Office proximity → Strongest predictor of workplace friendship\n• Dorm room proximity → Strongest predictor of college relationships\n• Neighborhood proximity → Determines social network composition\n\n**Digital Proximity** (phone home screen):\n• Apps on home screen → Used 10x more\n• Apps one swipe away → Used 3x more\n• Apps in folders → Rarely used\n• Apps off phone → Almost never used\n\n**Environmental Design Strategy**:\n1. **Desired behavior** → Make it PROXIMATE\n2. **Undesired behavior** → Make it DISTANT\n3. **Neutral behavior** → Leave as-is\n\n**Example - Healthier Eating**:\n• Put fruit bowl on counter (proximate)\n• Put water pitcher front of fridge (proximate)\n• Put junk food in basement or inconvenient location (distant)\n• Put healthy meals prepared in fridge front row (proximate)\n\nResult: You're not fighting willpower, you're leveraging proximity."
+              }
+            ],
+            "practical_exercise": "Choose one behavior you want to increase. Redesign your environment to make that behavior the path of least resistance through proximity. Document: (1) Current setup (2) New setup (3) Behavior change after 7 days."
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "How does environment influence behavior?",
+                "options": [
+                  "Environment has no effect on behavior",
+                  "Environment shapes behavior automatically, often without conscious awareness - like an invisible hand",
+                  "Only weak-willed people are affected by environment",
+                  "Environment only matters for animals, not humans"
+                ],
+                "correct": 1,
+                "explanation": "Environment is the invisible hand shaping behavior, usually without conscious awareness. Humans are highly responsive to environmental cues, and changing environment changes behavior automatically."
+              },
+              {
+                "id": "q2",
+                "question": "What is the Law of Proximity?",
+                "options": [
+                  "Stay close to your friends",
+                  "What's physically near is dramatically more likely to happen than what's distant",
+                  "Proximity doesn't matter in the digital age",
+                  "Things that are far away are more valuable"
+                ],
+                "correct": 1,
+                "explanation": "The Law of Proximity states that what's physically near is dramatically more likely to happen than what's far - objects 10 feet away are used 10x more than distant objects."
+              },
+              {
+                "id": "q3",
+                "question": "How does sensory environment affect cognition?",
+                "options": [
+                  "It doesn't affect cognition",
+                  "Sensory input (light, sound, temperature, scent) affects cognitive state before conscious thought",
+                  "Only extreme conditions matter",
+                  "Cognition is independent of physical environment"
+                ],
+                "correct": 1,
+                "explanation": "Sensory environment (light, sound, temperature, scent) affects cognitive state before conscious thought - different sensory patterns optimize for different mental states."
+              },
+              {
+                "id": "q4",
+                "question": "What's the best strategy for changing behavior through environmental design?",
+                "options": [
+                  "Use more willpower",
+                  "Make desired behavior proximate (easy) and undesired behavior distant (hard)",
+                  "Ignore environment and focus on mindset",
+                  "Change environments constantly"
+                ],
+                "correct": 1,
+                "explanation": "The best strategy is to make desired behaviors the path of least resistance through proximity, while making undesired behaviors distant and difficult - this leverages environment instead of fighting with willpower."
+              }
+            ]
+          }
+        },
+        {
+          "id": "temporal-domain-deep-dive",
+          "title": "Temporal Domain: Reading Cycles and Timing Patterns",
+          "order": 7,
+          "duration_minutes": 70,
+          "content": {
+            "overview": "Time is not linear in pattern terms - it's cyclical, rhythmic, and seasonal. Mastery here means recognizing where you are in various cycles to predict what comes next and act at optimal timing.",
+            "key_concepts": [
+              "All systems operate in cycles - recognizing the cycle reveals the pattern",
+              "Critical timing: WHEN you act often matters more than WHAT you act on",
+              "History doesn't repeat, but it rhymes - recognizing the rhyme gives foresight",
+              "Momentum patterns: Acceleration and deceleration follow predictable curves"
+            ],
+            "sections": [
+              {
+                "title": "Personal and Biological Cycles",
+                "content": "**The Pattern**: You operate in multiple overlapping cycles. Aligning actions with cycles multiplies effectiveness.\n\n**Circadian Rhythm** (24-hour cycle):\n\n**Peak Cognitive Performance** (2-4 hours after waking)\n• Best for: Complex problem-solving, strategic thinking, difficult decisions\n• Worst for: Routine tasks, creative brainstorming\n\n**Mid-Day Slump** (7-9 hours after waking)\n• Best for: Routine tasks, administrative work, meetings\n• Worst for: Important decisions, complex analysis\n\n**Creative Peak** (Evening, before fatigue)\n• Best for: Brainstorming, connecting ideas, writing\n• Worst for: Analytical precision tasks\n\n**Ultradian Rhythms** (90-120 minute cycles):\n• 90 minutes focus capacity → 20 minutes recovery needed\n• Fighting this rhythm = diminishing returns\n• Leveraging it = sustainable high performance\n\n**Weekly Rhythm**:\n• **Monday**: Lowest energy, highest friction (weekend reintegration)\n• **Tuesday/Wednesday**: Peak productivity\n• **Thursday**: Declining energy\n• **Friday**: Lowest productivity, highest social energy\n\n**Monthly Rhythms** (for ~50% of population):\n• Hormonal cycles affect risk-taking, social behavior, energy\n• Tracking your pattern allows anticipation and planning\n\n**Seasonal Rhythms**:\n• **Spring**: High energy, new beginnings, expansion\n• **Summer**: Peak energy, activity, growth\n• **Fall**: Energy decline, harvest, consolidation\n• **Winter**: Low energy, rest, reflection, planning\n\n**Application - Time Blocking by Cycle**:\n• Schedule complex work during cognitive peak\n• Schedule meetings during mid-day slump\n• Schedule creative work during evening (if that's your pattern)\n• Take breaks at 90-minute intervals\n• Plan ambitious starts for Tuesday/Wednesday, not Monday\n• Recognize seasonal energy and plan scope accordingly"
+              },
+              {
+                "title": "Economic and Market Cycles",
+                "content": "**The Pattern**: Markets, economies, and asset prices move in predictable cycles, not linear growth.\n\n**The Four-Season Economic Cycle** (typically 7-12 years):\n\n**Spring: Recovery**\n• Recession ending\n• Pessimism high, prices low\n• Smart money accumulates assets\n• General public still fearful\n• Pattern: Low prices, low optimism, high opportunity\n\n**Summer: Expansion**\n• Growth accelerating\n• Optimism rising\n• Employment increasing\n• Credit expanding\n• Pattern: Rising prices, rising optimism, declining opportunity\n\n**Fall: Peak**\n• Maximum optimism\n• 'This time is different' narratives\n• Everyone invested\n• Credit at maximum\n• Pattern: Peak prices, peak optimism, no opportunity (everything 'priced in')\n\n**Winter: Contraction/Recession**\n• Asset prices falling\n• Pessimism spreading\n• 'It will never recover' narratives\n• Credit contracting\n• Pattern: Falling prices, rising fear, growing opportunity\n\n**The Critical Pattern**: Maximum opportunity exists when maximum pessimism exists. By the time everyone is optimistic, opportunity has passed.\n\n**Historical Rhyming**:\n• 1920s boom → 1929 crash → Great Depression\n• 1990s tech boom → 2000 dot-com crash → 2001-2003 recession\n• 2000s housing boom → 2008 crash → Great Recession\n• 2020s ??? boom → 20?? crash → ???\n\n**Generational Cycle** (The Fourth Turning, ~80 years):\n\n**High** (Post-Crisis, 1946-1963)\n• Strong institutions\n• Conformity valued\n• Economic growth\n• Optimism high\n\n**Awakening** (1964-1983)\n• Question institutions\n• Individual spiritual seeking\n• Social upheaval\n• 'Consciousness revolution'\n\n**Unraveling** (1984-2007)\n• Weak institutions\n• Individualism peak\n• Cynicism\n• Fragmentation\n\n**Crisis** (2008-20??)\n• Institutional reconstruction\n• Collective action\n• Major challenges (war, depression, revolution)\n• Ends with new order\n\n**Pattern Recognition**: Where are we now? What typically comes next?"
+              },
+              {
+                "title": "Critical Timing and Momentum Windows",
+                "content": "**The Pattern**: There are optimal timing windows for action. Acting too early or too late dramatically reduces effectiveness.\n\n**Technology Adoption Curve** - When to adopt new technology:\n\n**Innovators** (2.5% adoption)\n• First to try new technology\n• Highest risk, highest cost\n• Many failures\n• Best if: You profit from being first (investors, developers)\n\n**Early Adopters** (13.5% adoption)\n• Proven concept, still rough\n• Lower risk, high cost\n• Competitive advantage possible\n• Best if: You want edge but can handle bugs\n\n**Early Majority** (34% adoption)\n• Technology now stable\n• Reasonable cost\n• Clear use cases\n• Best if: You want proven value\n\n**Late Majority** (34% adoption)\n• Technology mature\n• Cheap/free\n• Necessary for participation\n• Best if: You're risk-averse\n\n**Laggards** (16% adoption)\n• Technology declining\n• Being replaced\n• Adoption now hurts more than helps\n• Best if: Never (unless you like obsolescence)\n\n**Critical Timing Windows**:\n\n**Career Changes**:\n• **Best**: During economic expansion (hiring happens)\n• **Worst**: During recession (layoffs happening)\n• **Exception**: Recession can be best if acquiring rare skills while others retreat\n\n**Relationship Conversations**:\n• **Best**: When both parties are well-rested, fed, and calm\n• **Worst**: When tired, hungry, or already escalated\n• **Timing matters more than content**\n\n**Negotiation**:\n• **Best**: When you have alternative options\n• **Worst**: When desperate with no alternatives\n• **Leverage = Timing**\n\n**Learning New Skills**:\n• **Best**: When you have specific application ahead (use it or lose it)\n• **Worst**: 'Someday it might be useful' (will forget before applying)\n\n**Momentum Recognition**:\n• **Early momentum**: Small effort, large results (leverage point)\n• **Peak momentum**: Medium effort, medium results (good but not optimal)\n• **Late momentum**: Large effort, small results (diminishing returns)\n• **Reversal**: Any effort fights against momentum (extremely costly)\n\n**Strategic Timing**: Act during early momentum, harvest during peak, exit before reversal."
+              }
+            ],
+            "practical_exercise": "For the next two weeks, track your cognitive energy levels every 2 hours (scale 1-10). Identify your personal daily cycle. Then schedule one important task during your peak cognitive window. Compare performance to when you do similar tasks at low-energy times."
+          },
+          "quiz": {
+            "passing_score": 0.75,
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What is circadian rhythm and why does it matter?",
+                "options": [
+                  "A type of music",
+                  "Your 24-hour biological cycle that affects cognitive performance, energy, and optimal task timing",
+                  "A sleep disorder",
+                  "It doesn't matter for productivity"
+                ],
+                "correct": 1,
+                "explanation": "Circadian rhythm is your 24-hour biological cycle that dramatically affects cognitive performance, energy levels, and optimal task timing - aligning work with these cycles multiplies effectiveness."
+              },
+              {
+                "id": "q2",
+                "question": "What is the pattern of economic cycles?",
+                "options": [
+                  "Linear growth forever",
+                  "Random unpredictable chaos",
+                  "Four seasons: Recovery (Spring) → Expansion (Summer) → Peak (Fall) → Contraction (Winter), repeating every 7-12 years",
+                  "Only recessions, no patterns"
+                ],
+                "correct": 2,
+                "explanation": "Economic cycles follow a four-season pattern: Recovery → Expansion → Peak → Contraction, typically over 7-12 years. Maximum opportunity exists during maximum pessimism (winter/spring)."
+              },
+              {
+                "id": "q3",
+                "question": "When is the optimal time to adopt new technology according to the adoption curve?",
+                "options": [
+                  "Always be first (Innovator)",
+                  "Always wait until everyone else has (Laggard)",
+                  "It depends on your goals: First for competitive edge, Early Majority for proven value, Late Majority if risk-averse",
+                  "Timing doesn't matter"
+                ],
+                "correct": 2,
+                "explanation": "Optimal timing depends on your goals: Innovators/Early Adopters for competitive edge (high risk), Early Majority for proven value (balanced), Late Majority if risk-averse. Laggards typically adopt when technology is already obsolete."
+              },
+              {
+                "id": "q4",
+                "question": "What is the ultradian rhythm and how should you work with it?",
+                "options": [
+                  "A type of meditation",
+                  "90-120 minute focus cycles followed by 20-minute recovery - align work with this rhythm for sustainable high performance",
+                  "Working 8 hours straight",
+                  "It only affects sleep"
+                ],
+                "correct": 1,
+                "explanation": "Ultradian rhythm is your natural 90-120 minute focus cycle followed by a need for 20-minute recovery. Working with this rhythm (not against it) enables sustainable high performance."
               }
             ]
           }
