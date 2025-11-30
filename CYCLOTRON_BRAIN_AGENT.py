@@ -34,8 +34,8 @@ from pathlib import Path
 from collections import defaultdict
 import logging
 
-# Configuration
-ATOMS_DIR = Path("C:/Users/dwrek/100X_DEPLOYMENT/.cyclotron_atoms")
+# Configuration - Use portable paths
+ATOMS_DIR = Path(__file__).parent / ".cyclotron_atoms"
 INDEX_FILE = ATOMS_DIR / "index.json"
 BRAIN_STATE_FILE = ATOMS_DIR / "brain_state.json"
 VORTEX_FILE = ATOMS_DIR / "information_vortex.json"

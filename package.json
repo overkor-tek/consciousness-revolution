@@ -9,7 +9,7 @@
     "deploy": "netlify deploy --prod"
   },
   "dependencies": {
-    "stripe": "^14.8.0"
+    "stripe": "^14.25.0"
   },
   "devDependencies": {
     "netlify-cli": "^17.10.1"

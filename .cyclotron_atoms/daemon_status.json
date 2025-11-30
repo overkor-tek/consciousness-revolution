@@ -1,14 +1,14 @@
 {
-  "files_indexed": 1211,
-  "files_updated": 12237,
+  "files_indexed": 1214,
+  "files_updated": 13585,
   "files_deleted": 35,
   "errors": 0,
   "last_vacuum": "2025-11-25T09:10:34.891889",
   "started": "2025-11-25T08:54:57.852239",
-  "total_files": 10149,
-  "total_characters": 103791946,
+  "total_files": 10152,
+  "total_characters": 103764858,
   "db_path": "C:\\Users\\dwrek\\100X_DEPLOYMENT\\.cyclotron_atoms\\cyclotron.db",
   "running": true,
   "pid": 14016,
-  "updated": "2025-11-26T05:54:11.374519"
+  "updated": "2025-11-26T10:17:02.023606"
 }

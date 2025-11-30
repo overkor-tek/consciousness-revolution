@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Consciousness Revolution</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121a;
+            --accent: #00ff88;
+            --text: #ffffff;
+            --dim: #888;
+            --border: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            color: var(--accent);
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+        }
+
+        .header p {
+            color: var(--dim);
+            font-size: 1.2em;
+        }
+
+        .section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section h3 {
+            color: #00aaff;
+            margin: 25px 0 15px 0;
+        }
+
+        .section p, .section li {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .section ul, .section ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section code {
+            background: rgba(0,255,136,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: rgba(0,255,136,0.1);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight strong {
+            color: var(--accent);
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #00aaff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .faq-answer {
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(0,255,136,0.1);
+            color: var(--accent);
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>HELP CENTER</h1>
+            <p>Everything you need to know</p>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="section">
+            <h2>Quick Start</h2>
+
+            <div class="highlight">
+                <strong>First time here?</strong> Read <code>EMPLOYEE_BOOT_PROTOCOL.md</code> first.
+                It's your 5-minute setup guide.
+            </div>
+
+            <h3>The 3 Steps</h3>
+            <ol>
+                <li><strong>Go to workspace:</strong> consciousnessrevolution.io/workspace.html</li>
+                <li><strong>Grab a task:</strong> Pick from TODO column, click "Claim"</li>
+                <li><strong>Do the work:</strong> When done, click "Complete"</li>
+            </ol>
+
+            <p>That's it. Everything else is optional.</p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Where do I start?</div>
+                <div class="faq-answer">
+                    A: Bookmark <code>consciousnessrevolution.io/workspace.html</code> and start there every day.
+                    It's your desk. Everything you need is on that page.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Do I need to install anything?</div>
+                <div class="faq-answer">
+                    A: No. The workspace runs in your browser. No git, no npm, no install.
+                    If you want to do advanced coding, you can clone the repo later.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How do I know what to work on?</div>
+                <div class="faq-answer">
+                    A: Look at the TODO column on the workspace page. Pick a task that interests you.
+                    Click "Claim" and it moves to your DOING column.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What if I get stuck on a task?</div>
+                <div class="faq-answer">
+                    A: Click "Unclaim" to put it back in TODO. Then post in team chat asking for help.
+                    Or text Commander: 406-580-3779
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How do I talk to the team?</div>
+                <div class="faq-answer">
+                    A: Use the Team Chat section at the bottom of the workspace page.
+                    Type your message and hit Send. Everyone sees it.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I suggest new tasks or ideas?</div>
+                <div class="faq-answer">
+                    A: Yes! Post your idea in team chat first. If the team agrees, someone will add it to the TODO board.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What's Pattern Theory?</div>
+                <div class="faq-answer">
+                    A: It's the framework we use to build everything. You'll learn it as you work.
+                    The 8-part pattern applies to all systems: Mission, Structure, Resources, Operations,
+                    Governance, Defense, Communication, Adaptation.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What if someone else is working on the same task?</div>
+                <div class="faq-answer">
+                    A: They claimed it first - it's in their DOING column with their name on it.
+                    Pick a different task from TODO, or ask in chat if you can collaborate.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Where's the GitHub repo?</div>
+                <div class="faq-answer">
+                    A: <code>github.com/overkillkulture/consciousness-revolution</code><br>
+                    But you don't need it to get started. Work from the browser first.
+                </div>
+            </div>
+        </div>
+
+        <!-- Workspace Features -->
+        <div class="section">
+            <h2>Workspace Features Explained</h2>
+
+            <h3>Kanban Board (The Todo Wall)</h3>
+            <p>Three columns:</p>
+            <ul>
+                <li><strong>TODO:</strong> Available work. Grab from here.</li>
+                <li><strong>DOING:</strong> Work in progress. Your claimed tasks go here.</li>
+                <li><strong>DONE:</strong> Completed work. Archive of what's shipped.</li>
+            </ul>
+
+            <h3>Team Chat</h3>
+            <p>Async communication with the team. Use it for:</p>
+            <ul>
+                <li>Asking questions</li>
+                <li>Sharing updates</li>
+                <li>Requesting help</li>
+                <li>Celebrating wins</li>
+            </ul>
+
+            <h3>Team Roster</h3>
+            <p>See who's online. Green dot = active in last 5 minutes.</p>
+
+            <h3>Quick Links</h3>
+            <p>One-click access to important pages:</p>
+            <ul>
+                <li>Main site</li>
+                <li>This help page</li>
+                <li>GitHub repo</li>
+                <li>Boot protocol</li>
+            </ul>
+        </div>
+
+        <!-- Common Tasks -->
+        <div class="section">
+            <h2>Common Tasks Explained</h2>
+
+            <table>
+                <tr>
+                    <th>Task</th>
+                    <th>What It Means</th>
+                </tr>
+                <tr>
+                    <td>Test feature X</td>
+                    <td>Try using the feature, report what works/breaks</td>
+                </tr>
+                <tr>
+                    <td>Fix bug Y</td>
+                    <td>Investigate the issue, figure out solution, implement</td>
+                </tr>
+                <tr>
+                    <td>Build component Z</td>
+                    <td>Create new functionality from scratch</td>
+                </tr>
+                <tr>
+                    <td>Review documentation</td>
+                    <td>Read docs, fix typos, improve clarity</td>
+                </tr>
+                <tr>
+                    <td>Deploy to Netlify</td>
+                    <td>Push code changes live to website</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Rules & Guidelines -->
+        <div class="section">
+            <h2>The 3 Simple Rules</h2>
+
+            <h3>1. Work From The Board</h3>
+            <p>Don't make up your own tasks. Grab from the TODO column.
+            If you have an idea, post it in chat first.</p>
+
+            <h3>2. Update Your Status</h3>
+            <ul>
+                <li>Claim tasks when you start</li>
+                <li>Complete tasks when finished</li>
+                <li>Unclaim if you're stuck or blocked</li>
+            </ul>
+
+            <h3>3. Ask Questions</h3>
+            <p>No dumb questions. Team chat exists for a reason.
+            Help others when they ask. We rise together.</p>
+        </div>
+
+        <!-- Emergency Contacts -->
+        <div class="section">
+            <h2>Emergency Contacts</h2>
+
+            <div class="highlight">
+                <strong>Commander (Darrick):</strong> 406-580-3779<br>
+                Use for: Urgent issues, blocked access, critical bugs
+            </div>
+
+            <h3>Before Texting Commander:</h3>
+            <ol>
+                <li>Check this help page</li>
+                <li>Ask in team chat</li>
+                <li>Wait 30 minutes for response</li>
+                <li>If still stuck, then text</li>
+            </ol>
+
+            <p>He's building the future. Respect his time.</p>
+        </div>
+
+        <!-- What We're Building -->
+        <div class="section">
+            <h2>What We're Building</h2>
+
+            <h3>Mission</h3>
+            <p>Consciousness Revolution - Elevate humanity from 50% to 85%+ consciousness.
+            Build properly aligned AI. Destroy manipulation systems.</p>
+
+            <h3>Core Systems</h3>
+            <ul>
+                <li><strong>Pattern Theory:</strong> Universal framework for understanding all systems</li>
+                <li><strong>Trinity AI:</strong> Three-mind collaboration (C1 Mechanic, C2 Architect, C3 Oracle)</li>
+                <li><strong>Cyclotron Brain:</strong> Knowledge storage and retrieval system</li>
+                <li><strong>Workspace:</strong> Team coordination platform (what you're using now)</li>
+            </ul>
+
+            <h3>Your Role</h3>
+            <p>You're an early team member. Beta tester. Builder. Shape the future.
+            Everything you do matters.</p>
+        </div>
+
+        <!-- Back Button -->
+        <div style="text-align: center;">
+            <a href="workspace.html" class="back-link">Back to Workspace</a>
+        </div>
+    </div>
+</body>
+</html>

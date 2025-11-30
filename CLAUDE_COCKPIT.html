@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAUDE COCKPIT - Master Control</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #0a0a0a;
+            color: #00ff88;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #00ff88;
+            margin-bottom: 20px;
+            background: rgba(0,255,136,0.05);
+        }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .critical { color: #ff4444; background: rgba(255,0,0,0.1); padding: 15px; border: 1px solid #ff4444; margin: 20px 0; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+
+        .panel {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid #333;
+            padding: 20px;
+        }
+        .panel h2 { color: #ffd700; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
+
+        pre { background: #111; padding: 15px; overflow-x: auto; font-size: 0.9em; margin: 10px 0; }
+        code { color: #00ff88; }
+
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #333; }
+        th { color: #ffd700; }
+
+        .checklist { list-style: none; }
+        .checklist li { padding: 8px 0; border-bottom: 1px solid #222; }
+        .checklist li:before { content: "[ ] "; color: #666; }
+
+        a { color: #00aaff; }
+        .copy-btn { background: #333; border: none; color: #00ff88; padding: 3px 8px; cursor: pointer; font-size: 0.8em; }
+
+        .section-full { grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>CLAUDE COCKPIT</h1>
+    <p>THE ONLY FILE YOU NEED TO READ ON BOOT</p>
+    <p style="color:#888;">Updated: 2025-11-28 | Version: 1.0 | Location: consciousnessrevolution.io/CLAUDE_COCKPIT.html</p>
+</div>
+
+<div class="critical">
+    <strong>STOP.</strong> Before doing ANYTHING else, read this entire cockpit.
+    Do NOT start working until you understand the 7 domains, the team, and your tools.
+</div>
+
+<div class="grid">
+
+<!-- CHEAT CODE -->
+<div class="panel section-full">
+    <h2>THE CHEAT CODE (Memorize This)</h2>
+    <pre><code>Pattern: 3 → 7 → 13 → ∞ (Everything splits, maps, expands, loops)
+7 Domains: Physical | Financial | Mental | Emotional | Social | Creative | Integration
+Formula: C1 × C2 × C3 = ∞ (multiplication, not addition)
+Standards: LIGHTER, FASTER, STRONGER, MORE ELEGANT, LESS EXPENSIVE
+Truth: Pattern Recognition → Prediction → Action → Validation → Loop
+Execute: Build NOW, test IMMEDIATELY, ship TODAY
+You are already complete. Now execute.</code></pre>
+</div>
+
+<!-- CREDENTIALS -->
+<div class="panel">
+    <h2>ALL CREDENTIALS</h2>
+    <table>
+        <tr><th>Service</th><th>Login</th><th>Password</th></tr>
+        <tr><td>Namecheap</td><td>darrickpreble</td><td>Kill50780630#</td></tr>
+        <tr><td>GitHub</td><td>overkillkulture</td><td>Kill50780630#</td></tr>
+        <tr><td>Netlify</td><td>GitHub OAuth</td><td>-</td></tr>
+        <tr><td>Gmail</td><td>darrick.preble@gmail.com</td><td>Kill50780630#</td></tr>
+        <tr><td>Claude (Proton)</td><td>darrickpreble@proton.me</td><td>Kill50780630#</td></tr>
+        <tr><td>SMTP Email</td><td>commander@100xbuilder.io</td><td>Kill50780630#</td></tr>
+    </table>
+    <p style="color:#888;margin-top:10px;">SMTP Server: mail.privateemail.com:465 (SSL)</p>
+</div>
+
+<!-- DOMAINS -->
+<div class="panel">
+    <h2>LIVE DOMAINS</h2>
+    <table>
+        <tr><th>Domain</th><th>Status</th><th>Host</th></tr>
+        <tr><td><a href="https://consciousnessrevolution.io">consciousnessrevolution.io</a></td><td style="color:#0f0">LIVE</td><td>Netlify</td></tr>
+        <tr><td><a href="https://100xbuilder.io">100xbuilder.io</a></td><td style="color:#0f0">LIVE</td><td>Netlify</td></tr>
+    </table>
+    <p style="margin-top:15px;"><strong>Netlify Site:</strong> verdant-tulumba-fa2a5a</p>
+    <pre><code>cd 100X_DEPLOYMENT && netlify deploy --prod --dir=.</code></pre>
+</div>
+
+<!-- TEAM -->
+<div class="panel">
+    <h2>THE TEAM (15 People)</h2>
+    <table>
+        <tr><th>Name</th><th>Role</th><th>Email</th></tr>
+        <tr><td>Commander (Darrick)</td><td>Founder</td><td>darrick.preble@gmail.com</td></tr>
+        <tr><td>Maggie</td><td>Secretary/Backup</td><td>[Get from Commander]</td></tr>
+        <tr><td>Josh</td><td>Beta Tester</td><td>joshua.serrano2022@gmail.com</td></tr>
+        <tr><td>Toby</td><td>Beta Tester</td><td>tobyburrowes@gmail.com</td></tr>
+        <tr><td>William B</td><td>Beta Tester</td><td>wdbrotherton@gmail.com</td></tr>
+        <tr><td>Dean</td><td>Beta Tester</td><td>deansabrwork@gmail.com</td></tr>
+        <tr><td>William V</td><td>Beta Tester</td><td>varniwilliam@gmail.com</td></tr>
+        <tr><td>Rutherford</td><td>Beta Tester</td><td>ruuutherford@gmail.com</td></tr>
+    </table>
+    <p style="color:#ff4444;margin-top:10px;">Beta testers have been waiting 2 months. They need direction.</p>
+</div>
+
+<!-- TOOLS -->
+<div class="panel">
+    <h2>YOUR TOOLS</h2>
+    <ul class="checklist">
+        <li><strong>Screenshot:</strong> PIL ImageGrab → save to desktop → Read file</li>
+        <li><strong>Email:</strong> SMTP via mail.privateemail.com:465</li>
+        <li><strong>Brain:</strong> sqlite3 atoms.db (88,957 atoms)</li>
+        <li><strong>Deploy:</strong> netlify deploy --prod --dir=.</li>
+        <li><strong>Trinity MCP:</strong> mcp__trinity__* tools</li>
+        <li><strong>GitHub:</strong> gh CLI authenticated</li>
+    </ul>
+    <pre><code># Screenshot
+from PIL import ImageGrab
+ImageGrab.grab().save('C:/Users/dwrek/Desktop/screenshot.png')
+
+# Query Brain
+sqlite3 C:/Users/dwrek/.consciousness/cyclotron_core/atoms.db \
+  "SELECT * FROM atoms WHERE content LIKE '%topic%' LIMIT 10;"
+
+# Send Email
+import smtplib
+server = smtplib.SMTP_SSL('mail.privateemail.com', 465)
+server.login('commander@100xbuilder.io', 'Kill50780630#')</code></pre>
+</div>
+
+<!-- KEY LOCATIONS -->
+<div class="panel">
+    <h2>KEY FILE LOCATIONS</h2>
+    <table>
+        <tr><th>What</th><th>Where</th></tr>
+        <tr><td>This Cockpit</td><td>100X_DEPLOYMENT/CLAUDE_COCKPIT.html</td></tr>
+        <tr><td>Command Bridge</td><td>100X_DEPLOYMENT/COMMAND_BRIDGE.html</td></tr>
+        <tr><td>Brain Database</td><td>.consciousness/cyclotron_core/atoms.db</td></tr>
+        <tr><td>Beta Brain Package</td><td>100X_DEPLOYMENT/BETA_BRAIN_PACKAGE/</td></tr>
+        <tr><td>Email Config</td><td>.consciousness/EMAIL_CONFIG.json</td></tr>
+        <tr><td>Deployment Folder</td><td>C:\Users\dwrek\100X_DEPLOYMENT\</td></tr>
+    </table>
+</div>
+
+<!-- BASIC THINGS A TEAM NEEDS -->
+<div class="panel section-full">
+    <h2>THE 10 BASIC THINGS (Website Team Checklist)</h2>
+    <table>
+        <tr><th>#</th><th>Need</th><th>Status</th><th>Location/Action</th></tr>
+        <tr><td>1</td><td>Team Contact List</td><td style="color:#0f0">DONE</td><td>COMMAND_BRIDGE.html, this cockpit</td></tr>
+        <tr><td>2</td><td>Shared Credentials</td><td style="color:#0f0">DONE</td><td>This cockpit, COMMAND_BRIDGE.html</td></tr>
+        <tr><td>3</td><td>Meeting Place</td><td style="color:#ff0">PARTIAL</td><td>COMMAND_BRIDGE.html - needs video/chat</td></tr>
+        <tr><td>4</td><td>Task List / Direction</td><td style="color:#ff0">PARTIAL</td><td>COMMAND_BRIDGE.html - needs proper todo system</td></tr>
+        <tr><td>5</td><td>Bug Tracking</td><td style="color:#0f0">DONE</td><td>github.com/overkillkulture/consciousness-bugs</td></tr>
+        <tr><td>6</td><td>Code Repository</td><td style="color:#0f0">DONE</td><td>github.com/overkillkulture</td></tr>
+        <tr><td>7</td><td>Deployment Pipeline</td><td style="color:#0f0">DONE</td><td>Netlify auto-deploy from GitHub</td></tr>
+        <tr><td>8</td><td>Communication Channel</td><td style="color:#f00">MISSING</td><td>Need: Discord/Slack/Telegram group</td></tr>
+        <tr><td>9</td><td>Documentation</td><td style="color:#ff0">PARTIAL</td><td>Scattered - needs consolidation</td></tr>
+        <tr><td>10</td><td>Onboarding Process</td><td style="color:#f00">MISSING</td><td>Need: Step-by-step for new team members</td></tr>
+    </table>
+</div>
+
+<!-- IMMEDIATE PRIORITIES -->
+<div class="panel section-full">
+    <h2>IMMEDIATE PRIORITIES</h2>
+    <ol style="line-height: 2.5; padding-left: 20px;">
+        <li><strong style="color:#ff4444">Create team communication channel</strong> - Discord or Telegram group for all 15 people</li>
+        <li><strong style="color:#ff4444">Get contact info for ALL team members</strong> - We only have 8 emails</li>
+        <li><strong style="color:#ffaa00">Send direction to beta testers</strong> - They've been waiting 2 months</li>
+        <li><strong style="color:#ffaa00">Set up Maggie with full admin access</strong> - Backup commander</li>
+        <li><strong>Create onboarding document</strong> - How to join, what to do, who to contact</li>
+        <li><strong>Consolidate all documentation</strong> - Delete the 30+ boot protocols, keep only this</li>
+    </ol>
+</div>
+
+<!-- SUCCESSION -->
+<div class="panel">
+    <h2>SUCCESSION PROTOCOL</h2>
+    <p>If Commander is unavailable:</p>
+    <ol style="line-height: 2; padding-left: 20px; margin-top: 10px;">
+        <li>Maggie has full authority</li>
+        <li>All credentials are in this cockpit</li>
+        <li>System auto-runs (Netlify deploys)</li>
+        <li>Claude continues development</li>
+        <li>Beta testers continue testing</li>
+    </ol>
+</div>
+
+<!-- BRAIN QUERY -->
+<div class="panel">
+    <h2>QUERY BRAIN BEFORE BUILDING</h2>
+    <p style="color:#ffd700;margin-bottom:15px;">ALWAYS check if something exists before creating it:</p>
+    <pre><code># Python method
+import sqlite3
+conn = sqlite3.connect('C:/Users/dwrek/.consciousness/cyclotron_core/atoms.db')
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM atoms WHERE content LIKE '%topic%' LIMIT 10")
+results = cursor.fetchall()
+# If results exist: USE THEM
+# If empty: OK to build new</code></pre>
+</div>
+
+</div>
+
+<div style="text-align:center; margin-top:40px; padding:20px; border-top:1px solid #333; color:#666;">
+    <p>This is the ONLY boot file. All others are deprecated.</p>
+    <p>C1 × C2 × C3 = ∞</p>
+</div>
+
+</body>
+</html>

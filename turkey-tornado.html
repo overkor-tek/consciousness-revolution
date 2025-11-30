@@ -300,18 +300,19 @@
 
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-value">379+</div>
+                    <div class="stat-value" id="tornado-cycles">379+</div>
                     <div class="stat-label">Tornado Cycles</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value">176K</div>
+                    <div class="stat-value" id="knowledge-atoms">176K</div>
                     <div class="stat-label">Knowledge Atoms</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value">100%</div>
+                    <div class="stat-value" id="network-health">100%</div>
                     <div class="stat-label">Network Health</div>
                 </div>
             </div>
+            <div style="font-size: 11px; opacity: 0.5; margin-top: 5px;" id="last-update">Live stats loading...</div>
 
             <h2 style="color: #f7c59f; margin: 30px 0 20px;">Explore the Seven Domains</h2>
 
@@ -403,6 +404,51 @@
                 setTimeout(() => this.style.transform = '', 100);
             });
         });
+
+        // Live stats fetching
+        async function fetchLiveStats() {
+            try {
+                const response = await fetch('/api/network-stats');
+                const data = await response.json();
+
+                // Update tornado cycles
+                const cyclesEl = document.getElementById('tornado-cycles');
+                if (cyclesEl && data.cyclotron) {
+                    cyclesEl.textContent = data.cyclotron.tornadoCycles.toLocaleString() + '+';
+                }
+
+                // Update knowledge atoms
+                const atomsEl = document.getElementById('knowledge-atoms');
+                if (atomsEl && data.cyclotron) {
+                    const atoms = data.cyclotron.totalAtoms;
+                    atomsEl.textContent = atoms >= 1000 ? Math.floor(atoms / 1000) + 'K' : atoms;
+                }
+
+                // Update network health
+                const healthEl = document.getElementById('network-health');
+                if (healthEl && data.network) {
+                    healthEl.textContent = data.network.health + '%';
+                }
+
+                // Update timestamp
+                const updateEl = document.getElementById('last-update');
+                if (updateEl) {
+                    const now = new Date();
+                    updateEl.textContent = 'Live data updated ' + now.toLocaleTimeString();
+                }
+
+            } catch (error) {
+                console.log('Stats fetch failed, using fallback values');
+                const updateEl = document.getElementById('last-update');
+                if (updateEl) {
+                    updateEl.textContent = 'Stats from Turkey Tornado launch';
+                }
+            }
+        }
+
+        // Fetch stats on load and every 30 seconds
+        fetchLiveStats();
+        setInterval(fetchLiveStats, 30000);
     </script>
 </body>
 </html>

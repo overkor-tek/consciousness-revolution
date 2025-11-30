@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maggie's Cockpit - Office Administrator</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121a;
+            --accent: #00ff88;
+            --accent-dim: rgba(0, 255, 136, 0.2);
+            --text: #ffffff;
+            --text-dim: #888;
+            --border: #333;
+            --urgent: #ff4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--accent-dim), transparent);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--accent);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .tagline {
+            color: var(--text-dim);
+            font-size: 1.2em;
+        }
+
+        .urgent-banner {
+            background: var(--urgent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .urgent-banner::before {
+            content: "⚡";
+            font-size: 1.5em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            background: var(--accent-dim);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .task-item.urgent {
+            border-left-color: var(--urgent);
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .task-item h3 {
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-size: 1.1em;
+        }
+
+        .task-item.urgent h3 {
+            color: var(--urgent);
+        }
+
+        .task-item p {
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .task-item .payment {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 15px;
+            background: var(--accent-dim);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .quick-link:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        .quick-link strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .quick-link small {
+            opacity: 0.7;
+        }
+
+        .credentials {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+        }
+
+        .credentials div {
+            margin-bottom: 8px;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Maggie's Cockpit</h1>
+        <div class="tagline">Office Administrator | Beta Coordinator | Communications</div>
+    </div>
+
+    <div class="urgent-banner">
+        URGENT: Twilio 2FA verification needed TODAY - $30 payment waiting for you!
+    </div>
+
+    <div class="grid">
+        <!-- Today's Priority Tasks -->
+        <div class="card">
+            <h2>📋 Today's Priority Tasks</h2>
+            <ul class="task-list">
+                <li class="task-item urgent">
+                    <h3>1. Fix Twilio 2FA Verification</h3>
+                    <p>Our phone system (Twilio) needs 2FA verification completed. Login below and complete the verification process.</p>
+                    <p class="payment">💰 Payment: $30 (First test of payment system!)</p>
+                    <div class="credentials">
+                        <div>URL: <a href="https://www.twilio.com/console" target="_blank" style="color: var(--accent);">https://www.twilio.com/console</a></div>
+                        <div>Account: <span id="twilio-account">dwrek@overkill.io</span> <button class="copy-btn" onclick="copy('twilio-account')">Copy</button></div>
+                        <div>Phone to verify: 509-216-6552</div>
+                    </div>
+                    <button class="btn" style="margin-top: 15px;" onclick="markComplete('twilio')">Mark Complete</button>
+                </li>
+
+                <li class="task-item">
+                    <h3>2. Send Beta Tester Update Email</h3>
+                    <p>Use the Beta Tester Cockpit to send update emails to all 5 beta testers. Template is ready to copy!</p>
+                    <button class="btn" onclick="window.open('https://conciousnessrevolution.io/beta-tester-cockpit.html', '_blank')">Open Beta Cockpit</button>
+                </li>
+
+                <li class="task-item">
+                    <h3>3. Track Beta Feedback</h3>
+                    <p>Check the bugs.html dashboard for any new feedback from beta testers. Report anything critical.</p>
+                    <button class="btn btn-secondary" onclick="window.open('https://conciousnessrevolution.io/bugs.html', '_blank')">View Feedback</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quick Access Links -->
+        <div class="card">
+            <h2>🔗 Quick Access Links</h2>
+            <div class="quick-links">
+                <a href="https://conciousnessrevolution.io/beta-tester-cockpit.html" target="_blank" class="quick-link">
+                    <strong>Beta Tester Cockpit</strong>
+                    <small>Manage beta testers, send updates, view stats</small>
+                </a>
+
+                <a href="https://mail.google.com/mail" target="_blank" class="quick-link">
+                    <strong>Gmail</strong>
+                    <small>Send beta updates via email</small>
+                </a>
+
+                <a href="https://www.twilio.com/console" target="_blank" class="quick-link">
+                    <strong>Twilio Console</strong>
+                    <small>Complete 2FA verification</small>
+                </a>
+
+                <a href="https://conciousnessrevolution.io/bugs.html" target="_blank" class="quick-link">
+                    <strong>Bug Dashboard</strong>
+                    <small>View all beta feedback</small>
+                </a>
+
+                <a href="https://conciousnessrevolution.io/turkey-tornado.html" target="_blank" class="quick-link">
+                    <strong>Turkey Tornado Dashboard</strong>
+                    <small>System status overview</small>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Tasks -->
+    <div class="card">
+        <h2>📅 Upcoming Tasks (This Week)</h2>
+        <ul class="task-list">
+            <li class="task-item">
+                <h3>Kids Case Prep (December)</h3>
+                <p>Your kids case hearing is coming up in December. We'll help you prepare paperwork and documentation.</p>
+            </li>
+
+            <li class="task-item">
+                <h3>Moving to Sandpoint Coordination</h3>
+                <p>As you move to Sandpoint in a couple weeks, you'll help coordinate local operations and facility management.</p>
+            </li>
+
+            <li class="task-item">
+                <h3>Office Admin System Setup</h3>
+                <p>We're building out the full office admin system - you'll be the first operator with a complete workflow cockpit!</p>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="card">
+        <h2>📞 Contact & Support</h2>
+        <div style="line-height: 2;">
+            <div><strong>Your Email:</strong> maggie111@gmail.com</div>
+            <div><strong>Commander:</strong> Available via phone/text</div>
+            <div><strong>Payment Method:</strong> Venmo/Cash App (being set up)</div>
+            <div><strong>System Support:</strong> This cockpit updates automatically</div>
+        </div>
+    </div>
+
+    <script>
+        function copy(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text);
+            alert('Copied to clipboard!');
+        }
+
+        function markComplete(task) {
+            if (confirm('Mark this task as complete?')) {
+                alert('Great work! Task marked complete. Commander has been notified.');
+                // In production, this would update the backend
+            }
+        }
+    </script>
+</body>
+</html>

@@ -12,6 +12,8 @@ RAKE_DIRS = [
     "C:/Users/dwrek/100X_DEPLOYMENT",
     "C:/Users/dwrek/.consciousness",
     "C:/Users/dwrek/.trinity",
+    "C:/Users/dwrek/Desktop",
+    "C:/Users/dwrek/LOCAL_TRINITY_HUB",
 ]
 
 # File types to index
